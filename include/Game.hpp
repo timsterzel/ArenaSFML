@@ -1,5 +1,5 @@
-#ifndef GAME_H
-#define GAME_H
+#ifndef GAME_HPP
+#define GAME_HPP
 
 #include <SFML/Graphics.hpp>
 #include <chrono>
@@ -33,4 +33,4 @@ class Game
         void run();
 };
 
-#endif // GAME_H
+#endif // GAME_HPP
