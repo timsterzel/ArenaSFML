@@ -2,12 +2,16 @@
 #define GAME_H
 
 #include <SFML/Graphics.hpp>
+#include <chrono>
+
+typedef std::chrono::high_resolution_clock CLOCK;
 
 class Game
 {
     private:
         sf::RenderWindow m_window;
         sf::CircleShape m_shape;
+
 
 
     private:
