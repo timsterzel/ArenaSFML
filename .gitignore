@@ -30,7 +30,8 @@
  
 # Code::Blocks
 *.depend  
-*.layout  
+*.layout
+bin/
 
 # Tmp files
 *.temp
