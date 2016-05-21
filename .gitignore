@@ -26,3 +26,12 @@
 *.exe
 *.out
 *.app
+
+ 
+# Code::Blocks
+*.depend  
+*.layout  
+
+# Tmp files
+*.temp
+
