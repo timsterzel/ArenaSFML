@@ -21,8 +21,9 @@ Game::Game(bool showStats)
 	m_txtStatFPS.setCharacterSize(12);
 	m_txtStatFPS.setColor(sf::Color::White);
 
-    sf::Rect<int> rect;
-    m_textureHolder.load<sf::Rect<int>>(Textures::KNIGHT, "assets/sprites/knight.png", rect);
+    //sf::Rect<int> rect;
+    //m_textureHolder.load<sf::Rect<int>>(Textures::KNIGHT, "assets/sprites/knight.png", rect);
+    m_textureHolder.load(Textures::KNIGHT, "assets/sprites/knight.png");
     m_testSprite.setTexture(m_textureHolder.get(Textures::KNIGHT));
     m_testSprite.setOrigin(m_testSprite.getTextureRect().width / 2.f, m_testSprite.getTextureRect().height / 2.f);
     m_testSprite.setPosition(m_screenHeight / 2.f, m_screenWidth / 2.f);
