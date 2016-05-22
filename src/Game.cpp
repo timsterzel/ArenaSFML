@@ -3,11 +3,14 @@
 #include "ResourceIdentifiers.hpp"
 
 Game::Game(bool showStats)
-:m_window(sf::VideoMode(800, 480), "ArenaSFML")
+:m_screenHeight(800)
+,m_screenWidth(480)
+,m_showStats(showStats)
+,m_window(sf::VideoMode(m_screenHeight, m_screenWidth), "ArenaSFML")
 ,m_dt(0)
 ,m_fps(0)
 ,m_timePoint1(CLOCK::now())
-,m_showStats(showStats)
+
 {
     //m_shape.setFillColor(sf::Color::Green);
     m_window.setFramerateLimit(60);
@@ -21,6 +24,8 @@ Game::Game(bool showStats)
 
     m_textureHolder.load(Textures::KNIGHT, "assets/sprites/knight.png");
     m_testSprite.setTexture(m_textureHolder.get(Textures::KNIGHT));
+    m_testSprite.setOrigin(m_testSprite.getTextureRect().width / 2.f, m_testSprite.getTextureRect().height / 2.f);
+    m_testSprite.setPosition(m_screenHeight / 2.f, m_screenWidth / 2.f);
 }
 
 void Game::determineDeltaTime() {

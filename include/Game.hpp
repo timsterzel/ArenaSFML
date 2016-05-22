@@ -10,6 +10,13 @@ typedef std::chrono::high_resolution_clock CLOCK;
 class Game
 {
     private:
+        // Options
+        unsigned int m_screenHeight;
+        unsigned int m_screenWidth;
+        bool m_showStats;
+
+
+
         sf::RenderWindow m_window;
         sf::Sprite m_testSprite;
         sf::Font m_fontDefault;
@@ -19,8 +26,6 @@ class Game
         float m_dt;
         float m_fps;
         CLOCK::time_point m_timePoint1;
-        // Options
-        bool m_showStats;
 
         // Assets
         TextureHolder m_textureHolder;
