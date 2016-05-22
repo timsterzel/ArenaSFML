@@ -1,15 +1,15 @@
 #include "Game.hpp"
 #include <iostream>
+#include "ResourceIdentifiers.hpp"
 
-Game::Game(bool showStats):
-m_window(sf::VideoMode(800, 480), "ArenaSFML")
-,m_shape(100.f)
+Game::Game(bool showStats)
+:m_window(sf::VideoMode(800, 480), "ArenaSFML")
 ,m_dt(0)
 ,m_fps(0)
 ,m_timePoint1(CLOCK::now())
 ,m_showStats(showStats)
 {
-    m_shape.setFillColor(sf::Color::Green);
+    //m_shape.setFillColor(sf::Color::Green);
     m_window.setFramerateLimit(60);
     if (!m_fontDefault.loadFromFile("fonts/UbuntuMono-R.ttf"))
 	{
@@ -19,6 +19,8 @@ m_window(sf::VideoMode(800, 480), "ArenaSFML")
 	m_txtStatFPS.setCharacterSize(12);
 	m_txtStatFPS.setColor(sf::Color::White);
 
+    m_textureHolder.load(Textures::KNIGHT, "assets/sprites/knight.png");
+    m_testSprite.setTexture(m_textureHolder.get(Textures::KNIGHT));
 }
 
 void Game::determineDeltaTime() {
@@ -47,7 +49,7 @@ void Game::render()
 {
     std::cout << "Render" << std::endl;
     m_window.clear();
-    m_window.draw(m_shape);
+    m_window.draw(m_testSprite);
     m_window.draw(m_txtStatFPS);
     m_window.display();
 }

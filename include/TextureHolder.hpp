@@ -2,6 +2,7 @@
 #define TEXTUREHOLDER_HPP
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <string>
 #include <map>
 #include <memory>
 #include <cassert>
@@ -14,6 +15,9 @@ class TextureHolder
 
     public:
         TextureHolder();
+        void load(Textures texture, const std::string &fileName);
+        sf::Texture& get(Textures id);
+        const sf::Texture& get(Textures id) const;
 
 
 };

@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <chrono>
+#include "TextureHolder.hpp"
 
 typedef std::chrono::high_resolution_clock CLOCK;
 
@@ -10,7 +11,7 @@ class Game
 {
     private:
         sf::RenderWindow m_window;
-        sf::CircleShape m_shape;
+        sf::Sprite m_testSprite;
         sf::Font m_fontDefault;
         sf::Text m_txtStatFPS;
 
@@ -20,6 +21,9 @@ class Game
         CLOCK::time_point m_timePoint1;
         // Options
         bool m_showStats;
+
+        // Assets
+        TextureHolder m_textureHolder;
 
 
 

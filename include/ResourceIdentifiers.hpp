@@ -3,7 +3,7 @@
 
 enum class Textures
 {
-
+    KNIGHT
 };
 
 #endif // RESOURCEIDENTIFIERS_HPP
