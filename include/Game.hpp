@@ -1,9 +1,9 @@
 #ifndef GAME_HPP
 #define GAME_HPP
-
 #include <SFML/Graphics.hpp>
 #include <chrono>
-#include "TextureHolder.hpp"
+#include "ResourceHolder.hpp"
+#include "ResourceIdentifiers.hpp"
 
 typedef std::chrono::high_resolution_clock CLOCK;
 
@@ -28,7 +28,7 @@ class Game
         CLOCK::time_point m_timePoint1;
 
         // Assets
-        TextureHolder m_textureHolder;
+        ResourceHolder<sf::Texture, Textures> m_textureHolder;
 
 
 

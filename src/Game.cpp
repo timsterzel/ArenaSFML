@@ -1,6 +1,5 @@
 #include "Game.hpp"
 #include <iostream>
-#include "ResourceIdentifiers.hpp"
 
 Game::Game(bool showStats)
 :m_screenHeight(800)
