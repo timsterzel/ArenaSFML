@@ -16,7 +16,12 @@ class ResourceHolder
 
     public:
         void load(Identifier id, const std::string &fileName);
+
+        template <typename Parameter>
+        void load(Identifier id, const std::string &fileName, const Parameter &secondParam);
+
         Resource& get(Identifier id);
+
         const Resource& get(Identifier id) const;
 
 

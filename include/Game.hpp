@@ -15,8 +15,6 @@ class Game
         unsigned int m_screenWidth;
         bool m_showStats;
 
-
-
         sf::RenderWindow m_window;
         sf::Sprite m_testSprite;
         sf::Font m_fontDefault;
