@@ -42,11 +42,13 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="include/Entity.hpp" />
 		<Unit filename="include/Game.hpp" />
 		<Unit filename="include/ResourceHolder.hpp" />
 		<Unit filename="include/ResourceHolder.inl" />
 		<Unit filename="include/ResourceIdentifiers.hpp" />
 		<Unit filename="main.cpp" />
+		<Unit filename="src/Entity.cpp" />
 		<Unit filename="src/Game.cpp" />
 		<Extensions>
 			<code_completion />
