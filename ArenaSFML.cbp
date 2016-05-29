@@ -44,11 +44,10 @@
 		</Compiler>
 		<Unit filename="include/Game.hpp" />
 		<Unit filename="include/ResourceHolder.hpp" />
+		<Unit filename="include/ResourceHolder.inl" />
 		<Unit filename="include/ResourceIdentifiers.hpp" />
 		<Unit filename="main.cpp" />
 		<Unit filename="src/Game.cpp" />
-		<Unit filename="src/ResourceHolder.inl" />
-		<Unit filename="src/TextureHolder.cpp" />
 		<Extensions>
 			<code_completion />
 			<debugger />
