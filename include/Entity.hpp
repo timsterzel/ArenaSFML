@@ -1,8 +1,9 @@
 #ifndef ENTITY_HPP
 #define ENTITY_HPP
 #include <SFML/Graphics.hpp>
+#include "SceneNode.hpp"
 
-class Entity
+class Entity : public SceneNode
 {
     protected:
 
