@@ -2,6 +2,8 @@
 #define WARRIOR_HPP
 #include <SFML/Graphics.hpp>
 #include "Entity.hpp"
+#include "ResourceIdentifiers.hpp"
+#include "ResourceHolder.hpp"
 
 class Warrior : public Entity
 {
@@ -9,7 +11,7 @@ class Warrior : public Entity
         sf::Sprite m_sprite;
 
     public:
-        Warrior();
+        Warrior(Textures textureId, const ResourceHolder<sf::Texture, Textures> &textureHolder);
         virtual void drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const;
 };
 

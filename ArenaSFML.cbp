@@ -48,10 +48,12 @@
 		<Unit filename="include/ResourceHolder.inl" />
 		<Unit filename="include/ResourceIdentifiers.hpp" />
 		<Unit filename="include/SceneNode.hpp" />
+		<Unit filename="include/Warrior.hpp" />
 		<Unit filename="main.cpp" />
 		<Unit filename="src/Entity.cpp" />
 		<Unit filename="src/Game.cpp" />
 		<Unit filename="src/SceneNode.cpp" />
+		<Unit filename="src/Warrior.cpp" />
 		<Extensions>
 			<code_completion />
 			<debugger />

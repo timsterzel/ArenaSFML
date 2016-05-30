@@ -1,6 +1,7 @@
 #include "SceneNode.hpp"
 #include <algorithm>
 #include <cassert>
+#include <iostream>
 
 SceneNode::SceneNode()
 :m_parent(nullptr)
@@ -11,6 +12,7 @@ SceneNode::SceneNode()
 void SceneNode::attachChild(Ptr child)
 {
     child->m_parent = this;
+    m_children.push_back(std::move(child));
 }
 
 SceneNode::Ptr SceneNode::detachChild(const SceneNode& node)
@@ -33,7 +35,6 @@ void SceneNode::draw(sf::RenderTarget &target, sf::RenderStates states) const
         for (const Ptr &child : m_children)
         {
             child->draw(target, states);
-
         }
 
 }
