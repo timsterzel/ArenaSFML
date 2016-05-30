@@ -4,7 +4,7 @@
 Warrior::Warrior(Textures textureId, const ResourceHolder<sf::Texture, Textures> &textureHolder)
 :m_sprite(textureHolder.get(textureId))
 {
-    sf::FloatRect bounds = { m_sprite.getLocalBounds() };
+    sf::FloatRect bounds = m_sprite.getLocalBounds();
     m_sprite.setOrigin(bounds.width / 2.f, bounds.height / 2.f);
 }
 

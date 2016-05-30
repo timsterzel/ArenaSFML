@@ -71,7 +71,7 @@ sf::Transform SceneNode::getWorldTransform()
     sf::Transform trform = { sf::Transform::Identity };
     for (const SceneNode *node = this; node != nullptr; node = node->m_parent)
     {
-        trform = { node->getTransform() * trform };
+        trform = node->getTransform() * trform;
     }
     return trform;
 }
