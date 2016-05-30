@@ -20,6 +20,10 @@ class SceneNode : public sf::Transformable, public sf::Drawable, public sf::NonC
         void attachChild(Ptr child);
         Ptr detachChild(const SceneNode& node);
         void update(float dt);
+        // Get absolute world transform
+        sf::Transform getWorldTransform();
+        // Get absolute world position
+        sf::Vector2f getWorldPosition();
 
     private:
         // draw should not get overridden

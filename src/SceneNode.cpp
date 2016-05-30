@@ -65,3 +65,20 @@ void SceneNode::updateChildren(float dt)
         child->update(dt);
     }
 }
+
+sf::Transform SceneNode::getWorldTransform()
+{
+    sf::Transform trform = { sf::Transform::Identity };
+    for (const SceneNode *node = this; node != nullptr; node = node->m_parent)
+    {
+        trform = { node->getTransform() * trform };
+    }
+    return trform;
+}
+
+sf::Vector2f SceneNode::getWorldPosition()
+{
+    return getWorldTransform() * sf::Vector2f();
+}
+
+
