@@ -19,12 +19,15 @@ class SceneNode : public sf::Transformable, public sf::Drawable, public sf::NonC
         SceneNode();
         void attachChild(Ptr child);
         Ptr detachChild(const SceneNode& node);
+        void update(float dt);
 
     private:
         // draw should not get overridden
         virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const final;
         virtual void drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const;
-
+        void drawChildren(sf::RenderTarget &target, sf::RenderStates states) const;
+        virtual void updateCurrent(float dt);
+        void updateChildren(float dt);
 };
 
 #endif // SCENENODE_HPP

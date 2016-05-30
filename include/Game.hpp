@@ -12,6 +12,14 @@ typedef std::chrono::high_resolution_clock CLOCK;
 class Game
 {
     private:
+        enum class Layers
+        {
+            Main,
+            Statistics,
+            Count
+        };
+
+
         // Options
         unsigned int m_screenHeight;
         unsigned int m_screenWidth;
@@ -36,6 +44,7 @@ class Game
     private:
         void determineDeltaTime();
         void processEvents();
+        void update();
         void render();
 
     public:

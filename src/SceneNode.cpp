@@ -31,15 +31,37 @@ void SceneNode::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
         states.transform *= getTransform();
         drawCurrent(target, states);
-
-        for (const Ptr &child : m_children)
-        {
-            child->draw(target, states);
-        }
-
+        drawChildren(target, states);
 }
 
 void SceneNode::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const
 {
     //Do nothing by default
+}
+
+void SceneNode::drawChildren(sf::RenderTarget &target, sf::RenderStates states) const
+{
+    for (const Ptr &child : m_children)
+    {
+        child->draw(target, states);
+    }
+}
+
+void SceneNode::update(float dt)
+{
+    updateCurrent(dt);
+    updateChildren(dt);
+}
+
+void SceneNode::updateCurrent(float dt)
+{
+    // Do nothing by default
+}
+
+void SceneNode::updateChildren(float dt)
+{
+    for (const Ptr &child : m_children)
+    {
+        child->update(dt);
+    }
 }

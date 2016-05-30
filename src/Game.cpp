@@ -26,10 +26,22 @@ Game::Game(bool showStats)
     m_textureHolder.load(Textures::KNIGHT, "assets/sprites/knight.png");
     std::unique_ptr<Warrior> warrior(new Warrior(Textures::KNIGHT, m_textureHolder));
     warrior->setPosition(m_screenHeight / 2.f, m_screenWidth / 2.f);
+    warrior->setVelocity(0.f, -30.f);
     m_sceneGraph.attachChild(std::move(warrior));
     //m_testSprite.setTexture(m_textureHolder.get(Textures::KNIGHT));
     //m_testSprite.setOrigin(m_testSprite.getTextureRect().width / 2.f, m_testSprite.getTextureRect().height / 2.f);
     //m_testSprite.setPosition(m_screenHeight / 2.f, m_screenWidth / 2.f);
+}
+
+void Game::run()
+{
+    while (m_window.isOpen())
+    {
+        determineDeltaTime();
+        processEvents();
+        update();
+        render();
+    }
 }
 
 void Game::determineDeltaTime() {
@@ -54,6 +66,11 @@ void Game::processEvents()
     }
 }
 
+void Game::update()
+{
+    m_sceneGraph.update(m_dt);
+}
+
 void Game::render()
 {
     std::cout << "Render" << std::endl;
@@ -64,14 +81,5 @@ void Game::render()
     m_window.display();
 }
 
-void Game::run()
-{
-    while (m_window.isOpen())
-    {
-        determineDeltaTime();
-        processEvents();
-        render();
-    }
 
-}
 

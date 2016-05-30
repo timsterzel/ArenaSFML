@@ -19,6 +19,9 @@ class Entity : public SceneNode
         void setVelocity(float velX, float velY);
         sf::Vector2f getVelocity();
 
+    private:
+        virtual void updateCurrent(float dt);
+
 };
 
 #endif // ENTITY_HPP

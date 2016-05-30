@@ -21,3 +21,9 @@ sf::Vector2f Entity::getVelocity()
 {
     return m_velocity;
 }
+
+void Entity::updateCurrent(float dt)
+{
+    // Move is the same as setPosition(getPosition() + offset) of the sf::Transformable class
+    move(m_velocity * dt);
+}

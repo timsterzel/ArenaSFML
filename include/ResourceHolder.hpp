@@ -6,7 +6,6 @@
 #include <map>
 #include <memory>
 #include <cassert>
-#include "ResourceIdentifiers.hpp"
 
 template <typename Resource, typename Identifier>
 class ResourceHolder
