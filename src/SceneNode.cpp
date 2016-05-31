@@ -4,7 +4,8 @@
 #include <iostream>
 
 SceneNode::SceneNode()
-:m_parent{nullptr}
+: m_parent{nullptr}
+, m_command{ Commands::NONE }
 {
 
 }
@@ -81,4 +82,13 @@ sf::Vector2f SceneNode::getWorldPosition()
     return getWorldTransform() * sf::Vector2f();
 }
 
+void SceneNode::setCommand(Commands command)
+{
+    m_command = command;
+}
+
+Commands SceneNode::getCommand() const
+{
+    return m_command;
+}
 

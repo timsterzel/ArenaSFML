@@ -2,7 +2,6 @@
 
 
 Entity::Entity()
-: m_moveDirection{ MoveDirections::NONE }
 {
 
 }
@@ -23,21 +22,11 @@ sf::Vector2f Entity::getVelocity() const
     return m_velocity;
 }
 
-void Entity::setMoveDirection(MoveDirections moveDirection)
-{
-    m_moveDirection = moveDirection;
-}
-
-MoveDirections Entity::getMoveDirection() const
-{
-    return m_moveDirection;
-}
-
 void Entity::updateCurrent(float dt)
 {
     m_currentVelocity.x = 0.f;
     m_currentVelocity.y = 0.f;
-    if (m_moveDirection == MoveDirections::UP)
+    if (m_command == Commands::MOVE_UP)
     {
         m_currentVelocity.y = m_velocity.y;
     }

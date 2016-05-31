@@ -71,11 +71,11 @@ void Game::handleInput()
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
     {
-        m_playerWarrior->setMoveDirection(MoveDirections::UP);
+        m_playerWarrior->setCommand(Commands::MOVE_UP);
     }
     else
     {
-        m_playerWarrior->setMoveDirection(MoveDirections::NONE);
+        m_playerWarrior->setCommand(Commands::NONE);
     }
 
 }

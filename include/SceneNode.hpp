@@ -4,16 +4,25 @@
 #include <memory>
 #include <vector>
 
+enum class Commands
+{
+    MOVE_LEFT,
+    MOVE_RIGHT,
+    MOVE_UP,
+    MOVE_DOWN,
+    NONE
+};
 
 class SceneNode : public sf::Transformable, public sf::Drawable, public sf::NonCopyable
 {
     public:
         typedef std::unique_ptr<SceneNode> Ptr;
 
-    protected:
     private:
         std::vector<Ptr> m_children;
         SceneNode *m_parent;
+    protected:
+        Commands m_command;
 
     public:
         SceneNode();
@@ -24,6 +33,9 @@ class SceneNode : public sf::Transformable, public sf::Drawable, public sf::NonC
         sf::Transform getWorldTransform();
         // Get absolute world position
         sf::Vector2f getWorldPosition();
+
+        void setCommand(Commands command);
+        Commands getCommand() const;
 
     private:
         // draw should not get overridden
