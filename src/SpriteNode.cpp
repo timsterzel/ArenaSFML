@@ -1,11 +1,18 @@
 #include "SpriteNode.hpp"
 
-SpriteNode::SpriteNode()
+SpriteNode::SpriteNode(const sf::Texture &texture)
 {
-    //ctor
+
 }
 
-SpriteNode::~SpriteNode()
+SpriteNode::SpriteNode(const sf::Texture &texture, const sf::IntRect &rect)
 {
-    //dtor
+
 }
+
+void SpriteNode::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const
+{
+    target.draw(m_sprite, states);
+}
+
+
