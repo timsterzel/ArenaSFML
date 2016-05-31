@@ -11,6 +11,7 @@ Game::Game(bool showStats)
 , m_dt{0}
 , m_fps{0}
 , m_timePoint1{CLOCK::now()}
+, m_playerWarrior{nullptr}
 {
     //m_shape.setFillColor(sf::Color::Green);
     m_window.setFramerateLimit(60);
@@ -26,20 +27,19 @@ Game::Game(bool showStats)
     //m_textureHolder.load<sf::Rect<int>>(Textures::KNIGHT, "assets/sprites/knight.png", rect);
     m_textureHolder.load(Textures::KNIGHT, "assets/sprites/knight.png");
     std::unique_ptr<Warrior> warrior(new Warrior(Textures::KNIGHT, m_textureHolder));
-    warrior->setPosition(m_screenHeight / 2.f, m_screenWidth / 2.f);
-    warrior->setVelocity(0.f, -30.f);
+    m_playerWarrior = warrior.get();
+    m_playerWarrior->setPosition(m_screenHeight / 2.f, m_screenWidth / 2.f);
+    m_playerWarrior->setVelocity(0.f, -30.f);
     m_sceneGraph.attachChild(std::move(warrior));
-    //m_testSprite.setTexture(m_textureHolder.get(Textures::KNIGHT));
-    //m_testSprite.setOrigin(m_testSprite.getTextureRect().width / 2.f, m_testSprite.getTextureRect().height / 2.f);
-    //m_testSprite.setPosition(m_screenHeight / 2.f, m_screenWidth / 2.f);
 }
 
 void Game::run()
 {
-    while (m_window.isOpen())
+    while (m_window.isOpen() && m_isRunning)
     {
         determineDeltaTime();
         processEvents();
+        handleInput();
         update();
         render();
     }
@@ -65,6 +65,19 @@ void Game::processEvents()
             m_window.close();
         }
     }
+}
+
+void Game::handleInput()
+{
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+    {
+        m_playerWarrior->setMoveDirection(MoveDirections::UP);
+    }
+    else
+    {
+        m_playerWarrior->setMoveDirection(MoveDirections::NONE);
+    }
+
 }
 
 void Game::update()

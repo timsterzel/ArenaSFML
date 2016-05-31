@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <memory>
 #include <chrono>
+#include "Warrior.hpp"
 #include "ResourceHolder.hpp"
 #include "ResourceIdentifiers.hpp"
 #include "SceneNode.hpp"
@@ -14,9 +15,9 @@ class Game
     private:
         enum class Layers
         {
-            Main,
-            Statistics,
-            Count
+            MAIN,
+            STATISTICS,
+            COUNT
         };
 
 
@@ -40,11 +41,12 @@ class Game
         // Assets
         ResourceHolder<sf::Texture, Textures> m_textureHolder;
 
-
+        Warrior *m_playerWarrior;
 
     private:
         void determineDeltaTime();
         void processEvents();
+        void handleInput();
         void update();
         void render();
 

@@ -3,21 +3,30 @@
 #include <SFML/Graphics.hpp>
 #include "SceneNode.hpp"
 
+enum class MoveDirections
+{
+    LEFT,
+    RIGHT,
+    UP,
+    DOWN,
+    NONE
+};
+
 class Entity : public SceneNode
 {
-    protected:
-
-
     private:
         sf::Vector2f m_velocity;
-
+        sf::Vector2f m_currentVelocity;
+        MoveDirections m_moveDirection;
 
     public:
         Entity();
 
         void setVelocity(sf::Vector2f velocity);
         void setVelocity(float velX, float velY);
-        sf::Vector2f getVelocity();
+        sf::Vector2f getVelocity() const;
+        void setMoveDirection(MoveDirections moveDirection);
+        MoveDirections getMoveDirection() const;
 
     private:
         virtual void updateCurrent(float dt);
