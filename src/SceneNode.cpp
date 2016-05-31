@@ -4,7 +4,7 @@
 #include <iostream>
 
 SceneNode::SceneNode()
-:m_parent(nullptr)
+:m_parent{nullptr}
 {
 
 }
