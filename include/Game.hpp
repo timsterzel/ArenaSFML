@@ -29,8 +29,9 @@ class Game
         sf::Font m_fontDefault;
         sf::Text m_txtStatFPS;
 
-        SceneNode m_sceneGraph;
+        bool m_isRunning;
 
+        SceneNode m_sceneGraph;
 
         // Delta time
         float m_dt;

@@ -3,13 +3,14 @@
 #include "Warrior.hpp"
 
 Game::Game(bool showStats)
-: m_screenHeight(800)
-, m_screenWidth(480)
-, m_showStats(showStats)
-, m_window(sf::VideoMode(m_screenHeight, m_screenWidth), "ArenaSFML")
-, m_dt(0)
-, m_fps(0)
-, m_timePoint1(CLOCK::now())
+: m_screenHeight{800}
+, m_screenWidth{480}
+, m_showStats{showStats}
+, m_window{sf::VideoMode{m_screenHeight, m_screenWidth}, "ArenaSFML"}
+, m_isRunning{true}
+, m_dt{0}
+, m_fps{0}
+, m_timePoint1{CLOCK::now()}
 {
     //m_shape.setFillColor(sf::Color::Green);
     m_window.setFramerateLimit(60);
