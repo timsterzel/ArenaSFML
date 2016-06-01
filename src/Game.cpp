@@ -65,9 +65,7 @@ void Game::update()
 {
     while(!m_commandQueue.isEmpty())
     {
-        Command command = m_commandQueue.pop();
-
-
+        m_sceneGraph.onCommand(m_commandQueue.pop(), m_dt);
     }
     m_sceneGraph.update(m_dt);
 }

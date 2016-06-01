@@ -1,7 +1,7 @@
 #ifndef COMMAND_HPP
 #define COMMAND_HPP
 #include <SFML/Graphics.hpp>
-#include "SceneNode.hpp"
+#include "EnumWorldObjectTypes.hpp"
 
 enum class CommandTypes
 {

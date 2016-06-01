@@ -74,6 +74,25 @@ void SceneNode::updateChildren(float dt)
     }
 }
 
+void SceneNode::onCommand(const Command &command, float dt)
+{
+    onCommandCurrent(command, dt);
+    onCommandChildren(command, dt);
+}
+
+void SceneNode::onCommandCurrent(const Command &command, float dt)
+{
+    // Do nothing by default
+}
+
+void SceneNode::onCommandChildren(const Command &command, float dt)
+{
+    for (const Ptr &child : m_children)
+    {
+        child->onCommand(command, dt);
+    }
+}
+
 sf::Transform SceneNode::getWorldTransform()
 {
     sf::Transform trform = { sf::Transform::Identity };

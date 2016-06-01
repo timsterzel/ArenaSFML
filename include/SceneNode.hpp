@@ -3,6 +3,8 @@
 #include <SFML/Graphics.hpp>
 #include <memory>
 #include <vector>
+#include "Command.hpp"
+#include "EnumWorldObjectTypes.hpp"
 
 enum class Commands
 {
@@ -11,12 +13,6 @@ enum class Commands
     MOVE_UP,
     MOVE_DOWN,
     NONE
-};
-
-enum class WorldObjectType
-{
-    Player,
-    None
 };
 
 class SceneNode : public sf::Transformable, public sf::Drawable, public sf::NonCopyable
@@ -34,7 +30,9 @@ class SceneNode : public sf::Transformable, public sf::Drawable, public sf::NonC
         SceneNode(WorldObjectType type);
         void attachChild(Ptr child);
         Ptr detachChild(const SceneNode& node);
+        // dt is the delta time
         void update(float dt);
+        void onCommand(const Command &command, float dt);
         // Get absolute world transform
         sf::Transform getWorldTransform();
         // Get absolute world position
@@ -51,6 +49,8 @@ class SceneNode : public sf::Transformable, public sf::Drawable, public sf::NonC
         void drawChildren(sf::RenderTarget &target, sf::RenderStates states) const;
         virtual void updateCurrent(float dt);
         void updateChildren(float dt);
+        virtual void onCommandCurrent(const Command &command, float dt);
+        void onCommandChildren(const Command &command, float dt);
 };
 
 #endif // SCENENODE_HPP
