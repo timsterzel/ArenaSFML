@@ -13,6 +13,12 @@ enum class Commands
     NONE
 };
 
+enum class WorldObjectType
+{
+    Player,
+    None
+};
+
 class SceneNode : public sf::Transformable, public sf::Drawable, public sf::NonCopyable
 {
     public:
@@ -22,10 +28,10 @@ class SceneNode : public sf::Transformable, public sf::Drawable, public sf::NonC
         std::vector<Ptr> m_children;
         SceneNode *m_parent;
     protected:
-        Commands m_command;
-
+        WorldObjectType m_type;
     public:
         SceneNode();
+        SceneNode(WorldObjectType type);
         void attachChild(Ptr child);
         Ptr detachChild(const SceneNode& node);
         void update(float dt);
@@ -34,8 +40,9 @@ class SceneNode : public sf::Transformable, public sf::Drawable, public sf::NonC
         // Get absolute world position
         sf::Vector2f getWorldPosition();
 
-        void setCommand(Commands command);
-        Commands getCommand() const;
+        WorldObjectType getType() const;
+        void setType(WorldObjectType type);
+
 
     private:
         // draw should not get overridden

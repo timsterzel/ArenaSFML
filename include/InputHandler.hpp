@@ -2,22 +2,22 @@
 #define INPUTHANDLER_HPP
 #include <SFML/Graphics.hpp>
 #include <queue>
-
-
+#include "Command.hpp"
+#include "CommandQueue.hpp"
 
 class InputHandler
 {
     private:
         sf::RenderWindow *m_window;
-        std::queue<> m_Commands;
 
     public:
         InputHandler(sf::RenderWindow *window);
-        void handleInput();
+
+        void handleInput(CommandQueue &commandQueue);
 
     private:
-        void handleEvents();
-        void handleRealTimeInput();
+        void handleEvents(CommandQueue &commandQueue);
+        void handleRealTimeInput(CommandQueue &commandQueue);
 
 
 };

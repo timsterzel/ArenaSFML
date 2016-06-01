@@ -7,13 +7,13 @@ InputHandler::InputHandler(sf::RenderWindow *window)
 
 }
 
-void InputHandler::handleInput()
+void InputHandler::handleInput(CommandQueue &commandQueue)
 {
-    handleEvents();
-    handleRealTimeInput();
+    handleEvents(commandQueue);
+    handleRealTimeInput(commandQueue);
 }
 
-void InputHandler::handleEvents()
+void InputHandler::handleEvents(CommandQueue &commandQueue)
 {
     sf::Event event;
     while (m_window->pollEvent(event))
@@ -25,7 +25,16 @@ void InputHandler::handleEvents()
     }
 }
 
-void InputHandler::handleRealTimeInput()
+void InputHandler::handleRealTimeInput(CommandQueue &commandQueue)
 {
-
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+    {
+        commandQueue.push({CommandTypes::MOVE_UP, WorldObjectType::Player});
+    }
+    /*
+    else
+    {
+        m_playerWarrior->setCommand(Commands::NONE);
+    }
+    */
 }

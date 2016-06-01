@@ -7,6 +7,8 @@
 #include "ResourceHolder.hpp"
 #include "ResourceIdentifiers.hpp"
 #include "SceneNode.hpp"
+#include "CommandQueue.hpp"
+#include "InputHandler.hpp"
 
 typedef std::chrono::high_resolution_clock CLOCK;
 
@@ -41,11 +43,13 @@ class Game
         // Assets
         ResourceHolder<sf::Texture, Textures> m_textureHolder;
 
+        CommandQueue m_commandQueue;
+        InputHandler m_inputHandler;
+
         Warrior *m_playerWarrior;
 
     private:
         void determineDeltaTime();
-        void processEvents();
         void handleInput();
         void update();
         void render();

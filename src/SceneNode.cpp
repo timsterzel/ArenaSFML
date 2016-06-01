@@ -5,7 +5,14 @@
 
 SceneNode::SceneNode()
 : m_parent{nullptr}
-, m_command{ Commands::NONE }
+, m_type{WorldObjectType::None}
+{
+
+}
+
+SceneNode::SceneNode(WorldObjectType type)
+: m_parent{nullptr}
+, m_type{type}
 {
 
 }
@@ -82,13 +89,15 @@ sf::Vector2f SceneNode::getWorldPosition()
     return getWorldTransform() * sf::Vector2f();
 }
 
-void SceneNode::setCommand(Commands command)
+WorldObjectType SceneNode::getType() const
 {
-    m_command = command;
+    return m_type;
 }
 
-Commands SceneNode::getCommand() const
+void SceneNode::setType(WorldObjectType type)
 {
-    return m_command;
+    m_type = type;
 }
+
+
 

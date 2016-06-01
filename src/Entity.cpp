@@ -24,6 +24,7 @@ sf::Vector2f Entity::getVelocity() const
 
 void Entity::updateCurrent(float dt)
 {
+    /*
     m_currentVelocity.x = 0.f;
     m_currentVelocity.y = 0.f;
     if (m_command == Commands::MOVE_UP)
@@ -32,4 +33,5 @@ void Entity::updateCurrent(float dt)
     }
     // Move is the same as setPosition(getPosition() + offset) of the sf::Transformable class
     move(m_currentVelocity * dt);
+    */
 }

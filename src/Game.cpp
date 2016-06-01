@@ -11,6 +11,7 @@ Game::Game(bool showStats)
 , m_dt{0}
 , m_fps{0}
 , m_timePoint1{CLOCK::now()}
+, m_inputHandler{&m_window}
 , m_playerWarrior{nullptr}
 {
     //m_shape.setFillColor(sf::Color::Green);
@@ -38,7 +39,6 @@ void Game::run()
     while (m_window.isOpen() && m_isRunning)
     {
         determineDeltaTime();
-        processEvents();
         handleInput();
         update();
         render();
@@ -55,35 +55,20 @@ void Game::determineDeltaTime() {
     m_txtStatFPS.setString("FPS: " + std::to_string(m_fps));
 }
 
-void Game::processEvents()
-{
-    // One time events
-    sf::Event event;
-    while (m_window.pollEvent(event))
-    {
-        if (event.type == sf::Event::Closed)
-        {
-            m_window.close();
-        }
-    }
-    // Real time input
-}
 
 void Game::handleInput()
 {
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-    {
-        m_playerWarrior->setCommand(Commands::MOVE_UP);
-    }
-    else
-    {
-        m_playerWarrior->setCommand(Commands::NONE);
-    }
-
+    m_inputHandler.handleInput(m_commandQueue);
 }
 
 void Game::update()
 {
+    while(!m_commandQueue.isEmpty())
+    {
+        Command command = m_commandQueue.pop();
+
+
+    }
     m_sceneGraph.update(m_dt);
 }
 
