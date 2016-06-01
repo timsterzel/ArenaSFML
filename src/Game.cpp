@@ -31,6 +31,7 @@ Game::Game(bool showStats)
     m_playerWarrior = warrior.get();
     m_playerWarrior->setPosition(m_screenHeight / 2.f, m_screenWidth / 2.f);
     m_playerWarrior->setVelocity(0.f, -30.f);
+    m_playerWarrior->setType(WorldObjectType::Player);
     m_sceneGraph.attachChild(std::move(warrior));
 }
 
@@ -65,6 +66,7 @@ void Game::update()
 {
     while(!m_commandQueue.isEmpty())
     {
+        std::cout << "Game::update Quneue" << std::endl;
         m_sceneGraph.onCommand(m_commandQueue.pop(), m_dt);
     }
     m_sceneGraph.update(m_dt);
@@ -72,7 +74,7 @@ void Game::update()
 
 void Game::render()
 {
-    std::cout << "Render" << std::endl;
+    //std::cout << "Render" << std::endl;
     m_window.clear();
     m_window.draw(m_sceneGraph);
     //m_window.draw(m_testSprite);

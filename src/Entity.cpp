@@ -1,5 +1,5 @@
 #include "Entity.hpp"
-
+#include <iostream>
 
 Entity::Entity()
 {
@@ -34,4 +34,20 @@ void Entity::updateCurrent(float dt)
     // Move is the same as setPosition(getPosition() + offset) of the sf::Transformable class
     move(m_currentVelocity * dt);
     */
+}
+
+void Entity::onCommandCurrent(const Command &command, float dt)
+{
+    std::cout << "onCommandCurrent" << std::endl;
+    if (command.getWorldObjectType() == m_type)
+    {
+        m_currentVelocity.x = 0.f;
+        m_currentVelocity.y = 0.f;
+        if (command.getCommandType() == CommandTypes::MOVE_UP)
+        {
+            m_currentVelocity.y = m_velocity.y;
+        }
+        // Move is the same as setPosition(getPosition() + offset) of the sf::Transformable class
+        move(m_currentVelocity * dt);
+    }
 }

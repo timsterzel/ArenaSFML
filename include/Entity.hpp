@@ -20,6 +20,7 @@ class Entity : public SceneNode
 
     private:
         virtual void updateCurrent(float dt);
+        virtual void onCommandCurrent(const Command &command, float dt);
 
 };
 

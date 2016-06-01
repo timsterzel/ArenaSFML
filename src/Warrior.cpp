@@ -12,3 +12,5 @@ void Warrior::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) con
 {
     target.draw(m_sprite, states);
 }
+
+

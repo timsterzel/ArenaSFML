@@ -9,6 +9,7 @@
 #include "SceneNode.hpp"
 #include "CommandQueue.hpp"
 #include "InputHandler.hpp"
+#include "EnumWorldObjectTypes.hpp"
 
 typedef std::chrono::high_resolution_clock CLOCK;
 

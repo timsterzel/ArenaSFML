@@ -6,15 +6,6 @@
 #include "Command.hpp"
 #include "EnumWorldObjectTypes.hpp"
 
-enum class Commands
-{
-    MOVE_LEFT,
-    MOVE_RIGHT,
-    MOVE_UP,
-    MOVE_DOWN,
-    NONE
-};
-
 class SceneNode : public sf::Transformable, public sf::Drawable, public sf::NonCopyable
 {
     public:
