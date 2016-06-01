@@ -57,6 +57,7 @@ void Game::determineDeltaTime() {
 
 void Game::processEvents()
 {
+    // One time events
     sf::Event event;
     while (m_window.pollEvent(event))
     {
@@ -65,6 +66,7 @@ void Game::processEvents()
             m_window.close();
         }
     }
+    // Real time input
 }
 
 void Game::handleInput()
