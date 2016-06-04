@@ -2,8 +2,8 @@
 #define INPUTHANDLER_HPP
 #include <SFML/Graphics.hpp>
 #include <queue>
-#include "Command.hpp"
-#include "CommandQueue.hpp"
+#include "Input/Command.hpp"
+#include "Input/CommandQueue.hpp"
 
 class InputHandler
 {

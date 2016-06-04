@@ -1,4 +1,4 @@
-#include "Command.hpp"
+#include "Input/Command.hpp"
 
 Command::Command(CommandTypes commandType, WorldObjectTypes worldObjectType)
 : m_commandType{commandType}

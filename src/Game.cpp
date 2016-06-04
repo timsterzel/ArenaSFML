@@ -1,8 +1,8 @@
 #include "Game.hpp"
 #include <iostream>
 #include <memory>
-#include "SpriteNode.hpp"
-#include "Warrior.hpp"
+#include "Components/SpriteNode.hpp"
+#include "Components/Warrior.hpp"
 
 
 Game::Game(bool showStats)

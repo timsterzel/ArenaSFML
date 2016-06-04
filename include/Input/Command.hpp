@@ -1,8 +1,8 @@
 #ifndef COMMAND_HPP
 #define COMMAND_HPP
 #include <SFML/Graphics.hpp>
-#include "EnumWorldObjectTypes.hpp"
-#include "EnumCommandTypes.hpp"
+#include "Components/EnumWorldObjectTypes.hpp"
+#include "Input/EnumCommandTypes.hpp"
 
 class Command
 {

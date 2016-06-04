@@ -3,14 +3,13 @@
 #include <SFML/Graphics.hpp>
 #include <memory>
 #include <chrono>
-#include "Warrior.hpp"
+#include "Components/Warrior.hpp"
+#include "Components/EnumWorldObjectTypes.hpp"
+#include "Components/SceneNode.hpp"
+#include "Input/CommandQueue.hpp"
+#include "Input/InputHandler.hpp"
 #include "ResourceHolder.hpp"
 #include "EnumResourceIdentifiers.hpp"
-#include "SceneNode.hpp"
-#include "CommandQueue.hpp"
-#include "InputHandler.hpp"
-#include "EnumWorldObjectTypes.hpp"
-
 
 typedef std::chrono::high_resolution_clock CLOCK;
 

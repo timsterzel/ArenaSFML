@@ -3,7 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <memory>
 #include <vector>
-#include "Command.hpp"
+#include "Input/Command.hpp"
 #include "EnumWorldObjectTypes.hpp"
 
 class SceneNode : public sf::Transformable, public sf::Drawable, public sf::NonCopyable

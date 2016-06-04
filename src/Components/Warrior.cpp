@@ -1,4 +1,4 @@
-#include "Warrior.hpp"
+#include "Components/Warrior.hpp"
 #include <iostream>
 
 Warrior::Warrior(Textures textureId, const ResourceHolder<sf::Texture, Textures> &textureHolder)

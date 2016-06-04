@@ -1,4 +1,4 @@
-#include "InputHandler.hpp"
+#include "Input/InputHandler.hpp"
 #include <SFML/Graphics.hpp>
 #include <cmath>
 #include <iostream>

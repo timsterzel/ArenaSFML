@@ -1,4 +1,4 @@
-#include "Entity.hpp"
+#include "Components/Entity.hpp"
 #include <iostream>
 
 Entity::Entity()

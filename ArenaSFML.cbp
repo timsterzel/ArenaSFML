@@ -42,19 +42,23 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="include/Calc.hpp" />
+		<Unit filename="include/Calc.inl" />
 		<Unit filename="include/Command.hpp" />
 		<Unit filename="include/CommandQueue.hpp" />
 		<Unit filename="include/Entity.hpp" />
+		<Unit filename="include/EnumCommandTypes.hpp" />
+		<Unit filename="include/EnumResourceIdentifiers.hpp" />
 		<Unit filename="include/EnumWorldObjectTypes.hpp" />
 		<Unit filename="include/Game.hpp" />
 		<Unit filename="include/InputHandler.hpp" />
 		<Unit filename="include/ResourceHolder.hpp" />
 		<Unit filename="include/ResourceHolder.inl" />
-		<Unit filename="include/ResourceIdentifiers.hpp" />
 		<Unit filename="include/SceneNode.hpp" />
 		<Unit filename="include/SpriteNode.hpp" />
 		<Unit filename="include/Warrior.hpp" />
 		<Unit filename="main.cpp" />
+		<Unit filename="src/Calc.cpp" />
 		<Unit filename="src/Command.cpp" />
 		<Unit filename="src/CommandQueue.cpp" />
 		<Unit filename="src/Entity.cpp" />

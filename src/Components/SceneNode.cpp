@@ -1,4 +1,4 @@
-#include "SceneNode.hpp"
+#include "Components/SceneNode.hpp"
 #include <algorithm>
 #include <cassert>
 #include <iostream>

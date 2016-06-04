@@ -1,7 +1,6 @@
 #ifndef CALC_HPP
 #define CALC_HPP
 
-
 class Calc
 {
     private:

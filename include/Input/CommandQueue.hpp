@@ -1,6 +1,6 @@
 #ifndef COMMANDQUEUE_HPP
 #define COMMANDQUEUE_HPP
-#include "Command.hpp"
+#include "Input/Command.hpp"
 #include "queue"
 
 class CommandQueue

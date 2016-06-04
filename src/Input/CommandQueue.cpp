@@ -1,4 +1,4 @@
-#include "CommandQueue.hpp"
+#include "Input/CommandQueue.hpp"
 
 CommandQueue::CommandQueue()
 {

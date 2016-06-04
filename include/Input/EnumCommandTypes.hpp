@@ -7,8 +7,7 @@ enum class CommandTypes
     MOVE_LEFT,
     MOVE_RIGHT,
     MOVE_UP,
-    MOVE_DOWN,
-    NONE
+    MOVE_DOWN
 };
 
 #endif // ENUMCOMMANDTYPES_HPP
