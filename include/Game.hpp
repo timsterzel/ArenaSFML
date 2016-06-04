@@ -11,13 +11,23 @@
 #include "InputHandler.hpp"
 #include "EnumWorldObjectTypes.hpp"
 
+
 typedef std::chrono::high_resolution_clock CLOCK;
 
 class Game
 {
     private:
+        // Use of enum instead of enum class, so we can use Layer as int
+        enum Layers
+        {
+            BACKGROUND,
+            MAIN,
+            STATISTICS,
+            COUNT
+        };
 
 
+    private:
         // Options
         unsigned int m_screenHeight;
         unsigned int m_screenWidth;
@@ -30,6 +40,7 @@ class Game
         bool m_isRunning;
 
         SceneNode m_sceneGraph;
+        std::array<SceneNode*, Layers::COUNT> m_sceneLayers;
 
         // Delta time
         float m_dt;
@@ -44,6 +55,9 @@ class Game
         Warrior *m_playerWarrior;
 
     private:
+        void loadFonts();
+        void loadTextures();
+        void buildScene();
         void determineDeltaTime();
         void handleInput();
         void update();

@@ -1,7 +1,8 @@
 #include "Game.hpp"
 #include <iostream>
+#include <memory>
 #include "Warrior.hpp"
-#include "EnumLayers.hpp"
+
 
 Game::Game(bool showStats)
 : m_screenHeight{800}
@@ -17,6 +18,13 @@ Game::Game(bool showStats)
 {
     //m_shape.setFillColor(sf::Color::Green);
     m_window.setFramerateLimit(60);
+    loadFonts();
+    loadTextures();
+    buildScene();
+}
+
+void Game::loadFonts()
+{
     if (!m_fontDefault.loadFromFile("fonts/UbuntuMono-R.ttf"))
 	{
 		std::cout << "Error cannot load Font" << std::endl;
@@ -24,16 +32,32 @@ Game::Game(bool showStats)
 	m_txtStatFPS.setFont(m_fontDefault);
 	m_txtStatFPS.setCharacterSize(12);
 	m_txtStatFPS.setColor(sf::Color::White);
+}
 
+void Game::loadTextures()
+{
     //sf::Rect<int> rect;
     //m_textureHolder.load<sf::Rect<int>>(Textures::KNIGHT, "assets/sprites/knight.png", rect);
     m_textureHolder.load(Textures::KNIGHT, "assets/sprites/knight.png");
+}
+
+void Game::buildScene()
+{
+
+    for (std::size_t i = { 0 }; i < Layers::COUNT; i++)
+    {
+        // Use std::unique_ptr<SceneNode>
+        SceneNode::Ptr layer(new SceneNode());
+        m_sceneLayers[i] = layer.get();
+        m_sceneGraph.attachChild(std::move(layer));
+    }
+
     std::unique_ptr<Warrior> warrior(new Warrior(Textures::KNIGHT, m_textureHolder));
     m_playerWarrior = warrior.get();
     m_playerWarrior->setPosition(m_screenHeight / 2.f, m_screenWidth / 2.f);
     m_playerWarrior->setVelocity(30.f, 30.f);
     m_playerWarrior->setType(WorldObjectType::Player);
-    m_sceneGraph.attachChild(std::move(warrior));
+    m_sceneLayers[Layers::MAIN]->attachChild(std::move(warrior));
 }
 
 void Game::run()
