@@ -31,6 +31,18 @@ void InputHandler::handleRealTimeInput(CommandQueue &commandQueue)
     {
         commandQueue.push({CommandTypes::MOVE_UP, WorldObjectType::Player});
     }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+    {
+        commandQueue.push({CommandTypes::MOVE_DOWN, WorldObjectType::Player});
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+    {
+        commandQueue.push({CommandTypes::MOVE_LEFT, WorldObjectType::Player});
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+    {
+        commandQueue.push({CommandTypes::MOVE_RIGHT, WorldObjectType::Player});
+    }
     /*
     else
     {

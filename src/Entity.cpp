@@ -45,7 +45,20 @@ void Entity::onCommandCurrent(const Command &command, float dt)
         m_currentVelocity.y = 0.f;
         if (command.getCommandType() == CommandTypes::MOVE_UP)
         {
+            m_currentVelocity.y = -m_velocity.y;
+        }
+        else if (command.getCommandType() == CommandTypes::MOVE_DOWN)
+        {
             m_currentVelocity.y = m_velocity.y;
+        }
+         else if (command.getCommandType() == CommandTypes::MOVE_LEFT)
+        {
+            m_currentVelocity.x = -m_velocity.x;
+            //std::cout << "MOVE_LEFT Entity" << std::endl;
+        }
+        else if (command.getCommandType() == CommandTypes::MOVE_RIGHT)
+        {
+            m_currentVelocity.x = m_velocity.x;
         }
         // Move is the same as setPosition(getPosition() + offset) of the sf::Transformable class
         move(m_currentVelocity * dt);

@@ -30,7 +30,7 @@ Game::Game(bool showStats)
     std::unique_ptr<Warrior> warrior(new Warrior(Textures::KNIGHT, m_textureHolder));
     m_playerWarrior = warrior.get();
     m_playerWarrior->setPosition(m_screenHeight / 2.f, m_screenWidth / 2.f);
-    m_playerWarrior->setVelocity(0.f, -30.f);
+    m_playerWarrior->setVelocity(30.f, 30.f);
     m_playerWarrior->setType(WorldObjectType::Player);
     m_sceneGraph.attachChild(std::move(warrior));
 }
