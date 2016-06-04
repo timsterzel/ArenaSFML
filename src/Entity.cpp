@@ -38,27 +38,27 @@ void Entity::updateCurrent(float dt)
 
 void Entity::onCommandCurrent(const Command &command, float dt)
 {
-    std::cout << "onCommandCurrent" << std::endl;
     if (command.getWorldObjectType() == m_type)
     {
         m_currentVelocity.x = 0.f;
         m_currentVelocity.y = 0.f;
-        if (command.getCommandType() == CommandTypes::MOVE_UP)
+        switch (command.getCommandType())
         {
-            m_currentVelocity.y = -m_velocity.y;
-        }
-        else if (command.getCommandType() == CommandTypes::MOVE_DOWN)
-        {
-            m_currentVelocity.y = m_velocity.y;
-        }
-         else if (command.getCommandType() == CommandTypes::MOVE_LEFT)
-        {
-            m_currentVelocity.x = -m_velocity.x;
-            //std::cout << "MOVE_LEFT Entity" << std::endl;
-        }
-        else if (command.getCommandType() == CommandTypes::MOVE_RIGHT)
-        {
-            m_currentVelocity.x = m_velocity.x;
+            case CommandTypes::ROTATE:
+                setRotation(command.getValues().x - 90.f);
+                break;
+            case CommandTypes::MOVE_UP:
+                m_currentVelocity.y = -m_velocity.y;
+                break;
+            case CommandTypes::MOVE_DOWN:
+                m_currentVelocity.y = m_velocity.y;
+                break;
+            case CommandTypes::MOVE_LEFT:
+                m_currentVelocity.x = -m_velocity.x;
+                break;
+            case CommandTypes::MOVE_RIGHT:
+                m_currentVelocity.x = m_velocity.x;
+                break;
         }
         // Move is the same as setPosition(getPosition() + offset) of the sf::Transformable class
         move(m_currentVelocity * dt);

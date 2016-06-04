@@ -5,6 +5,7 @@
 
 enum class CommandTypes
 {
+    ROTATE,
     MOVE_LEFT,
     MOVE_RIGHT,
     MOVE_UP,

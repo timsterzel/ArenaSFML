@@ -9,6 +9,7 @@ class InputHandler
 {
     private:
         sf::RenderWindow *m_window;
+        sf::Vector2i m_lastMousePos;
 
     public:
         InputHandler(sf::RenderWindow *window);
