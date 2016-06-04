@@ -16,12 +16,6 @@ typedef std::chrono::high_resolution_clock CLOCK;
 class Game
 {
     private:
-        enum class Layers
-        {
-            MAIN,
-            STATISTICS,
-            COUNT
-        };
 
 
         // Options

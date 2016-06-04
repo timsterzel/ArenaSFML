@@ -1,6 +1,7 @@
 #include "Game.hpp"
 #include <iostream>
 #include "Warrior.hpp"
+#include "EnumLayers.hpp"
 
 Game::Game(bool showStats)
 : m_screenHeight{800}
