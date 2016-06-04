@@ -2,8 +2,6 @@
 
 #define PI 3.14159265
 
-
-
 template<typename T, typename U>
 float Calc::getVec2Scalar(const T vec1, const U vec2)
 {

@@ -8,8 +8,8 @@
 #include "Components/SceneNode.hpp"
 #include "Input/CommandQueue.hpp"
 #include "Input/InputHandler.hpp"
-#include "ResourceHolder.hpp"
-#include "EnumResourceIdentifiers.hpp"
+#include "Resources/ResourceHolder.hpp"
+#include "Resources/EnumResourceIdentifiers.hpp"
 
 typedef std::chrono::high_resolution_clock CLOCK;
 

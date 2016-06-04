@@ -1,7 +1,7 @@
 #ifndef SPRITENODE_HPP
 #define SPRITENODE_HPP
 #include <SFML/Graphics.hpp>
-#include "SceneNode.hpp"
+#include "Components/SceneNode.hpp"
 
 class SpriteNode : public SceneNode
 {

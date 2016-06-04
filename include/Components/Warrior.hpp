@@ -1,9 +1,9 @@
 #ifndef WARRIOR_HPP
 #define WARRIOR_HPP
 #include <SFML/Graphics.hpp>
-#include "Entity.hpp"
-#include "EnumResourceIdentifiers.hpp"
-#include "ResourceHolder.hpp"
+#include "Components/Entity.hpp"
+#include "Resources/EnumResourceIdentifiers.hpp"
+#include "Resources/ResourceHolder.hpp"
 
 class Warrior : public Entity
 {

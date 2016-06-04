@@ -4,7 +4,7 @@
 #include <memory>
 #include <vector>
 #include "Input/Command.hpp"
-#include "EnumWorldObjectTypes.hpp"
+#include "Components/EnumWorldObjectTypes.hpp"
 
 class SceneNode : public sf::Transformable, public sf::Drawable, public sf::NonCopyable
 {
