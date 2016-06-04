@@ -2,7 +2,7 @@
 #define WARRIOR_HPP
 #include <SFML/Graphics.hpp>
 #include "Entity.hpp"
-#include "ResourceIdentifiers.hpp"
+#include "EnumResourceIdentifiers.hpp"
 #include "ResourceHolder.hpp"
 
 class Warrior : public Entity

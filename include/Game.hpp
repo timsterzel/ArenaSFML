@@ -5,7 +5,7 @@
 #include <chrono>
 #include "Warrior.hpp"
 #include "ResourceHolder.hpp"
-#include "ResourceIdentifiers.hpp"
+#include "EnumResourceIdentifiers.hpp"
 #include "SceneNode.hpp"
 #include "CommandQueue.hpp"
 #include "InputHandler.hpp"

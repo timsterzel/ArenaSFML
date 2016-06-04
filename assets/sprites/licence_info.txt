@@ -1,6 +1,23 @@
-The following assets are under the Creative Commons Attribution 3.0 licence and base on assets from Xarius.
+The following assets are under the Creative Commons Attribution 3.0 licence and base on assets from Xarius:
+knight.png
+wizard.png
 This assets are modified. You can find the unmodified assets on the following url:
 http://opengameart.org/users/xarius
 A link to the licence:
 https://creativecommons.org/licenses/by/3.0/de/legalcode
+
+The following assets are under the Creative Commons Attribution 3.0 licence (CC-BY-SA 3.0) and base on assets from Rothens:
+chess_white-png
+This assets are modified. You can find the unmodified assets on the following url:
+http://opengameart.org/users/rothens
+A link to the licence:
+http://creativecommons.org/licenses/by-sa/3.0/legalcode
+
+
+
+
+
+
+
+
 

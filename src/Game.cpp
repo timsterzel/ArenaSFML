@@ -1,6 +1,7 @@
 #include "Game.hpp"
 #include <iostream>
 #include <memory>
+#include "SpriteNode.hpp"
 #include "Warrior.hpp"
 
 
@@ -38,6 +39,7 @@ void Game::loadTextures()
 {
     //sf::Rect<int> rect;
     //m_textureHolder.load<sf::Rect<int>>(Textures::KNIGHT, "assets/sprites/knight.png", rect);
+    m_textureHolder.load(Textures::CHESS_WHITE, "assets/sprites/chess_white.png");
     m_textureHolder.load(Textures::KNIGHT, "assets/sprites/knight.png");
 }
 
@@ -51,6 +53,20 @@ void Game::buildScene()
         m_sceneLayers[i] = layer.get();
         m_sceneGraph.attachChild(std::move(layer));
     }
+
+    /*
+    sf::Texture &texture = mTextures.get(Textures::Desert);
+	sf::IntRect textureRect(mWorldBounds);
+	texture.setRepeated(true);
+	std::unique_ptr<SpriteNode> backgroundSprite(new SpriteNode(texture, textureRect));
+	backgroundSprite->setPosition(mWorldBounds.left, mWorldBounds.top);
+	mSceneLayers[Background]->attachChild(std::move(backgroundSprite));
+    */
+    sf::Texture &texture = m_textureHolder.get(Textures::CHESS_WHITE);
+    sf::IntRect textureRect(0.f, 0.f, m_screenHeight, m_screenWidth);
+    texture.setRepeated(true);
+    std::unique_ptr<SpriteNode> background(new SpriteNode(texture, textureRect));
+    m_sceneLayers[Layers::BACKGROUND]->attachChild(std::move(background));
 
     std::unique_ptr<Warrior> warrior(new Warrior(Textures::KNIGHT, m_textureHolder));
     m_playerWarrior = warrior.get();
