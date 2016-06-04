@@ -1,8 +1,6 @@
-This used assets are under the Creative Commons Attribution 3.0 licence.
-The Assets are modified from the original.
-The original Assets are created by Xarius. You can find the Assets at: 
-http://opengameart.org/content/topdown-knight
-
+The following assets are under the Creative Commons Attribution 3.0 licence and base on assets from Xarius.
+This assets are modified. You can find the unmodified assets on the following url:
+http://opengameart.org/users/xarius
 A link to the licence:
 https://creativecommons.org/licenses/by/3.0/de/legalcode
 
