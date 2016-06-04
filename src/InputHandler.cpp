@@ -57,8 +57,6 @@ void InputHandler::handleRealTimeInput(CommandQueue &commandQueue)
         commandQueue.push({ CommandTypes::ROTATE, WorldObjectTypes::Player, { AngleSigned, 0.f } });
     }
 
-    std::cout << " mouse angle: " << AngleSigned << std::endl;
-
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
     {
         commandQueue.push({ CommandTypes::MOVE_UP, WorldObjectTypes::Player });

@@ -19,11 +19,6 @@ class Calc
 
         template<typename T, typename U>
         static float getVec2Angle(const T vec1, const U vec2);
-
-
-
-
-
 };
 
 #include "Calc.inl"

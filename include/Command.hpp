@@ -2,17 +2,7 @@
 #define COMMAND_HPP
 #include <SFML/Graphics.hpp>
 #include "EnumWorldObjectTypes.hpp"
-
-enum class CommandTypes
-{
-    ROTATE,
-    MOVE_LEFT,
-    MOVE_RIGHT,
-    MOVE_UP,
-    MOVE_DOWN,
-    NONE
-};
-
+#include "EnumCommandTypes.hpp"
 
 class Command
 {
@@ -33,7 +23,6 @@ class Command
 
         sf::Vector2f getValues() const;
         void setValue(sf::Vector2f values);
-
 };
 
 #endif // COMMAND_HPP

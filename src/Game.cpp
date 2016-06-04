@@ -107,7 +107,6 @@ void Game::update()
 {
     while(!m_commandQueue.isEmpty())
     {
-        std::cout << "Game::update Quneue" << std::endl;
         m_sceneGraph.onCommand(m_commandQueue.pop(), m_dt);
     }
     m_sceneGraph.update(m_dt);
