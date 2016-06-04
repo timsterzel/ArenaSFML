@@ -15,10 +15,10 @@ class SceneNode : public sf::Transformable, public sf::Drawable, public sf::NonC
         std::vector<Ptr> m_children;
         SceneNode *m_parent;
     protected:
-        WorldObjectType m_type;
+        WorldObjectTypes m_type;
     public:
         SceneNode();
-        SceneNode(WorldObjectType type);
+        SceneNode(WorldObjectTypes type);
         void attachChild(Ptr child);
         Ptr detachChild(const SceneNode& node);
         // dt is the delta time
@@ -29,8 +29,8 @@ class SceneNode : public sf::Transformable, public sf::Drawable, public sf::NonC
         // Get absolute world position
         sf::Vector2f getWorldPosition();
 
-        WorldObjectType getType() const;
-        void setType(WorldObjectType type);
+        WorldObjectTypes getType() const;
+        void setType(WorldObjectTypes type);
 
 
     private:

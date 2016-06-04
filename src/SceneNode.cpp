@@ -5,12 +5,12 @@
 
 SceneNode::SceneNode()
 : m_parent{nullptr}
-, m_type{WorldObjectType::None}
+, m_type{WorldObjectTypes::None}
 {
 
 }
 
-SceneNode::SceneNode(WorldObjectType type)
+SceneNode::SceneNode(WorldObjectTypes type)
 : m_parent{nullptr}
 , m_type{type}
 {
@@ -108,12 +108,12 @@ sf::Vector2f SceneNode::getWorldPosition()
     return getWorldTransform() * sf::Vector2f();
 }
 
-WorldObjectType SceneNode::getType() const
+WorldObjectTypes SceneNode::getType() const
 {
     return m_type;
 }
 
-void SceneNode::setType(WorldObjectType type)
+void SceneNode::setType(WorldObjectTypes type)
 {
     m_type = type;
 }

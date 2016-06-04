@@ -1,7 +1,7 @@
 #ifndef ENUMWORLDOBJECTTYPE_HPP
 #define ENUMWORLDOBJECTTYPE_HPP
 
-enum class WorldObjectType
+enum class WorldObjectTypes
 {
     Player,
     None

@@ -54,26 +54,26 @@ void InputHandler::handleRealTimeInput(CommandQueue &commandQueue)
     const float AngleSigned = TranslatedMousePos.y < 0 ? -Angle : Angle;
     if (CurrentMousePos != m_lastMousePos)
     {
-        commandQueue.push({ CommandTypes::ROTATE, WorldObjectType::Player, { AngleSigned, 0.f } });
+        commandQueue.push({ CommandTypes::ROTATE, WorldObjectTypes::Player, { AngleSigned, 0.f } });
     }
 
     std::cout << " mouse angle: " << AngleSigned << std::endl;
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
     {
-        commandQueue.push({ CommandTypes::MOVE_UP, WorldObjectType::Player });
+        commandQueue.push({ CommandTypes::MOVE_UP, WorldObjectTypes::Player });
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
     {
-        commandQueue.push({ CommandTypes::MOVE_DOWN, WorldObjectType::Player });
+        commandQueue.push({ CommandTypes::MOVE_DOWN, WorldObjectTypes::Player });
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
     {
-        commandQueue.push({ CommandTypes::MOVE_LEFT, WorldObjectType::Player });
+        commandQueue.push({ CommandTypes::MOVE_LEFT, WorldObjectTypes::Player });
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
     {
-        commandQueue.push({ CommandTypes::MOVE_RIGHT, WorldObjectType::Player });
+        commandQueue.push({ CommandTypes::MOVE_RIGHT, WorldObjectTypes::Player });
     }
 
     m_lastMousePos.x = CurrentMousePos.x;

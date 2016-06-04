@@ -1,13 +1,13 @@
 #include "Command.hpp"
 
-Command::Command(CommandTypes commandType, WorldObjectType worldObjectType)
+Command::Command(CommandTypes commandType, WorldObjectTypes worldObjectType)
 : m_commandType{commandType}
 , m_worldObjectType{worldObjectType}
 {
 
 }
 
-Command::Command(CommandTypes commandType, WorldObjectType worldObjectType, sf::Vector2f values)
+Command::Command(CommandTypes commandType, WorldObjectTypes worldObjectType, sf::Vector2f values)
 : m_commandType{commandType}
 , m_worldObjectType{worldObjectType}
 , m_values{values}
@@ -25,12 +25,12 @@ void Command::setCommandType(CommandTypes commandType)
     m_commandType = commandType;
 }
 
-WorldObjectType Command::getWorldObjectType() const
+WorldObjectTypes Command::getWorldObjectType() const
 {
     return m_worldObjectType;
 }
 
-void Command::setWorldObjectType(WorldObjectType worldObjectType)
+void Command::setWorldObjectType(WorldObjectTypes worldObjectType)
 {
     m_worldObjectType = worldObjectType;
 }

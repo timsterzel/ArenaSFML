@@ -72,7 +72,7 @@ void Game::buildScene()
     m_playerWarrior = warrior.get();
     m_playerWarrior->setPosition(m_screenHeight / 2.f, m_screenWidth / 2.f);
     m_playerWarrior->setVelocity(30.f, 30.f);
-    m_playerWarrior->setType(WorldObjectType::Player);
+    m_playerWarrior->setType(WorldObjectTypes::Player);
     m_sceneLayers[Layers::MAIN]->attachChild(std::move(warrior));
 }
 
