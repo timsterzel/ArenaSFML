@@ -26,7 +26,7 @@ Game::Game(bool showStats)
 
 void Game::loadFonts()
 {
-    if (!m_fontDefault.loadFromFile("fonts/UbuntuMono-R.ttf"))
+    if (!m_fontDefault.loadFromFile("assets/fonts/UbuntuMono-R.ttf"))
 	{
 		std::cout << "Error cannot load Font" << std::endl;
 	}
