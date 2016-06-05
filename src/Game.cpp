@@ -1,8 +1,6 @@
 #include "Game.hpp"
 #include <iostream>
 #include <memory>
-#include "Components/SpriteNode.hpp"
-#include "Components/Warrior.hpp"
 
 
 Game::Game(bool showStats)
@@ -15,13 +13,16 @@ Game::Game(bool showStats)
 , m_fps{0}
 , m_timePoint1{CLOCK::now()}
 , m_inputHandler{&m_window}
-, m_playerWarrior{nullptr}
+, m_world{&m_window, m_fontHolder, m_textureHolder/*, &m_inputQueue*/}
+//, m_playerWarrior{nullptr}
 {
+    std::cout << "Game constructor start" << std::endl;
     //m_shape.setFillColor(sf::Color::Green);
     m_window.setFramerateLimit(60);
     loadFonts();
     loadTextures();
     buildScene();
+    m_world.buildScene();
 }
 
 void Game::loadFonts()
@@ -42,7 +43,7 @@ void Game::buildScene()
     m_txtStatFPS.setFont(m_fontHolder.get(Fonts::DEFAULT));
 	m_txtStatFPS.setCharacterSize(12);
 	m_txtStatFPS.setColor(sf::Color::White);
-
+    /*
     for (std::size_t i = { 0 }; i < Layers::COUNT; i++)
     {
         // Use std::unique_ptr<SceneNode>
@@ -51,14 +52,14 @@ void Game::buildScene()
         m_sceneGraph.attachChild(std::move(layer));
     }
 
-    /*
+
     sf::Texture &texture = mTextures.get(Textures::Desert);
 	sf::IntRect textureRect(mWorldBounds);
 	texture.setRepeated(true);
 	std::unique_ptr<SpriteNode> backgroundSprite(new SpriteNode(texture, textureRect));
 	backgroundSprite->setPosition(mWorldBounds.left, mWorldBounds.top);
 	mSceneLayers[Background]->attachChild(std::move(backgroundSprite));
-    */
+
     sf::Texture &texture = m_textureHolder.get(Textures::CHESS_WHITE);
     sf::IntRect textureRect(0.f, 0.f, m_screenHeight, m_screenWidth);
     texture.setRepeated(true);
@@ -71,6 +72,7 @@ void Game::buildScene()
     m_playerWarrior->setVelocity(30.f, 30.f);
     m_playerWarrior->setType(WorldObjectTypes::Player);
     m_sceneLayers[Layers::MAIN]->attachChild(std::move(warrior));
+    */
 }
 
 void Game::run()
@@ -97,15 +99,20 @@ void Game::determineDeltaTime() {
 
 void Game::handleInput()
 {
-    m_inputHandler.handleInput(m_commandQueue);
+    m_inputHandler.handleInput(m_inputQueue);
+    while(!m_inputQueue.isEmpty())
+    {
+        Input input = m_inputQueue.pop();
+        //m_sceneGraph.onCommand(input, m_dt);
+        // Let world class translate the input to commands
+        m_world.translateInput(input, m_dt);
+    }
 }
 
 void Game::update()
 {
-    while(!m_commandQueue.isEmpty())
-    {
-        m_sceneGraph.onCommand(m_commandQueue.pop(), m_dt);
-    }
+    m_world.handleCommands(m_dt);
+    m_world.update(m_dt);
     m_sceneGraph.update(m_dt);
 }
 
@@ -114,8 +121,7 @@ void Game::render()
     //std::cout << "Render" << std::endl;
     m_window.clear();
     m_window.draw(m_sceneGraph);
-    //m_window.draw(m_testSprite);
-    m_window.draw(m_txtStatFPS);
+    m_world.render();
     m_window.display();
 }
 

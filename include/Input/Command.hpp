@@ -13,7 +13,7 @@ class Command
 
     public:
         Command(CommandTypes commandType, WorldObjectTypes worldObjectType);
-        Command(CommandTypes commandType, WorldObjectTypes worldObjectType, sf::Vector2f valuess);
+        Command(CommandTypes commandType, WorldObjectTypes worldObjectType, sf::Vector2f values);
 
         CommandTypes getCommandType() const;
         void setCommandType(CommandTypes commandType);

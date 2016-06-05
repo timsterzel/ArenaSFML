@@ -37,7 +37,7 @@ Resource& ResourceHolder<Resource, Identifier>::get(Identifier id)
 }
 
 template <typename Resource, typename Identifier>
-const Resource& ResourceHolder<Resource, Identifier>::get(Identifier id) const
+Resource& ResourceHolder<Resource, Identifier>::get(Identifier id) const
 {
     auto found = m_resourceMap.find(id);
     // Stop programm in debug mode, when trying to get a resource which is not loaded

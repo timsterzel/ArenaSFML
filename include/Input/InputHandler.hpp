@@ -1,9 +1,8 @@
 #ifndef INPUTHANDLER_HPP
 #define INPUTHANDLER_HPP
 #include <SFML/Graphics.hpp>
-#include <queue>
-#include "Input/Command.hpp"
-#include "Input/CommandQueue.hpp"
+#include "Input/QueueHelper.hpp"
+#include "Input/Input.hpp"
 
 class InputHandler
 {
@@ -14,11 +13,11 @@ class InputHandler
     public:
         InputHandler(sf::RenderWindow *window);
 
-        void handleInput(CommandQueue &commandQueue);
+        void handleInput(QueueHelper<Input> &inputQueue);
 
     private:
-        void handleEvents(CommandQueue &commandQueue);
-        void handleRealTimeInput(CommandQueue &commandQueue);
+        void handleEvents(QueueHelper<Input> &inputQueue);
+        void handleRealTimeInput(QueueHelper<Input> &inputQueue);
 
 
 };

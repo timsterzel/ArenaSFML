@@ -21,7 +21,8 @@ class ResourceHolder
 
         Resource& get(Identifier id);
 
-        const Resource& get(Identifier id) const;
+        Resource& get(Identifier id) const;
+        //const Resource& get(Identifier id) const;
 
 
 };

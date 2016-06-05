@@ -10,13 +10,13 @@ InputHandler::InputHandler(sf::RenderWindow *window)
 
 }
 
-void InputHandler::handleInput(CommandQueue &commandQueue)
+void InputHandler::handleInput(QueueHelper<Input> &inputQueue)
 {
-    handleEvents(commandQueue);
-    handleRealTimeInput(commandQueue);
+    handleEvents(inputQueue);
+    handleRealTimeInput(inputQueue);
 }
 
-void InputHandler::handleEvents(CommandQueue &commandQueue)
+void InputHandler::handleEvents(QueueHelper<Input> &inputQueue)
 {
     sf::Event event;
     while (m_window->pollEvent(event))
@@ -41,13 +41,42 @@ void InputHandler::handleEvents(CommandQueue &commandQueue)
     }
 }
 
-void InputHandler::handleRealTimeInput(CommandQueue &commandQueue)
+void InputHandler::handleRealTimeInput(QueueHelper<Input> &inputQueue)
 {
+    const sf::Vector2i CurrentMousePos = { sf::Mouse::getPosition(*m_window) };
+    if (CurrentMousePos != m_lastMousePos)
+    {
+        const sf::Vector2i WindowCenter(static_cast<int>(m_window->getSize().x / 2), static_cast<int>(m_window->getSize().y / 2));
+        const sf::Vector2i TranslatedMousePos = { CurrentMousePos - WindowCenter };
+        const sf::Vector2f TranslatedMousePosF(static_cast<sf::Vector2f>(TranslatedMousePos));
+        inputQueue.push({ InputTypes::TRANSLATED_CURSOR_POS, TranslatedMousePosF });
+    }
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+    {
+        inputQueue.push({InputTypes::UP});
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+    {
+        inputQueue.push({InputTypes::DOWN});
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+    {
+        inputQueue.push({InputTypes::LEFT});
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+    {
+        inputQueue.push({InputTypes::RIGHT});
+    }
+
+    m_lastMousePos.x = CurrentMousePos.x;
+    m_lastMousePos.y = CurrentMousePos.y;
+    /*
     const sf::Vector2i UnitVecX(1, 0);
     const sf::Vector2i WindowCenter(static_cast<int>(m_window->getSize().x / 2), static_cast<int>(m_window->getSize().y / 2));
     const sf::Vector2i CurrentMousePos = { sf::Mouse::getPosition(*m_window) };
-    /*  The angle which should be calculated have the coordinate systems midpoint a the center of the window,
-     *   so we have to translate the mouse position so its relativ to the center of the window */
+    // The angle which should be calculated have the coordinate systems midpoint a the center of the window,
+    // so we have to translate the mouse position so its relativ to the center of the window
     const sf::Vector2i TranslatedMousePos = { CurrentMousePos - WindowCenter };
     // Calculate angle between the unit vector and the translated mouse position
     const float Angle = { Calc::radToDeg(Calc::getVec2Angle<sf::Vector2i, sf::Vector2i>(UnitVecX, TranslatedMousePos)) };
@@ -76,10 +105,5 @@ void InputHandler::handleRealTimeInput(CommandQueue &commandQueue)
 
     m_lastMousePos.x = CurrentMousePos.x;
     m_lastMousePos.y = CurrentMousePos.y;
-    /*
-    else
-    {
-        m_playerWarrior->setCommand(Commands::NONE);
-    }
     */
 }

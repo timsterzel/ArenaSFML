@@ -3,11 +3,13 @@
 #include <SFML/Graphics.hpp>
 #include <memory>
 #include <chrono>
+#include "World.hpp"
 #include "Components/Warrior.hpp"
 #include "Components/EnumWorldObjectTypes.hpp"
 #include "Components/SceneNode.hpp"
-#include "Input/CommandQueue.hpp"
+#include "Input/QueueHelper.hpp"
 #include "Input/InputHandler.hpp"
+#include "Input/EnumInputTypes.hpp"
 #include "Resources/ResourceHolder.hpp"
 #include "Resources/EnumResourceIdentifiers.hpp"
 
@@ -15,17 +17,6 @@ typedef std::chrono::high_resolution_clock CLOCK;
 
 class Game
 {
-    private:
-        // Use of enum instead of enum class, so we can use Layer as int
-        enum Layers
-        {
-            BACKGROUND,
-            MAIN,
-            STATISTICS,
-            COUNT
-        };
-
-
     private:
         // Options
         unsigned int m_screenHeight;
@@ -39,7 +30,7 @@ class Game
         bool m_isRunning;
 
         SceneNode m_sceneGraph;
-        std::array<SceneNode*, Layers::COUNT> m_sceneLayers;
+        //std::array<SceneNode*, Layers::COUNT> m_sceneLayers;
 
         // Delta time
         float m_dt;
@@ -49,10 +40,12 @@ class Game
         ResourceHolder<sf::Font, Fonts> m_fontHolder;
         ResourceHolder<sf::Texture, Textures> m_textureHolder;
 
-        CommandQueue m_commandQueue;
+        // The game class handle all inputs which get later translated to commands
+        QueueHelper<Input> m_inputQueue;
         InputHandler m_inputHandler;
 
-        Warrior *m_playerWarrior;
+        World m_world;
+        //Warrior *m_playerWarrior;
 
     private:
         void loadFonts();
