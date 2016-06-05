@@ -30,17 +30,18 @@ class World : private sf::NonCopyable
         SceneNode m_sceneGraph;
         std::array<SceneNode*, Layers::COUNT> m_sceneLayers;
 
-        const ResourceHolder<sf::Font, Fonts> &m_fontHolder;
-        const ResourceHolder<sf::Texture, Textures> &m_textureHolder;
+        const ResourceHolder<sf::Font, Fonts> &m_FontHolder;
+        const ResourceHolder<sf::Texture, Textures> &m_TextureHolder;
 
         QueueHelper<Input> *m_inputQueue;
         QueueHelper<Command> m_commandQueue;
 
+        sf::FloatRect m_worldBounds;
         Warrior *m_playerWarrior;
 
     public:
         World(sf::RenderWindow *window, const ResourceHolder<sf::Font, Fonts> &fontHolder,
-                const ResourceHolder<sf::Texture, Textures> &textureHolder/*, QueueHelper<Input> *inputQueue*/);
+                const ResourceHolder<sf::Texture, Textures> &textureHolder);
 
         void buildScene();
         void translateInput(Input input, float dt);

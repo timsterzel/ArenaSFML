@@ -13,11 +13,8 @@ Game::Game(bool showStats)
 , m_fps{0}
 , m_timePoint1{CLOCK::now()}
 , m_inputHandler{&m_window}
-, m_world{&m_window, m_fontHolder, m_textureHolder/*, &m_inputQueue*/}
-//, m_playerWarrior{nullptr}
+, m_world{&m_window, m_fontHolder, m_textureHolder}
 {
-    std::cout << "Game constructor start" << std::endl;
-    //m_shape.setFillColor(sf::Color::Green);
     m_window.setFramerateLimit(60);
     loadFonts();
     loadTextures();
@@ -43,36 +40,6 @@ void Game::buildScene()
     m_txtStatFPS.setFont(m_fontHolder.get(Fonts::DEFAULT));
 	m_txtStatFPS.setCharacterSize(12);
 	m_txtStatFPS.setColor(sf::Color::White);
-    /*
-    for (std::size_t i = { 0 }; i < Layers::COUNT; i++)
-    {
-        // Use std::unique_ptr<SceneNode>
-        SceneNode::Ptr layer(new SceneNode());
-        m_sceneLayers[i] = layer.get();
-        m_sceneGraph.attachChild(std::move(layer));
-    }
-
-
-    sf::Texture &texture = mTextures.get(Textures::Desert);
-	sf::IntRect textureRect(mWorldBounds);
-	texture.setRepeated(true);
-	std::unique_ptr<SpriteNode> backgroundSprite(new SpriteNode(texture, textureRect));
-	backgroundSprite->setPosition(mWorldBounds.left, mWorldBounds.top);
-	mSceneLayers[Background]->attachChild(std::move(backgroundSprite));
-
-    sf::Texture &texture = m_textureHolder.get(Textures::CHESS_WHITE);
-    sf::IntRect textureRect(0.f, 0.f, m_screenHeight, m_screenWidth);
-    texture.setRepeated(true);
-    std::unique_ptr<SpriteNode> background(new SpriteNode(texture, textureRect));
-    m_sceneLayers[Layers::BACKGROUND]->attachChild(std::move(background));
-
-    std::unique_ptr<Warrior> warrior(new Warrior(Textures::KNIGHT, m_textureHolder));
-    m_playerWarrior = warrior.get();
-    m_playerWarrior->setPosition(m_screenHeight / 2.f, m_screenWidth / 2.f);
-    m_playerWarrior->setVelocity(30.f, 30.f);
-    m_playerWarrior->setType(WorldObjectTypes::Player);
-    m_sceneLayers[Layers::MAIN]->attachChild(std::move(warrior));
-    */
 }
 
 void Game::run()

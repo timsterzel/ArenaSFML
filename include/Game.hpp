@@ -30,7 +30,6 @@ class Game
         bool m_isRunning;
 
         SceneNode m_sceneGraph;
-        //std::array<SceneNode*, Layers::COUNT> m_sceneLayers;
 
         // Delta time
         float m_dt;
@@ -45,7 +44,6 @@ class Game
         InputHandler m_inputHandler;
 
         World m_world;
-        //Warrior *m_playerWarrior;
 
     private:
         void loadFonts();

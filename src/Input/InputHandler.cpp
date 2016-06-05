@@ -2,7 +2,6 @@
 #include <SFML/Graphics.hpp>
 #include <cmath>
 #include <iostream>
-#include "Calc.hpp"
 
 InputHandler::InputHandler(sf::RenderWindow *window)
 : m_window{window}
