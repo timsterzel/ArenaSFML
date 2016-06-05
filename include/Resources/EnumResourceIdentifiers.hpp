@@ -7,4 +7,9 @@ enum class Textures
     KNIGHT
 };
 
+enum class Fonts
+{
+    DEFAULT
+};
+
 #endif // RESOURCEIDENTIFIERS_HPP

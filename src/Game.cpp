@@ -26,13 +26,7 @@ Game::Game(bool showStats)
 
 void Game::loadFonts()
 {
-    if (!m_fontDefault.loadFromFile("assets/fonts/UbuntuMono-R.ttf"))
-	{
-		std::cout << "Error cannot load Font" << std::endl;
-	}
-	m_txtStatFPS.setFont(m_fontDefault);
-	m_txtStatFPS.setCharacterSize(12);
-	m_txtStatFPS.setColor(sf::Color::White);
+    m_fontHolder.load(Fonts::DEFAULT, "assets/fonts/UbuntuMono-R.ttf");
 }
 
 void Game::loadTextures()
@@ -45,6 +39,9 @@ void Game::loadTextures()
 
 void Game::buildScene()
 {
+    m_txtStatFPS.setFont(m_fontHolder.get(Fonts::DEFAULT));
+	m_txtStatFPS.setCharacterSize(12);
+	m_txtStatFPS.setColor(sf::Color::White);
 
     for (std::size_t i = { 0 }; i < Layers::COUNT; i++)
     {

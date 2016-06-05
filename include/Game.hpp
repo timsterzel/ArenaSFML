@@ -46,6 +46,7 @@ class Game
         float m_fps;
         CLOCK::time_point m_timePoint1;
         // Assets
+        ResourceHolder<sf::Font, Fonts> m_fontHolder;
         ResourceHolder<sf::Texture, Textures> m_textureHolder;
 
         CommandQueue m_commandQueue;
