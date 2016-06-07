@@ -49,6 +49,7 @@ void Game::run()
     {
         determineDeltaTime();
         handleInput();
+        m_world.controlWorldEntities();
         update();
         render();
     }

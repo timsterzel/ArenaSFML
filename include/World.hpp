@@ -45,6 +45,7 @@ class World : private sf::NonCopyable
 
         void buildScene();
         void translateInput(Input input, float dt);
+        void controlWorldEntities();
         void handleCommands(float dt);
         void update(float dt);
         void render();

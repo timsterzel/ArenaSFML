@@ -51,7 +51,6 @@ void World::buildScene()
 
 void World::translateInput(Input input, float dt)
 {
-
     switch (input.getInputType())
     {
         case InputTypes::CURSOR_POS :
@@ -107,6 +106,13 @@ void World::translateInput(Input input, float dt)
     {
         commandQueue.push({ CommandTypes::MOVE_RIGHT, WorldObjectTypes::Player });
     }*/
+}
+
+// Tmp (better implemention later)
+void World::controlWorldEntities()
+{
+    // Let Enemy look to player
+    m_commandQueue.push({ CommandTypes::LOOK_AT, WorldObjectTypes::ENEMY, m_playerWarrior->getPosition() });
 }
 
 void World::handleCommands(float dt)
