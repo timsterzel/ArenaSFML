@@ -5,7 +5,7 @@
 
 SceneNode::SceneNode()
 : m_parent{nullptr}
-, m_type{WorldObjectTypes::None}
+, m_type{WorldObjectTypes::NONE}
 {
 
 }

@@ -34,18 +34,17 @@ void World::buildScene()
     std::unique_ptr<SpriteNode> background(new SpriteNode(texture, textureRect));
     m_sceneLayers[Layers::BACKGROUND]->attachChild(std::move(background));
 
-    std::unique_ptr<Warrior> warrior(new Warrior(100, Textures::, m_TextureHolder));
-    m_playerWarrior = warrior.get();
-    m_playerWarrior->setPosition(800 / 2.f, 480 / 2.f);
-    m_playerWarrior->setVelocity(30.f, 30.f);
-    m_playerWarrior->setType(WorldObjectTypes::Player);
-    m_sceneLayers[Layers::MAIN]->attachChild(std::move(warrior));
+    std::unique_ptr<Warrior> wizard(new Warrior(100, Textures::WIZARD, m_TextureHolder));
+    wizard->setPosition(800 / 2.f + 100.f, 480 / 2.f);
+    wizard->setVelocity(30.f, 30.f);
+    wizard->setType(WorldObjectTypes::ENEMY);
+    m_sceneLayers[Layers::MAIN]->attachChild(std::move(wizard));
 
     std::unique_ptr<Warrior> warrior(new Warrior(100, Textures::KNIGHT, m_TextureHolder));
     m_playerWarrior = warrior.get();
     m_playerWarrior->setPosition(800 / 2.f, 480 / 2.f);
     m_playerWarrior->setVelocity(30.f, 30.f);
-    m_playerWarrior->setType(WorldObjectTypes::Player);
+    m_playerWarrior->setType(WorldObjectTypes::PLAYER);
     m_sceneLayers[Layers::MAIN]->attachChild(std::move(warrior));
 
 }
@@ -57,7 +56,7 @@ void World::translateInput(Input input, float dt)
     {
         case InputTypes::CURSOR_POS :
         {
-            m_commandQueue.push({ CommandTypes::LOOK_AT, WorldObjectTypes::Player, input.getValues() });
+            m_commandQueue.push({ CommandTypes::LOOK_AT, WorldObjectTypes::PLAYER, input.getValues() });
             break;
         }
         case InputTypes::TRANSLATED_CURSOR_POS :
@@ -74,16 +73,16 @@ void World::translateInput(Input input, float dt)
             break;
         }
         case InputTypes::UP :
-            m_commandQueue.push({ CommandTypes::MOVE_UP, WorldObjectTypes::Player });
+            m_commandQueue.push({ CommandTypes::MOVE_UP, WorldObjectTypes::PLAYER });
             break;
         case InputTypes::DOWN :
-            m_commandQueue.push({ CommandTypes::MOVE_DOWN, WorldObjectTypes::Player });
+            m_commandQueue.push({ CommandTypes::MOVE_DOWN, WorldObjectTypes::PLAYER });
             break;
         case InputTypes::LEFT :
-            m_commandQueue.push({ CommandTypes::MOVE_LEFT, WorldObjectTypes::Player });
+            m_commandQueue.push({ CommandTypes::MOVE_LEFT, WorldObjectTypes::PLAYER });
             break;
         case InputTypes::RIGHT :
-            m_commandQueue.push({ CommandTypes::MOVE_RIGHT, WorldObjectTypes::Player });
+            m_commandQueue.push({ CommandTypes::MOVE_RIGHT, WorldObjectTypes::PLAYER });
             break;
     }
     /*
