@@ -7,11 +7,21 @@
 
 class Warrior : public Entity
 {
+    protected:
+        int m_health;
+
     private:
         sf::Sprite m_sprite;
 
     public:
         Warrior(Textures textureId, const ResourceHolder<sf::Texture, Textures> &textureHolder);
+
+        int getHealth() const;
+        void setHealth(const int health);
+
+        void damage(const int damage);
+        void heal(const int health);
+
         virtual void drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const;
 
     private:

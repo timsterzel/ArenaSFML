@@ -9,6 +9,26 @@ Warrior::Warrior(Textures textureId, const ResourceHolder<sf::Texture, Textures>
     m_sprite.setOrigin(bounds.width / 2.f, bounds.height / 2.f);
 }
 
+int Warrior::getHealth() const
+{
+    return m_health;
+}
+
+void Warrior::setHealth(const int health)
+{
+    m_health = health;
+}
+
+void Warrior::damage(const int damage)
+{
+    m_health -= damage;
+}
+
+void Warrior::heal(const int health)
+{
+    m_health += health;
+}
+
 void Warrior::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const
 {
     target.draw(m_sprite, states);
