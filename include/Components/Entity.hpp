@@ -7,9 +7,11 @@
 
 class Entity : public SceneNode
 {
-    private:
+    protected:
         sf::Vector2f m_velocity;
         sf::Vector2f m_currentVelocity;
+
+    private:
 
     public:
         Entity();

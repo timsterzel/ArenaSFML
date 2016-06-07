@@ -13,6 +13,10 @@ class Warrior : public Entity
     public:
         Warrior(Textures textureId, const ResourceHolder<sf::Texture, Textures> &textureHolder);
         virtual void drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const;
+
+    private:
+        virtual void onCommandCurrent(const Command &command, float dt);
+        void lookAt(sf::Vector2f pos);
 };
 
 #endif // WARRIOR_HPP

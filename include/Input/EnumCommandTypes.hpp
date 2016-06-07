@@ -3,6 +3,7 @@
 
 enum class CommandTypes
 {
+    LOOK_AT,
     ROTATE,
     MOVE_LEFT,
     MOVE_RIGHT,

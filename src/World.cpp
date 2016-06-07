@@ -51,15 +51,7 @@ void World::translateInput(Input input, float dt)
     {
         case InputTypes::CURSOR_POS :
         {
-            const sf::Vector2f UnitVecX(1.0, 0.f);
-            // The angle which should be calculated have the coordinate systems midpoint at the players position,
-            // so we have to use the translated mouse position so its relativ to the center of the window
-            const sf::Vector2f MousePos = { input.getValues() };
-            const sf::Vector2f TranslatedMousePos = MousePos - m_playerWarrior->getPosition();
-
-            const float Angle = { Calc::radToDeg(Calc::getVec2Angle<sf::Vector2f, sf::Vector2f>(UnitVecX, TranslatedMousePos)) };
-            const float AngleSigned = TranslatedMousePos.y < 0.f ? -Angle : Angle;
-            m_commandQueue.push({ CommandTypes::ROTATE, WorldObjectTypes::Player, { AngleSigned, 0.f } });
+            m_commandQueue.push({ CommandTypes::LOOK_AT, WorldObjectTypes::Player, input.getValues() });
             break;
         }
         case InputTypes::TRANSLATED_CURSOR_POS :

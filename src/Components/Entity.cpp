@@ -38,29 +38,5 @@ void Entity::updateCurrent(float dt)
 
 void Entity::onCommandCurrent(const Command &command, float dt)
 {
-    if (command.getWorldObjectType() == m_type)
-    {
-        m_currentVelocity.x = 0.f;
-        m_currentVelocity.y = 0.f;
-        switch (command.getCommandType())
-        {
-            case CommandTypes::ROTATE:
-                setRotation(command.getValues().x - 90.f);
-                break;
-            case CommandTypes::MOVE_UP:
-                m_currentVelocity.y = -m_velocity.y;
-                break;
-            case CommandTypes::MOVE_DOWN:
-                m_currentVelocity.y = m_velocity.y;
-                break;
-            case CommandTypes::MOVE_LEFT:
-                m_currentVelocity.x = -m_velocity.x;
-                break;
-            case CommandTypes::MOVE_RIGHT:
-                m_currentVelocity.x = m_velocity.x;
-                break;
-        }
-        // Move is the same as setPosition(getPosition() + offset) of the sf::Transformable class
-        move(m_currentVelocity * dt);
-    }
+
 }
