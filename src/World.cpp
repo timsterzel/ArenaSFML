@@ -34,8 +34,14 @@ void World::buildScene()
     std::unique_ptr<SpriteNode> background(new SpriteNode(texture, textureRect));
     m_sceneLayers[Layers::BACKGROUND]->attachChild(std::move(background));
 
+    std::unique_ptr<Warrior> warrior(new Warrior(100, Textures::, m_TextureHolder));
+    m_playerWarrior = warrior.get();
+    m_playerWarrior->setPosition(800 / 2.f, 480 / 2.f);
+    m_playerWarrior->setVelocity(30.f, 30.f);
+    m_playerWarrior->setType(WorldObjectTypes::Player);
+    m_sceneLayers[Layers::MAIN]->attachChild(std::move(warrior));
 
-    std::unique_ptr<Warrior> warrior(new Warrior(Textures::KNIGHT, m_TextureHolder));
+    std::unique_ptr<Warrior> warrior(new Warrior(100, Textures::KNIGHT, m_TextureHolder));
     m_playerWarrior = warrior.get();
     m_playerWarrior->setPosition(800 / 2.f, 480 / 2.f);
     m_playerWarrior->setVelocity(30.f, 30.f);

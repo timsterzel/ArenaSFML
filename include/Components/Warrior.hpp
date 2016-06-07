@@ -8,17 +8,19 @@
 class Warrior : public Entity
 {
     protected:
-        int m_health;
+        int m_maxHealth;
+        int m_currentHealth;
 
     private:
         sf::Sprite m_sprite;
 
     public:
-        Warrior(Textures textureId, const ResourceHolder<sf::Texture, Textures> &textureHolder);
+        Warrior(const int health, Textures textureId, const ResourceHolder<sf::Texture, Textures> &textureHolder);
 
-        int getHealth() const;
-        void setHealth(const int health);
+        int getCurrentHealth() const;
+        void setCurrentHealth(const int health);
 
+        bool isAlive() const;
         void damage(const int damage);
         void heal(const int health);
 

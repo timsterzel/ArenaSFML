@@ -4,7 +4,8 @@
 enum class Textures
 {
     CHESS_WHITE,
-    KNIGHT
+    KNIGHT,
+    MAGICIAN
 };
 
 enum class Fonts

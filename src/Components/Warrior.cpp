@@ -2,31 +2,42 @@
 #include "Calc.hpp"
 #include <iostream>
 
-Warrior::Warrior(Textures textureId, const ResourceHolder<sf::Texture, Textures> &textureHolder)
-:m_sprite{textureHolder.get(textureId)}
+Warrior::Warrior(const int health, Textures textureId, const ResourceHolder<sf::Texture, Textures> &textureHolder)
+: m_maxHealth{ health }
+, m_currentHealth{ health }
+, m_sprite{ textureHolder.get(textureId) }
 {
     sf::FloatRect bounds = m_sprite.getLocalBounds();
     m_sprite.setOrigin(bounds.width / 2.f, bounds.height / 2.f);
 }
 
-int Warrior::getHealth() const
+int Warrior::getCurrentHealth() const
 {
-    return m_health;
+    return m_currentHealth;
 }
 
-void Warrior::setHealth(const int health)
+void Warrior::setCurrentHealth(const int health)
 {
-    m_health = health;
+    m_currentHealth = health;
+}
+
+bool Warrior::isAlive() const
+{
+    return m_currentHealth > 0;
 }
 
 void Warrior::damage(const int damage)
 {
-    m_health -= damage;
+    m_currentHealth -= damage;
 }
 
 void Warrior::heal(const int health)
 {
-    m_health += health;
+    m_currentHealth += health;
+    if (m_currentHealth > m_maxHealth)
+    {
+        m_currentHealth = m_maxHealth;
+    }
 }
 
 void Warrior::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const
