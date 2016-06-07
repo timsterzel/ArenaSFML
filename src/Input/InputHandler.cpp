@@ -43,13 +43,19 @@ void InputHandler::handleEvents(QueueHelper<Input> &inputQueue)
 void InputHandler::handleRealTimeInput(QueueHelper<Input> &inputQueue)
 {
     const sf::Vector2i CurrentMousePos = { sf::Mouse::getPosition(*m_window) };
+
+    inputQueue.push({ InputTypes::CURSOR_POS, static_cast<sf::Vector2f>(CurrentMousePos) });
+    /*
     if (CurrentMousePos != m_lastMousePos)
     {
         const sf::Vector2i WindowCenter(static_cast<int>(m_window->getSize().x / 2), static_cast<int>(m_window->getSize().y / 2));
         const sf::Vector2i TranslatedMousePos = { CurrentMousePos - WindowCenter };
         const sf::Vector2f TranslatedMousePosF(static_cast<sf::Vector2f>(TranslatedMousePos));
         inputQueue.push({ InputTypes::TRANSLATED_CURSOR_POS, TranslatedMousePosF });
+
+
     }
+    */
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
     {

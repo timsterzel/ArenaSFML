@@ -9,6 +9,7 @@
 
 enum class InputTypes
 {
+    CURSOR_POS,
     TRANSLATED_CURSOR_POS,
     LEFT,
     RIGHT,

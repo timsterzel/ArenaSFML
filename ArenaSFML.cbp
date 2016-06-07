@@ -51,12 +51,16 @@
 		<Unit filename="include/Components/Warrior.hpp" />
 		<Unit filename="include/Game.hpp" />
 		<Unit filename="include/Input/Command.hpp" />
-		<Unit filename="include/Input/CommandQueue.hpp" />
 		<Unit filename="include/Input/EnumCommandTypes.hpp" />
+		<Unit filename="include/Input/EnumInputTypes.hpp" />
+		<Unit filename="include/Input/Input.hpp" />
 		<Unit filename="include/Input/InputHandler.hpp" />
+		<Unit filename="include/Input/QueueHelper.hpp" />
+		<Unit filename="include/Input/QueueHelper.inl" />
 		<Unit filename="include/Resources/EnumResourceIdentifiers.hpp" />
 		<Unit filename="include/Resources/ResourceHolder.hpp" />
 		<Unit filename="include/Resources/ResourceHolder.inl" />
+		<Unit filename="include/World.hpp" />
 		<Unit filename="main.cpp" />
 		<Unit filename="src/Calc.cpp" />
 		<Unit filename="src/Components/Entity.cpp" />
@@ -65,8 +69,9 @@
 		<Unit filename="src/Components/Warrior.cpp" />
 		<Unit filename="src/Game.cpp" />
 		<Unit filename="src/Input/Command.cpp" />
-		<Unit filename="src/Input/CommandQueue.cpp" />
+		<Unit filename="src/Input/Input.cpp" />
 		<Unit filename="src/Input/InputHandler.cpp" />
+		<Unit filename="src/World.cpp" />
 		<Extensions>
 			<code_completion />
 			<debugger />
