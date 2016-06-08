@@ -43,7 +43,7 @@ void World::buildScene()
     std::unique_ptr<Warrior> warrior(new Warrior(100, Textures::KNIGHT, m_TextureHolder));
     m_playerWarrior = warrior.get();
     m_playerWarrior->setPosition(800 / 2.f, 480 / 2.f);
-    m_playerWarrior->setVelocity(30.f, 30.f);
+    m_playerWarrior->setVelocity(60.f, 60.f);
     m_playerWarrior->setType(WorldObjectTypes::PLAYER);
     m_sceneLayers[Layers::MAIN]->attachChild(std::move(warrior));
 

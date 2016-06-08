@@ -83,7 +83,7 @@ void Warrior::lookAt(const sf::Vector2f LookPos)
     const sf::Vector2f UnitVecX(1.0, 0.f);
     // The angle which should be calculated have the coordinate systems midpoint at the players position,
     // so we have to translate the pos in relation to the player position
-    const sf::Vector2f TranslatedLookPos = LookPos - getPosition();
+    const sf::Vector2f TranslatedLookPos = LookPos - getWorldPosition();
     const float Angle = { Calc::radToDeg(Calc::getVec2Angle<sf::Vector2f, sf::Vector2f>(UnitVecX, TranslatedLookPos)) };
     const float AngleSigned = TranslatedLookPos.y < 0.f ? -Angle : Angle;
     setRotation(AngleSigned);
