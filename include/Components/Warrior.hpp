@@ -1,6 +1,7 @@
 #ifndef WARRIOR_HPP
 #define WARRIOR_HPP
 #include <SFML/Graphics.hpp>
+#include "Collision/CollisionCircle.hpp"
 #include "Components/Entity.hpp"
 #include "Resources/EnumResourceIdentifiers.hpp"
 #include "Resources/ResourceHolder.hpp"
@@ -13,6 +14,7 @@ class Warrior : public Entity
 
     private:
         sf::Sprite m_sprite;
+        CollisionCircle m_collisionCircle;
 
     public:
         Warrior(const int health, Textures textureId, const ResourceHolder<sf::Texture, Textures> &textureHolder);
