@@ -118,5 +118,10 @@ void SceneNode::setType(WorldObjectTypes type)
     m_type = type;
 }
 
+Collision SceneNode::getCollisionShape() const
+{
+    return m_collisionShape;
+}
+
 
 

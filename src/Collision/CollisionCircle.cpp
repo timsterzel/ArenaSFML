@@ -12,3 +12,13 @@ void CollisionCircle::draw(sf::RenderTarget &target, sf::RenderStates states) co
 {
     target.draw(m_circleShape, states);
 }
+
+bool CollisionCircle::isColliding(const Collision &collider) const
+{
+
+}
+
+bool CollisionCircle::isColliding(const CollisionCircle &collider) const
+{
+
+}

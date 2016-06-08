@@ -3,8 +3,9 @@
 #include <SFML/Graphics.hpp>
 #include <memory>
 #include <vector>
-#include "Input/Command.hpp"
+#include "Collision/Collision.hpp"
 #include "Components/EnumWorldObjectTypes.hpp"
+#include "Input/Command.hpp"
 
 class SceneNode : public sf::Transformable, public sf::Drawable, public sf::NonCopyable
 {
@@ -16,6 +17,7 @@ class SceneNode : public sf::Transformable, public sf::Drawable, public sf::NonC
         SceneNode *m_parent;
     protected:
         WorldObjectTypes m_type;
+        Collision m_collisionShape;
     public:
         SceneNode();
         SceneNode(WorldObjectTypes type);
@@ -31,6 +33,9 @@ class SceneNode : public sf::Transformable, public sf::Drawable, public sf::NonC
 
         WorldObjectTypes getType() const;
         void setType(WorldObjectTypes type);
+
+        virtual Collision getCollisionShape() const;
+
 
 
     private:

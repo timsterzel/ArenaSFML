@@ -2,6 +2,7 @@
 #define COLLISIONCIRCLE_HPP
 #include <SFML/Graphics.hpp>
 #include "Collision/Collision.hpp"
+#include "Components/SceneNode.hpp"
 
 class CollisionCircle : public Collision
 {
@@ -11,7 +12,15 @@ class CollisionCircle : public Collision
 
         explicit CollisionCircle(float radius);
 
+        sf::Vector2f getPosition() const;
+
         virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const;
+
+        virtual bool isColliding(const Collision &collider) const;
+
+    private:
+
+        virtual bool isColliding(const CollisionCircle &collider) const;
 };
 
 #endif // COLLISIONCIRCLE_HPP
