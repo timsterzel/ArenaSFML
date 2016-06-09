@@ -14,7 +14,7 @@ class Warrior : public Entity
 
     private:
         sf::Sprite m_sprite;
-        CollisionCircle m_collisionCircle;
+        //CollisionCircle m_collisionCircle;
 
     public:
         Warrior(const int health, Textures textureId, const ResourceHolder<sf::Texture, Textures> &textureHolder);

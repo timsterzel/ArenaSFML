@@ -6,7 +6,6 @@ Warrior::Warrior(const int health, Textures textureId, const ResourceHolder<sf::
 : m_maxHealth{ health }
 , m_currentHealth{ health }
 , m_sprite{ textureHolder.get(textureId) }
-, m_collisionCircle{ 12.f }
 {
     sf::FloatRect bounds = m_sprite.getLocalBounds();
     m_sprite.setOrigin(bounds.width / 2.f, bounds.height / 2.f);
@@ -44,7 +43,11 @@ void Warrior::heal(const int health)
 void Warrior::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const
 {
     target.draw(m_sprite, states);
-    m_collisionCircle.draw(target, states);
+    // Only draw collision shape when it is not nullptr
+    if (m_collisionShape)
+    {
+        m_collisionShape->draw(target, states);
+    }
 }
 
 void Warrior::onCommandCurrent(const Command &command, float dt)

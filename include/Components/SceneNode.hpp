@@ -15,8 +15,8 @@ class SceneNode : public sf::Transformable, public sf::Drawable, public sf::NonC
     private:
         std::vector<Ptr> m_children;
         SceneNode *m_parent;
-        std::unique_ptr<Collision> m_collisionShape;
     protected:
+        std::unique_ptr<Collision> m_collisionShape;
         WorldObjectTypes m_type;
     public:
         SceneNode();
