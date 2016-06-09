@@ -38,7 +38,7 @@ SceneNode::Ptr SceneNode::detachChild(const SceneNode& node)
     return result;
 }
 
-void SceneNode::setCollisionShape(std::unique_ptr<Collision> collisionShape)
+void SceneNode::setCollisionShape(std::unique_ptr<CollisionShape> collisionShape)
 {
     m_collisionShape = std::move(collisionShape);
 }
@@ -126,7 +126,7 @@ void SceneNode::setType(WorldObjectTypes type)
     m_type = type;
 }
 
-Collision* SceneNode::getCollisionShape() const
+CollisionShape* SceneNode::getCollisionShape() const
 {
     return m_collisionShape.get();
 }

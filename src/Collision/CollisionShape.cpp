@@ -1,4 +1,4 @@
-#include "Collision/Collision.hpp"
+#include "Collision/CollisionShape.hpp"
 
 /*
 void Collision::draw(sf::RenderTarget &target, sf::RenderStates states) const

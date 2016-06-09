@@ -14,7 +14,7 @@ void CollisionRect::draw(sf::RenderTarget &target, sf::RenderStates states) cons
     target.draw(m_rectShape, states);
 }
 
-bool CollisionRect::isColliding(const Collision &collider) const
+bool CollisionRect::isColliding(const CollisionShape &collider) const
 {
     return collider.isColliding(*this);
 }

@@ -3,7 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <memory>
 #include <vector>
-#include "Collision/Collision.hpp"
+#include "Collision/CollisionShape.hpp"
 #include "Components/EnumWorldObjectTypes.hpp"
 #include "Input/Command.hpp"
 
@@ -16,7 +16,7 @@ class SceneNode : public sf::Transformable, public sf::Drawable, public sf::NonC
         std::vector<Ptr> m_children;
         SceneNode *m_parent;
     protected:
-        std::unique_ptr<Collision> m_collisionShape;
+        std::unique_ptr<CollisionShape> m_collisionShape;
         WorldObjectTypes m_type;
     public:
         SceneNode();
@@ -24,7 +24,7 @@ class SceneNode : public sf::Transformable, public sf::Drawable, public sf::NonC
         void attachChild(Ptr child);
         Ptr detachChild(const SceneNode& node);
 
-        void setCollisionShape(std::unique_ptr<Collision> collisionShape);
+        void setCollisionShape(std::unique_ptr<CollisionShape> collisionShape);
         // dt is the delta time
         void update(float dt);
         void onCommand(const Command &command, float dt);
@@ -36,7 +36,7 @@ class SceneNode : public sf::Transformable, public sf::Drawable, public sf::NonC
         WorldObjectTypes getType() const;
         void setType(WorldObjectTypes type);
 
-        Collision* getCollisionShape() const;
+        CollisionShape* getCollisionShape() const;
 
 
 

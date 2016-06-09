@@ -1,12 +1,12 @@
-#ifndef COLLISION_HPP
-#define COLLISION_HPP
+#ifndef COLLISIONSHAPE_HPP
+#define COLLISIONSHAPE_HPP
 #include <SFML/Graphics.hpp>
 
 
 class CollisionCircle;
 class CollisionRect;
 
-class Collision : public sf::Transformable, public sf::Drawable
+class CollisionShape : public sf::Transformable, public sf::Drawable
 {
     private:
         //SceneNode *m_parent;
@@ -21,9 +21,9 @@ class Collision : public sf::Transformable, public sf::Drawable
         */
 
         // http://stackoverflow.com/questions/22899363/advice-on-class-structure-in-a-collision-detection-system (The accepted answer)
-        virtual bool isColliding(const Collision &collider) const = 0;
+        virtual bool isColliding(const CollisionShape &collider) const = 0;
         virtual bool isColliding(const CollisionCircle &collider) const = 0;
         virtual bool isColliding(const CollisionRect &collider) const = 0;
 };
 
-#endif // COLLISION_HPP
+#endif // COLLISIONSHAPE_HPP
