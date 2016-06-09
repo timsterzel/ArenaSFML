@@ -5,6 +5,7 @@
 
 SceneNode::SceneNode()
 : m_parent{nullptr}
+, m_collisionShape{nullptr}
 , m_type{WorldObjectTypes::NONE}
 {
 
@@ -12,10 +13,12 @@ SceneNode::SceneNode()
 
 SceneNode::SceneNode(WorldObjectTypes type)
 : m_parent{nullptr}
+, m_collisionShape{nullptr}
 , m_type{type}
 {
 
 }
+
 
 void SceneNode::attachChild(Ptr child)
 {
@@ -33,6 +36,11 @@ SceneNode::Ptr SceneNode::detachChild(const SceneNode& node)
     result->m_parent = nullptr;
     m_children.erase(found);
     return result;
+}
+
+void SceneNode::setCollisionShape(std::unique_ptr<Collision> collisionShape)
+{
+    m_collisionShape = std::move(collisionShape);
 }
 
 void SceneNode::draw(sf::RenderTarget &target, sf::RenderStates states) const
@@ -118,9 +126,9 @@ void SceneNode::setType(WorldObjectTypes type)
     m_type = type;
 }
 
-Collision SceneNode::getCollisionShape() const
+Collision* SceneNode::getCollisionShape() const
 {
-    return m_collisionShape;
+    return m_collisionShape.get();
 }
 
 

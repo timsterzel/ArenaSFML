@@ -15,14 +15,16 @@ class SceneNode : public sf::Transformable, public sf::Drawable, public sf::NonC
     private:
         std::vector<Ptr> m_children;
         SceneNode *m_parent;
+        std::unique_ptr<Collision> m_collisionShape;
     protected:
         WorldObjectTypes m_type;
-        Collision m_collisionShape;
     public:
         SceneNode();
         SceneNode(WorldObjectTypes type);
         void attachChild(Ptr child);
         Ptr detachChild(const SceneNode& node);
+
+        void setCollisionShape(std::unique_ptr<Collision> collisionShape);
         // dt is the delta time
         void update(float dt);
         void onCommand(const Command &command, float dt);
@@ -34,7 +36,7 @@ class SceneNode : public sf::Transformable, public sf::Drawable, public sf::NonC
         WorldObjectTypes getType() const;
         void setType(WorldObjectTypes type);
 
-        virtual Collision getCollisionShape() const;
+        Collision* getCollisionShape() const;
 
 
 

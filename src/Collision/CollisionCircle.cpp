@@ -1,4 +1,5 @@
 #include "Collision/CollisionCircle.hpp"
+#include "Collision/CollisionHandler.hpp"
 
 CollisionCircle::CollisionCircle(float radius)
 : m_circleShape{ radius }
@@ -15,10 +16,15 @@ void CollisionCircle::draw(sf::RenderTarget &target, sf::RenderStates states) co
 
 bool CollisionCircle::isColliding(const Collision &collider) const
 {
-
+    return collider.isColliding(*this);
 }
 
 bool CollisionCircle::isColliding(const CollisionCircle &collider) const
 {
+    return CollisionHandler::isColliding(*this, collider);
+}
 
+bool CollisionCircle::isColliding(const CollisionRect &collider) const
+{
+    return CollisionHandler::isColliding(*this, collider);
 }

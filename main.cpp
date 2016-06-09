@@ -5,7 +5,7 @@
 class Base
 {
     public:
-        virtual void print()
+        virtual void print() const
         {
             std::cout << "Class Base" << std::endl;
         }
@@ -14,7 +14,7 @@ class Base
 class ChildA : public Base
 {
     public:
-        virtual void print()
+        virtual void print() const
         {
             std::cout << "Class ChildA" << std::endl;
         }
@@ -23,31 +23,33 @@ class ChildA : public Base
 class ChildB : public Base
 {
     public:
-        virtual void print()
+        virtual void print() const
         {
             std::cout << "Class ChildB" << std::endl;
         }
 };
 
-void printClassText(Base &a, Base &b)
+void printClassText(Base *a, Base *b)
 {
-    a.print();
-    b.print();
+    std::cout << "Function parameters: Base Base" << std::endl;
 }
 
-void printClassText(ChildA &a, Base &b)
+void printClassText(ChildA *a, ChildB *b)
 {
-    std::cout << "ChildA function" << std::endl;
-    a.print();
-    b.print();
+    std::cout << "Function parameters: ChildA ChildB" << std::endl;
 }
 */
 
 int main()
 {
-    //Base a = ChildA();
-    //Base b = ChildB();
-    //printClassText(a, b);
+    /*
+    Base *a = new ChildA();
+    Base *b = new ChildB();
+    printClassText(a, b);
+
+    delete a;
+    delete b;
+    */
 
     Game game(true);
     game.run();

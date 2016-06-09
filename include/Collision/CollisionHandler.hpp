@@ -12,7 +12,9 @@ class CollisionHandler
     public:
         //explicit CollisionHandler(SceneNode *sceneGraph);
         static bool isColliding(const CollisionCircle &objA, const CollisionCircle &objB);
-
+        static bool isColliding(const CollisionRect &objA, const CollisionRect &objB);
+        static bool isColliding(const CollisionCircle &objA, const CollisionRect &objB);
+        static bool isColliding(const CollisionRect &objA, const CollisionCircle &objB);
 };
 
 #endif // COLLISIONHANDLER_HPP

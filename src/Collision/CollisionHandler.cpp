@@ -9,5 +9,20 @@ CollisionHandler::CollisionHandler(SceneNode *sceneGraph)
 
 bool CollisionHandler::isColliding(const CollisionCircle &objA, const CollisionCircle &objB)
 {
-    //const float DistanceX = objA.getP
+    return false;
+}
+
+bool CollisionHandler::isColliding(const CollisionRect &objA, const CollisionRect &objB)
+{
+    return false;
+}
+
+bool CollisionHandler::isColliding(const CollisionCircle &objA, const CollisionRect &objB)
+{
+    return false;
+}
+
+bool CollisionHandler::isColliding(const CollisionRect &objA, const CollisionCircle &objB)
+{
+    return false;
 }

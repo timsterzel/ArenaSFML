@@ -1,16 +1,16 @@
-#ifndef COLLISIONCIRCLE_HPP
-#define COLLISIONCIRCLE_HPP
+#ifndef COLLISIONRECT_HPP
+#define COLLISIONRECT_HPP
 #include <SFML/Graphics.hpp>
 #include "Collision/Collision.hpp"
 #include "Components/SceneNode.hpp"
 
-class CollisionCircle : public Collision
+class CollisionRect : public Collision
 {
     private:
-        sf::CircleShape m_circleShape;
+        sf::RectangleShape m_rectShape;
     public:
 
-        explicit CollisionCircle(float radius);
+        explicit CollisionRect(sf::Vector2f rectSize);
 
         sf::Vector2f getPosition() const;
 
@@ -23,4 +23,4 @@ class CollisionCircle : public Collision
         virtual bool isColliding(const CollisionRect &collider) const;
 };
 
-#endif // COLLISIONCIRCLE_HPP
+#endif // COLLISIONRECT_HPP
