@@ -45,6 +45,15 @@ void World::buildScene()
     wizard->setType(WorldObjectTypes::ENEMY);
     m_sceneLayers[Layers::MAIN]->attachChild(std::move(wizard));
 
+
+    std::unique_ptr<Warrior> warriorEnemy(new Warrior(100, Textures::KNIGHT, m_TextureHolder));
+    std::unique_ptr<Collision> collisionShapeWarriorEnemy(new CollisionRect({ 32.f, 32.f }));
+    warriorEnemy->setCollisionShape(std::move(collisionShapeWarriorEnemy));
+    warriorEnemy->setPosition(800 / 3.f + 100.f, 480 / 3.f);
+    warriorEnemy->setVelocity(30.f, 30.f);
+    warriorEnemy->setType(WorldObjectTypes::ENEMY);
+    m_sceneLayers[Layers::MAIN]->attachChild(std::move(warriorEnemy));
+
     std::unique_ptr<Warrior> warrior(new Warrior(100, Textures::KNIGHT, m_TextureHolder));
     std::unique_ptr<Collision> collisionShapeWarrior(new CollisionCircle(12.f));
     m_playerWarrior = warrior.get();
