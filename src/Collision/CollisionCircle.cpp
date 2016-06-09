@@ -9,6 +9,11 @@ CollisionCircle::CollisionCircle(float radius)
     m_circleShape.setOrigin(radius, radius);
 }
 
+float CollisionCircle::getRadius() const
+{
+    return m_circleShape.getRadius();
+}
+
 void CollisionCircle::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
     target.draw(m_circleShape, states);

@@ -85,6 +85,11 @@ void Warrior::onCommandCurrent(const Command &command, float dt)
 
 void Warrior::lookAt(const sf::Vector2f LookPos)
 {
+    // only look to the LookPos when Warrior is not at the same position
+    if (LookPos.x == getWorldPosition().x && LookPos.y == getWorldPosition().y)
+    {
+        return;
+    }
     const sf::Vector2f UnitVecX(1.0, 0.f);
     // The angle which should be calculated have the coordinate systems midpoint at the players position,
     // so we have to translate the pos in relation to the player position

@@ -38,15 +38,18 @@ void World::buildScene()
     m_sceneLayers[Layers::BACKGROUND]->attachChild(std::move(background));
 
     std::unique_ptr<Warrior> wizard(new Warrior(100, Textures::WIZARD, m_TextureHolder));
+    SceneNode *wizardEnemyTmp = wizard.get();
     std::unique_ptr<CollisionShape> collisionShapeWizard(new CollisionCircle(12.f));
     wizard->setCollisionShape(std::move(collisionShapeWizard));
-    wizard->setPosition(800 / 2.f + 100.f, 480 / 2.f);
+    //wizard->setPosition(800 / 2.f + 100.f, 480 / 2.f);
+    wizard->setPosition(800 / 2.f , 480 / 2.f);
     wizard->setVelocity(30.f, 30.f);
     wizard->setType(WorldObjectTypes::ENEMY);
     m_sceneLayers[Layers::MAIN]->attachChild(std::move(wizard));
 
 
     std::unique_ptr<Warrior> warriorEnemy(new Warrior(100, Textures::KNIGHT, m_TextureHolder));
+    SceneNode *warriorEnemyTmp = warriorEnemy.get();
     std::unique_ptr<CollisionShape> collisionShapeWarriorEnemy(new CollisionRect({ 32.f, 32.f }));
     warriorEnemy->setCollisionShape(std::move(collisionShapeWarriorEnemy));
     warriorEnemy->setPosition(800 / 3.f + 100.f, 480 / 3.f);
@@ -55,13 +58,20 @@ void World::buildScene()
     m_sceneLayers[Layers::MAIN]->attachChild(std::move(warriorEnemy));
 
     std::unique_ptr<Warrior> warrior(new Warrior(100, Textures::KNIGHT, m_TextureHolder));
-    std::unique_ptr<CollisionShape> collisionShapeWarrior(new CollisionCircle(12.f));
     m_playerWarrior = warrior.get();
+    std::unique_ptr<CollisionShape> collisionShapeWarrior(new CollisionCircle(12.f));
     m_playerWarrior->setCollisionShape(std::move(collisionShapeWarrior));
     m_playerWarrior->setPosition(800 / 2.f, 480 / 2.f);
     m_playerWarrior->setVelocity(60.f, 60.f);
     m_playerWarrior->setType(WorldObjectTypes::PLAYER);
     m_sceneLayers[Layers::MAIN]->attachChild(std::move(warrior));
+
+    // Collision Tests
+    if (m_playerWarrior->getCollisionShape()->isColliding(*wizardEnemyTmp->getCollisionShape()))
+    {
+        std::cout << "Colliding" << std::endl;
+    }
+    //m_playerWarrior->getCollisionShape()->isColliding(*warriorEnemyTmp->getCollisionShape());
 
 }
 
@@ -148,6 +158,9 @@ void World::update(float dt)
     }
     */
     m_sceneGraph.update(dt);
+    // Collison Test
+    //m_playerWarrior->getCollisionShape()->isColliding(*wizardEnemyTmp->getCollisionShape());
+
 }
 
 void World::render()

@@ -41,6 +41,7 @@ SceneNode::Ptr SceneNode::detachChild(const SceneNode& node)
 void SceneNode::setCollisionShape(std::unique_ptr<CollisionShape> collisionShape)
 {
     m_collisionShape = std::move(collisionShape);
+    m_collisionShape->setParent(this);
 }
 
 void SceneNode::draw(sf::RenderTarget &target, sf::RenderStates states) const

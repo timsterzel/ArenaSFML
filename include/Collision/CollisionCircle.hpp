@@ -12,7 +12,7 @@ class CollisionCircle : public CollisionShape
 
         explicit CollisionCircle(float radius);
 
-        sf::Vector2f getPosition() const;
+        float getRadius() const;
 
         virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const;
 
