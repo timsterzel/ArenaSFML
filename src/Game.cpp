@@ -92,6 +92,7 @@ void Game::render()
     m_window.clear();
     m_window.draw(m_sceneGraph);
     m_world.render();
+    m_window.draw(m_txtStatFPS);
     m_window.display();
 }
 
