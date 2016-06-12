@@ -48,6 +48,7 @@ class World : private sf::NonCopyable
         void controlWorldEntities();
         void handleCommands(float dt);
         void update(float dt);
+        void handleCollision(float dt);
         void render();
 
     private:

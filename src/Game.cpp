@@ -82,6 +82,7 @@ void Game::update()
 {
     m_world.handleCommands(m_dt);
     m_world.update(m_dt);
+    m_world.handleCollision(m_dt);
     m_sceneGraph.update(m_dt);
 }
 

@@ -152,15 +152,16 @@ void World::handleCommands(float dt)
 void World::update(float dt)
 {
     m_sceneGraph.update(dt);
-    // Collison Test
+}
+
+void World::handleCollision(float dt)
+{
     std::set<SceneNode::Pair> collisionPairs;
     m_sceneGraph.checkSceneCollision(m_sceneGraph, collisionPairs);
     for (SceneNode::Pair pairTmp : collisionPairs)
     {
         std::cout << "Collision" << std::endl;
     }
-    //m_playerWarrior->getCollisionShape()->isColliding(*wizardEnemyTmp->getCollisionShape());
-
 }
 
 void World::render()
