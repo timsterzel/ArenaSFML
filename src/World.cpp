@@ -151,14 +151,14 @@ void World::handleCommands(float dt)
 
 void World::update(float dt)
 {
-    /*
-    while(!m_commandQueue.isEmpty())
-    {
-        m_sceneGraph.onCommand(m_commandQueue.pop(), dt);
-    }
-    */
     m_sceneGraph.update(dt);
     // Collison Test
+    std::set<SceneNode::Pair> collisionPairs;
+    m_sceneGraph.checkSceneCollision(m_sceneGraph, collisionPairs);
+    for (SceneNode::Pair pairTmp : collisionPairs)
+    {
+        std::cout << "Collision" << std::endl;
+    }
     //m_playerWarrior->getCollisionShape()->isColliding(*wizardEnemyTmp->getCollisionShape());
 
 }

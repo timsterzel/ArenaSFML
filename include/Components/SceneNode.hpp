@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <memory>
 #include <vector>
+#include <set>
 #include "Collision/CollisionShape.hpp"
 #include "Components/EnumWorldObjectTypes.hpp"
 #include "Input/Command.hpp"
@@ -11,6 +12,7 @@ class SceneNode : public sf::Transformable, public sf::Drawable, public sf::NonC
 {
     public:
         typedef std::unique_ptr<SceneNode> Ptr;
+        typedef std::pair<SceneNode*, SceneNode*> Pair;
 
     private:
         std::vector<Ptr> m_children;
@@ -37,6 +39,11 @@ class SceneNode : public sf::Transformable, public sf::Drawable, public sf::NonC
         void setType(WorldObjectTypes type);
 
         CollisionShape* getCollisionShape() const;
+        bool isColliding(SceneNode &node) const;
+
+        // Check if the given SceneGraph and its child collides with the ScneGraph and its nodes
+        void checkNodeCollision(SceneNode &node, std::set<Pair> &collisionPairs);
+        void checkSceneCollision(SceneNode &sceneGraph, std::set<Pair> &collisionPairs);
 
 
 

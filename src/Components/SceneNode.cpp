@@ -132,5 +132,42 @@ CollisionShape* SceneNode::getCollisionShape() const
     return m_collisionShape.get();
 }
 
+bool SceneNode::isColliding(SceneNode &node) const
+{
+    // If there is no collision shape specified there can not be a collision
+    if (m_collisionShape == nullptr || node.getCollisionShape() == nullptr)
+    {
+        return false;
+    }
+    return m_collisionShape->isColliding(*node.getCollisionShape());
+}
+
+void SceneNode::checkNodeCollision(SceneNode &node, std::set<Pair> &collisionPairs)
+{
+    if (this != &node && isColliding(node))
+    {
+        // std::minmax return always the same pair indepented of the order of the parameters, where the first is the smallest and the second the greater one
+        // (The smaller one have the lower address in this case). In std::set unique objects are stored as key and dont ad a new key if there is already the same
+        // so with std::minmax we ensure that we only store a collison once (a collides with b and b collisdes with a, but we only need the pair once)
+        collisionPairs.insert(std::minmax(this, &node));
+    }
+
+    for (Ptr &child: m_children)
+    {
+        child->checkNodeCollision(node, collisionPairs);
+    }
+}
+
+void SceneNode::checkSceneCollision(SceneNode &sceneGraph, std::set<Pair> &collisionPairs)
+{
+    checkNodeCollision(sceneGraph, collisionPairs);
+
+    for (Ptr &child: sceneGraph.m_children)
+    {
+        checkSceneCollision(*child, collisionPairs);
+    }
+
+}
+
 
 
