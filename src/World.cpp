@@ -160,8 +160,49 @@ void World::handleCollision(float dt)
     m_sceneGraph.checkSceneCollision(m_sceneGraph, collisionPairs);
     for (SceneNode::Pair pairTmp : collisionPairs)
     {
+        if (matchesCategories(pairTmp, WorldObjectTypes::PLAYER, WorldObjectTypes::ENEMY))
+        {
+            std::cout << "Player Enemy Collision" << std::endl;
+        }
         std::cout << "Collision" << std::endl;
     }
+}
+/*
+bool World::matchesCategories(SceneNode::Pair &colliders, WorldObjectTypes worldObjectType1, WorldObjectTypes worldObjectType2)
+{
+    unsigned int category1 = static_cast<unsigned int>(colliders.first->getType());
+    unsigned int category2 = static_cast<unsigned int>(colliders.second->getType());
+    unsigned int type1 = static_cast<unsigned int>(worldObjectType1);
+    unsigned int type2 = static_cast<unsigned int>(worldObjectType2);
+    std::cout << "Cat1: " << category1 << " Cat2: " << category2 << " Type1: " << type1 << " Type2: " << type2 << std::endl;
+    if (type1 & category1 && type2 & category2)
+    {
+        return true;
+    }
+    else if (type1 & category2 && type2 & category1)
+    {
+        std::swap(colliders.first, colliders.second);
+        return true;
+    }
+    return false;
+}
+*/
+bool World::matchesCategories(SceneNode::Pair &colliders, WorldObjectTypes type1, WorldObjectTypes type2)
+{
+    WorldObjectTypes category1 = colliders.first->getType();
+    WorldObjectTypes category2 = colliders.second->getType();
+
+    //std::cout << "Cat1: " << category1 << " Cat2: " << category2 << " Type1: " << type1 << " Type2: " << type2 << std::endl;
+    if (type1 == category1 && type2 == category2)
+    {
+        return true;
+    }
+    else if (type1 == category2 && type2 == category1)
+    {
+        std::swap(colliders.first, colliders.second);
+        return true;
+    }
+    return false;
 }
 
 void World::render()

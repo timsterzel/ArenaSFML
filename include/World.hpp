@@ -49,6 +49,7 @@ class World : private sf::NonCopyable
         void handleCommands(float dt);
         void update(float dt);
         void handleCollision(float dt);
+        bool matchesCategories(SceneNode::Pair &colliders, WorldObjectTypes type1, WorldObjectTypes type2);
         void render();
 
     private:
