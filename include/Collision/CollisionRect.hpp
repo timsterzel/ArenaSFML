@@ -7,12 +7,15 @@
 class CollisionRect : public CollisionShape
 {
     private:
-        sf::RectangleShape m_rectShape;
+        //sf::RectangleShape m_rectShape;
+        float m_width;
+        float m_height;
     public:
 
         explicit CollisionRect(sf::Vector2f rectSize);
 
-        sf::Vector2f getPosition() const;
+        float getWidth() const;
+        float getHeight() const;
 
         virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const;
 

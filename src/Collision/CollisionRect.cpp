@@ -2,16 +2,28 @@
 #include "Collision/CollisionHandler.hpp"
 
 CollisionRect::CollisionRect(sf::Vector2f rectSize)
-: m_rectShape{ rectSize }
+: m_width{ rectSize.x }
+, m_height{ rectSize.y }
 {
-    m_rectShape.setFillColor(sf::Color(255, 0, 0, 160));
-    //m_circleShape.setFillColor(sf::Color::Red);
-    m_rectShape.setOrigin(rectSize.x / 2.f, rectSize.y / 2.f);
+
+}
+
+float CollisionRect::getWidth() const
+{
+    return m_width;
+}
+
+float CollisionRect::getHeight() const
+{
+    return m_height;
 }
 
 void CollisionRect::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-    target.draw(m_rectShape, states);
+    sf::RectangleShape rect({ m_width, m_height });
+    rect.setFillColor(sf::Color(255, 0, 0, 160));
+    rect.setOrigin(m_width / 2.f, m_height / 2.f);
+    target.draw(rect, states);
 }
 
 bool CollisionRect::isColliding(const CollisionShape &collider) const

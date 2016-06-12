@@ -2,6 +2,7 @@
 #define COLLISIONHANDLER_HPP
 #include <SFML/Graphics.hpp>
 #include "Collision/CollisionCircle.hpp"
+#include "Collision/CollisionRect.hpp"
 #include "Components/SceneNode.hpp"
 
 
