@@ -18,13 +18,14 @@ float CollisionRect::getHeight() const
     return m_height;
 }
 
-float CollisionRect::getRotation() const
+float CollisionRect::getWorldRotation() const
 {
+    float rotation = { getRotation() };
     if (m_parent != nullptr)
     {
-        return m_parent->getRotation();
+        rotation += m_parent->getWorldRotation();
     }
-    return 0.f;
+    return rotation;
 }
 
 void CollisionRect::draw(sf::RenderTarget &target, sf::RenderStates states) const

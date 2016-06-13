@@ -31,9 +31,11 @@ class SceneNode : public sf::Transformable, public sf::Drawable, public sf::NonC
         void update(float dt);
         void onCommand(const Command &command, float dt);
         // Get absolute world transform
-        sf::Transform getWorldTransform();
-        // Get absolute world position
-        sf::Vector2f getWorldPosition();
+        sf::Transform getWorldTransform() const;
+        // Get absolute position in world
+        sf::Vector2f getWorldPosition() const ;
+        // Get absolute rotation in world
+        float getWorldRotation() const;
 
         WorldObjectTypes getType() const;
         void setType(WorldObjectTypes type);

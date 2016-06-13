@@ -68,6 +68,17 @@ void World::buildScene()
     m_sceneLayers[Layers::MAIN]->attachChild(std::move(warriorEnemy2));
 
 
+    std::unique_ptr<Warrior> warriorEnemy3(new Warrior(100, Textures::KNIGHT, m_TextureHolder));
+    SceneNode *warriorEnemy3Tmp = warriorEnemy3.get();
+    std::unique_ptr<CollisionShape> collisionShapeWarriorEnemy3(new CollisionRect({ 32.f, 32.f }));
+    warriorEnemy3->setCollisionShape(std::move(collisionShapeWarriorEnemy3));
+    warriorEnemy3->setPosition(800 / 3.f + 300.f, 380);
+    warriorEnemy3->setVelocity(30.f, 30.f);
+    warriorEnemy3->setType(WorldObjectTypes::NONE);
+    warriorEnemy3->setRotation(50.f);
+    m_sceneLayers[Layers::MAIN]->attachChild(std::move(warriorEnemy3));
+
+
 
     std::unique_ptr<Warrior> warrior(new Warrior(100, Textures::KNIGHT, m_TextureHolder));
     m_playerWarrior = warrior.get();

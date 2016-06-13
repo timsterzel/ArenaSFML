@@ -102,7 +102,7 @@ void SceneNode::onCommandChildren(const Command &command, float dt)
     }
 }
 
-sf::Transform SceneNode::getWorldTransform()
+sf::Transform SceneNode::getWorldTransform() const
 {
     sf::Transform trform = { sf::Transform::Identity };
     for (const SceneNode *node = this; node != nullptr; node = node->m_parent)
@@ -112,9 +112,19 @@ sf::Transform SceneNode::getWorldTransform()
     return trform;
 }
 
-sf::Vector2f SceneNode::getWorldPosition()
+sf::Vector2f SceneNode::getWorldPosition() const
 {
     return getWorldTransform() * sf::Vector2f();
+}
+
+float SceneNode::getWorldRotation() const
+{
+    float rotation = 0.f;
+    for (const SceneNode *node = this; node != nullptr; node = node->m_parent)
+    {
+        rotation += node->getRotation();
+    }
+    return rotation;
 }
 
 WorldObjectTypes SceneNode::getType() const
