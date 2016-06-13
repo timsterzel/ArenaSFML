@@ -1,5 +1,6 @@
 #ifndef CALC_HPP
 #define CALC_HPP
+#include <SFML/Graphics.hpp>
 
 class Calc
 {
@@ -18,6 +19,8 @@ class Calc
 
         template<typename T, typename U>
         static float getVec2Angle(const T vec1, const U vec2);
+
+        static sf::Vector2f rotatePointAround(const sf::Vector2f Point, const sf::Vector2f TargetPoint, const float AngleDegree);
 };
 
 #include "Calc.inl"

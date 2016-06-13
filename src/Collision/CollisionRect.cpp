@@ -18,6 +18,15 @@ float CollisionRect::getHeight() const
     return m_height;
 }
 
+float CollisionRect::getRotation() const
+{
+    if (m_parent != nullptr)
+    {
+        return m_parent->getRotation();
+    }
+    return 0.f;
+}
+
 void CollisionRect::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
     sf::RectangleShape rect({ m_width, m_height });

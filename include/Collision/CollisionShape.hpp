@@ -8,7 +8,7 @@ class CollisionRect;
 
 class CollisionShape : public sf::Transformable, public sf::Drawable
 {
-    private:
+    protected:
         SceneNode *m_parent;
     public:
         CollisionShape();
