@@ -28,6 +28,15 @@ void CollisionShape::setParent(SceneNode *parent)
     m_parent = parent;
 }
 
+float CollisionShape::getWorldRotation() const
+{
+    float rotation = { getRotation() };
+    if (m_parent != nullptr)
+    {
+        rotation += m_parent->getWorldRotation();
+    }
+    return rotation;
+}
 /*
 void Collision::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {

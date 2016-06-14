@@ -53,3 +53,8 @@ sf::Vector2f Calc::rotatePointAround(const sf::Vector2f Point, const sf::Vector2
 
     return { Xnew, Ynew };
 }
+
+float Calc::clamp(const float Value, const float MinValue, const float MaxValue)
+{
+    return std::max(MinValue, std::min(MaxValue, Value));
+}

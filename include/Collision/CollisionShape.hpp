@@ -18,6 +18,7 @@ class CollisionShape : public sf::Transformable, public sf::Drawable
         // The World position depends on the parent position (the position is the relative position to the parents position)
         sf::Transform getWorldTransform() const;
         sf::Vector2f getWorldPosition() const;
+        float getWorldRotation() const;
         void setParent(SceneNode *parent);
 
         // http://stackoverflow.com/questions/22899363/advice-on-class-structure-in-a-collision-detection-system (The accepted answer)

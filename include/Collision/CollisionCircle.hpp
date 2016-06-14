@@ -7,7 +7,7 @@
 class CollisionCircle : public CollisionShape
 {
     private:
-        sf::CircleShape m_circleShape;
+        float m_radius;
     public:
 
         explicit CollisionCircle(float radius);

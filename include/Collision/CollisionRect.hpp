@@ -16,7 +16,6 @@ class CollisionRect : public CollisionShape
 
         float getWidth() const;
         float getHeight() const;
-        float getWorldRotation() const;
 
         virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const;
 

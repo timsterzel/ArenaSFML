@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include "Game.hpp"
+#include "Calc.hpp"
 /*
 class Base
 {
@@ -50,7 +51,6 @@ int main()
     delete a;
     delete b;
     */
-
 
     Game game(true);
     game.run();

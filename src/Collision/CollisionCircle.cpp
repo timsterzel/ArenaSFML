@@ -2,21 +2,22 @@
 #include "Collision/CollisionHandler.hpp"
 
 CollisionCircle::CollisionCircle(float radius)
-: m_circleShape{ radius }
+: m_radius{ radius }
 {
-    m_circleShape.setFillColor(sf::Color(255, 0, 0, 160));
-    //m_circleShape.setFillColor(sf::Color::Red);
-    m_circleShape.setOrigin(radius, radius);
+
 }
 
 float CollisionCircle::getRadius() const
 {
-    return m_circleShape.getRadius();
+    return m_radius;
 }
 
 void CollisionCircle::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-    target.draw(m_circleShape, states);
+    sf::CircleShape circleShape{ m_radius };
+    circleShape.setFillColor(sf::Color(255, 0, 0, 160));
+    circleShape.setOrigin(m_radius, m_radius);
+    target.draw(circleShape, states);
 }
 
 bool CollisionCircle::isColliding(const CollisionShape &collider) const

@@ -21,6 +21,7 @@ class Calc
         static float getVec2Angle(const T vec1, const U vec2);
 
         static sf::Vector2f rotatePointAround(const sf::Vector2f Point, const sf::Vector2f TargetPoint, const float AngleDegree);
+        static float clamp(const float Value, const float MinValue, const float MaxValue);
 };
 
 #include "Calc.inl"
