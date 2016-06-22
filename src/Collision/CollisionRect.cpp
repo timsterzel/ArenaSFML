@@ -21,7 +21,7 @@ float CollisionRect::getHeight() const
 
 void CollisionRect::computeVertices()
 {
-    const float Rotation = { getRotation() };
+    const float Rotation = { getWorldRotation() };
     const sf::Vector2f Position = { getWorldPosition() };
     //std::cout << "Rotation: " << Rotation << std::endl;
     // Compute the rects vertices as AABB
