@@ -10,20 +10,27 @@ class CollisionRect : public CollisionShape
         //sf::RectangleShape m_rectShape;
         float m_width;
         float m_height;
+        std::vector<sf::Vector2f> m_vertices;
     public:
 
         explicit CollisionRect(sf::Vector2f rectSize);
 
         float getWidth() const;
         float getHeight() const;
+        // Determine where the vertices of the rect are and put them into the m_vertices vector.
+        void computeVertices();
+
+        sf::Vector2f support();
 
         virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const;
 
-        virtual bool isColliding(const CollisionShape &collider) const;
+        virtual bool isColliding(CollisionShape &collider);
 
+        sf::Vector2f getFarthestPointInDirection(sf::Vector2f dir) const;
     private:
-        virtual bool isColliding(const CollisionCircle &collider) const;
-        virtual bool isColliding(const CollisionRect &collider) const;
+        virtual bool isColliding(CollisionCircle &collider);
+        virtual bool isColliding(CollisionRect &collider);
+
 };
 
 #endif // COLLISIONRECT_HPP

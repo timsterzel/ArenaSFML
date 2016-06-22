@@ -1,5 +1,6 @@
 #include "Collision/CollisionRect.hpp"
 #include "Collision/CollisionHandler.hpp"
+#include "Calc.hpp"
 
 CollisionRect::CollisionRect(sf::Vector2f rectSize)
 : m_width{ rectSize.x }
@@ -18,6 +19,29 @@ float CollisionRect::getHeight() const
     return m_height;
 }
 
+void CollisionRect::computeVertices()
+{
+    const float Rotation = { getRotation() };
+    const sf::Vector2f Position = { getWorldPosition() };
+    //std::cout << "Rotation: " << Rotation << std::endl;
+    // Compute the rects vertices as AABB
+    const sf::Vector2f EdgeA = { Position.x - m_width / 2.f, Position.y - m_height / 2.f };
+    const sf::Vector2f EdgeB = { Position.x + m_width / 2.f, Position.y - m_height / 2.f };
+    const sf::Vector2f EdgeC = { Position.x - m_width / 2.f, Position.y + m_height / 2.f };
+    const sf::Vector2f EdgeD = { Position.x + m_width / 2.f, Position.y + m_height / 2.f };
+    // Apply rects rotation to the vertices
+    const sf::Vector2f EdgeAR = { Calc::rotatePointAround(EdgeA, Position, -Rotation) };
+    const sf::Vector2f EdgeBR = { Calc::rotatePointAround(EdgeB, Position, -Rotation) };
+    const sf::Vector2f EdgeCR = { Calc::rotatePointAround(EdgeC, Position, -Rotation) };
+    const sf::Vector2f EdgeDR = { Calc::rotatePointAround(EdgeD, Position, -Rotation) };
+    // Add the vertices to the container
+    m_vertices.clear();
+    m_vertices.push_back(EdgeAR);
+    m_vertices.push_back(EdgeBR);
+    m_vertices.push_back(EdgeCR);
+    m_vertices.push_back(EdgeDR);
+}
+
 void CollisionRect::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
     sf::RectangleShape rect({ m_width, m_height });
@@ -26,17 +50,35 @@ void CollisionRect::draw(sf::RenderTarget &target, sf::RenderStates states) cons
     target.draw(rect, states);
 }
 
-bool CollisionRect::isColliding(const CollisionShape &collider) const
+bool CollisionRect::isColliding(CollisionShape &collider)
 {
     return collider.isColliding(*this);
 }
 
-bool CollisionRect::isColliding(const CollisionCircle &collider) const
+bool CollisionRect::isColliding(CollisionCircle &collider)
 {
     return CollisionHandler::isColliding(*this, collider);
 }
 
-bool CollisionRect::isColliding(const CollisionRect &collider) const
+bool CollisionRect::isColliding(CollisionRect &collider)
 {
     return CollisionHandler::isColliding(*this, collider);
+}
+
+// Return the point which is nearest (farthest) to the given direction
+sf::Vector2f CollisionRect::getFarthestPointInDirection(sf::Vector2f dir) const
+{
+    int maxPos = 0;
+    float maxScalar = Calc::getVec2Scalar<sf::Vector2f, sf::Vector2f>(dir, m_vertices[0]);
+    // Determine which verices of the rect is the nearest ( have the highest dot product) to the given vector
+    for (std::size_t i = 0; i != m_vertices.size(); i++)
+    {
+        float scalar = { Calc::getVec2Scalar<sf::Vector2f, sf::Vector2f>(dir, m_vertices[i]) };
+        if (scalar > maxScalar)
+        {
+            maxPos = i;
+            maxScalar = scalar;
+        }
+    }
+    return m_vertices[maxPos];
 }

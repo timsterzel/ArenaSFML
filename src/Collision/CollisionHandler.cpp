@@ -11,7 +11,7 @@ CollisionHandler::CollisionHandler(SceneNode *sceneGraph)
 }
 */
 
-bool CollisionHandler::isColliding(const CollisionCircle &objA, const CollisionCircle &objB)
+bool CollisionHandler::isColliding(CollisionCircle &objA, CollisionCircle &objB)
 {
     //std::cout << "isColliding CollisionCircle, CollisionCircle" << std::endl;
     //std::cout << "objA Pos: x = " << objA.getWorldPosition().x << " y = " << objA.getWorldPosition().y << std::endl;
@@ -22,13 +22,49 @@ bool CollisionHandler::isColliding(const CollisionCircle &objA, const CollisionC
     return dist < objA.getRadius() + objB.getRadius();
 }
 
-bool CollisionHandler::isColliding(const CollisionRect &objA, const CollisionRect &objB)
+bool CollisionHandler::isColliding(CollisionRect &objA, CollisionRect &objB)
 {
+
     std::cout << "isColliding CollisionRect, CollisionRect" << std::endl;
+    // Choose any vector (Its n ot relevant which vector)
+    sf::Vector2f dir(1.f, 1.f);
+    objA.computeVertices();
+    objB.computeVertices();
+
+    std::vector<sf::Vector2f> simplex;
+    // Get and store first minkowski difference point
+    sf::Vector2f p = { support(objA, objB, dir) };
+    simplex.push_back(p);
+    // negate the direction
+    //dir = -dir;
+    // Now we change the search direction. Now we have a search direction from the new point to the origin (P0 = 0 - P = -P)
+    //
+    dir = -p;
+    while (true)
+    {
+        // Get another minkowski difference point (Its another because we now use the negated direction
+        simplex.push_back({ support(objA, objB, dir) });
+        sf::Vector2f lastPoint = simplex.back();
+        // If we have as the search direction the last point to the origin and the dot product between this search direction and the new point
+        // we get with this is under 0 it means that the angle between the seach direction and the new poit (as vector) is over 90 degrees.
+        // if this is the case, the shape cannot contain the origin, because we have the farthest point to this direction which dont have pass the origin
+        // (You can see it when you draw it)
+        if (Calc::getVec2Scalar<sf::Vector2f, sf::Vector2f>(lastPoint, dir) < 0)
+        {
+            return false;
+        }
+        else
+        {
+            if (containsOrigin(simplex, dir))
+            {
+                return true;
+            }
+        }
+    }
     return false;
 }
 
-bool CollisionHandler::isColliding(const CollisionCircle &objA, const CollisionRect &objB)
+bool CollisionHandler::isColliding(CollisionCircle &objA, CollisionRect &objB)
 {
     const float RectRotation = objB.getWorldRotation();
     // We use a local coordinate system, where the Rect is axis aligned at (0|0)
@@ -53,8 +89,65 @@ bool CollisionHandler::isColliding(const CollisionCircle &objA, const CollisionR
 }
 
 
-bool CollisionHandler::isColliding(const CollisionRect &objA, const CollisionCircle &objB)
+bool CollisionHandler::isColliding(CollisionRect &objA, CollisionCircle &objB)
 {
     return CollisionHandler::isColliding(objB, objA);;
+}
+
+sf::Vector2f CollisionHandler::support(CollisionRect &objA, CollisionRect &objB, sf::Vector2f dir)
+{
+    // Get the vertex of the first rect which is the nearest to the direction vector
+    sf::Vector2f SupportVecA = objA.getFarthestPointInDirection(dir);
+    // Get the vertex of the second rect which is the nearest to the opposite direction vector
+    sf::Vector2f SupportVecB = objB.getFarthestPointInDirection(-dir);
+
+    return SupportVecA - SupportVecB;
+}
+
+bool CollisionHandler::containsOrigin(std::vector<sf::Vector2f> &simpex, sf::Vector2f &dir)
+{
+    sf::Vector2f a = simpex.back();
+    sf::Vector2f ao = -a;
+    if (simpex.size() == 3)
+    {
+        // The simplex is a triangle
+        sf::Vector2f b = simpex[1];
+        sf::Vector2f c = simpex.front();
+        sf::Vector2f ab = b - a;
+        sf::Vector2f ac = c - a;
+        // Get the normals
+        sf::Vector2f abPerp = Calc::getVec2TripleProduct<sf::Vector2f, sf::Vector2f, sf::Vector2f>(ac, ab, ab);
+        sf::Vector2f acPerp = Calc::getVec2TripleProduct<sf::Vector2f, sf::Vector2f, sf::Vector2f>(ab, ac, ac);
+        if (Calc::getVec2Scalar<sf::Vector2f, sf::Vector2f>(abPerp, ao) > 0)
+        {
+            // Remove point c
+            simpex.erase(simpex.begin() + 0);
+            // New direction is abPerp
+            dir = abPerp;
+        }
+        else
+        {
+            if (Calc::getVec2Scalar<sf::Vector2f, sf::Vector2f>(acPerp, ao) > 0)
+            {
+                // Remove point b
+                simpex.erase(simpex.begin() + 1);
+                dir = acPerp;
+            }
+            else
+            {
+                return true;
+            }
+        }
+    }
+    else
+    {
+        // The simplex is a line
+        sf::Vector2f b = simpex.front();
+        sf::Vector2f ab = b - a;
+        // Get perpendicular vector of ab to the origin (Vector which is 90 degrees to the ab vector)
+        sf::Vector2f abPerp = Calc::getVec2TripleProduct<sf::Vector2f, sf::Vector2f, sf::Vector2f>(ab, ao, ab);
+        dir = abPerp;
+    }
+    return false;
 }
 

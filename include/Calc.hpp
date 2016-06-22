@@ -20,6 +20,9 @@ class Calc
         template<typename T, typename U>
         static float getVec2Angle(const T vec1, const U vec2);
 
+        template<typename T, typename U, typename V>
+        static sf::Vector2f getVec2TripleProduct(const T VecA, const U VecB, const V VecC);
+
         static sf::Vector2f rotatePointAround(const sf::Vector2f Point, const sf::Vector2f TargetPoint, const float AngleDegree);
         static float clamp(const float Value, const float MinValue, const float MaxValue);
 };

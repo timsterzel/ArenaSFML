@@ -16,11 +16,11 @@ class CollisionCircle : public CollisionShape
 
         virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const;
 
-        virtual bool isColliding(const CollisionShape &collider) const;
+        virtual bool isColliding(CollisionShape &collider);
 
     private:
-        virtual bool isColliding(const CollisionCircle &collider) const;
-        virtual bool isColliding(const CollisionRect &collider) const;
+        virtual bool isColliding(CollisionCircle &collider);
+        virtual bool isColliding(CollisionRect &collider);
 };
 
 #endif // COLLISIONCIRCLE_HPP

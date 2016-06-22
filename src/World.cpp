@@ -82,7 +82,8 @@ void World::buildScene()
 
     std::unique_ptr<Warrior> warrior(new Warrior(100, Textures::KNIGHT, m_TextureHolder));
     m_playerWarrior = warrior.get();
-    std::unique_ptr<CollisionShape> collisionShapeWarrior(new CollisionCircle(12.f));
+    //std::unique_ptr<CollisionShape> collisionShapeWarrior(new CollisionCircle(12.f));
+    std::unique_ptr<CollisionShape> collisionShapeWarrior(new CollisionRect({ 32.f, 32.f }));
     m_playerWarrior->setCollisionShape(std::move(collisionShapeWarrior));
     m_playerWarrior->setPosition(800 / 2.f, 480 / 2.f);
     m_playerWarrior->setVelocity(60.f, 60.f);

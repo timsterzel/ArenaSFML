@@ -19,3 +19,16 @@ float Calc::getVec2Angle(const T vec1, const U vec2)
 {
     return std::acos( getVec2Scalar<T, U>(vec1, vec2) / ( getVec2Length<T>(vec1) *  getVec2Length<U>(vec2) ) );
 }
+
+template<typename T, typename U, typename V>
+sf::Vector2f Calc::getVec2TripleProduct(const T VecA, const U VecB, const V VecC)
+{
+    const float ScaAC = Calc::getVec2Scalar<T, V>(VecA, VecC);
+    const float ScaBC = Calc::getVec2Scalar<U, V>(VecB, VecC);
+
+    const float X = VecB.x * ScaAC - VecA.x * ScaBC;
+    const float Y = VecB.y * ScaAC - VecA.y * ScaBC;
+
+    return { X, Y };
+}
+
