@@ -179,5 +179,32 @@ void SceneNode::checkSceneCollision(SceneNode &sceneGraph, std::set<Pair> &colli
 
 }
 
+void SceneNode::safeTransform()
+{
+    safeCurrentTransform();
+    safeChildTransform();
+}
+
+void SceneNode::safeChildTransform()
+{
+    for (const Ptr &child : m_children)
+    {
+        child->safeTransform();
+    }
+}
+
+void SceneNode::safeCurrentTransform()
+{
+    m_lastPos = getPosition();
+    m_lastRot = getRotation();
+    m_lastScal = getScale();
+}
+
+void SceneNode::restoreLastTransform()
+{
+    setPosition(m_lastPos);
+    setRotation(m_lastRot);
+    setScale(m_lastScal);
+}
 
 

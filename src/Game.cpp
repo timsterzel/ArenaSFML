@@ -49,7 +49,6 @@ void Game::run()
     {
         determineDeltaTime();
         handleInput();
-        m_world.controlWorldEntities();
         update();
         render();
     }
@@ -80,6 +79,8 @@ void Game::handleInput()
 
 void Game::update()
 {
+    m_world.safeSceneNodeTrasform();
+    m_world.controlWorldEntities();
     m_world.handleCommands(m_dt);
     m_world.update(m_dt);
     m_world.handleCollision(m_dt);

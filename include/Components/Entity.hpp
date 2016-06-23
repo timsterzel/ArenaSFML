@@ -11,6 +11,7 @@ class Entity : public SceneNode
         sf::Vector2f m_velocity;
         sf::Vector2f m_currentVelocity;
 
+
     private:
 
     public:

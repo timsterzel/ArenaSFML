@@ -44,6 +44,8 @@ class World : private sf::NonCopyable
                 const ResourceHolder<sf::Texture, Textures> &textureHolder);
 
         void buildScene();
+        // Safe the actual position, rotation and scale of the SceneNode
+        void safeSceneNodeTrasform();
         void translateInput(Input input, float dt);
         void controlWorldEntities();
         void handleCommands(float dt);

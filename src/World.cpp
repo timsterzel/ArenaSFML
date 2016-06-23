@@ -42,7 +42,7 @@ void World::buildScene()
     std::unique_ptr<CollisionShape> collisionShapeWizard(new CollisionCircle(12.f));
     wizard->setCollisionShape(std::move(collisionShapeWizard));
     //wizard->setPosition(800 / 2.f + 100.f, 480 / 2.f);
-    wizard->setPosition(800 / 2.f , 480 / 2.f);
+    wizard->setPosition(800 / 2.f - 60.f, 480 / 2.f - 10.f);
     wizard->setVelocity(30.f, 30.f);
     wizard->setType(WorldObjectTypes::ENEMY);
     m_sceneLayers[Layers::MAIN]->attachChild(std::move(wizard));
@@ -91,12 +91,19 @@ void World::buildScene()
     m_sceneLayers[Layers::MAIN]->attachChild(std::move(warrior));
 
     // Collision Tests
+    /*
     if (m_playerWarrior->getCollisionShape()->isColliding(*wizardEnemyTmp->getCollisionShape()))
     {
         std::cout << "Colliding" << std::endl;
     }
+    */
     //m_playerWarrior->getCollisionShape()->isColliding(*warriorEnemyTmp->getCollisionShape());
 
+}
+
+void World::safeSceneNodeTrasform()
+{
+    m_sceneGraph.safeTransform();
 }
 
 void World::translateInput(Input input, float dt)
@@ -187,6 +194,8 @@ void World::handleCollision(float dt)
         if (matchesCategories(pairTmp, WorldObjectTypes::PLAYER, WorldObjectTypes::ENEMY))
         {
             std::cout << "Player Enemy Collision" << std::endl;
+            pairTmp.first->restoreLastTransform();
+            pairTmp.second->restoreLastTransform();
         }
         std::cout << "Collision" << std::endl;
     }
