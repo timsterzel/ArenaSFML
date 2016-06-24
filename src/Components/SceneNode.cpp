@@ -4,21 +4,22 @@
 #include <iostream>
 
 SceneNode::SceneNode()
-: m_parent{nullptr}
-, m_collisionShape{nullptr}
-, m_type{WorldObjectTypes::NONE}
+: m_parent{ nullptr }
+, m_collisionShape{ nullptr }
+, m_type{ WorldObjectTypes::NONE }
+, m_isActive{ true }
 {
 
 }
 
 SceneNode::SceneNode(WorldObjectTypes type)
-: m_parent{nullptr}
-, m_collisionShape{nullptr}
-, m_type{type}
+: m_parent{ nullptr }
+, m_collisionShape{ nullptr }
+, m_type{ type }
+, m_isActive{ true }
 {
 
 }
-
 
 void SceneNode::attachChild(Ptr child)
 {
@@ -142,6 +143,15 @@ CollisionShape* SceneNode::getCollisionShape() const
     return m_collisionShape.get();
 }
 
+bool SceneNode::isActive() const
+{
+    return m_isActive;
+}
+void SceneNode::setIsActive(bool isActive)
+{
+    m_isActive = isActive;
+}
+
 bool SceneNode::isColliding(SceneNode &node) const
 {
     // If there is no collision shape specified there can not be a collision
@@ -154,7 +164,9 @@ bool SceneNode::isColliding(SceneNode &node) const
 
 void SceneNode::checkNodeCollision(SceneNode &node, std::set<Pair> &collisionPairs)
 {
-    if (this != &node && isColliding(node))
+    // If the actual SceneNode is passive we dont have to check if it colliding with something.
+    // If the other node is active it will check if it is colliding with this node.
+    if (this != &node && m_isActive && isColliding(node))
     {
         // std::minmax return always the same pair indepented of the order of the parameters, where the first is the smallest and the second the greater one
         // (The smaller one have the lower address in this case). In std::set unique objects are stored as key and dont ad a new key if there is already the same

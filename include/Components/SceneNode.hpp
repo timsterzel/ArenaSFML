@@ -20,6 +20,15 @@ class SceneNode : public sf::Transformable, public sf::Drawable, public sf::NonC
     protected:
         std::unique_ptr<CollisionShape> m_collisionShape;
         WorldObjectTypes m_type;
+        // A SceneNode is active it moves or rotate.
+        // If it is only passive, so it dont move, rotate etc things can possibly collide with it (If it have a collision shape),
+        // but a passive object can not do anything to collide with something. But Other SceneNodes can do things so they collides
+        // with it. When we know that a SceneNode is passive we dont have to check collision twice. We just have to check if the
+        // active SceneNode collides with the inActive SceneNode.
+        // In a nutshell: When the SceneNode change his position or rotate its active.
+        bool m_isActive;
+
+
 
         sf::Vector2f m_lastPos;
         float m_lastRot;
@@ -46,6 +55,9 @@ class SceneNode : public sf::Transformable, public sf::Drawable, public sf::NonC
 
         CollisionShape* getCollisionShape() const;
         bool isColliding(SceneNode &node) const;
+
+        bool isActive() const;
+        void setIsActive(bool isActive);
 
         // Check if the given SceneGraph and its child collides with the ScneGraph and its nodes
         void checkNodeCollision(SceneNode &node, std::set<Pair> &collisionPairs);
