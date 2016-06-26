@@ -152,12 +152,12 @@ void SceneNode::setIsActive(bool isActive)
     m_isActive = isActive;
 }
 
-bool SceneNode::isColliding(SceneNode &node) const
+CollisionInfo SceneNode::isColliding(SceneNode &node) const
 {
     // If there is no collision shape specified there can not be a collision
     if (m_collisionShape == nullptr || node.getCollisionShape() == nullptr)
     {
-        return false;
+        return CollisionInfo(false);
     }
     return m_collisionShape->isColliding(*node.getCollisionShape());
 }
@@ -166,7 +166,7 @@ void SceneNode::checkNodeCollision(SceneNode &node, std::set<Pair> &collisionPai
 {
     // If the actual SceneNode is passive we dont have to check if it colliding with something.
     // If the other node is active it will check if it is colliding with this node.
-    if (this != &node && m_isActive && isColliding(node))
+    if (this != &node && m_isActive && isColliding(node).isCollision())
     {
         // std::minmax return always the same pair indepented of the order of the parameters, where the first is the smallest and the second the greater one
         // (The smaller one have the lower address in this case). In std::set unique objects are stored as key and dont ad a new key if there is already the same

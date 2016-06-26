@@ -1,6 +1,7 @@
 #ifndef COLLISIONSHAPE_HPP
 #define COLLISIONSHAPE_HPP
 #include <SFML/Graphics.hpp>
+#include <Collision/CollisionInfo.hpp>
 
 class SceneNode;
 class CollisionCircle;
@@ -22,9 +23,9 @@ class CollisionShape : public sf::Transformable, public sf::Drawable
         void setParent(SceneNode *parent);
 
         // http://stackoverflow.com/questions/22899363/advice-on-class-structure-in-a-collision-detection-system (The accepted answer)
-        virtual bool isColliding(CollisionShape &collider) = 0;
-        virtual bool isColliding(CollisionCircle &collider) = 0;
-        virtual bool isColliding(CollisionRect &collider) = 0;
+        virtual CollisionInfo isColliding(CollisionShape &collider) = 0;
+        virtual CollisionInfo isColliding(CollisionCircle &collider) = 0;
+        virtual CollisionInfo isColliding(CollisionRect &collider) = 0;
 };
 
 #endif // COLLISIONSHAPE_HPP

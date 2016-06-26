@@ -55,17 +55,17 @@ void CollisionRect::draw(sf::RenderTarget &target, sf::RenderStates states) cons
     target.draw(rect, states);
 }
 
-bool CollisionRect::isColliding(CollisionShape &collider)
+CollisionInfo CollisionRect::isColliding(CollisionShape &collider)
 {
     return collider.isColliding(*this);
 }
 
-bool CollisionRect::isColliding(CollisionCircle &collider)
+CollisionInfo CollisionRect::isColliding(CollisionCircle &collider)
 {
     return CollisionHandler::isColliding(*this, collider);
 }
 
-bool CollisionRect::isColliding(CollisionRect &collider)
+CollisionInfo CollisionRect::isColliding(CollisionRect &collider)
 {
     return CollisionHandler::isColliding(*this, collider);
 }

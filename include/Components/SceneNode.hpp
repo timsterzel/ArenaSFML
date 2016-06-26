@@ -54,7 +54,7 @@ class SceneNode : public sf::Transformable, public sf::Drawable, public sf::NonC
         void setType(WorldObjectTypes type);
 
         CollisionShape* getCollisionShape() const;
-        bool isColliding(SceneNode &node) const;
+        CollisionInfo isColliding(SceneNode &node) const;
 
         bool isActive() const;
         void setIsActive(bool isActive);

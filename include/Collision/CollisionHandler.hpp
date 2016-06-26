@@ -2,6 +2,7 @@
 #define COLLISIONHANDLER_HPP
 #include <SFML/Graphics.hpp>
 #include "Collision/CollisionCircle.hpp"
+#include "Collision/CollisionInfo.hpp"
 #include "Collision/CollisionRect.hpp"
 #include "Components/SceneNode.hpp"
 #include <vector>
@@ -15,10 +16,10 @@ class CollisionHandler
     public:
 
         //explicit CollisionHandler(SceneNode *sceneGraph);
-        static bool isColliding(CollisionCircle &objA, CollisionCircle &objB);
-        static bool isColliding(CollisionRect &objA, CollisionRect &objB);
-        static bool isColliding(CollisionCircle &objA, CollisionRect &objB);
-        static bool isColliding(CollisionRect &objA, CollisionCircle &objB);
+        static CollisionInfo isColliding(CollisionCircle &objA, CollisionCircle &objB);
+        static CollisionInfo isColliding(CollisionRect &objA, CollisionRect &objB);
+        static CollisionInfo isColliding(CollisionCircle &objA, CollisionRect &objB);
+        static CollisionInfo isColliding(CollisionRect &objA, CollisionCircle &objB);
 
     private:
         // Support function to get a point for a specific direction from a convex shape

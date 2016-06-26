@@ -20,17 +20,17 @@ void CollisionCircle::draw(sf::RenderTarget &target, sf::RenderStates states) co
     target.draw(circleShape, states);
 }
 
-bool CollisionCircle::isColliding(CollisionShape &collider)
+CollisionInfo CollisionCircle::isColliding(CollisionShape &collider)
 {
     return collider.isColliding(*this);
 }
 
-bool CollisionCircle::isColliding(CollisionCircle &collider)
+CollisionInfo CollisionCircle::isColliding(CollisionCircle &collider)
 {
     return CollisionHandler::isColliding(*this, collider);
 }
 
-bool CollisionCircle::isColliding(CollisionRect &collider)
+CollisionInfo CollisionCircle::isColliding(CollisionRect &collider)
 {
     return CollisionHandler::isColliding(*this, collider);
 }

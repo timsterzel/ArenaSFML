@@ -12,7 +12,7 @@ CollisionHandler::CollisionHandler(SceneNode *sceneGraph)
 }
 */
 
-bool CollisionHandler::isColliding(CollisionCircle &objA, CollisionCircle &objB)
+CollisionInfo CollisionHandler::isColliding(CollisionCircle &objA, CollisionCircle &objB)
 {
     //std::cout << "isColliding CollisionCircle, CollisionCircle" << std::endl;
     //std::cout << "objA Pos: x = " << objA.getWorldPosition().x << " y = " << objA.getWorldPosition().y << std::endl;
@@ -20,7 +20,8 @@ bool CollisionHandler::isColliding(CollisionCircle &objA, CollisionCircle &objB)
     const float distX = { objA.getWorldPosition().x - objB.getWorldPosition().x };
     const float distY = { objA.getWorldPosition().y - objB.getWorldPosition().y };
     const float dist = std::sqrt((distX * distX)  + (distY * distY));
-    return dist < objA.getRadius() + objB.getRadius();
+    bool isCollision = { dist < objA.getRadius() + objB.getRadius() };
+    return CollisionInfo(isCollision);
 }
 
 // GJK algorithm
@@ -72,7 +73,7 @@ bool CollisionHandler::isColliding(CollisionRect &objA, CollisionRect &objB)
 
 
 // SAT algorithm
-bool CollisionHandler::isColliding(CollisionRect &objA, CollisionRect &objB)
+CollisionInfo CollisionHandler::isColliding(CollisionRect &objA, CollisionRect &objB)
 {
     objA.computeVertices();
     objB.computeVertices();
@@ -89,7 +90,7 @@ bool CollisionHandler::isColliding(CollisionRect &objA, CollisionRect &objB)
         //<< " B : min: " << getProjection(axis, verticesB).first << " max: " << getProjection(axis, verticesB).second << std::endl;
         if (!areAxisProjectionsIntersecting(getProjection(axis, verticesA), getProjection(axis, verticesB)))
         {
-            return false;
+            return CollisionInfo(false);
         }
     }
     for (sf::Vector2f axis : axisesB)
@@ -99,11 +100,11 @@ bool CollisionHandler::isColliding(CollisionRect &objA, CollisionRect &objB)
         //<< " B : min: " << getProjection(axis, verticesB).first << " max: " << getProjection(axis, verticesB).second << std::endl;
         if (!areAxisProjectionsIntersecting(getProjection(axis, verticesA), getProjection(axis, verticesB)))
         {
-            return false;
+            return CollisionInfo(false);
         }
     }
-    // If we were not able to create a seperate axix between the two shapes after testing all axis there have to be an intersection
-    return true;
+    // If we were not able to create a seperate axis between the two shapes after testing all axis there have to be an intersection
+    return CollisionInfo(true);
 }
 
 std::pair<float, float> CollisionHandler::getProjection(sf::Vector2f axis, const std::vector<sf::Vector2f> &vertices)
@@ -163,7 +164,7 @@ bool CollisionHandler::areAxisProjectionsIntersecting(const std::pair<float, flo
     return true;
 }
 
-bool CollisionHandler::isColliding(CollisionCircle &objA, CollisionRect &objB)
+CollisionInfo CollisionHandler::isColliding(CollisionCircle &objA, CollisionRect &objB)
 {
     const float RectRotation = objB.getWorldRotation();
     // We use a local coordinate system, where the Rect is axis aligned at (0|0)
@@ -184,11 +185,12 @@ bool CollisionHandler::isColliding(CollisionCircle &objA, CollisionRect &objB)
     const float NearestCircleDistance = { Calc::getVec2Length<sf::Vector2f>(Nearest - CirclePos) };
     // When the distance beetween the nearest point on circle and circles position
     // is smaller than the radius of the circle we have a collison
-    return NearestCircleDistance < objA.getRadius();
+    bool isCollision = { NearestCircleDistance < objA.getRadius() };
+    return CollisionInfo(isCollision);
 }
 
 
-bool CollisionHandler::isColliding(CollisionRect &objA, CollisionCircle &objB)
+CollisionInfo CollisionHandler::isColliding(CollisionRect &objA, CollisionCircle &objB)
 {
     return CollisionHandler::isColliding(objB, objA);;
 }
