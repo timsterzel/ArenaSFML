@@ -32,3 +32,21 @@ sf::Vector2f Calc::getVec2TripleProduct(const T VecA, const U VecB, const V VecC
     return { X, Y };
 }
 
+template<typename T>
+sf::Vector2f Calc::getVec2PerpendicularLeft(const T Vec)
+{
+    return sf::Vector2f(Vec.y, -Vec.x);
+}
+
+template<typename T>
+sf::Vector2f Calc::getVec2PerpendicularRight(const T Vec)
+{
+    return sf::Vector2f(-Vec.y, Vec.x);
+}
+
+template<typename T>
+sf::Vector2f Calc::normalizeVec2(const T Vec)
+{
+    const float Length = { getVec2Length<T>(Vec) };
+    return { Vec.x / Length, Vec.y / Length };
+}

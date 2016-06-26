@@ -1,5 +1,6 @@
 #include "Collision/CollisionHandler.hpp"
 #include <iostream>
+#include <vector>
 #include <cmath>
 #include <algorithm>
 #include "Calc.hpp"
@@ -22,6 +23,8 @@ bool CollisionHandler::isColliding(CollisionCircle &objA, CollisionCircle &objB)
     return dist < objA.getRadius() + objB.getRadius();
 }
 
+// GJK algorithm
+/*
 bool CollisionHandler::isColliding(CollisionRect &objA, CollisionRect &objB)
 {
 
@@ -62,6 +65,102 @@ bool CollisionHandler::isColliding(CollisionRect &objA, CollisionRect &objB)
         }
     }
     return false;
+}
+*/
+
+
+
+
+// SAT algorithm
+bool CollisionHandler::isColliding(CollisionRect &objA, CollisionRect &objB)
+{
+    objA.computeVertices();
+    objB.computeVertices();
+    std::vector<sf::Vector2f> verticesA = { objA.getVertices() };
+    std::vector<sf::Vector2f> verticesB = { objB.getVertices() };
+    // Store the axises to test
+    std::vector<sf::Vector2f> axisesA = { getAxises(verticesA) };
+    std::vector<sf::Vector2f> axisesB = { getAxises(verticesB) };
+
+    for (sf::Vector2f axis : axisesA)
+    {
+        //std::cout << "AxisA: x: " << axis.x << " y: " << axis.y << std::endl;
+        //std::cout << "ProjectionA min: " << getProjection(axis, verticesA).first << " max: " << getProjection(axis, verticesA).second
+        //<< " B : min: " << getProjection(axis, verticesB).first << " max: " << getProjection(axis, verticesB).second << std::endl;
+        if (!areAxisProjectionsIntersecting(getProjection(axis, verticesA), getProjection(axis, verticesB)))
+        {
+            return false;
+        }
+    }
+    for (sf::Vector2f axis : axisesB)
+    {
+        //std::cout << "AxisB: x: " << axis.x << " y: " << axis.y << std::endl;
+        //std::cout << "ProjectionA min: " << getProjection(axis, verticesA).first << " max: " << getProjection(axis, verticesA).second
+        //<< " B : min: " << getProjection(axis, verticesB).first << " max: " << getProjection(axis, verticesB).second << std::endl;
+        if (!areAxisProjectionsIntersecting(getProjection(axis, verticesA), getProjection(axis, verticesB)))
+        {
+            return false;
+        }
+    }
+    // If we were not able to create a seperate axix between the two shapes after testing all axis there have to be an intersection
+    return true;
+}
+
+std::pair<float, float> CollisionHandler::getProjection(sf::Vector2f axis, const std::vector<sf::Vector2f> &vertices)
+{
+    float minSkalar = Calc::getVec2Scalar<sf::Vector2f, sf::Vector2f>(axis, vertices[0]);
+    float maxSkalar = minSkalar;
+    for (std::size_t i = 1; i != vertices.size(); i++)
+    {
+        float skalar = Calc::getVec2Scalar<sf::Vector2f, sf::Vector2f>(axis, vertices[i]);
+        if (skalar < minSkalar)
+        {
+            minSkalar = skalar;
+        }
+        else if (skalar > maxSkalar)
+        {
+            maxSkalar = skalar;
+        }
+    }
+    return { minSkalar, maxSkalar };
+}
+
+std::vector<sf::Vector2f> CollisionHandler::getAxises(const std::vector<sf::Vector2f> &Vertices)
+{
+    std::vector<sf::Vector2f> axises;
+    const std::size_t VerticesSize = Vertices.size();
+    for (std::size_t i = 0; i != VerticesSize; i++)
+    {
+        sf::Vector2f edge;
+        if (i != 0)
+        {
+            edge = Vertices[i] - Vertices[i - 1];
+        }
+        else
+        {
+            edge = Vertices[0] - Vertices[VerticesSize - 1];
+        }
+        sf::Vector2f perp = { Calc::getVec2PerpendicularLeft<sf::Vector2f>(edge) };
+        // Get normalized vector
+        perp = Calc::normalizeVec2<sf::Vector2f>(perp);
+        axises.push_back(perp);
+    }
+    return axises;
+}
+
+bool CollisionHandler::areAxisProjectionsIntersecting(const std::pair<float, float> ProjectionA, const std::pair<float, float> ProjectionB)
+{
+    const float MinA = { ProjectionA.first };
+    const float MaxA = { ProjectionA.second };
+    const float MinB = { ProjectionB.first };
+    const float MaxB = { ProjectionA.second };
+    // Check if the projections are intersecting, when not the shapes qare not colliding
+    // because we can seperate the two shapes
+    if ( (MinA < MaxB && MaxA < MinB) || (MinB < MaxA && MaxB < MinA) )
+    {
+        return false;
+    }
+    return true;
 }
 
 bool CollisionHandler::isColliding(CollisionCircle &objA, CollisionRect &objB)

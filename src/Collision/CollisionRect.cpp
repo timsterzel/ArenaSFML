@@ -27,8 +27,8 @@ void CollisionRect::computeVertices()
     // Compute the rects vertices as AABB
     const sf::Vector2f EdgeA = { Position.x - m_width / 2.f, Position.y - m_height / 2.f };
     const sf::Vector2f EdgeB = { Position.x + m_width / 2.f, Position.y - m_height / 2.f };
-    const sf::Vector2f EdgeC = { Position.x - m_width / 2.f, Position.y + m_height / 2.f };
-    const sf::Vector2f EdgeD = { Position.x + m_width / 2.f, Position.y + m_height / 2.f };
+    const sf::Vector2f EdgeC = { Position.x + m_width / 2.f, Position.y + m_height / 2.f };
+    const sf::Vector2f EdgeD = { Position.x - m_width / 2.f, Position.y + m_height / 2.f };
     // Apply rects rotation to the vertices
     const sf::Vector2f EdgeAR = { Calc::rotatePointAround(EdgeA, Position, -Rotation) };
     const sf::Vector2f EdgeBR = { Calc::rotatePointAround(EdgeB, Position, -Rotation) };
@@ -40,6 +40,11 @@ void CollisionRect::computeVertices()
     m_vertices.push_back(EdgeBR);
     m_vertices.push_back(EdgeCR);
     m_vertices.push_back(EdgeDR);
+}
+
+std::vector<sf::Vector2f> CollisionRect::getVertices() const
+{
+    return m_vertices;
 }
 
 void CollisionRect::draw(sf::RenderTarget &target, sf::RenderStates states) const

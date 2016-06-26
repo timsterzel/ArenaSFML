@@ -38,6 +38,8 @@ class World : private sf::NonCopyable
 
         sf::FloatRect m_worldBounds;
         Warrior *m_playerWarrior;
+        // TMP
+        long colCnt = 0;
 
     public:
         World(sf::RenderWindow *window, const ResourceHolder<sf::Font, Fonts> &fontHolder,
