@@ -61,12 +61,6 @@ class SceneNode : public sf::Transformable, public sf::Drawable, public sf::NonC
         bool isActive() const;
         void setIsActive(bool isActive);
 
-        // Check if the given SceneGraph and its child collides with the ScneGraph and its nodes.
-        // CollisionPairs is used to check if the pair of colliding SceneNodes if allready added.
-        // In the collisionData vector are the collisionInfos and the SceneNodes stored, which are affected from the collision
-        void checkNodeCollision(SceneNode &node, std::set<Pair> &collisionPairs, std::vector<std::pair<Pair, CollisionInfo>> &collisionData);
-        void checkSceneCollision(SceneNode &sceneGraph, std::set<Pair> &collisionPairs, std::vector<std::pair<Pair, CollisionInfo>> &collisionData);
-
         // Safe transform of the actual and parent nodes (position, rotation and scale)
         void safeTransform();
         // Safe the actual transform of the actual sceneNode and childs (position, rotation and scale)
@@ -75,6 +69,8 @@ class SceneNode : public sf::Transformable, public sf::Drawable, public sf::NonC
         void safeCurrentTransform();
         // Restore the last state of position, rotation and scale (the pos and rotation of the entity before last change)
         void restoreLastTransform();
+
+        void checkSceneCollision(SceneNode &sceneGraph, std::vector<std::pair<Pair, CollisionInfo>> &collisionData);
 
     private:
         // draw should not get overridden
@@ -85,6 +81,13 @@ class SceneNode : public sf::Transformable, public sf::Drawable, public sf::NonC
         void updateChildren(float dt);
         virtual void onCommandCurrent(const Command &command, float dt);
         void onCommandChildren(const Command &command, float dt);
+        // Check if the given SceneGraph and its child collides with the ScneGraph and its nodes.
+        // CollisionPairs is used to check if the pair of colliding SceneNodes if allready added.
+        // In the collisionData vector are the collisionInfos and the SceneNodes stored, which are affected from the collision
+        void checkNodeCollision(SceneNode &node, std::set<Pair> &collisionPairs, std::vector<std::pair<Pair, CollisionInfo>> &collisionData);
+        void checkSceneCollision(SceneNode &sceneGraph, std::set<Pair> &collisionPairs, std::vector<std::pair<Pair, CollisionInfo>> &collisionData);
+
+
 };
 
 #endif // SCENENODE_HPP

@@ -162,6 +162,25 @@ CollisionInfo SceneNode::isColliding(SceneNode &node) const
     return m_collisionShape->isColliding(*node.getCollisionShape());
 }
 
+void SceneNode::checkSceneCollision(SceneNode &sceneGraph, std::vector<std::pair<Pair, CollisionInfo>> &collisionData)
+{
+    // Store the collisionPairs, so we can later check if the same collision is already stored, so we only
+    // store the Collision information once.
+    std::set<SceneNode::Pair> collisionPairs;
+    checkSceneCollision(sceneGraph, collisionPairs, collisionData);
+}
+
+void SceneNode::checkSceneCollision(SceneNode &sceneGraph, std::set<Pair> &collisionPairs, std::vector<std::pair<Pair, CollisionInfo>> &collisionData)
+{
+    checkNodeCollision(sceneGraph, collisionPairs, collisionData);
+
+    for (Ptr &child: sceneGraph.m_children)
+    {
+        checkSceneCollision(*child, collisionPairs, collisionData);
+    }
+
+}
+
 void SceneNode::checkNodeCollision(SceneNode &node, std::set<Pair> &collisionPairs, std::vector<std::pair<Pair, CollisionInfo>> &collisionData)
 {
     // If the actual SceneNode is passive we dont have to check if it colliding with something.
@@ -195,17 +214,6 @@ void SceneNode::checkNodeCollision(SceneNode &node, std::set<Pair> &collisionPai
     {
         child->checkNodeCollision(node, collisionPairs, collisionData);
     }
-}
-
-void SceneNode::checkSceneCollision(SceneNode &sceneGraph, std::set<Pair> &collisionPairs, std::vector<std::pair<Pair, CollisionInfo>> &collisionData)
-{
-    checkNodeCollision(sceneGraph, collisionPairs, collisionData);
-
-    for (Ptr &child: sceneGraph.m_children)
-    {
-        checkSceneCollision(*child, collisionPairs, collisionData);
-    }
-
 }
 
 void SceneNode::safeTransform()

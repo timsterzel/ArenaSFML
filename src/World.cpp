@@ -211,13 +211,10 @@ void World::update(float dt)
 
 void World::handleCollision(float dt)
 {
-    // Store the collisionPairs, so we can later check if the same collision is already stored, so we only
-    // store the Collision information once.
-    std::set<SceneNode::Pair> collisionPairs;
     // Here are the collision information stored, which we use later and the affected SceneNodes
     std::vector<std::pair<SceneNode::Pair, CollisionInfo>> collisionData;
 
-    m_sceneGraph.checkSceneCollision(m_sceneGraph, collisionPairs, collisionData);
+    m_sceneGraph.checkSceneCollision(m_sceneGraph, collisionData);
     for (std::pair<SceneNode::Pair, CollisionInfo> collisionDataTmp : collisionData)
     {
         SceneNode::Pair sceneNodes = { collisionDataTmp.first };

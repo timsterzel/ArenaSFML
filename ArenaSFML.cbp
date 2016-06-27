@@ -46,6 +46,7 @@
 		<Unit filename="include/Calc.inl" />
 		<Unit filename="include/Collision/CollisionCircle.hpp" />
 		<Unit filename="include/Collision/CollisionHandler.hpp" />
+		<Unit filename="include/Collision/CollisionInfo.hpp" />
 		<Unit filename="include/Collision/CollisionRect.hpp" />
 		<Unit filename="include/Collision/CollisionShape.hpp" />
 		<Unit filename="include/Components/Entity.hpp" />
@@ -69,6 +70,7 @@
 		<Unit filename="src/Calc.cpp" />
 		<Unit filename="src/Collision/CollisionCircle.cpp" />
 		<Unit filename="src/Collision/CollisionHandler.cpp" />
+		<Unit filename="src/Collision/CollisionInfo.cpp" />
 		<Unit filename="src/Collision/CollisionRect.cpp" />
 		<Unit filename="src/Collision/CollisionShape.cpp" />
 		<Unit filename="src/Components/Entity.cpp" />
