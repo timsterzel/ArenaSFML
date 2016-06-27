@@ -21,6 +21,12 @@ CollisionInfo CollisionHandler::isColliding(CollisionCircle &objA, CollisionCirc
     const float distY = { objA.getWorldPosition().y - objB.getWorldPosition().y };
     const float dist = std::sqrt((distX * distX)  + (distY * distY));
     bool isCollision = { dist < objA.getRadius() + objB.getRadius() };
+    if (isCollision)
+    {
+        float overlap = dist - objA.getRadius() + objB.getRadius();
+        sf::Vector2f direction = objB.getPosition() - objA.getPosition();
+        return CollisionInfo(isCollision, overlap, direction);
+    }
     return CollisionInfo(isCollision);
 }
 
