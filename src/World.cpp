@@ -7,7 +7,6 @@
 #include "Calc.hpp"
 #include <memory>
 
-
 World::World(sf::RenderWindow *window, const ResourceHolder<sf::Font, Fonts> &FontHolder, const ResourceHolder<sf::Texture, Textures> &TextureHolder
     /*,QueueHelper<Input> *inputQueue*/)
 : m_window{window}
@@ -212,8 +211,26 @@ void World::update(float dt)
 
 void World::handleCollision(float dt)
 {
+    // Store the collisionPairs, so we can later check if the same collision is already stored, so we only
+    // store the Collision information once.
     std::set<SceneNode::Pair> collisionPairs;
-    m_sceneGraph.checkSceneCollision(m_sceneGraph, collisionPairs);
+    // Here are the collision information stored, which we use later and the affected SceneNodes
+    std::vector<std::pair<SceneNode::Pair, CollisionInfo>> collisionData;
+
+    m_sceneGraph.checkSceneCollision(m_sceneGraph, collisionPairs, collisionData);
+    for (std::pair<SceneNode::Pair, CollisionInfo> collisionDataTmp : collisionData)
+    {
+        SceneNode::Pair sceneNodes = { collisionDataTmp.first };
+        CollisionInfo collisionInfo = { collisionDataTmp.second };
+        if (matchesCategories(sceneNodes, WorldObjectTypes::PLAYER, WorldObjectTypes::ENEMY))
+        {
+            std::cout << "Player Enemy Collision" << std::endl;
+            //pairTmp.first->restoreLastTransform();
+            //pairTmp.second->restoreLastTransform();
+        }
+        std::cout << "Collision: " << colCnt++ << std::endl;
+    }
+    /*
     for (SceneNode::Pair pairTmp : collisionPairs)
     {
         if (matchesCategories(pairTmp, WorldObjectTypes::PLAYER, WorldObjectTypes::ENEMY))
@@ -224,6 +241,7 @@ void World::handleCollision(float dt)
         }
         std::cout << "Collision: " << colCnt++ << std::endl;
     }
+    */
 }
 /*
 bool World::matchesCategories(SceneNode::Pair &colliders, WorldObjectTypes worldObjectType1, WorldObjectTypes worldObjectType2)

@@ -4,6 +4,7 @@
 #include <memory>
 #include <vector>
 #include <set>
+#include <tuple>
 #include "Collision/CollisionShape.hpp"
 #include "Components/EnumWorldObjectTypes.hpp"
 #include "Input/Command.hpp"
@@ -13,6 +14,7 @@ class SceneNode : public sf::Transformable, public sf::Drawable, public sf::NonC
     public:
         typedef std::unique_ptr<SceneNode> Ptr;
         typedef std::pair<SceneNode*, SceneNode*> Pair;
+        //typedef std::tuple<SceneNode*, SceneNode*, CollisionInfo> Pair;
 
     private:
         std::vector<Ptr> m_children;
@@ -59,9 +61,11 @@ class SceneNode : public sf::Transformable, public sf::Drawable, public sf::NonC
         bool isActive() const;
         void setIsActive(bool isActive);
 
-        // Check if the given SceneGraph and its child collides with the ScneGraph and its nodes
-        void checkNodeCollision(SceneNode &node, std::set<Pair> &collisionPairs);
-        void checkSceneCollision(SceneNode &sceneGraph, std::set<Pair> &collisionPairs);
+        // Check if the given SceneGraph and its child collides with the ScneGraph and its nodes.
+        // CollisionPairs is used to check if the pair of colliding SceneNodes if allready added.
+        // In the collisionData vector are the collisionInfos and the SceneNodes stored, which are affected from the collision
+        void checkNodeCollision(SceneNode &node, std::set<Pair> &collisionPairs, std::vector<std::pair<Pair, CollisionInfo>> &collisionData);
+        void checkSceneCollision(SceneNode &sceneGraph, std::set<Pair> &collisionPairs, std::vector<std::pair<Pair, CollisionInfo>> &collisionData);
 
         // Safe transform of the actual and parent nodes (position, rotation and scale)
         void safeTransform();

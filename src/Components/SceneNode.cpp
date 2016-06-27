@@ -162,31 +162,48 @@ CollisionInfo SceneNode::isColliding(SceneNode &node) const
     return m_collisionShape->isColliding(*node.getCollisionShape());
 }
 
-void SceneNode::checkNodeCollision(SceneNode &node, std::set<Pair> &collisionPairs)
+void SceneNode::checkNodeCollision(SceneNode &node, std::set<Pair> &collisionPairs, std::vector<std::pair<Pair, CollisionInfo>> &collisionData)
 {
     // If the actual SceneNode is passive we dont have to check if it colliding with something.
     // If the other node is active it will check if it is colliding with this node.
-    if (this != &node && m_isActive && isColliding(node).isCollision())
+    if (this != &node && m_isActive)
     {
-        // std::minmax return always the same pair indepented of the order of the parameters, where the first is the smallest and the second the greater one
-        // (The smaller one have the lower address in this case). In std::set unique objects are stored as key and dont ad a new key if there is already the same
-        // so with std::minmax we ensure that we only store a collison once (a collides with b and b collisdes with a, but we only need the pair once)
-        collisionPairs.insert(std::minmax(this, &node));
+        CollisionInfo collisionInfo = { isColliding(node) };
+        if (collisionInfo.isCollision())
+        {
+            // std::minmax return always the same pair indepented of the order of the parameters, where the first is the smallest and the second the greater one
+            // (The smaller one have the lower address in this case). In std::set unique objects are stored as key and dont ad a new key if there is already the same
+            // so with std::minmax we ensure that we only store a collison once (a collides with b and b collisdes with a, but we only need the pair once)
+            Pair sceneNodePair = std::minmax(this, &node);
+            auto inserted = collisionPairs.insert(sceneNodePair);
+            // Add collision information and SceneNodes to collisionData vector only when the pair of SceneNodes were successfully added to collisionPairs set,
+            // so we can ensure that we add the collisio only once.
+            if (inserted.second)
+            {
+                collisionData.push_back({ sceneNodePair, collisionInfo });
+                std::cout << "Inserted" << std::endl;
+            }
+            else
+            {
+                std::cout << "Not inserted" << std::endl;
+            }
+        }
+
     }
 
     for (Ptr &child: m_children)
     {
-        child->checkNodeCollision(node, collisionPairs);
+        child->checkNodeCollision(node, collisionPairs, collisionData);
     }
 }
 
-void SceneNode::checkSceneCollision(SceneNode &sceneGraph, std::set<Pair> &collisionPairs)
+void SceneNode::checkSceneCollision(SceneNode &sceneGraph, std::set<Pair> &collisionPairs, std::vector<std::pair<Pair, CollisionInfo>> &collisionData)
 {
-    checkNodeCollision(sceneGraph, collisionPairs);
+    checkNodeCollision(sceneGraph, collisionPairs, collisionData);
 
     for (Ptr &child: sceneGraph.m_children)
     {
-        checkSceneCollision(*child, collisionPairs);
+        checkSceneCollision(*child, collisionPairs, collisionData);
     }
 
 }
