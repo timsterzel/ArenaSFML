@@ -221,7 +221,18 @@ void World::handleCollision(float dt)
         CollisionInfo collisionInfo = { collisionDataTmp.second };
         if (matchesCategories(sceneNodes, WorldObjectTypes::PLAYER, WorldObjectTypes::ENEMY))
         {
+            Entity *entityOne = { static_cast<Entity*>(sceneNodes.first) };
+            Entity *entityTwo = { static_cast<Entity*>(sceneNodes.second) };
             std::cout << "Player Enemy Collision" << std::endl;
+            float overlap = { collisionInfo.getLength() };
+            std::cout << "OVERLAP: " << overlap << std::endl;
+            sf::Vector2f direction = { collisionInfo.getDirection() };
+            // Check if the entity direction is the same as the direction given by the collision info
+            // and when move it in the other direction
+            sf::Vector2f dirOne = Calc::getVec2Scalar(entityOne->getVelocity(), direction) <= 0 ? direction : -direction;
+            sf::Vector2f dirTwo = Calc::getVec2Scalar(entityTwo->getVelocity(), direction) <= 0 ? direction : -direction;
+            entityOne->moveInDirection(direction, overlap / 2.f);
+            entityTwo->moveInDirection(-direction, overlap / 2.f);
             //pairTmp.first->restoreLastTransform();
             //pairTmp.second->restoreLastTransform();
         }

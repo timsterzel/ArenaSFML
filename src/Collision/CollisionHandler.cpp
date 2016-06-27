@@ -88,8 +88,9 @@ CollisionInfo CollisionHandler::isColliding(CollisionRect &objA, CollisionRect &
     // Store the axises to test
     std::vector<sf::Vector2f> axisesA = { getAxises(verticesA) };
     std::vector<sf::Vector2f> axisesB = { getAxises(verticesB) };
-    //Used provide collision information
-    float overlap = { 0.f };
+    // Used provide collision information
+    // Use as standart an overlapwhich is to high that it cant occur in the game
+    float overlap = { 99999.f };
     sf::Vector2f collisionAxis;
 
     for (sf::Vector2f axis : axisesA)
@@ -108,7 +109,7 @@ CollisionInfo CollisionHandler::isColliding(CollisionRect &objA, CollisionRect &
             float overlapTmp = { getSATOverlap(ProjectionA, ProjectionB) };
             if (overlapTmp < overlap)
             {
-                overlapTmp = overlap;
+                overlap = overlapTmp;
                 collisionAxis = axis;
             }
         }
@@ -129,7 +130,7 @@ CollisionInfo CollisionHandler::isColliding(CollisionRect &objA, CollisionRect &
             float overlapTmp = { getSATOverlap(ProjectionA, ProjectionB) };
             if (overlapTmp < overlap)
             {
-                overlapTmp = overlap;
+                overlap = overlapTmp;
                 collisionAxis = axis;
             }
         }

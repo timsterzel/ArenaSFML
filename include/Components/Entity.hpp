@@ -20,6 +20,9 @@ class Entity : public SceneNode
         void setVelocity(sf::Vector2f velocity);
         void setVelocity(float velX, float velY);
         sf::Vector2f getVelocity() const;
+        // Move the actual object the given length by the acutal direction (velocity)
+        void moveInActualDirection(const float length);
+        void moveInDirection(const sf::Vector2f direction, const float length);
 
     private:
         virtual void updateCurrent(float dt);

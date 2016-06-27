@@ -1,4 +1,5 @@
 #include "Components/Entity.hpp"
+#include "Calc.hpp"
 #include <iostream>
 
 Entity::Entity()
@@ -20,6 +21,18 @@ void Entity::setVelocity(float velX, float velY)
 sf::Vector2f Entity::getVelocity() const
 {
     return m_velocity;
+}
+
+void Entity::moveInActualDirection(const float length)
+{
+    sf::Vector2f normalizedDir = { Calc::normalizeVec2<sf::Vector2f>(m_velocity) };
+    move(normalizedDir.x * length, normalizedDir.y * length);
+}
+
+void Entity::moveInDirection(const sf::Vector2f direction, const float length)
+{
+    sf::Vector2f normalizedDir = { Calc::normalizeVec2<sf::Vector2f>(direction) };
+    move(normalizedDir.x * length, normalizedDir.y * length);
 }
 
 void Entity::updateCurrent(float dt)
