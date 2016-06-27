@@ -23,8 +23,8 @@ CollisionInfo CollisionHandler::isColliding(CollisionCircle &objA, CollisionCirc
     bool isCollision = { dist < objA.getRadius() + objB.getRadius() };
     if (isCollision)
     {
-        float overlap = dist - objA.getRadius() + objB.getRadius();
-        sf::Vector2f direction = objB.getPosition() - objA.getPosition();
+        float overlap = (objA.getRadius() + objB.getRadius()) - dist;
+        sf::Vector2f direction = objB.getWorldPosition() - objA.getWorldPosition();
         return CollisionInfo(isCollision, overlap, direction);
     }
     return CollisionInfo(isCollision);
