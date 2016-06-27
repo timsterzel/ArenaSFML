@@ -82,15 +82,29 @@ CollisionInfo CollisionHandler::isColliding(CollisionRect &objA, CollisionRect &
     // Store the axises to test
     std::vector<sf::Vector2f> axisesA = { getAxises(verticesA) };
     std::vector<sf::Vector2f> axisesB = { getAxises(verticesB) };
+    //Used provide collision information
+    float overlap = { 0.f };
+    sf::Vector2f collisionAxis;
 
     for (sf::Vector2f axis : axisesA)
     {
         //std::cout << "AxisA: x: " << axis.x << " y: " << axis.y << std::endl;
         //std::cout << "ProjectionA min: " << getProjection(axis, verticesA).first << " max: " << getProjection(axis, verticesA).second
         //<< " B : min: " << getProjection(axis, verticesB).first << " max: " << getProjection(axis, verticesB).second << std::endl;
-        if (!areAxisProjectionsIntersecting(getProjection(axis, verticesA), getProjection(axis, verticesB)))
+        const std::pair<float, float> ProjectionA = { getProjection(axis, verticesA) };
+        const std::pair<float, float> ProjectionB = { getProjection(axis, verticesB) };
+        if (!areAxisProjectionsIntersecting(ProjectionA, ProjectionB))
         {
             return CollisionInfo(false);
+        }
+        else
+        {
+            float overlapTmp = { getSATOverlap(ProjectionA, ProjectionB) };
+            if (overlapTmp < overlap)
+            {
+                overlapTmp = overlap;
+                collisionAxis = axis;
+            }
         }
     }
     for (sf::Vector2f axis : axisesB)
@@ -98,13 +112,24 @@ CollisionInfo CollisionHandler::isColliding(CollisionRect &objA, CollisionRect &
         //std::cout << "AxisB: x: " << axis.x << " y: " << axis.y << std::endl;
         //std::cout << "ProjectionA min: " << getProjection(axis, verticesA).first << " max: " << getProjection(axis, verticesA).second
         //<< " B : min: " << getProjection(axis, verticesB).first << " max: " << getProjection(axis, verticesB).second << std::endl;
-        if (!areAxisProjectionsIntersecting(getProjection(axis, verticesA), getProjection(axis, verticesB)))
+        const std::pair<float, float> ProjectionA = { getProjection(axis, verticesA) };
+        const std::pair<float, float> ProjectionB = { getProjection(axis, verticesB) };
+        if (!areAxisProjectionsIntersecting(ProjectionA, ProjectionB))
         {
             return CollisionInfo(false);
         }
+        else
+        {
+            float overlapTmp = { getSATOverlap(ProjectionA, ProjectionB) };
+            if (overlapTmp < overlap)
+            {
+                overlapTmp = overlap;
+                collisionAxis = axis;
+            }
+        }
     }
     // If we were not able to create a seperate axis between the two shapes after testing all axis there have to be an intersection
-    return CollisionInfo(true);
+    return CollisionInfo(true, overlap, collisionAxis);
 }
 
 std::pair<float, float> CollisionHandler::getProjection(sf::Vector2f axis, const std::vector<sf::Vector2f> &vertices)
@@ -162,6 +187,19 @@ bool CollisionHandler::areAxisProjectionsIntersecting(const std::pair<float, flo
         return false;
     }
     return true;
+}
+
+float CollisionHandler::getSATOverlap(const std::pair<float, float> ProjectionA, const std::pair<float, float> ProjectionB)
+{
+    if (areAxisProjectionsIntersecting(ProjectionA, ProjectionB))
+    {
+        const float MinA = { ProjectionA.first };
+        const float MaxA = { ProjectionA.second };
+        const float MinB = { ProjectionB.first };
+        const float MaxB = { ProjectionA.second };
+        return std::min(MaxA, MaxB) - std::max(MinA, MinB);
+    }
+    return 0.f;
 }
 
 CollisionInfo CollisionHandler::isColliding(CollisionCircle &objA, CollisionRect &objB)

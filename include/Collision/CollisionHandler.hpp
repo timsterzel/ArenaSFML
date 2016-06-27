@@ -32,6 +32,8 @@ class CollisionHandler
         // The vertices have to be in the right order, so they create the needed shape by iterating over it
         static std::vector<sf::Vector2f> getAxises(const std::vector<sf::Vector2f> &Vertices);
         static bool areAxisProjectionsIntersecting(const std::pair<float, float> ProjectionA, const std::pair<float, float> ProjectionB);
+        // Get the overlap of the 2 projections (used in SAT algorithm)
+        static float getSATOverlap(const std::pair<float, float> ProjectionA, const std::pair<float, float> ProjectionB);
 };
 
 #endif // COLLISIONHANDLER_HPP
