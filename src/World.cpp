@@ -235,11 +235,12 @@ void World::update(float dt)
 void World::handleCollision(float dt)
 {
     // Here are the collision information stored, which we use later and the affected SceneNodes
-    std::vector<std::pair<SceneNode::Pair, CollisionInfo>> collisionData;
+    std::vector<CollisionInfo> collisionData;
 
     m_sceneGraph.checkSceneCollision(m_sceneGraph, collisionData);
     for (std::pair<SceneNode::Pair, CollisionInfo> collisionDataTmp : collisionData)
     {
+        /*
         SceneNode::Pair sceneNodes = { collisionDataTmp.first };
         CollisionInfo collisionInfo = { collisionDataTmp.second };
         if (matchesCategories(sceneNodes, WorldObjectTypes::PLAYER, WorldObjectTypes::ENEMY))
@@ -295,6 +296,7 @@ void World::handleCollision(float dt)
             //pairTmp.first->restoreLastTransform();
             //pairTmp.second->restoreLastTransform();
         }
+        */
         std::cout << "Collision: " << colCnt++ << std::endl;
     }
 }

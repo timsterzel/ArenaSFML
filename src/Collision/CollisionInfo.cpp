@@ -1,19 +1,23 @@
 #include "Collision/CollisionInfo.hpp"
 
-CollisionInfo::CollisionInfo(bool isCollision)
+CollisionInfo::CollisionInfo(const bool isCollision)
 : m_isCollision{ isCollision }
 , m_length{ 0.f }
-, m_direction{ 0.f, 0.f }
+, m_resolveDirFirst{ 0.f, 0.f }
+, m_resolveDirSecond{ 0.f, 0.f }
 , m_collidedFirst{ nullptr }
 , m_collidedSecod { nullptr }
 {
 
 }
 
-CollisionInfo::CollisionInfo(bool isCollision, float length, sf::Vector2f direction, SceneNode *collidedFirst, SceneNode *collidedSecond))
+CollisionInfo::CollisionInfo(const bool isCollision, const float length, const sf::Vector2f resolveDirFirst,
+                            , const sf::Vector2f resolveDirSecond, SceneNode *const collidedFirst
+                            , SceneNode *const collidedSecond)
 : m_isCollision{ isCollision }
 , m_length{ length }
-, m_direction{ direction }
+, m_resolveDirFirst{  }
+, m_resolveDirSecond{ collidedFirst }
 , m_collidedFirst{ collidedFirst }
 , m_collidedSecod { collidedSecond }
 {
@@ -30,9 +34,14 @@ float CollisionInfo::getLength() const
     return m_length;
 }
 
-sf::Vector2f CollisionInfo::getDirection() const
+sf::Vector2f CollisionInfo::getResolveDirOfFirst() const
 {
-    return m_direction;
+    return m_resolveDirFirst;
+}
+
+sf::Vector2f CollisionInfo::getResolveDirOfSecond() const
+{
+    return m_resolveDirSecond;
 }
 
 SceneNode* CollisionInfo::getCollidedFirst() const
