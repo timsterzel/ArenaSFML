@@ -77,7 +77,6 @@ bool CollisionHandler::isColliding(CollisionRect &objA, CollisionRect &objB)
 
 
 
-
 // SAT algorithm
 CollisionInfo CollisionHandler::isColliding(CollisionRect &objA, CollisionRect &objB)
 {
@@ -139,6 +138,48 @@ CollisionInfo CollisionHandler::isColliding(CollisionRect &objA, CollisionRect &
     return CollisionInfo(true, overlap, collisionAxis);
 }
 
+CollisionInfo CollisionHandler::isColliding(CollisionCircle &objA, CollisionRect &objB)
+{
+    const float RectRotation = objB.getWorldRotation();
+    // We use a local coordinate system, where the Rect is axis aligned at (0|0)
+    const sf::Vector2f RectPos{ 0.f, 0.f };
+    // The Circle have to get translated into this local coordinate system. Because the rect can have a rotation we must translate the rotate of the circle, too.
+    // (Here RectRotation is used instean of RectRotation, because Calc::rotatePointAround() use the behavior of the coordinate system)
+    const sf::Vector2f CirclePos = { Calc::rotatePointAround(objA.getWorldPosition() - objB.getWorldPosition(), { 0.f, 0.f }, RectRotation) };
+
+    const float RectWidth = { objB.getWidth() };
+    const float RectHeight = { objB.getHeight() };
+    // Get the vector which represents the vector of the distance between the position of the rect and circle
+    const sf::Vector2f CircleRectDistVec = { CirclePos.x - RectPos.x, CirclePos.y - RectPos.y };
+    // Determine the nearest position on the rect to the circle (Here we can use clamping for that)
+    const float NearestX = { Calc::clamp(CircleRectDistVec.x, -(RectWidth / 2.f), RectWidth / 2.f) };
+    const float NearestY = { Calc::clamp(CircleRectDistVec.y, -(RectHeight / 2.f), RectHeight / 2.f) };
+    const sf::Vector2f Nearest = { RectPos.x + NearestX,  RectPos.y + NearestY };
+    // Get the distance between the nearest point on rect to the circle and the circle
+    const float NearestCircleDistance = { Calc::getVec2Length<sf::Vector2f>(Nearest - CirclePos) };
+    // When the distance beetween the nearest point on circle and circles position
+    // is smaller than the radius of the circle we have a collison
+    bool isCollision = { NearestCircleDistance < objA.getRadius() };
+    if (isCollision)
+    {
+        // Translate data back to world coordinates
+        const sf::Vector2f CirclePosWorld = { objA.getWorldPosition() };
+        const sf::Vector2f NearestPosWorld = { Calc::rotatePointAround(Nearest, { 0.f, 0.f }, -RectRotation) + objB.getWorldPosition() };
+
+        const float Overlap = objA.getRadius() - NearestCircleDistance;
+        const sf::Vector2f Direction = CirclePosWorld - NearestPosWorld;
+        return CollisionInfo(true, Overlap, Direction);
+    }
+    return CollisionInfo(false);
+}
+
+
+CollisionInfo CollisionHandler::isColliding(CollisionRect &objA, CollisionCircle &objB)
+{
+    return CollisionHandler::isColliding(objB, objA);;
+}
+
+// SAT
 std::pair<float, float> CollisionHandler::getProjection(sf::Vector2f axis, const std::vector<sf::Vector2f> &vertices)
 {
     float minSkalar = Calc::getVec2Scalar<sf::Vector2f, sf::Vector2f>(axis, vertices[0]);
@@ -158,6 +199,7 @@ std::pair<float, float> CollisionHandler::getProjection(sf::Vector2f axis, const
     return { minSkalar, maxSkalar };
 }
 
+// SAT
 std::vector<sf::Vector2f> CollisionHandler::getAxises(const std::vector<sf::Vector2f> &Vertices)
 {
     std::vector<sf::Vector2f> axises;
@@ -181,6 +223,7 @@ std::vector<sf::Vector2f> CollisionHandler::getAxises(const std::vector<sf::Vect
     return axises;
 }
 
+// SAT
 bool CollisionHandler::areAxisProjectionsIntersecting(const std::pair<float, float> ProjectionA, const std::pair<float, float> ProjectionB)
 {
     const float MinA = { ProjectionA.first };
@@ -196,6 +239,7 @@ bool CollisionHandler::areAxisProjectionsIntersecting(const std::pair<float, flo
     return true;
 }
 
+// SAT
 float CollisionHandler::getSATOverlap(const std::pair<float, float> ProjectionA, const std::pair<float, float> ProjectionB)
 {
     if (areAxisProjectionsIntersecting(ProjectionA, ProjectionB))
@@ -209,37 +253,7 @@ float CollisionHandler::getSATOverlap(const std::pair<float, float> ProjectionA,
     return 0.f;
 }
 
-CollisionInfo CollisionHandler::isColliding(CollisionCircle &objA, CollisionRect &objB)
-{
-    const float RectRotation = objB.getWorldRotation();
-    // We use a local coordinate system, where the Rect is axis aligned at (0|0)
-    const sf::Vector2f RectPos{ 0.f, 0.f };
-    // The Circle have to get translated into this local coordinate system. Because the rect can have a rotation we must translate the rotate of the circle, too.
-    // (Here RectRotation is used instean of RectRotation, because Calc::rotatePointAround() use the behavior of the coordinate system)
-    const sf::Vector2f CirclePos = { Calc::rotatePointAround(objA.getWorldPosition() - objB.getWorldPosition(), { 0.f, 0.f }, RectRotation) };
-
-    const float RectWidth = { objB.getWidth() };
-    const float RectHeight = { objB.getHeight() };
-    // Get the vector which represents the vector of the distance between the position of the rect and circle
-    const sf::Vector2f CircleRectDistVec = { CirclePos.x - RectPos.x, CirclePos.y - RectPos.y };
-    // Determine the nearest position on the rect to the circle (Here we can use clamping for that)
-    const float NearestX = { Calc::clamp(CircleRectDistVec.x, -(RectWidth / 2.f), RectWidth / 2.f) };
-    const float NearestY = { Calc::clamp(CircleRectDistVec.y, -(RectHeight / 2.f), RectHeight / 2.f) };
-    const sf::Vector2f Nearest{ RectPos.x + NearestX,  RectPos.y + NearestY };
-    // Get the distance between the nearest point on rect to the circle and the circle
-    const float NearestCircleDistance = { Calc::getVec2Length<sf::Vector2f>(Nearest - CirclePos) };
-    // When the distance beetween the nearest point on circle and circles position
-    // is smaller than the radius of the circle we have a collison
-    bool isCollision = { NearestCircleDistance < objA.getRadius() };
-    return CollisionInfo(isCollision);
-}
-
-
-CollisionInfo CollisionHandler::isColliding(CollisionRect &objA, CollisionCircle &objB)
-{
-    return CollisionHandler::isColliding(objB, objA);;
-}
-
+// GJK
 sf::Vector2f CollisionHandler::support(CollisionRect &objA, CollisionRect &objB, sf::Vector2f dir)
 {
     // Get the vertex of the first rect which is the nearest to the direction vector
@@ -250,6 +264,7 @@ sf::Vector2f CollisionHandler::support(CollisionRect &objA, CollisionRect &objB,
     return SupportVecA - SupportVecB;
 }
 
+// GJK
 bool CollisionHandler::containsOrigin(std::vector<sf::Vector2f> &simpex, sf::Vector2f &dir)
 {
     sf::Vector2f a = simpex.back();

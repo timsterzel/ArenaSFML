@@ -238,18 +238,6 @@ void World::handleCollision(float dt)
         }
         std::cout << "Collision: " << colCnt++ << std::endl;
     }
-    /*
-    for (SceneNode::Pair pairTmp : collisionPairs)
-    {
-        if (matchesCategories(pairTmp, WorldObjectTypes::PLAYER, WorldObjectTypes::ENEMY))
-        {
-            std::cout << "Player Enemy Collision" << std::endl;
-            //pairTmp.first->restoreLastTransform();
-            //pairTmp.second->restoreLastTransform();
-        }
-        std::cout << "Collision: " << colCnt++ << std::endl;
-    }
-    */
 }
 /*
 bool World::matchesCategories(SceneNode::Pair &colliders, WorldObjectTypes worldObjectType1, WorldObjectTypes worldObjectType2)
