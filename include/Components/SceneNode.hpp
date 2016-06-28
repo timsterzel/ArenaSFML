@@ -9,6 +9,9 @@
 #include "Components/EnumWorldObjectTypes.hpp"
 #include "Input/Command.hpp"
 
+class CollisionShape;
+class CollisionInfo;
+
 class SceneNode : public sf::Transformable, public sf::Drawable, public sf::NonCopyable
 {
     public:
@@ -70,7 +73,7 @@ class SceneNode : public sf::Transformable, public sf::Drawable, public sf::NonC
         // Restore the last state of position, rotation and scale (the pos and rotation of the entity before last change)
         void restoreLastTransform();
 
-        void checkSceneCollision(SceneNode &sceneGraph, std::vector<std::pair<Pair, CollisionInfo>> &collisionData);
+        void checkSceneCollision(SceneNode &sceneGraph, std::vector<CollisionInfo> &collisionData);
 
     private:
         // draw should not get overridden
@@ -84,8 +87,8 @@ class SceneNode : public sf::Transformable, public sf::Drawable, public sf::NonC
         // Check if the given SceneGraph and its child collides with the ScneGraph and its nodes.
         // CollisionPairs is used to check if the pair of colliding SceneNodes if allready added.
         // In the collisionData vector are the collisionInfos and the SceneNodes stored, which are affected from the collision
-        void checkNodeCollision(SceneNode &node, std::set<Pair> &collisionPairs, std::vector<std::pair<Pair, CollisionInfo>> &collisionData);
-        void checkSceneCollision(SceneNode &sceneGraph, std::set<Pair> &collisionPairs, std::vector<std::pair<Pair, CollisionInfo>> &collisionData);
+        void checkNodeCollision(SceneNode &node, std::set<Pair> &collisionPairs, std::vector<CollisionInfo> &collisionData);
+        void checkSceneCollision(SceneNode &sceneGraph, std::set<Pair> &collisionPairs, std::vector<CollisionInfo> &collisionData);
 
 
 };

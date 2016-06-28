@@ -162,15 +162,15 @@ CollisionInfo SceneNode::isColliding(SceneNode &node) const
     return m_collisionShape->isColliding(*node.getCollisionShape());
 }
 
-void SceneNode::checkSceneCollision(SceneNode &sceneGraph, std::vector<std::pair<Pair, CollisionInfo>> &collisionData)
+void SceneNode::checkSceneCollision(SceneNode &sceneGraph, std::vector<CollisionInfo> &collisionData)
 {
     // Store the collisionPairs, so we can later check if the same collision is already stored, so we only
     // store the Collision information once.
-    std::set<SceneNode::Pair> collisionPairs;
+    std::set<Pair> collisionPairs;
     checkSceneCollision(sceneGraph, collisionPairs, collisionData);
 }
 
-void SceneNode::checkSceneCollision(SceneNode &sceneGraph, std::set<Pair> &collisionPairs, std::vector<std::pair<Pair, CollisionInfo>> &collisionData)
+void SceneNode::checkSceneCollision(SceneNode &sceneGraph, std::set<Pair> &collisionPairs, std::vector<CollisionInfo> &collisionData)
 {
     checkNodeCollision(sceneGraph, collisionPairs, collisionData);
 
@@ -181,7 +181,7 @@ void SceneNode::checkSceneCollision(SceneNode &sceneGraph, std::set<Pair> &colli
 
 }
 
-void SceneNode::checkNodeCollision(SceneNode &node, std::set<Pair> &collisionPairs, std::vector<std::pair<Pair, CollisionInfo>> &collisionData)
+void SceneNode::checkNodeCollision(SceneNode &node, std::set<Pair> &collisionPairs, std::vector<CollisionInfo> &collisionData)
 {
     // If the actual SceneNode is passive we dont have to check if it colliding with something.
     // If the other node is active it will check if it is colliding with this node.
@@ -199,7 +199,7 @@ void SceneNode::checkNodeCollision(SceneNode &node, std::set<Pair> &collisionPai
             // so we can ensure that we add the collisio only once.
             if (inserted.second)
             {
-                collisionData.push_back({ sceneNodePair, collisionInfo });
+                collisionData.push_back(collisionInfo);
                 std::cout << "Inserted" << std::endl;
             }
             else

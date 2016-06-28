@@ -25,7 +25,7 @@ CollisionInfo CollisionHandler::isColliding(CollisionCircle &objA, CollisionCirc
     {
         float overlap = (objA.getRadius() + objB.getRadius()) - dist;
         sf::Vector2f direction = objB.getWorldPosition() - objA.getWorldPosition();
-        return CollisionInfo(isCollision, overlap, direction);
+        return CollisionInfo(isCollision, overlap, -direction, direction, objA.getParent(), objB.getParent());
     }
     return CollisionInfo(isCollision);
 }
@@ -135,7 +135,8 @@ CollisionInfo CollisionHandler::isColliding(CollisionRect &objA, CollisionRect &
         }
     }
     // If we were not able to create a seperate axis between the two shapes after testing all axis there have to be an intersection
-    return CollisionInfo(true, overlap, collisionAxis);
+    // tmp
+    return CollisionInfo(true, overlap, collisionAxis, -collisionAxis, objA.getParent(), objB.getParent());
 }
 
 CollisionInfo CollisionHandler::isColliding(CollisionCircle &objA, CollisionRect &objB)
@@ -168,7 +169,7 @@ CollisionInfo CollisionHandler::isColliding(CollisionCircle &objA, CollisionRect
 
         const float Overlap = objA.getRadius() - NearestCircleDistance;
         const sf::Vector2f Direction = CirclePosWorld - NearestPosWorld;
-        return CollisionInfo(true, Overlap, Direction);
+        return CollisionInfo(true, Overlap, Direction, -Direction, objA.getParent(), objB.getParent());
     }
     return CollisionInfo(false);
 }

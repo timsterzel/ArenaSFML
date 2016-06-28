@@ -1,7 +1,8 @@
 #ifndef COLLISIONINFO_HPP
 #define COLLISIONINFO_HPP
 #include <SFML/Graphics.hpp>
-#include "Components/SceneNode.hpp"
+
+class SceneNode;
 
 class CollisionInfo
 {
@@ -17,7 +18,7 @@ class CollisionInfo
     public:
         explicit CollisionInfo(const bool isCollision);
         CollisionInfo(const bool isCollision, const float length, const sf::Vector2f resolveDirFirst,
-        , const sf::Vector2f resolveDirSecond, SceneNode *const collidedFirst, SceneNode *const collidedSecond);
+        const sf::Vector2f resolveDirSecond, SceneNode *const collidedFirst, SceneNode *const collidedSecond);
 
         bool isCollision() const;
         float getLength() const;

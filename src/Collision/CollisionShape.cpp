@@ -1,6 +1,4 @@
 #include "Collision/CollisionShape.hpp"
-#include "Components/SceneNode.hpp"
-
 
 CollisionShape::CollisionShape()
 : m_parent{ nullptr }
@@ -26,6 +24,11 @@ sf::Vector2f CollisionShape::getWorldPosition() const
 void CollisionShape::setParent(SceneNode *parent)
 {
     m_parent = parent;
+}
+
+SceneNode* CollisionShape::getParent() const
+{
+    return m_parent;
 }
 
 float CollisionShape::getWorldRotation() const

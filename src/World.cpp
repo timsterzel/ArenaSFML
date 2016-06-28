@@ -238,7 +238,7 @@ void World::handleCollision(float dt)
     std::vector<CollisionInfo> collisionData;
 
     m_sceneGraph.checkSceneCollision(m_sceneGraph, collisionData);
-    for (std::pair<SceneNode::Pair, CollisionInfo> collisionDataTmp : collisionData)
+    for (CollisionInfo collisionDataTmp : collisionData)
     {
         /*
         SceneNode::Pair sceneNodes = { collisionDataTmp.first };
