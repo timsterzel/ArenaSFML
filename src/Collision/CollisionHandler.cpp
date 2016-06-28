@@ -55,7 +55,7 @@ bool CollisionHandler::isColliding(CollisionRect &objA, CollisionRect &objB)
     while (true)
     {
         // Get another minkowski difference point (Its another because we now use the negated direction
-        simplex.push_back({ support(objA, objB, dir) });
+        simplex.push_back({ supportGJK(objA, objB, dir) });
         sf::Vector2f lastPoint = simplex.back();
         // If we have as the search direction the last point to the origin and the dot product between this search direction and the new point
         // we get with this is under 0 it means that the angle between the seach direction and the new poit (as vector) is over 90 degrees.
@@ -67,7 +67,7 @@ bool CollisionHandler::isColliding(CollisionRect &objA, CollisionRect &objB)
         }
         else
         {
-            if (containsOrigin(simplex, dir))
+            if (containsOriginGJK(simplex, dir))
             {
                 return true;
             }
@@ -85,8 +85,8 @@ CollisionInfo CollisionHandler::isColliding(CollisionRect &objA, CollisionRect &
     std::vector<sf::Vector2f> verticesA = { objA.getVertices() };
     std::vector<sf::Vector2f> verticesB = { objB.getVertices() };
     // Store the axises to test
-    std::vector<sf::Vector2f> axisesA = { getAxises(verticesA) };
-    std::vector<sf::Vector2f> axisesB = { getAxises(verticesB) };
+    std::vector<sf::Vector2f> axisesA = { getAxisesSAT(verticesA) };
+    std::vector<sf::Vector2f> axisesB = { getAxisesSAT(verticesB) };
     // Used provide collision information
     // Use as standart an overlapwhich is to high that it cant occur in the game
     float overlap = { 99999.f };
@@ -97,15 +97,15 @@ CollisionInfo CollisionHandler::isColliding(CollisionRect &objA, CollisionRect &
         //std::cout << "AxisA: x: " << axis.x << " y: " << axis.y << std::endl;
         //std::cout << "ProjectionA min: " << getProjection(axis, verticesA).first << " max: " << getProjection(axis, verticesA).second
         //<< " B : min: " << getProjection(axis, verticesB).first << " max: " << getProjection(axis, verticesB).second << std::endl;
-        const std::pair<float, float> ProjectionA = { getProjection(axis, verticesA) };
-        const std::pair<float, float> ProjectionB = { getProjection(axis, verticesB) };
-        if (!areAxisProjectionsIntersecting(ProjectionA, ProjectionB))
+        const std::pair<float, float> ProjectionA = { getProjectionSAT(axis, verticesA) };
+        const std::pair<float, float> ProjectionB = { getProjectionSAT(axis, verticesB) };
+        if (!areAxisProjectionsIntersectingSAT(ProjectionA, ProjectionB))
         {
             return CollisionInfo(false);
         }
         else
         {
-            float overlapTmp = { getSATOverlap(ProjectionA, ProjectionB) };
+            float overlapTmp = { getOverlapSAT(ProjectionA, ProjectionB) };
             if (overlapTmp < overlap)
             {
                 overlap = overlapTmp;
@@ -118,15 +118,15 @@ CollisionInfo CollisionHandler::isColliding(CollisionRect &objA, CollisionRect &
         //std::cout << "AxisB: x: " << axis.x << " y: " << axis.y << std::endl;
         //std::cout << "ProjectionA min: " << getProjection(axis, verticesA).first << " max: " << getProjection(axis, verticesA).second
         //<< " B : min: " << getProjection(axis, verticesB).first << " max: " << getProjection(axis, verticesB).second << std::endl;
-        const std::pair<float, float> ProjectionA = { getProjection(axis, verticesA) };
-        const std::pair<float, float> ProjectionB = { getProjection(axis, verticesB) };
-        if (!areAxisProjectionsIntersecting(ProjectionA, ProjectionB))
+        const std::pair<float, float> ProjectionA = { getProjectionSAT(axis, verticesA) };
+        const std::pair<float, float> ProjectionB = { getProjectionSAT(axis, verticesB) };
+        if (!areAxisProjectionsIntersectingSAT(ProjectionA, ProjectionB))
         {
             return CollisionInfo(false);
         }
         else
         {
-            float overlapTmp = { getSATOverlap(ProjectionA, ProjectionB) };
+            float overlapTmp = { getOverlapSAT(ProjectionA, ProjectionB) };
             if (overlapTmp < overlap)
             {
                 overlap = overlapTmp;
@@ -199,7 +199,7 @@ CollisionInfo CollisionHandler::isColliding(CollisionRect &objA, CollisionCircle
 }
 
 // SAT
-std::pair<float, float> CollisionHandler::getProjection(sf::Vector2f axis, const std::vector<sf::Vector2f> &vertices)
+std::pair<float, float> CollisionHandler::getProjectionSAT(sf::Vector2f axis, const std::vector<sf::Vector2f> &vertices)
 {
     float minSkalar = Calc::getVec2Scalar<sf::Vector2f, sf::Vector2f>(axis, vertices[0]);
     float maxSkalar = minSkalar;
@@ -219,7 +219,7 @@ std::pair<float, float> CollisionHandler::getProjection(sf::Vector2f axis, const
 }
 
 // SAT
-std::vector<sf::Vector2f> CollisionHandler::getAxises(const std::vector<sf::Vector2f> &Vertices)
+std::vector<sf::Vector2f> CollisionHandler::getAxisesSAT(const std::vector<sf::Vector2f> &Vertices)
 {
     std::vector<sf::Vector2f> axises;
     const std::size_t VerticesSize = Vertices.size();
@@ -245,7 +245,7 @@ std::vector<sf::Vector2f> CollisionHandler::getAxises(const std::vector<sf::Vect
 }
 
 // SAT
-bool CollisionHandler::areAxisProjectionsIntersecting(const std::pair<float, float> ProjectionA, const std::pair<float, float> ProjectionB)
+bool CollisionHandler::areAxisProjectionsIntersectingSAT(const std::pair<float, float> ProjectionA, const std::pair<float, float> ProjectionB)
 {
     const float MinA = { ProjectionA.first };
     const float MaxA = { ProjectionA.second };
@@ -261,9 +261,9 @@ bool CollisionHandler::areAxisProjectionsIntersecting(const std::pair<float, flo
 }
 
 // SAT
-float CollisionHandler::getSATOverlap(const std::pair<float, float> ProjectionA, const std::pair<float, float> ProjectionB)
+float CollisionHandler::getOverlapSAT(const std::pair<float, float> ProjectionA, const std::pair<float, float> ProjectionB)
 {
-    if (areAxisProjectionsIntersecting(ProjectionA, ProjectionB))
+    if (areAxisProjectionsIntersectingSAT(ProjectionA, ProjectionB))
     {
         const float MinA = { ProjectionA.first };
         const float MaxA = { ProjectionA.second };
@@ -275,7 +275,7 @@ float CollisionHandler::getSATOverlap(const std::pair<float, float> ProjectionA,
 }
 
 // GJK
-sf::Vector2f CollisionHandler::support(CollisionRect &objA, CollisionRect &objB, sf::Vector2f dir)
+sf::Vector2f CollisionHandler::supportGJK(CollisionRect &objA, CollisionRect &objB, sf::Vector2f dir)
 {
     // Get the vertex of the first rect which is the nearest to the direction vector
     sf::Vector2f SupportVecA = objA.getFarthestPointInDirection(dir);
@@ -286,7 +286,7 @@ sf::Vector2f CollisionHandler::support(CollisionRect &objA, CollisionRect &objB,
 }
 
 // GJK
-bool CollisionHandler::containsOrigin(std::vector<sf::Vector2f> &simpex, sf::Vector2f &dir)
+bool CollisionHandler::containsOriginGJK(std::vector<sf::Vector2f> &simpex, sf::Vector2f &dir)
 {
     sf::Vector2f a = simpex.back();
     sf::Vector2f ao = -a;
