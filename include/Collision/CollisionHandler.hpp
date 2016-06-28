@@ -34,6 +34,9 @@ class CollisionHandler
         static bool areAxisProjectionsIntersecting(const std::pair<float, float> ProjectionA, const std::pair<float, float> ProjectionB);
         // Get the overlap of the 2 projections (used in SAT algorithm)
         static float getSATOverlap(const std::pair<float, float> ProjectionA, const std::pair<float, float> ProjectionB);
+        // Get the direction of Overlap
+        //static sf::Vector2f getSATOverlapDirection(const sf::Vector2f axis, const std::pair<float, float> projectionA, const std::pair<float, float> projectionB);
+
 };
 
 #endif // COLLISIONHANDLER_HPP

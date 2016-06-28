@@ -36,6 +36,7 @@ void CollisionRect::computeVertices()
     const sf::Vector2f EdgeDR = { Calc::rotatePointAround(EdgeD, Position, -Rotation) };
     // Add the vertices to the container
     m_vertices.clear();
+    // Add vertices clockwise
     m_vertices.push_back(EdgeAR);
     m_vertices.push_back(EdgeBR);
     m_vertices.push_back(EdgeCR);

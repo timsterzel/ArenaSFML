@@ -37,7 +37,6 @@ CollisionInfo CollisionHandler::isColliding(CollisionCircle &objA, CollisionCirc
 /*
 bool CollisionHandler::isColliding(CollisionRect &objA, CollisionRect &objB)
 {
-
     std::cout << "isColliding CollisionRect, CollisionRect" << std::endl;
     // Choose any vector (Its n ot relevant which vector)
     sf::Vector2f dir(1.f, 1.f);
@@ -77,8 +76,6 @@ bool CollisionHandler::isColliding(CollisionRect &objA, CollisionRect &objB)
     return false;
 }
 */
-
-
 
 // SAT algorithm
 CollisionInfo CollisionHandler::isColliding(CollisionRect &objA, CollisionRect &objB)
@@ -137,9 +134,27 @@ CollisionInfo CollisionHandler::isColliding(CollisionRect &objA, CollisionRect &
             }
         }
     }
+    const sf::Vector2f dirVecAB = { objB.getWorldPosition() - objA.getWorldPosition() };
+    sf::Vector2f directionA;
+    sf::Vector2f directionB;
+    // Angle is bigger then 90 degrees, vectors are not in the same direction.
+    // When we have a AB vector (objBs position - objAs position) and AB is not in the
+    // direction of the axis normal, ObjA have to be moves in the direction of the axis
+    // normal and objB int the opposite direction.
+    if (Calc::getVec2Scalar<sf::Vector2f, sf::Vector2f>(dirVecAB, collisionAxis) < 0)
+    {
+        directionA = collisionAxis;
+        directionB = -collisionAxis;
+    }
+    // Angle is smaller then 90 degrees, vectors are in the same direction
+    else
+    {
+        directionA = -collisionAxis;
+        directionB = collisionAxis;
+    }
+
     // If we were not able to create a seperate axis between the two shapes after testing all axis there have to be an intersection
-    // tmp
-    return CollisionInfo(true, overlap, collisionAxis, -collisionAxis, objA.getParent(), objB.getParent());
+    return CollisionInfo(true, overlap, directionA, directionB, objA.getParent(), objB.getParent());
 }
 
 CollisionInfo CollisionHandler::isColliding(CollisionCircle &objA, CollisionRect &objB)
@@ -219,6 +234,8 @@ std::vector<sf::Vector2f> CollisionHandler::getAxises(const std::vector<sf::Vect
         {
             edge = Vertices[0] - Vertices[VerticesSize - 1];
         }
+        // If we use the left perpenduclar or right perpendicular depends on the direction of the edge direction vectors.
+        // Here there are created in clockwise, so we have to use the left perpenduclar, so the normal point outwards
         sf::Vector2f perp = { Calc::getVec2PerpendicularLeft<sf::Vector2f>(edge) };
         // Get normalized vector
         perp = Calc::normalizeVec2<sf::Vector2f>(perp);

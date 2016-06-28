@@ -18,6 +18,7 @@ class CollisionRect : public CollisionShape
         float getWidth() const;
         float getHeight() const;
         // Determine where the vertices of the rect are and put them into the m_vertices vector.
+        // The vertices are added clockwise.
         void computeVertices();
         std::vector<sf::Vector2f> getVertices() const;
 
