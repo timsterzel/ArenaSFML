@@ -23,6 +23,11 @@ sf::Vector2f Entity::getVelocity() const
     return m_velocity;
 }
 
+sf::Vector2f Entity::getCurrentVelocity() const
+{
+    return m_currentVelocity;
+}
+
 void Entity::moveInActualDirection(const float length)
 {
     sf::Vector2f normalizedDir = { Calc::normalizeVec2<sf::Vector2f>(m_velocity) };

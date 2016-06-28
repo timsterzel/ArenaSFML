@@ -10,8 +10,6 @@ class Entity : public SceneNode
     protected:
         sf::Vector2f m_velocity;
         sf::Vector2f m_currentVelocity;
-
-
     private:
 
     public:
@@ -20,6 +18,7 @@ class Entity : public SceneNode
         void setVelocity(sf::Vector2f velocity);
         void setVelocity(float velX, float velY);
         sf::Vector2f getVelocity() const;
+        sf::Vector2f getCurrentVelocity() const;
         // Move the actual object the given length by the acutal direction (velocity)
         void moveInActualDirection(const float length);
         void moveInDirection(const sf::Vector2f direction, const float length);

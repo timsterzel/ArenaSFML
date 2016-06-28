@@ -59,19 +59,36 @@ void InputHandler::handleRealTimeInput(QueueHelper<Input> &inputQueue)
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
     {
-        inputQueue.push({InputTypes::UP});
+        inputQueue.push({ InputTypes::UP });
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
     {
-        inputQueue.push({InputTypes::DOWN});
+        inputQueue.push({ InputTypes::DOWN });
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
     {
-        inputQueue.push({InputTypes::LEFT});
+        inputQueue.push({ InputTypes::LEFT });
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
     {
-        inputQueue.push({InputTypes::RIGHT});
+        inputQueue.push({ InputTypes::RIGHT });
+    }
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+    {
+        inputQueue.push({ InputTypes::UP_A });
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+    {
+        inputQueue.push({ InputTypes::DOWN_A });
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+    {
+        inputQueue.push({ InputTypes::LEFT_A });
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+    {
+        inputQueue.push({ InputTypes::RIGHT_A });
     }
 
     m_lastMousePos.x = CurrentMousePos.x;

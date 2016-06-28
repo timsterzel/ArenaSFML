@@ -114,6 +114,16 @@ void World::buildScene()
     m_playerWarrior->setType(WorldObjectTypes::PLAYER);
     m_sceneLayers[Layers::MAIN]->attachChild(std::move(warrior));
 
+    std::unique_ptr<Warrior> warriorPlayerTwo(new Warrior(100, Textures::KNIGHT, m_TextureHolder));
+    m_playerWarriorTwo = warriorPlayerTwo.get();
+    std::unique_ptr<CollisionShape> collisionShapeWarriorPlayer2(new CollisionCircle(12.f));
+    //std::unique_ptr<CollisionShape> collisionShapeWarrior(new CollisionRect({ 32.f, 32.f }));
+    m_playerWarriorTwo->setCollisionShape(std::move(collisionShapeWarriorPlayer2));
+    m_playerWarriorTwo->setPosition(800 / 2.f - 160.f, 480 / 2.f + 90.f);
+    m_playerWarriorTwo->setVelocity(60.f, 60.f);
+    m_playerWarriorTwo->setType(WorldObjectTypes::PLAYER_TWO);
+    m_sceneLayers[Layers::MAIN]->attachChild(std::move(warriorPlayerTwo));
+
     // Collision Tests
     /*
     if (m_playerWarrior->getCollisionShape()->isColliding(*wizardEnemyTmp->getCollisionShape()))
@@ -163,6 +173,19 @@ void World::translateInput(Input input, float dt)
             break;
         case InputTypes::RIGHT :
             m_commandQueue.push({ CommandTypes::MOVE_RIGHT, WorldObjectTypes::PLAYER });
+            break;
+        // Tmp (Arrow Keys)
+        case InputTypes::UP_A :
+            m_commandQueue.push({ CommandTypes::MOVE_UP, WorldObjectTypes::PLAYER_TWO });
+            break;
+        case InputTypes::DOWN_A :
+            m_commandQueue.push({ CommandTypes::MOVE_DOWN, WorldObjectTypes::PLAYER_TWO });
+            break;
+        case InputTypes::LEFT_A :
+            m_commandQueue.push({ CommandTypes::MOVE_LEFT, WorldObjectTypes::PLAYER_TWO });
+            break;
+        case InputTypes::RIGHT_A :
+            m_commandQueue.push({ CommandTypes::MOVE_RIGHT, WorldObjectTypes::PLAYER_TWO });
             break;
     }
     /*
@@ -231,6 +254,42 @@ void World::handleCollision(float dt)
             // and when move it in the other direction
             sf::Vector2f dirOne = Calc::getVec2Scalar(entityOne->getVelocity(), direction) <= 0 ? direction : -direction;
             sf::Vector2f dirTwo = Calc::getVec2Scalar(entityTwo->getVelocity(), direction) <= 0 ? direction : -direction;
+            entityOne->moveInDirection(direction, overlap / 2.f);
+            entityTwo->moveInDirection(-direction, overlap / 2.f);
+            //pairTmp.first->restoreLastTransform();
+            //pairTmp.second->restoreLastTransform();
+        }
+        else if (matchesCategories(sceneNodes, WorldObjectTypes::ENEMY, WorldObjectTypes::ENEMY))
+        {
+            Entity *entityOne = { static_cast<Entity*>(sceneNodes.first) };
+            Entity *entityTwo = { static_cast<Entity*>(sceneNodes.second) };
+            std::cout << "ENEMY Enemy Collision" << std::endl;
+            float overlap = { collisionInfo.getLength() };
+            std::cout << "OVERLAP: " << overlap << std::endl;
+            sf::Vector2f direction = { collisionInfo.getDirection() };
+            // Check if the entity direction is the same as the direction given by the collision info
+            // and when move it in the other direction
+            sf::Vector2f dirOne = Calc::getVec2Scalar(entityOne->getVelocity(), direction) <= 0 ? direction : -direction;
+            sf::Vector2f dirTwo = Calc::getVec2Scalar(entityTwo->getVelocity(), direction) <= 0 ? direction : -direction;
+            entityOne->moveInDirection(direction, overlap / 2.f);
+            entityTwo->moveInDirection(-direction, overlap / 2.f);
+            //pairTmp.first->restoreLastTransform();
+            //pairTmp.second->restoreLastTransform();
+        }
+        else if (matchesCategories(sceneNodes, WorldObjectTypes::PLAYER, WorldObjectTypes::PLAYER_TWO))
+        {
+            Entity *entityOne = { static_cast<Entity*>(sceneNodes.first) };
+            Entity *entityTwo = { static_cast<Entity*>(sceneNodes.second) };
+            std::cout << "ENEMY Enemy Collision" << std::endl;
+            float overlap = { collisionInfo.getLength() };
+            std::cout << "OVERLAP: " << overlap << std::endl;
+            sf::Vector2f direction = { collisionInfo.getDirection() };
+            // Check if the entity direction is the same as the direction given by the collision info
+            // and when move it in the other direction
+            sf::Vector2f dirOne = Calc::getVec2Scalar(entityOne->getCurrentVelocity(), direction) <= 0 ? direction : -direction;
+            sf::Vector2f dirTwo = Calc::getVec2Scalar(entityTwo->getCurrentVelocity(), direction) <= 0 ? direction : -direction;
+            std::cout << "Vel One: X:" << entityOne->getCurrentVelocity().x << " Y: " << entityOne->getCurrentVelocity().y << std::endl;
+            std::cout << "Vel Two: X:" << entityTwo->getCurrentVelocity().x <<  " Y: " << entityTwo->getCurrentVelocity().y << std::endl;
             entityOne->moveInDirection(direction, overlap / 2.f);
             entityTwo->moveInDirection(-direction, overlap / 2.f);
             //pairTmp.first->restoreLastTransform();

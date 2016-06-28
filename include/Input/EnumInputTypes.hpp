@@ -14,7 +14,12 @@ enum class InputTypes
     LEFT,
     RIGHT,
     UP,
-    DOWN
+    DOWN,
+    // TMP
+    LEFT_A,
+    RIGHT_A,
+    UP_A,
+    DOWN_A
 };
 
 #endif // ENUMINPUTTYPES_HPP

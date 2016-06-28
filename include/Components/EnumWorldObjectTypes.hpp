@@ -5,7 +5,9 @@ enum class WorldObjectTypes
 {
     NONE,
     PLAYER,
-    ENEMY
+    ENEMY,
+    // TMP
+    PLAYER_TWO
 };
 
 #endif // ENUMWORLDOBJECTTYPE

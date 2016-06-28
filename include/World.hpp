@@ -38,6 +38,7 @@ class World : private sf::NonCopyable
 
         sf::FloatRect m_worldBounds;
         Warrior *m_playerWarrior;
+        Warrior *m_playerWarriorTwo;
         // TMP
         long colCnt = 0;
 
