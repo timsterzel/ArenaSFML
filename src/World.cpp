@@ -238,65 +238,80 @@ void World::handleCollision(float dt)
     std::vector<CollisionInfo> collisionData;
 
     m_sceneGraph.checkSceneCollision(m_sceneGraph, collisionData);
-    for (CollisionInfo collisionDataTmp : collisionData)
+    for (CollisionInfo collisionInfo : collisionData)
     {
-        /*
-        SceneNode::Pair sceneNodes = { collisionDataTmp.first };
-        CollisionInfo collisionInfo = { collisionDataTmp.second };
+        SceneNode *sceneNodeFirst = { collisionInfo.getCollidedFirst() };
+        SceneNode *sceneNodeSecond = { collisionInfo.getCollidedSecond() };
+        SceneNode::Pair sceneNodes = { collisionInfo.getCollidedFirst(), collisionInfo.getCollidedSecond() };
         if (matchesCategories(sceneNodes, WorldObjectTypes::PLAYER, WorldObjectTypes::ENEMY))
         {
-            Entity *entityOne = { static_cast<Entity*>(sceneNodes.first) };
-            Entity *entityTwo = { static_cast<Entity*>(sceneNodes.second) };
-            std::cout << "Player Enemy Collision" << std::endl;
+            Entity *entityOne = { static_cast<Entity*>(sceneNodeFirst) };
+            Entity *entityTwo = { static_cast<Entity*>(sceneNodeSecond) };
             float overlap = { collisionInfo.getLength() };
+            entityOne->moveInDirection(collisionInfo.getResolveDirOfFirst(), overlap / 2.f);
+            entityTwo->moveInDirection(collisionInfo.getResolveDirOfSecond(), overlap / 2.f);
+            std::cout << "Player Enemy Enemy" << std::endl;
             std::cout << "OVERLAP: " << overlap << std::endl;
-            sf::Vector2f direction = { collisionInfo.getDirection() };
+            std::cout << "DirOne: X:" << collisionInfo.getResolveDirOfFirst().x << " Y: " << collisionInfo.getResolveDirOfFirst().y << std::endl;
+            std::cout << "DirTwo: X:" << collisionInfo.getResolveDirOfSecond().x <<  " Y: " << collisionInfo.getResolveDirOfSecond().y << std::endl;
+            std::cout << "PosOne: X:" << entityOne->getWorldPosition().x << " Y: " << entityOne->getWorldPosition().y << std::endl;
+            std::cout << "PosTwo: X:" << entityTwo->getWorldPosition().x <<  " Y: " << entityTwo->getWorldPosition().y << std::endl;
+            /*
+            while(1)
+            {
+
+            }
+            */
+            //sf::Vector2f direction = { collisionInfo.getDirection() };
             // Check if the entity direction is the same as the direction given by the collision info
             // and when move it in the other direction
-            sf::Vector2f dirOne = Calc::getVec2Scalar(entityOne->getVelocity(), direction) <= 0 ? direction : -direction;
-            sf::Vector2f dirTwo = Calc::getVec2Scalar(entityTwo->getVelocity(), direction) <= 0 ? direction : -direction;
-            entityOne->moveInDirection(direction, overlap / 2.f);
-            entityTwo->moveInDirection(-direction, overlap / 2.f);
-            //pairTmp.first->restoreLastTransform();
-            //pairTmp.second->restoreLastTransform();
+            //sf::Vector2f dirOne = Calc::getVec2Scalar(entityOne->getVelocity(), direction) <= 0 ? direction : -direction;
+            //sf::Vector2f dirTwo = Calc::getVec2Scalar(entityTwo->getVelocity(), direction) <= 0 ? direction : -direction;
+            //entityOne->moveInDirection(direction, overlap / 2.f);
+            //entityTwo->moveInDirection(-direction, overlap / 2.f);
         }
         else if (matchesCategories(sceneNodes, WorldObjectTypes::ENEMY, WorldObjectTypes::ENEMY))
         {
-            Entity *entityOne = { static_cast<Entity*>(sceneNodes.first) };
-            Entity *entityTwo = { static_cast<Entity*>(sceneNodes.second) };
-            std::cout << "ENEMY Enemy Collision" << std::endl;
+            Entity *entityOne = { static_cast<Entity*>(sceneNodeFirst) };
+            Entity *entityTwo = { static_cast<Entity*>(sceneNodeSecond) };
             float overlap = { collisionInfo.getLength() };
-            std::cout << "OVERLAP: " << overlap << std::endl;
-            sf::Vector2f direction = { collisionInfo.getDirection() };
-            // Check if the entity direction is the same as the direction given by the collision info
-            // and when move it in the other direction
-            sf::Vector2f dirOne = Calc::getVec2Scalar(entityOne->getVelocity(), direction) <= 0 ? direction : -direction;
-            sf::Vector2f dirTwo = Calc::getVec2Scalar(entityTwo->getVelocity(), direction) <= 0 ? direction : -direction;
-            entityOne->moveInDirection(direction, overlap / 2.f);
-            entityTwo->moveInDirection(-direction, overlap / 2.f);
-            //pairTmp.first->restoreLastTransform();
-            //pairTmp.second->restoreLastTransform();
+            entityOne->moveInDirection(collisionInfo.getResolveDirOfFirst(), overlap / 2.f);
+            entityTwo->moveInDirection(collisionInfo.getResolveDirOfSecond(), overlap / 2.f);
         }
         else if (matchesCategories(sceneNodes, WorldObjectTypes::PLAYER, WorldObjectTypes::PLAYER_TWO))
         {
-            Entity *entityOne = { static_cast<Entity*>(sceneNodes.first) };
-            Entity *entityTwo = { static_cast<Entity*>(sceneNodes.second) };
-            std::cout << "ENEMY Enemy Collision" << std::endl;
+            Entity *entityOne = { static_cast<Entity*>(sceneNodeFirst) };
+            Entity *entityTwo = { static_cast<Entity*>(sceneNodeSecond) };
             float overlap = { collisionInfo.getLength() };
+            entityOne->moveInDirection(collisionInfo.getResolveDirOfFirst(), overlap / 2.f);
+            entityTwo->moveInDirection(collisionInfo.getResolveDirOfSecond(), overlap / 2.f);
             std::cout << "OVERLAP: " << overlap << std::endl;
-            sf::Vector2f direction = { collisionInfo.getDirection() };
-            // Check if the entity direction is the same as the direction given by the collision info
-            // and when move it in the other direction
-            sf::Vector2f dirOne = Calc::getVec2Scalar(entityOne->getCurrentVelocity(), direction) <= 0 ? direction : -direction;
-            sf::Vector2f dirTwo = Calc::getVec2Scalar(entityTwo->getCurrentVelocity(), direction) <= 0 ? direction : -direction;
-            std::cout << "Vel One: X:" << entityOne->getCurrentVelocity().x << " Y: " << entityOne->getCurrentVelocity().y << std::endl;
-            std::cout << "Vel Two: X:" << entityTwo->getCurrentVelocity().x <<  " Y: " << entityTwo->getCurrentVelocity().y << std::endl;
-            entityOne->moveInDirection(direction, overlap / 2.f);
-            entityTwo->moveInDirection(-direction, overlap / 2.f);
+            std::cout << "DirOne: X:" << collisionInfo.getResolveDirOfFirst().x << " Y: " << collisionInfo.getResolveDirOfFirst().y << std::endl;
+            std::cout << "DirTwo: X:" << collisionInfo.getResolveDirOfSecond().x <<  " Y: " << collisionInfo.getResolveDirOfSecond().y << std::endl;
+            std::cout << "PosOne: X:" << entityOne->getWorldPosition().x << " Y: " << entityOne->getWorldPosition().y << std::endl;
+            std::cout << "PosTwo: X:" << entityTwo->getWorldPosition().x <<  " Y: " << entityTwo->getWorldPosition().y << std::endl;
+        }
+        else if (matchesCategories(sceneNodes, WorldObjectTypes::ENEMY, WorldObjectTypes::PLAYER_TWO))
+        {
+            Entity *entityOne = { static_cast<Entity*>(sceneNodeFirst) };
+            Entity *entityTwo = { static_cast<Entity*>(sceneNodeSecond) };
+            float overlap = { collisionInfo.getLength() };
+            entityOne->moveInDirection(collisionInfo.getResolveDirOfFirst(), overlap / 2.f);
+            entityTwo->moveInDirection(collisionInfo.getResolveDirOfSecond(), overlap / 2.f);
             //pairTmp.first->restoreLastTransform();
             //pairTmp.second->restoreLastTransform();
         }
-        */
+        else if (matchesCategories(sceneNodes, WorldObjectTypes::NONE, WorldObjectTypes::PLAYER))
+        {
+            Entity *entityOne = { static_cast<Entity*>(sceneNodeFirst) };
+            Entity *entityTwo = { static_cast<Entity*>(sceneNodeSecond) };
+            float overlap = { collisionInfo.getLength() };
+            entityOne->moveInDirection(collisionInfo.getResolveDirOfFirst(), overlap / 2.f);
+            entityTwo->moveInDirection(collisionInfo.getResolveDirOfSecond(), overlap / 2.f);
+            //pairTmp.first->restoreLastTransform();
+            //pairTmp.second->restoreLastTransform();
+        }
+
         std::cout << "Collision: " << colCnt++ << std::endl;
     }
 }

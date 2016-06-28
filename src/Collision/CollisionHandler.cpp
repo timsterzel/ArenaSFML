@@ -14,18 +14,21 @@ CollisionHandler::CollisionHandler(SceneNode *sceneGraph)
 
 CollisionInfo CollisionHandler::isColliding(CollisionCircle &objA, CollisionCircle &objB)
 {
+    const sf::Vector2f distVec = { objA.getWorldPosition() - objB.getWorldPosition() };
+    const float dist = Calc::getVec2Length<sf::Vector2f>(distVec);
     //std::cout << "isColliding CollisionCircle, CollisionCircle" << std::endl;
     //std::cout << "objA Pos: x = " << objA.getWorldPosition().x << " y = " << objA.getWorldPosition().y << std::endl;
     //std::cout << "objB Pos: x = " << objB.getWorldPosition().x << " y = " << objB.getWorldPosition().y << std::endl;
+    /*
     const float distX = { objA.getWorldPosition().x - objB.getWorldPosition().x };
     const float distY = { objA.getWorldPosition().y - objB.getWorldPosition().y };
     const float dist = std::sqrt((distX * distX)  + (distY * distY));
+    */
     bool isCollision = { dist < objA.getRadius() + objB.getRadius() };
     if (isCollision)
     {
         float overlap = (objA.getRadius() + objB.getRadius()) - dist;
-        sf::Vector2f direction = objB.getWorldPosition() - objA.getWorldPosition();
-        return CollisionInfo(isCollision, overlap, -direction, direction, objA.getParent(), objB.getParent());
+        return CollisionInfo(true, overlap, distVec, -distVec, objA.getParent(), objB.getParent());
     }
     return CollisionInfo(isCollision);
 }
