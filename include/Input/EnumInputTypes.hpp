@@ -15,6 +15,11 @@ enum class InputTypes
     RIGHT,
     UP,
     DOWN,
+    // Debug
+    D1,
+    D2,
+    D3,
+    D4,
     // TMP
     LEFT_A,
     RIGHT_A,

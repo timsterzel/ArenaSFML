@@ -36,6 +36,25 @@ void InputHandler::handleEvents(QueueHelper<Input> &inputQueue)
         {
             // Do nothing at the moment
         }
+        else if (event.type == sf::Event::KeyPressed)
+        {
+            if (event.key.code == sf::Keyboard::F1)
+            {
+                inputQueue.push({ InputTypes::D1 });
+            }
+            else if (event.key.code == sf::Keyboard::F2)
+            {
+                inputQueue.push({ InputTypes::D2 });
+            }
+            else if (event.key.code == sf::Keyboard::F3)
+            {
+                inputQueue.push({ InputTypes::D3 });
+            }
+            else if (event.key.code == sf::Keyboard::F4)
+            {
+                inputQueue.push({ InputTypes::D4 });
+            }
+        }
 
     }
 }

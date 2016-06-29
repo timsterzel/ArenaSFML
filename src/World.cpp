@@ -92,7 +92,6 @@ void World::buildScene()
     warriorEnemy2->setType(WorldObjectTypes::NONE);
     m_sceneLayers[Layers::MAIN]->attachChild(std::move(warriorEnemy2));
 
-
     std::unique_ptr<Warrior> warriorEnemy3(new Warrior(100, Textures::KNIGHT, m_TextureHolder));
     SceneNode *warriorEnemy3Tmp = warriorEnemy3.get();
     std::unique_ptr<CollisionShape> collisionShapeWarriorEnemy3(new CollisionRect({ 32.f, 32.f }));
@@ -102,8 +101,6 @@ void World::buildScene()
     warriorEnemy3->setType(WorldObjectTypes::NONE);
     warriorEnemy3->setRotation(50.f);
     m_sceneLayers[Layers::MAIN]->attachChild(std::move(warriorEnemy3));
-
-
 
     std::unique_ptr<Warrior> warrior(new Warrior(100, Textures::KNIGHT, m_TextureHolder));
     m_playerWarrior = warrior.get();
@@ -174,6 +171,19 @@ void World::translateInput(Input input, float dt)
             break;
         case InputTypes::RIGHT :
             m_commandQueue.push({ CommandTypes::MOVE_RIGHT, WorldObjectTypes::PLAYER });
+            break;
+        // Debug
+        case InputTypes::D1 :
+
+            break;
+        case InputTypes::D2 :
+
+            break;
+        case InputTypes::D3 :
+
+            break;
+        case InputTypes::D4 :
+
             break;
         // Tmp (Arrow Keys)
         case InputTypes::UP_A :

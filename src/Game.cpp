@@ -72,7 +72,25 @@ void Game::handleInput()
     while(!m_inputQueue.isEmpty())
     {
         Input input = m_inputQueue.pop();
-        //m_sceneGraph.onCommand(input, m_dt);
+        if (m_isInDebug)
+        {
+            switch (input.getInputType())
+            {
+                case InputTypes::D1 :
+
+                    break;
+                case InputTypes::D2 :
+                    // Show /hide statistics
+                    m_showStats = !m_showStats;
+                    break;
+                case InputTypes::D3 :
+
+                    break;
+                case InputTypes::D4 :
+
+                    break;
+            }
+        }
         // Let world class translate the input to commands
         m_world.translateInput(input, m_dt);
     }
@@ -94,7 +112,10 @@ void Game::render()
     m_window.clear();
     m_window.draw(m_sceneGraph);
     m_world.render();
-    m_window.draw(m_txtStatFPS);
+    if (m_showStats)
+    {
+        m_window.draw(m_txtStatFPS);
+    }
     m_window.display();
 }
 
