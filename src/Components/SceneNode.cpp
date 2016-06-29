@@ -49,12 +49,22 @@ void SceneNode::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
         states.transform *= getTransform();
         drawCurrent(target, states);
+        drawCollisionShape(target, states);
         drawChildren(target, states);
 }
 
 void SceneNode::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const
 {
     //Do nothing by default
+}
+
+void SceneNode::drawCollisionShape(sf::RenderTarget &target, sf::RenderStates states) const
+{
+    // Only draw collision shape when it is not nullptr
+    if (m_collisionShape)
+    {
+        m_collisionShape->draw(target, states);
+    }
 }
 
 void SceneNode::drawChildren(sf::RenderTarget &target, sf::RenderStates states) const

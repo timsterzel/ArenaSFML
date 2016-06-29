@@ -13,8 +13,9 @@ class CollisionShape : public sf::Transformable, public sf::Drawable
 {
     protected:
         SceneNode *m_parent;
+        bool *m_draw;
     public:
-        CollisionShape();
+        CollisionShape(bool *draw);
 
         virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const = 0;
 

@@ -10,6 +10,7 @@
 World::World(const bool isInDebug, sf::RenderWindow *window, const ResourceHolder<sf::Font, Fonts> &FontHolder,
 const ResourceHolder<sf::Texture, Textures> &TextureHolder)
 : m_isInDebug { isInDebug }
+, m_drawCollisionShape{ false }
 , m_window{ window }
 , m_worldView{ m_window->getDefaultView() }
 , m_FontHolder{ FontHolder }
@@ -64,7 +65,7 @@ void World::buildScene()
 
     std::unique_ptr<Warrior> wizard(new Warrior(100, Textures::WIZARD, m_TextureHolder));
     SceneNode *wizardEnemyTmp = wizard.get();
-    std::unique_ptr<CollisionShape> collisionShapeWizard(new CollisionCircle(12.f));
+    std::unique_ptr<CollisionShape> collisionShapeWizard(new CollisionCircle(12.f , &m_drawCollisionShape));
     wizard->setCollisionShape(std::move(collisionShapeWizard));
     //wizard->setPosition(800 / 2.f + 100.f, 480 / 2.f);
     wizard->setPosition(800 / 2.f - 60.f, 480 / 2.f - 10.f);
@@ -75,7 +76,7 @@ void World::buildScene()
 
     std::unique_ptr<Warrior> warriorEnemy(new Warrior(100, Textures::KNIGHT, m_TextureHolder));
     SceneNode *warriorEnemyTmp = warriorEnemy.get();
-    std::unique_ptr<CollisionShape> collisionShapeWarriorEnemy(new CollisionRect({ 32.f, 32.f }));
+    std::unique_ptr<CollisionShape> collisionShapeWarriorEnemy(new CollisionRect({ 32.f, 32.f }, &m_drawCollisionShape));
     warriorEnemy->setCollisionShape(std::move(collisionShapeWarriorEnemy));
     warriorEnemy->setPosition(800 / 3.f + 100.f, 480 / 3.f);
     warriorEnemy->setVelocity(30.f, 30.f);
@@ -85,7 +86,7 @@ void World::buildScene()
 
     std::unique_ptr<Warrior> warriorEnemy2(new Warrior(100, Textures::KNIGHT, m_TextureHolder));
     SceneNode *warriorEnemy2Tmp = warriorEnemy2.get();
-    std::unique_ptr<CollisionShape> collisionShapeWarriorEnemy2(new CollisionRect({ 32.f, 32.f }));
+    std::unique_ptr<CollisionShape> collisionShapeWarriorEnemy2(new CollisionRect({ 32.f, 32.f }, &m_drawCollisionShape));
     warriorEnemy2->setCollisionShape(std::move(collisionShapeWarriorEnemy2));
     warriorEnemy2->setPosition(800 / 3.f + 300.f, 480 / 3.f);
     warriorEnemy2->setVelocity(30.f, 30.f);
@@ -94,7 +95,7 @@ void World::buildScene()
 
     std::unique_ptr<Warrior> warriorEnemy3(new Warrior(100, Textures::KNIGHT, m_TextureHolder));
     SceneNode *warriorEnemy3Tmp = warriorEnemy3.get();
-    std::unique_ptr<CollisionShape> collisionShapeWarriorEnemy3(new CollisionRect({ 32.f, 32.f }));
+    std::unique_ptr<CollisionShape> collisionShapeWarriorEnemy3(new CollisionRect({ 32.f, 32.f }, &m_drawCollisionShape));
     warriorEnemy3->setCollisionShape(std::move(collisionShapeWarriorEnemy3));
     warriorEnemy3->setPosition(800 / 3.f + 300.f, 380);
     warriorEnemy3->setVelocity(30.f, 30.f);
@@ -104,7 +105,7 @@ void World::buildScene()
 
     std::unique_ptr<Warrior> warrior(new Warrior(100, Textures::KNIGHT, m_TextureHolder));
     m_playerWarrior = warrior.get();
-    std::unique_ptr<CollisionShape> collisionShapeWarrior(new CollisionCircle(12.f));
+    std::unique_ptr<CollisionShape> collisionShapeWarrior(new CollisionCircle(12.f, &m_drawCollisionShape));
     //std::unique_ptr<CollisionShape> collisionShapeWarrior(new CollisionRect({ 32.f, 32.f }));
     m_playerWarrior->setCollisionShape(std::move(collisionShapeWarrior));
     m_playerWarrior->setPosition(800 / 2.f, 480 / 2.f);
@@ -115,7 +116,7 @@ void World::buildScene()
     std::unique_ptr<Warrior> warriorPlayerTwo(new Warrior(100, Textures::KNIGHT, m_TextureHolder));
     Warrior *playerWarriorTwo = warriorPlayerTwo.get();
     //std::unique_ptr<CollisionShape> collisionShapeWarriorPlayer2(new CollisionCircle(12.f));
-    std::unique_ptr<CollisionShape> collisionShapeWarriorPlayer2(new CollisionRect({ 32.f, 32.f }));
+    std::unique_ptr<CollisionShape> collisionShapeWarriorPlayer2(new CollisionRect({ 32.f, 32.f }, &m_drawCollisionShape));
     playerWarriorTwo->setCollisionShape(std::move(collisionShapeWarriorPlayer2));
     playerWarriorTwo->setPosition(800 / 2.f - 160.f, 480 / 2.f + 90.f);
     playerWarriorTwo->setVelocity(60.f, 60.f);
@@ -180,7 +181,7 @@ void World::translateInput(Input input, float dt)
 
             break;
         case InputTypes::D3 :
-
+            m_drawCollisionShape = !m_drawCollisionShape;
             break;
         case InputTypes::D4 :
 

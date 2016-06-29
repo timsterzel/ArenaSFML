@@ -1,7 +1,8 @@
 #include "Collision/CollisionShape.hpp"
 
-CollisionShape::CollisionShape()
+CollisionShape::CollisionShape(bool *draw)
 : m_parent{ nullptr }
+, m_draw{ draw }
 {
 
 }

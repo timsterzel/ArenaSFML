@@ -43,11 +43,6 @@ void Warrior::heal(const int health)
 void Warrior::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const
 {
     target.draw(m_sprite, states);
-    // Only draw collision shape when it is not nullptr
-    if (m_collisionShape)
-    {
-        m_collisionShape->draw(target, states);
-    }
 }
 
 void Warrior::onCommandCurrent(const Command &command, float dt)

@@ -25,6 +25,7 @@ class World : private sf::NonCopyable
 
     private:
         bool m_isInDebug;
+        bool m_drawCollisionShape;
 
         sf::RenderWindow *m_window;
         sf::View m_worldView;
