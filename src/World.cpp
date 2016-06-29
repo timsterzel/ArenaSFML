@@ -7,15 +7,16 @@
 #include "Calc.hpp"
 #include <memory>
 
-World::World(sf::RenderWindow *window, const ResourceHolder<sf::Font, Fonts> &FontHolder, const ResourceHolder<sf::Texture, Textures> &TextureHolder
-    /*,QueueHelper<Input> *inputQueue*/)
-: m_window{window}
-, m_worldView{m_window->getDefaultView()}
-, m_FontHolder{FontHolder}
-, m_TextureHolder{TextureHolder}
+World::World(const bool isInDebug, sf::RenderWindow *window, const ResourceHolder<sf::Font, Fonts> &FontHolder,
+const ResourceHolder<sf::Texture, Textures> &TextureHolder)
+: m_isInDebug { isInDebug }
+, m_window{ window }
+, m_worldView{ m_window->getDefaultView() }
+, m_FontHolder{ FontHolder }
+, m_TextureHolder{ TextureHolder }
 //, m_inputQueue{inputQueue}
 , m_worldBounds{ 0.f, 0.f, 800.f, 480.f }
-, m_playerWarrior{nullptr}
+, m_playerWarrior{ nullptr }
 {
 
 }
@@ -115,13 +116,13 @@ void World::buildScene()
     m_sceneLayers[Layers::MAIN]->attachChild(std::move(warrior));
 
     std::unique_ptr<Warrior> warriorPlayerTwo(new Warrior(100, Textures::KNIGHT, m_TextureHolder));
-    m_playerWarriorTwo = warriorPlayerTwo.get();
+    Warrior *playerWarriorTwo = warriorPlayerTwo.get();
     //std::unique_ptr<CollisionShape> collisionShapeWarriorPlayer2(new CollisionCircle(12.f));
     std::unique_ptr<CollisionShape> collisionShapeWarriorPlayer2(new CollisionRect({ 32.f, 32.f }));
-    m_playerWarriorTwo->setCollisionShape(std::move(collisionShapeWarriorPlayer2));
-    m_playerWarriorTwo->setPosition(800 / 2.f - 160.f, 480 / 2.f + 90.f);
-    m_playerWarriorTwo->setVelocity(60.f, 60.f);
-    m_playerWarriorTwo->setType(WorldObjectTypes::PLAYER_TWO);
+    playerWarriorTwo->setCollisionShape(std::move(collisionShapeWarriorPlayer2));
+    playerWarriorTwo->setPosition(800 / 2.f - 160.f, 480 / 2.f + 90.f);
+    playerWarriorTwo->setVelocity(60.f, 60.f);
+    playerWarriorTwo->setType(WorldObjectTypes::PLAYER_TWO);
     m_sceneLayers[Layers::MAIN]->attachChild(std::move(warriorPlayerTwo));
 
     // Collision Tests

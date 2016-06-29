@@ -3,17 +3,18 @@
 #include <memory>
 
 
-Game::Game(bool showStats)
-: m_screenHeight{800}
-, m_screenWidth{480}
-, m_showStats{showStats}
-, m_window{sf::VideoMode{m_screenHeight, m_screenWidth}, "ArenaSFML"}
-, m_isRunning{true}
-, m_dt{0}
-, m_fps{0}
-, m_timePoint1{CLOCK::now()}
-, m_inputHandler{&m_window}
-, m_world{&m_window, m_fontHolder, m_textureHolder}
+Game::Game(const bool showStats, const bool isInDebug)
+: m_screenHeight{ 800 }
+, m_screenWidth{ 480 }
+, m_showStats{ showStats }
+, m_isInDebug{ isInDebug }
+, m_window{ sf::VideoMode{ m_screenHeight, m_screenWidth} , "ArenaSFML" }
+, m_isRunning{ true }
+, m_dt{ 0 }
+, m_fps{ 0 }
+, m_timePoint1{ CLOCK::now() }
+, m_inputHandler{ &m_window }
+, m_world{ isInDebug, &m_window, m_fontHolder, m_textureHolder }
 {
     m_window.setFramerateLimit(60);
     loadFonts();

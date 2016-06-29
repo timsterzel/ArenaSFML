@@ -22,6 +22,7 @@ class Game
         unsigned int m_screenHeight;
         unsigned int m_screenWidth;
         bool m_showStats;
+        bool m_isInDebug;
 
         sf::RenderWindow m_window;
         sf::Font m_fontDefault;
@@ -55,7 +56,7 @@ class Game
         void render();
 
     public:
-        Game(bool showStats);
+        Game(const bool showStats, const bool isInDebug);
         void run();
 };
 

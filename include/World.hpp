@@ -24,6 +24,8 @@ class World : private sf::NonCopyable
         };
 
     private:
+        bool m_isInDebug;
+
         sf::RenderWindow *m_window;
         sf::View m_worldView;
 
@@ -38,12 +40,11 @@ class World : private sf::NonCopyable
 
         sf::FloatRect m_worldBounds;
         Warrior *m_playerWarrior;
-        Warrior *m_playerWarriorTwo;
         // TMP
         long colCnt = 0;
 
     public:
-        World(sf::RenderWindow *window, const ResourceHolder<sf::Font, Fonts> &fontHolder,
+        World(const bool isInDebug, sf::RenderWindow *window, const ResourceHolder<sf::Font, Fonts> &fontHolder,
                 const ResourceHolder<sf::Texture, Textures> &textureHolder);
 
         void buildScene();
