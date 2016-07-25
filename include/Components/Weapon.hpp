@@ -13,7 +13,6 @@ class Weapon : public Entity
     private:
         sf::Sprite m_sprite;
 
-
     public:
         Weapon(const int damage, Textures textureId, const ResourceHolder<sf::Texture, Textures> &textureHolder);
 
@@ -21,6 +20,9 @@ class Weapon : public Entity
 
         int getDamage() const;
         void setDamage(const int damage);
+
+        int getSpriteWidth() const;
+        int getSpriteHeight() const;
 
         virtual void drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const;
 

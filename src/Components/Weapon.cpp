@@ -25,10 +25,17 @@ void Weapon::setDamage(const int damage)
     m_damage = damage;
 }
 
+int Weapon::getSpriteWidth() const
+{
+    return m_sprite.getGlobalBounds().width;
+}
+
+int Weapon::getSpriteHeight() const
+{
+    return m_sprite.getGlobalBounds().height;
+}
+
 void Weapon::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const
 {
     target.draw(m_sprite, states);
 }
-
-
-

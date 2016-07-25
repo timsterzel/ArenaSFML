@@ -75,9 +75,12 @@ class SceneNode : public sf::Transformable, public sf::Drawable, public sf::NonC
 
         void checkSceneCollision(SceneNode &sceneGraph, std::vector<CollisionInfo> &collisionData);
 
-    private:
+
         // draw should not get overridden
         virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const final;
+
+    private:
+
         virtual void drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const;
         virtual void drawCollisionShape(sf::RenderTarget &target, sf::RenderStates states) const;
         void drawChildren(sf::RenderTarget &target, sf::RenderStates states) const;
@@ -90,6 +93,8 @@ class SceneNode : public sf::Transformable, public sf::Drawable, public sf::NonC
         // In the collisionData vector are the collisionInfos and the SceneNodes stored, which are affected from the collision
         void checkNodeCollision(SceneNode &node, std::set<Pair> &collisionPairs, std::vector<CollisionInfo> &collisionData);
         void checkSceneCollision(SceneNode &sceneGraph, std::set<Pair> &collisionPairs, std::vector<CollisionInfo> &collisionData);
+
+
 
 
 };

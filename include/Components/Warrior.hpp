@@ -16,7 +16,7 @@ class Warrior : public Entity
 
     private:
         sf::Sprite m_sprite;
-        std::unique_ptr<Weapon> m_weapon;
+        Weapon *m_weapon;
         //CollisionCircle m_collisionCircle;
 
     public:
@@ -25,7 +25,7 @@ class Warrior : public Entity
         int getCurrentHealth() const;
         void setCurrentHealth(const int health);
 
-        void setWeapon(std::unique_ptr<Weapon> weapon);
+        void setWeapon(Weapon *weapon);
         Weapon* getWeapon() const;
 
 

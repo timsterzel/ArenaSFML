@@ -23,15 +23,16 @@ void Warrior::setCurrentHealth(const int health)
     m_currentHealth = health;
 }
 
-void Warrior::setWeapon(std::unique_ptr<Weapon> weapon)
+void Warrior::setWeapon(Weapon *weapon)
 {
-    m_weapon = std::move(weapon);
+    m_weapon = weapon;
+    m_weapon->setPosition(10.f, 10.f);
     //m_weapon->setParent(this);
 }
 
 Weapon* Warrior::getWeapon() const
 {
-    return m_weapon.get();
+    return m_weapon;
 }
 
 bool Warrior::isAlive() const
@@ -59,7 +60,9 @@ void Warrior::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) con
     // Only draw weapon when it is not nullptr
     if (m_weapon)
     {
-        m_weapon->drawCurrent(target, states);
+        // Add weapons transform here, because we call drawCurrent directly
+        //states.transform *= m_weapon->getTransform();
+        m_weapon->draw(target, states);
     }
 }
 

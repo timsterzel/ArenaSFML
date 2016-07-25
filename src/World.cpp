@@ -104,8 +104,12 @@ void World::buildScene()
     warriorEnemy3->setRotation(50.f);
     m_sceneLayers[Layers::MAIN]->attachChild(std::move(warriorEnemy3));
 
+    // PLAYER
     std::unique_ptr<Weapon> swordPlayer(new Weapon(60 ,Textures::SWORD, m_TextureHolder));
-    swordPlayer->setPosition(10.f, 10.f);
+    swordPlayer->setType(WorldObjectTypes::WEAPON);
+    swordPlayer->setPosition(0.f, 0.f);
+    std::unique_ptr<CollisionShape> collisionShapePlayerSword(new CollisionRect({ swordPlayer->getSpriteWidth(), swordPlayer->getSpriteHeight() }, &m_drawCollisionShape));
+    swordPlayer->setCollisionShape(std::move(collisionShapePlayerSword));
     std::unique_ptr<Warrior> warrior(new Warrior(100, Textures::KNIGHT, m_TextureHolder));
     m_playerWarrior = warrior.get();
     std::unique_ptr<CollisionShape> collisionShapeWarrior(new CollisionCircle(12.f, &m_drawCollisionShape));
@@ -114,7 +118,8 @@ void World::buildScene()
     m_playerWarrior->setPosition(800 / 2.f, 480 / 2.f);
     m_playerWarrior->setVelocity(60.f, 60.f);
     m_playerWarrior->setType(WorldObjectTypes::PLAYER);
-    m_playerWarrior->setWeapon(std::move(swordPlayer));
+    m_playerWarrior->setWeapon(swordPlayer.get());
+    m_playerWarrior->attachChild(std::move(swordPlayer));
     m_sceneLayers[Layers::MAIN]->attachChild(std::move(warrior));
 
     std::unique_ptr<Warrior> warriorPlayerTwo(new Warrior(100, Textures::KNIGHT, m_TextureHolder));
