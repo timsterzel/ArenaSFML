@@ -1,11 +1,23 @@
 #include "Components/Warrior.hpp"
 #include "Calc.hpp"
+#include "Components/Weapon.hpp"
 #include <iostream>
 
 Warrior::Warrior(const int health, Textures textureId, const ResourceHolder<sf::Texture, Textures> &textureHolder)
 : m_maxHealth{ health }
 , m_currentHealth{ health }
 , m_sprite{ textureHolder.get(textureId) }
+, m_weapon{ nullptr }
+{
+    sf::FloatRect bounds = m_sprite.getLocalBounds();
+    m_sprite.setOrigin(bounds.width / 2.f, bounds.height / 2.f);
+}
+
+Warrior::Warrior(Weapon *weapon, const int health, Textures textureId, const ResourceHolder<sf::Texture, Textures> &textureHolder)
+: m_maxHealth{ health }
+, m_currentHealth{ health }
+, m_sprite{ textureHolder.get(textureId) }
+, m_weapon{ weapon }
 {
     sf::FloatRect bounds = m_sprite.getLocalBounds();
     m_sprite.setOrigin(bounds.width / 2.f, bounds.height / 2.f);
@@ -19,6 +31,11 @@ int Warrior::getCurrentHealth() const
 void Warrior::setCurrentHealth(const int health)
 {
     m_currentHealth = health;
+}
+
+Weapon* Warrior::getWeapon() const
+{
+    return m_weapon;
 }
 
 bool Warrior::isAlive() const

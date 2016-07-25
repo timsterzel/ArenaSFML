@@ -3,11 +3,16 @@
 #include <iostream>
 
 Weapon::Weapon(const int damage, Textures textureId, const ResourceHolder<sf::Texture, Textures> &textureHolder)
-: m_damage { damage }
+: m_damage{ damage }
 , m_sprite{ textureHolder.get(textureId) }
 {
     sf::FloatRect bounds = m_sprite.getLocalBounds();
     m_sprite.setOrigin(bounds.width / 2.f, bounds.height / 2.f);
+}
+
+Weapon::~Weapon()
+{
+    std::cout << "Weapon destructor" << std::endl;
 }
 
 int Weapon::getDamage() const

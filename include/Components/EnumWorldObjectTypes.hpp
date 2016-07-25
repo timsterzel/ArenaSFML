@@ -7,7 +7,8 @@ enum class WorldObjectTypes
     PLAYER,
     ENEMY,
     // TMP
-    PLAYER_TWO
+    PLAYER_TWO,
+    WEAPON
 };
 
 #endif // ENUMWORLDOBJECTTYPE

@@ -6,6 +6,8 @@
 #include "Resources/EnumResourceIdentifiers.hpp"
 #include "Resources/ResourceHolder.hpp"
 
+class Weapon;
+
 class Warrior : public Entity
 {
     protected:
@@ -14,13 +16,17 @@ class Warrior : public Entity
 
     private:
         sf::Sprite m_sprite;
+        Weapon *m_weapon;
         //CollisionCircle m_collisionCircle;
 
     public:
         Warrior(const int health, Textures textureId, const ResourceHolder<sf::Texture, Textures> &textureHolder);
+        Warrior(Weapon *weapon, const int health, Textures textureId, const ResourceHolder<sf::Texture, Textures> &textureHolder);
 
         int getCurrentHealth() const;
         void setCurrentHealth(const int health);
+
+        Weapon* getWeapon() const;
 
         bool isAlive() const;
         void damage(const int damage);

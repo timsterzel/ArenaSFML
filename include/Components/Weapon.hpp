@@ -17,6 +17,8 @@ class Weapon : public Entity
     public:
         Weapon(const int damage, Textures textureId, const ResourceHolder<sf::Texture, Textures> &textureHolder);
 
+        virtual ~Weapon();
+
         int getDamage() const;
         void setDamage(const int damage);
 

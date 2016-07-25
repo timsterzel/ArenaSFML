@@ -3,8 +3,6 @@
 #include <SFML/Graphics.hpp>
 #include "Components/SceneNode.hpp"
 
-
-
 class Entity : public SceneNode
 {
     protected:
