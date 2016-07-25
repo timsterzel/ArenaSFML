@@ -13,16 +13,6 @@ Warrior::Warrior(const int health, Textures textureId, const ResourceHolder<sf::
     m_sprite.setOrigin(bounds.width / 2.f, bounds.height / 2.f);
 }
 
-Warrior::Warrior(Weapon *weapon, const int health, Textures textureId, const ResourceHolder<sf::Texture, Textures> &textureHolder)
-: m_maxHealth{ health }
-, m_currentHealth{ health }
-, m_sprite{ textureHolder.get(textureId) }
-, m_weapon{ weapon }
-{
-    sf::FloatRect bounds = m_sprite.getLocalBounds();
-    m_sprite.setOrigin(bounds.width / 2.f, bounds.height / 2.f);
-}
-
 int Warrior::getCurrentHealth() const
 {
     return m_currentHealth;
@@ -33,9 +23,15 @@ void Warrior::setCurrentHealth(const int health)
     m_currentHealth = health;
 }
 
+void Warrior::setWeapon(std::unique_ptr<Weapon> weapon)
+{
+    m_weapon = std::move(weapon);
+    //m_weapon->setParent(this);
+}
+
 Weapon* Warrior::getWeapon() const
 {
-    return m_weapon;
+    return m_weapon.get();
 }
 
 bool Warrior::isAlive() const
@@ -60,6 +56,11 @@ void Warrior::heal(const int health)
 void Warrior::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const
 {
     target.draw(m_sprite, states);
+    // Only draw weapon when it is not nullptr
+    if (m_weapon)
+    {
+        m_weapon->drawCurrent(target, states);
+    }
 }
 
 void Warrior::onCommandCurrent(const Command &command, float dt)
