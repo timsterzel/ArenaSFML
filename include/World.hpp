@@ -55,6 +55,7 @@ class World : private sf::NonCopyable
         void controlWorldEntities();
         void handleCommands(float dt);
         void update(float dt);
+        void resolveEntityCollisions(SceneNode *sceneNodeFirst, SceneNode *sceneNodeSecond, CollisionInfo &collisionInfo);
         void handleCollision(float dt);
         bool matchesCategories(SceneNode::Pair &colliders, WorldObjectTypes type1, WorldObjectTypes type2);
         void render();
