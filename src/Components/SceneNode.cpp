@@ -128,6 +128,11 @@ sf::Vector2f SceneNode::getWorldPosition() const
     return getWorldTransform() * sf::Vector2f();
 }
 
+sf::Vector2f SceneNode::getWorldCenterPosition() const
+{
+    getWorldPosition();
+}
+
 float SceneNode::getWorldRotation() const
 {
     float rotation = 0.f;

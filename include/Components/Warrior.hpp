@@ -17,6 +17,7 @@ class Warrior : public Entity
     private:
         sf::Sprite m_sprite;
         Weapon *m_weapon;
+        sf::Vector2f m_weaponPos;
         //CollisionCircle m_collisionCircle;
 
     public:
@@ -28,6 +29,7 @@ class Warrior : public Entity
         void setWeapon(Weapon *weapon);
         Weapon* getWeapon() const;
 
+        sf::Vector2f getWorldWeaponPos() const;
 
         bool isAlive() const;
         void damage(const int damage);
@@ -36,6 +38,7 @@ class Warrior : public Entity
         virtual void drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const;
 
     private:
+        virtual void updateCurrent(float dt);
         virtual void onCommandCurrent(const Command &command, float dt);
         void lookAt(sf::Vector2f pos);
 };

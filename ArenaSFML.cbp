@@ -54,6 +54,7 @@
 		<Unit filename="include/Components/SceneNode.hpp" />
 		<Unit filename="include/Components/SpriteNode.hpp" />
 		<Unit filename="include/Components/Warrior.hpp" />
+		<Unit filename="include/Components/Weapon.hpp" />
 		<Unit filename="include/Game.hpp" />
 		<Unit filename="include/Input/Command.hpp" />
 		<Unit filename="include/Input/EnumCommandTypes.hpp" />
@@ -77,6 +78,7 @@
 		<Unit filename="src/Components/SceneNode.cpp" />
 		<Unit filename="src/Components/SpriteNode.cpp" />
 		<Unit filename="src/Components/Warrior.cpp" />
+		<Unit filename="src/Components/Weapon.cpp" />
 		<Unit filename="src/Game.cpp" />
 		<Unit filename="src/Input/Command.cpp" />
 		<Unit filename="src/Input/Input.cpp" />

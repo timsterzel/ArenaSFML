@@ -3,6 +3,8 @@
 #include <iostream>
 
 Entity::Entity()
+: m_width{ 0.f }
+, m_height{ 0.f }
 {
 
 }
@@ -28,6 +30,26 @@ sf::Vector2f Entity::getCurrentVelocity() const
     return m_currentVelocity;
 }
 
+float Entity::getWidth() const
+{
+    return m_width;
+}
+
+void Entity::setWidth(float width)
+{
+    m_width = width;
+}
+
+float Entity::getHeight() const
+{
+    return m_height;
+}
+
+void Entity::setHeight(float height)
+{
+    m_height = height;
+}
+
 void Entity::moveInActualDirection(const float length)
 {
     sf::Vector2f normalizedDir = { Calc::normalizeVec2<sf::Vector2f>(m_velocity) };
@@ -39,6 +61,12 @@ void Entity::moveInDirection(const sf::Vector2f direction, const float length)
     sf::Vector2f normalizedDir = { Calc::normalizeVec2<sf::Vector2f>(direction) };
     move(normalizedDir.x * length, normalizedDir.y * length);
 }
+/*
+sf::Vector2f Entity::getWorldCenterPosition() const
+{
+    return getWorldPosition() - getOrigin() + sf::Vector2f(m_width, m_height);
+}
+*/
 
 void Entity::updateCurrent(float dt)
 {

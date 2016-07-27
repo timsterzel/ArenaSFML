@@ -51,9 +51,12 @@ class SceneNode : public sf::Transformable, public sf::Drawable, public sf::NonC
         // Get absolute world transform
         sf::Transform getWorldTransform() const;
         // Get absolute position in world
-        sf::Vector2f getWorldPosition() const ;
+        sf::Vector2f getWorldPosition() const;
+        // Get the absolute World Position when origin is in the center of the object ( When it is not it is translated so it is)
+        virtual sf::Vector2f getWorldCenterPosition() const;
         // Get absolute rotation in world
         float getWorldRotation() const;
+
 
         WorldObjectTypes getType() const;
         void setType(WorldObjectTypes type);

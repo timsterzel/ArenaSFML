@@ -108,6 +108,8 @@ void World::buildScene()
     std::unique_ptr<Weapon> swordPlayer(new Weapon(60 ,Textures::SWORD, m_TextureHolder));
     swordPlayer->setType(WorldObjectTypes::WEAPON);
     swordPlayer->setPosition(0.f, 0.f);
+    //swordPlayer->setRotationPoint(0.f, swordPlayer->getSpriteHeight() / 2.f);
+    swordPlayer->setEquipPoint(-10.f, 0.f);
     std::unique_ptr<CollisionShape> collisionShapePlayerSword(new CollisionRect({ swordPlayer->getSpriteWidth(), swordPlayer->getSpriteHeight() }, &m_drawCollisionShape));
     swordPlayer->setCollisionShape(std::move(collisionShapePlayerSword));
     std::unique_ptr<Warrior> warrior(new Warrior(100, Textures::KNIGHT, m_TextureHolder));

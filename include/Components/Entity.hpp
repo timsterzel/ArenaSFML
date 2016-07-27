@@ -8,6 +8,8 @@ class Entity : public SceneNode
     protected:
         sf::Vector2f m_velocity;
         sf::Vector2f m_currentVelocity;
+        float m_width;
+        float m_height;
     private:
 
     public:
@@ -17,9 +19,16 @@ class Entity : public SceneNode
         void setVelocity(float velX, float velY);
         sf::Vector2f getVelocity() const;
         sf::Vector2f getCurrentVelocity() const;
+        float getWidth() const;
+        void setWidth(float width);
+        float getHeight() const;
+        void setHeight(float height);
         // Move the actual object the given length by the acutal direction (velocity)
         void moveInActualDirection(const float length);
         void moveInDirection(const sf::Vector2f direction, const float length);
+
+        // We have to override this method, because the entity can have a width an height
+        //virtual sf::Vector2f getWorldCenterPosition() const;
 
     private:
         virtual void updateCurrent(float dt);

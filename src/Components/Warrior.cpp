@@ -8,9 +8,12 @@ Warrior::Warrior(const int health, Textures textureId, const ResourceHolder<sf::
 , m_currentHealth{ health }
 , m_sprite{ textureHolder.get(textureId) }
 , m_weapon{ nullptr }
+, m_weaponPos(0.f, 10.f)
 {
     sf::FloatRect bounds = m_sprite.getLocalBounds();
     m_sprite.setOrigin(bounds.width / 2.f, bounds.height / 2.f);
+    setWidth(bounds.width);
+    setHeight(bounds.height);
 }
 
 int Warrior::getCurrentHealth() const
@@ -26,13 +29,20 @@ void Warrior::setCurrentHealth(const int health)
 void Warrior::setWeapon(Weapon *weapon)
 {
     m_weapon = weapon;
-    m_weapon->setPosition(10.f, 10.f);
+    m_weapon->equip(m_weaponPos);
+    //m_weapon->setPosition(m_weaponPos);
+    //m_weapon->setPosition(10.f, 10.f);
     //m_weapon->setParent(this);
 }
 
 Weapon* Warrior::getWeapon() const
 {
     return m_weapon;
+}
+
+sf::Vector2f Warrior::getWorldWeaponPos() const
+{
+    return getWorldTransform() * m_weaponPos;
 }
 
 bool Warrior::isAlive() const
@@ -63,7 +73,27 @@ void Warrior::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) con
         // Add weapons transform here, because we call drawCurrent directly
         //states.transform *= m_weapon->getTransform();
         m_weapon->draw(target, states);
+
+
+        // Draw weapon pos (TMP)
+        sf::CircleShape circleShape{ 3.f };
+        circleShape.setFillColor(sf::Color::Green);
+        circleShape.setOrigin(3.f, 3.f);
+        circleShape.setPosition(getWorldWeaponPos());
+        target.draw(circleShape);
     }
+}
+
+void Warrior::updateCurrent(float dt)
+{
+    if (m_weapon)
+    {
+        const float rotation = { -60.f * dt };
+        m_weapon->rotateAround(m_weaponPos, rotation);
+    }
+    std::cout << "WorldPos: " << getWorldPosition().x << "|" << getWorldPosition().y
+    << "WeaponWorldPos: " << getWorldWeaponPos().x << "|" << getWorldWeaponPos().y << std::endl;
+
 }
 
 void Warrior::onCommandCurrent(const Command &command, float dt)

@@ -13,10 +13,11 @@ class Weapon : public Entity
     private:
         sf::Sprite m_sprite;
         bool m_isAttacking;
-        // The point on the weapon on which the weapon is connected to the parent, relative to the origin
-        //sf::Vector2f m_relEquipPoint;
-        //sf::Vector2f m_absEquipPoint;
+        // The point of which it should be rotated
+        sf::Vector2f m_rotationPoint;
 
+        // The point on the weapon on which the weapon is connected to the parent, relative to the origin
+        sf::Vector2f m_relEquipPoint;
 
     public:
         Weapon(const int damage, Textures textureId, const ResourceHolder<sf::Texture, Textures> &textureHolder);
@@ -31,7 +32,13 @@ class Weapon : public Entity
 
         bool isAttacking() const;
 
-        //void setEquipPoint(float x, float y);
+        void setRotationPoint(float x, float y);
+        sf::Vector2f getRotationPoint() const;
+
+        void rotateAround(sf::Vector2f pos, float degrees);
+
+        void setEquipPoint(float x, float y);
+        void equip(sf::Vector2f parentEqiupPos);
 
         virtual void drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const;
 
