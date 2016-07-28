@@ -3,18 +3,19 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include <chrono>
-#include "Animation/AnimationStep.hpp"
+#include "Animation/AnimationStepRotation.hpp"
 
 typedef std::chrono::high_resolution_clock CLOCK;
 
 class Animation
 {
     private:
-        std::vector<AnimationStep> m_steps;
-
+        std::vector<AnimationStepRotation> m_rotationSteps;
+        int m_actualRotationStep;
 
     public:
-        Animation();
+        explicit Animation(std::vector<AnimationStepRotation> rotationSteps);
+
 
 };
 

@@ -1,7 +1,8 @@
 #include "Animation/Animation.hpp"
 #include <iostream>
 
-Animation::Animation()
+Animation::Animation(std::vector<AnimationStepRotation> rotationSteps)
+: m_rotationSteps{ rotationSteps }
 {
 
 }
