@@ -36,7 +36,8 @@ class Weapon : public Entity
         void setRotationPoint(float x, float y);
         sf::Vector2f getRotationPoint() const;
 
-        void rotateAround(sf::Vector2f pos, float degrees);
+        virtual void setRotation(float angle);
+        //void rotateAround(sf::Vector2f pos, float degrees);
         void rotate(float angle);
 
         void setEquipPoint(float x, float y);

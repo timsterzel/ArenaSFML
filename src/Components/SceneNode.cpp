@@ -255,4 +255,13 @@ void SceneNode::restoreLastTransform()
     setScale(m_lastScal);
 }
 
+void SceneNode::setRotation(float angle)
+{
+    sf::Transformable::setRotation(angle);
+}
+
+void SceneNode::rotate(float angle)
+{
+    sf::Transformable::rotate(angle);
+}
 
