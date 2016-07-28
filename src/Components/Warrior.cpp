@@ -91,8 +91,8 @@ void Warrior::updateCurrent(float dt)
         const float rotation = { -60.f * dt };
         m_weapon->rotateAround(m_weaponPos, rotation);
     }
-    std::cout << "WorldPos: " << getWorldPosition().x << "|" << getWorldPosition().y
-    << "WeaponWorldPos: " << getWorldWeaponPos().x << "|" << getWorldWeaponPos().y << std::endl;
+    //std::cout << "WorldPos: " << getWorldPosition().x << "|" << getWorldPosition().y
+    //<< "WeaponWorldPos: " << getWorldWeaponPos().x << "|" << getWorldWeaponPos().y << std::endl;
 
 }
 

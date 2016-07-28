@@ -10,7 +10,6 @@ Weapon::Weapon(const int damage, Textures textureId, const ResourceHolder<sf::Te
 , m_relEquipPoint{ 0.f, 0.f }
 {
     sf::FloatRect bounds = m_sprite.getLocalBounds();
-    std::cout << "WIDTH: " << bounds.width << " HEIGHT: " << bounds.height << std::endl;
     m_sprite.setOrigin(bounds.width / 2.f, bounds.height / 2.f);
     setWidth(bounds.width);
     setHeight(bounds.height);
@@ -77,7 +76,6 @@ void Weapon::rotateAround(sf::Vector2f pos, float degrees)
     rotate(degrees);
     const sf::Vector2f newPos = { Calc::rotatePointAround(getPosition(), pos, -degrees) };
     setPosition(newPos);
-
 }
 
 void Weapon::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const
