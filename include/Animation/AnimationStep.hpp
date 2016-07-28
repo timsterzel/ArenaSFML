@@ -5,14 +5,12 @@
 class AnimationStep
 {
     private:
-        float m_targetRotation;
-        sf::Vector2f m_targetMovement;
-        float m_rotationSpeed;
-        sf::Vector2f m_movementSpeed;
+        // The duration of the animation in seconds
+        float m_duration;
 
     public:
-
-
+        AnimationStep();
+        explicit AnimationStep(float duration);
 };
 
 #endif // ANIMATIONSTEP_HPP

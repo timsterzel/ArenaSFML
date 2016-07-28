@@ -73,11 +73,6 @@ class SceneNode : public sf::Transformable, public sf::Drawable, public sf::NonC
         // Restore the last state of position, rotation and scale (the pos and rotation of the entity before last change)
         void restoreLastTransform();
 
-        // Override transformables setRotation() method with virtual so we can modify it in classes
-        virtual void setRotation(float angle);
-        // Override transformables rotate() method with virtual so we can modify it in classes
-        virtual void rotate(float angle);
-
         void checkSceneCollision(SceneNode &sceneGraph, std::vector<CollisionInfo> &collisionData);
 
 
