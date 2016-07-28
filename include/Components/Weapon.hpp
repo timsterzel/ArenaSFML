@@ -32,10 +32,12 @@ class Weapon : public Entity
 
         bool isAttacking() const;
 
+        void setRotationPoint(sf::Vector2f point);
         void setRotationPoint(float x, float y);
         sf::Vector2f getRotationPoint() const;
 
         void rotateAround(sf::Vector2f pos, float degrees);
+        void rotate(float angle);
 
         void setEquipPoint(float x, float y);
         void equip(sf::Vector2f parentEqiupPos);

@@ -49,6 +49,11 @@ bool Weapon::isAttacking() const
     return m_isAttacking;
 }
 
+void Weapon::setRotationPoint(sf::Vector2f point)
+{
+    m_rotationPoint = point;
+}
+
 void Weapon::setRotationPoint(float x, float y)
 {
     m_rotationPoint.x = x;
@@ -75,6 +80,13 @@ void Weapon::rotateAround(sf::Vector2f pos, float degrees)
 {
     rotate(degrees);
     const sf::Vector2f newPos = { Calc::rotatePointAround(getPosition(), pos, -degrees) };
+    setPosition(newPos);
+}
+
+void Weapon::rotate(float angle)
+{
+    Transformable::rotate(angle);
+    const sf::Vector2f newPos = { Calc::rotatePointAround(getPosition(), m_rotationPoint, -angle) };
     setPosition(newPos);
 }
 

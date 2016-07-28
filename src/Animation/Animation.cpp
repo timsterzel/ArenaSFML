@@ -1,6 +1,11 @@
 #include "Animation/Animation.hpp"
 #include <iostream>
 
+Animation::Animation()
+{
+
+}
+
 /*
 CLOCK::time_point timePoint2 = { CLOCK::now() };
 std::chrono::duration<float> timeSpan = { timePoint2 - m_timePoint1 };
