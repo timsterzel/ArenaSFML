@@ -13,7 +13,7 @@ Warrior::Warrior(const int health, Textures textureId, const ResourceHolder<sf::
 , m_weapon{ nullptr }
 , m_upperBody{ nullptr }
 , m_weaponPos(0.f, 10.f)
-, m_animationSword( m_weapon, false )
+, m_animationSword( m_weapon, true )
 {
     sf::FloatRect bounds = m_sprite.getLocalBounds();
     m_sprite.setOrigin(bounds.width / 2.f, bounds.height / 2.f);
@@ -21,7 +21,7 @@ Warrior::Warrior(const int health, Textures textureId, const ResourceHolder<sf::
     setHeight(bounds.height);
 
     std::vector<AnimationStepRotation>  swordRoationSteps;
-    swordRoationSteps.push_back({ -90.f, 2.f });
+    swordRoationSteps.push_back({ 0.f, -90.f,  1.f });
     m_animationSword.setRotationSteps(swordRoationSteps);
 
 }
@@ -49,6 +49,7 @@ void Warrior::setWeapon(Weapon *weapon)
     m_weapon->setRotationPoint(m_weaponPos);
     m_weapon->equip(m_weaponPos);
     m_animationSword.setParent(m_weapon);
+    m_animationSword.start();
     //m_weapon->setPosition(m_weaponPos);
     //m_weapon->setPosition(10.f, 10.f);
     //m_weapon->setParent(this);
@@ -117,7 +118,7 @@ void Warrior::updateCurrent(float dt)
 
         }
         */
-        m_animationSword.start();
+
         m_animationSword.update(dt);
 
 

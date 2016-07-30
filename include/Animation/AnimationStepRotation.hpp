@@ -6,13 +6,20 @@
 class AnimationStepRotation : public AnimationStep
 {
     private:
-        float m_rotation;
+        float m_startRotation;
+        float m_totalRotation;
+        //float m_targetRotation;
+        // The Rotation speed in degrees per second
+        float m_rotationSpeed;
 
     public:
-        explicit AnimationStepRotation(float rotation);
-        AnimationStepRotation(float rotation, float duration);
+        //AnimationStepRotation(float startRotation, float targetRotation);
+        AnimationStepRotation(float startRotation, float totalRotation, float duration);
 
-        float getRotation() const;
+        float getStartRotation() const;
+        //float getTargetRotation() const;
+        float getTotalRotation() const;
+        float getRotationSpeed() const;
 };
 
 #endif // ANIMATIONSTEPROTATION_HPP

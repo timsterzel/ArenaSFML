@@ -4,7 +4,7 @@
 
 class AnimationStep
 {
-    private:
+    protected:
         // The duration of the animation in seconds
         float m_duration;
 

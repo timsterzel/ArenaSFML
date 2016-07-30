@@ -18,8 +18,6 @@ class Animation
         float m_rotated;
 
         SceneNode *m_parent;
-        // The rotation of the parent before starting rotating when a new step starts
-        float m_rotationAtStepStart;
 
         bool m_isRunning;
 
@@ -35,6 +33,9 @@ class Animation
         void update(float dt);
         //void pause();
         void stop();
+
+    private:
+        void startStep(int index);
 };
 
 #endif // ANIMATION_HPP
