@@ -8,10 +8,12 @@ class SpriteNode : public SceneNode
     private:
         sf::Sprite m_sprite;
     public:
-        SpriteNode(const sf::Texture &texture);
-        SpriteNode(const sf::Texture &texture, const sf::IntRect &rect);
+        SpriteNode(const sf::Texture &texture, bool centerOrigin);
+        SpriteNode(const sf::Texture &texture, const sf::IntRect &rect, bool centerOrigin);
     private:
         virtual void drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const;
+
+        void init(bool centerOrigin);
 
 };
 

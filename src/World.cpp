@@ -61,7 +61,7 @@ void World::buildScene()
     sf::Texture &texture = m_TextureHolder.get(Textures::CHESS_WHITE);
     sf::IntRect textureRect(m_worldBounds);
     texture.setRepeated(true);
-    std::unique_ptr<SpriteNode> background(new SpriteNode(texture, textureRect));
+    std::unique_ptr<SpriteNode> background(new SpriteNode(texture, textureRect, false));
     m_sceneLayers[Layers::BACKGROUND]->attachChild(std::move(background));
 
     std::unique_ptr<Warrior> wizard(new Warrior(100, Textures::WIZARD, m_TextureHolder));
@@ -103,8 +103,8 @@ void World::buildScene()
     warriorEnemy3->setType(WorldObjectTypes::NONE);
     warriorEnemy3->setRotation(50.f);
     m_sceneLayers[Layers::MAIN]->attachChild(std::move(warriorEnemy3));
-
-    // PLAYER
+    // ******* PLAYER *********
+    // SWORD
     std::unique_ptr<Weapon> swordPlayer(new Weapon(60 ,Textures::SWORD, m_TextureHolder));
     swordPlayer->setType(WorldObjectTypes::WEAPON);
     swordPlayer->setPosition(0.f, 0.f);
@@ -112,6 +112,14 @@ void World::buildScene()
     swordPlayer->setEquipPoint(-10.f, 0.f);
     std::unique_ptr<CollisionShape> collisionShapePlayerSword(new CollisionRect({ swordPlayer->getSpriteWidth(), swordPlayer->getSpriteHeight() }, &m_drawCollisionShape));
     swordPlayer->setCollisionShape(std::move(collisionShapePlayerSword));
+    // Parts
+    std::unique_ptr<SpriteNode> playerLeftShoe(new SpriteNode(m_TextureHolder.get(Textures::KNIGHT_LEFT_SHOE), true));
+    playerLeftShoe->setPosition(8.f, -5.f);
+    std::unique_ptr<SpriteNode> playerRightShoe(new SpriteNode(m_TextureHolder.get(Textures::KNIGHT_RIGHT_SHOE), true));
+    playerRightShoe->setPosition(8.f, 5.f);
+    std::unique_ptr<SpriteNode> playerUpperBody(new SpriteNode(m_TextureHolder.get(Textures::KNIGHT_UPPER_BODY), true));
+
+    // Warrior
     std::unique_ptr<Warrior> warrior(new Warrior(100, Textures::KNIGHT, m_TextureHolder));
     m_playerWarrior = warrior.get();
     std::unique_ptr<CollisionShape> collisionShapeWarrior(new CollisionCircle(12.f, &m_drawCollisionShape));
@@ -121,8 +129,15 @@ void World::buildScene()
     m_playerWarrior->setVelocity(60.f, 60.f);
     m_playerWarrior->setType(WorldObjectTypes::PLAYER);
     m_playerWarrior->setWeapon(swordPlayer.get());
+    // Add Parts to player
+    m_playerWarrior->attachChild(std::move(playerLeftShoe));
+    m_playerWarrior->attachChild(std::move(playerRightShoe));
     m_playerWarrior->attachChild(std::move(swordPlayer));
+    m_playerWarrior->attachChild(std::move(playerUpperBody));
     m_sceneLayers[Layers::MAIN]->attachChild(std::move(warrior));
+    //***********
+
+
 
     std::unique_ptr<Warrior> warriorPlayerTwo(new Warrior(100, Textures::KNIGHT, m_TextureHolder));
     Warrior *playerWarriorTwo = warriorPlayerTwo.get();

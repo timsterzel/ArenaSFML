@@ -34,6 +34,9 @@ void Game::loadTextures()
     //m_textureHolder.load<sf::Rect<int>>(Textures::KNIGHT, "assets/sprites/knight.png", rect);
     m_textureHolder.load(Textures::CHESS_WHITE, "assets/sprites/chess_white.png");
     m_textureHolder.load(Textures::KNIGHT, "assets/sprites/knight.png");
+    m_textureHolder.load(Textures::KNIGHT_LEFT_SHOE, "assets/sprites/knight_left_shoe.png");
+    m_textureHolder.load(Textures::KNIGHT_RIGHT_SHOE, "assets/sprites/knight_right_shoe.png");
+    m_textureHolder.load(Textures::KNIGHT_UPPER_BODY, "assets/sprites/knight_upper_body.png");
     m_textureHolder.load(Textures::WIZARD, "assets/sprites/wizard.png");
     m_textureHolder.load(Textures::SWORD, "assets/sprites/sword.png");
 }

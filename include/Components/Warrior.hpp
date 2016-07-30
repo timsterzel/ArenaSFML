@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include "Collision/CollisionCircle.hpp"
 #include "Components/Entity.hpp"
+#include "Components/SpriteNode.hpp"
 #include "Resources/EnumResourceIdentifiers.hpp"
 #include "Resources/ResourceHolder.hpp"
 
@@ -16,7 +17,10 @@ class Warrior : public Entity
 
     private:
         sf::Sprite m_sprite;
+        SpriteNode *m_leftShoe;
+        SpriteNode *m_rightShoe;
         Weapon *m_weapon;
+        SpriteNode *m_upperBody;
         sf::Vector2f m_weaponPos;
         //CollisionCircle m_collisionCircle;
 
@@ -26,6 +30,7 @@ class Warrior : public Entity
         int getCurrentHealth() const;
         void setCurrentHealth(const int health);
 
+        void setBodyParts(SpriteNode *leftShoe, SpriteNode *rightShoe, SpriteNode *upperBody);
         void setWeapon(Weapon *weapon);
         Weapon* getWeapon() const;
 

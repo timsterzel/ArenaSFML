@@ -5,6 +5,9 @@ enum class Textures
 {
     CHESS_WHITE,
     KNIGHT,
+    KNIGHT_LEFT_SHOE,
+    KNIGHT_RIGHT_SHOE,
+    KNIGHT_UPPER_BODY,
     WIZARD,
     SWORD
 };

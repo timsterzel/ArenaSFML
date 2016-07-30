@@ -7,7 +7,10 @@ Warrior::Warrior(const int health, Textures textureId, const ResourceHolder<sf::
 : m_maxHealth{ health }
 , m_currentHealth{ health }
 , m_sprite{ textureHolder.get(textureId) }
+, m_leftShoe{ nullptr }
+, m_rightShoe{ nullptr }
 , m_weapon{ nullptr }
+, m_upperBody{ nullptr }
 , m_weaponPos(0.f, 10.f)
 {
     sf::FloatRect bounds = m_sprite.getLocalBounds();
@@ -24,6 +27,13 @@ int Warrior::getCurrentHealth() const
 void Warrior::setCurrentHealth(const int health)
 {
     m_currentHealth = health;
+}
+
+void Warrior::setBodyParts(SpriteNode *leftShoe, SpriteNode *rightShoe, SpriteNode *upperBody)
+{
+    m_leftShoe = leftShoe;
+    m_rightShoe = rightShoe;
+    m_upperBody = upperBody;
 }
 
 void Warrior::setWeapon(Weapon *weapon)
@@ -67,7 +77,7 @@ void Warrior::heal(const int health)
 
 void Warrior::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const
 {
-    target.draw(m_sprite, states);
+    //target.draw(m_sprite, states);
     // Only draw weapon when it is not nullptr
     if (m_weapon)
     {
