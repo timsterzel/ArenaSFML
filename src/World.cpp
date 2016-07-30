@@ -199,6 +199,9 @@ void World::translateInput(Input input, float dt)
         case InputTypes::RIGHT :
             m_commandQueue.push({ CommandTypes::MOVE_RIGHT, WorldObjectTypes::PLAYER });
             break;
+        case InputTypes::LEFT_CLICK :
+            m_commandQueue.push({ CommandTypes::ATTACK, WorldObjectTypes::PLAYER });
+            break;
         // Debug
         case InputTypes::D1 :
 

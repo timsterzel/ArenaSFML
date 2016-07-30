@@ -54,6 +54,14 @@ void InputHandler::handleEvents(QueueHelper<Input> &inputQueue)
             {
                 inputQueue.push({ InputTypes::D4 });
             }
+
+        }
+        else if (event.type == sf::Event::MouseButtonPressed)
+        {
+            if (event.mouseButton.button == sf::Mouse::Left)
+            {
+                inputQueue.push({ InputTypes::LEFT_CLICK });
+            }
         }
 
     }
