@@ -68,16 +68,6 @@ sf::Vector2f Entity::getWorldCenterPosition() const
 }
 */
 
-void Entity::setRotation(float angle)
-{
-    sf::Transformable::setRotation(angle);
-}
-
-void Entity::rotate(float angle)
-{
-    sf::Transformable::rotate(angle);
-}
-
 void Entity::updateCurrent(float dt)
 {
     /*

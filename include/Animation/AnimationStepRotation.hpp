@@ -10,7 +10,9 @@ class AnimationStepRotation : public AnimationStep
 
     public:
         explicit AnimationStepRotation(float rotation);
-        explicit AnimationStepRotation(float rotation, float duration);
+        AnimationStepRotation(float rotation, float duration);
+
+        float getRotation() const;
 };
 
 #endif // ANIMATIONSTEPROTATION_HPP

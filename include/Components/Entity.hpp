@@ -27,10 +27,6 @@ class Entity : public SceneNode
         void moveInActualDirection(const float length);
         void moveInDirection(const sf::Vector2f direction, const float length);
 
-        // Override transformables setRotation() method with virtual so we can modify it in classes
-        virtual void setRotation(float angle);
-        // Override transformables rotate() method with virtual so we can modify it in classes
-        virtual void rotate(float angle);
         // We have to override this method, because the entity can have a width an height
         //virtual sf::Vector2f getWorldCenterPosition() const;
 

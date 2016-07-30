@@ -11,3 +11,8 @@ AnimationStep::AnimationStep(float duration)
 {
 
 }
+
+float AnimationStep::getDuration() const
+{
+    return m_duration;
+}

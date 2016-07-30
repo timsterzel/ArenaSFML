@@ -164,6 +164,16 @@ void SceneNode::setIsActive(bool isActive)
     m_isActive = isActive;
 }
 
+void SceneNode::setRotation(float angle)
+{
+    sf::Transformable::setRotation(angle);
+}
+
+void SceneNode::rotate(float angle)
+{
+    sf::Transformable::rotate(angle);
+}
+
 CollisionInfo SceneNode::isColliding(SceneNode &node) const
 {
     // If there is no collision shape specified there can not be a collision

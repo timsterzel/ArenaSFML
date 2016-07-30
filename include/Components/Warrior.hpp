@@ -1,6 +1,7 @@
 #ifndef WARRIOR_HPP
 #define WARRIOR_HPP
 #include <SFML/Graphics.hpp>
+#include "Animation/Animation.hpp"
 #include "Collision/CollisionCircle.hpp"
 #include "Components/Entity.hpp"
 #include "Components/SpriteNode.hpp"
@@ -22,6 +23,8 @@ class Warrior : public Entity
         Weapon *m_weapon;
         SpriteNode *m_upperBody;
         sf::Vector2f m_weaponPos;
+
+        Animation m_animationSword;
         //CollisionCircle m_collisionCircle;
 
     public:

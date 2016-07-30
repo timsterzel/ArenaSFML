@@ -64,6 +64,11 @@ class SceneNode : public sf::Transformable, public sf::Drawable, public sf::NonC
         bool isActive() const;
         void setIsActive(bool isActive);
 
+        // Override transformables setRotation() method with virtual so we can modify it in classes
+        virtual void setRotation(float angle);
+        // Override transformables rotate() method with virtual so we can modify it in classes
+        virtual void rotate(float angle);
+
         // Safe transform of the actual and parent nodes (position, rotation and scale)
         void safeTransform();
         // Safe the actual transform of the actual sceneNode and childs (position, rotation and scale)

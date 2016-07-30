@@ -11,6 +11,8 @@ class AnimationStep
     public:
         AnimationStep();
         explicit AnimationStep(float duration);
+
+        float getDuration() const;
 };
 
 #endif // ANIMATIONSTEP_HPP
