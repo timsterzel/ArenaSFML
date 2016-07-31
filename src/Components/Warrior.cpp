@@ -24,6 +24,11 @@ Warrior::Warrior(const int health, Textures textureId, const ResourceHolder<sf::
     swordRoationSteps.push_back({ 0.f, -60.f,  0.5f });
     m_animationSword.setRotationSteps(swordRoationSteps);
 
+    /*
+    std::vector<AnimationStepMovement>  swordMovementSteps;
+    swordMovementSteps.push_back({ sf::Vector2f(0.f, 0.f), 100.f, sf::Vector2f(10.f, 0.f) , 1.5f });
+    m_animationSword.setMovementSteps(swordMovementSteps);
+    */
 }
 
 int Warrior::getCurrentHealth() const

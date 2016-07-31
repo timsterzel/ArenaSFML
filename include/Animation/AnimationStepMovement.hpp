@@ -7,16 +7,16 @@ class AnimationStepMovement : public AnimationStep
 {
     private:
         sf::Vector2f m_startPosition;
-        float m_length;
+        float m_totalDistance;
         sf::Vector2f m_direction;
         // The movement speed per second
         sf::Vector2f m_movementPerSecond;
 
     public:
-        AnimationStepMovement(sf::Vector2f startPosition, float length, sf::Vector2f direction, float duration);
+        AnimationStepMovement(sf::Vector2f startPosition, float totalDistance, sf::Vector2f direction, float duration);
 
         sf::Vector2f getStartPosition() const;
-        float getLength() const;
+        float getTotalDistance() const;
         sf::Vector2f getMovementSpeed() const;
 };
 

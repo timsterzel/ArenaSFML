@@ -1,5 +1,7 @@
 #include "Animation/Animation.hpp"
 #include <iostream>
+#include "Calc.hpp"
+#include <cmath>
 #include "Components/SceneNode.hpp"
 
 Animation::Animation(SceneNode *parent, bool repeat)
@@ -8,18 +10,23 @@ Animation::Animation(SceneNode *parent, bool repeat)
 , m_actualRotationStep{ 0 }
 , m_rotated{ 0.f }
 , m_parent{ parent }
-, m_isRunning{ false }
+, m_isRotationRunning{ false }
+, m_isMovementRunning{ false }
 {
 
 }
 
-Animation::Animation(std::vector<AnimationStepRotation> rotationSteps, SceneNode *parent, bool repeat)
+Animation::Animation(std::vector<AnimationStepRotation> rotationSteps, std::vector<AnimationStepMovement> movementSteps, SceneNode *parent, bool repeat)
 : m_repeat{ repeat }
 , m_rotationSteps{ rotationSteps }
 , m_actualRotationStep{ 0 }
 , m_rotated{ 0.f }
+, m_movementSteps{ movementSteps }
+, m_actualMovementStep{ 0 }
+, m_moved{ 0.f }
 , m_parent{ parent }
-, m_isRunning{ false }
+, m_isRotationRunning{ false }
+, m_isMovementRunning{ false }
 {
 
 }
@@ -29,6 +36,11 @@ void Animation::setRotationSteps(std::vector<AnimationStepRotation> rotationStep
     m_rotationSteps = rotationSteps;
 }
 
+void Animation::setMovementSteps(std::vector<AnimationStepMovement> movementSteps)
+{
+    m_movementSteps = movementSteps;
+}
+
 void Animation::setParent(SceneNode *parent)
 {
     m_parent = parent;
@@ -36,20 +48,27 @@ void Animation::setParent(SceneNode *parent)
 
 bool Animation::isRunning() const
 {
-    return m_isRunning;
+    return m_isRotationRunning || m_isMovementRunning;
 }
 
 void Animation::start()
 {
-    std::cout << "Rotation before start:  " << m_parent->getRotation() << std::endl;
-    if (!m_isRunning && m_rotationSteps.size() > 0)
+    if (!isRunning())
     {
-        m_isRunning = true;
-        startStep(0);
+        if (m_rotationSteps.size() > 0)
+        {
+            m_isRotationRunning = true;
+            startRotationStep(0);
+        }
+        if (m_movementSteps.size() > 0)
+        {
+            m_isMovementRunning = true;
+            startMovementStep(0);
+        }
     }
 }
 
-void Animation::startStep(int index)
+void Animation::startRotationStep(int index)
 {
     m_actualRotationStep = index;
     const AnimationStepRotation rotationStep = { m_rotationSteps[index] };
@@ -58,71 +77,87 @@ void Animation::startStep(int index)
     std::cout << "Rotation Parent Start Step: " << m_parent->getRotation() << std::endl;
 }
 
+void Animation::startMovementStep(int index)
+{
+    m_actualMovementStep = index;
+    const AnimationStepMovement movementStep = { m_movementSteps[index] };
+    m_parent->setPosition(movementStep.getStartPosition());
+    m_moved = 0.f;
+}
+
 void Animation::update(float dt)
 {
-    if (!m_isRunning || m_parent == nullptr)
+    if (!isRunning() || m_parent == nullptr)
     {
         return;
     }
+    if (m_isRotationRunning)
+    {
+        updateRotation(dt);
+    }
+    if (m_isMovementRunning)
+    {
+        updateMovement(dt);
+    }
+}
+
+void Animation::updateRotation(float dt)
+{
     const AnimationStepRotation rotationStep = { m_rotationSteps[m_actualRotationStep] };
     // The rotation should take a spicific while, so calculate the rotation which the sceneNode make now
     float actualRotation = { rotationStep.getRotationSpeed() * dt };
     m_rotated += actualRotation;
     m_parent->rotate(actualRotation);
-    if (m_rotated * -1 >= rotationStep.getTotalRotation() * -1)
+    if (std::fabs(m_rotated) >= std::fabs(rotationStep.getTotalRotation()))
     {
         if (m_actualRotationStep < m_rotationSteps.size() - 1)
         {
-            startStep(m_actualRotationStep + 1);
+            startRotationStep(m_actualRotationStep + 1);
         }
         else
         {
             if (m_repeat)
             {
-                startStep(0);
+                startRotationStep(0);
             }
             else
             {
-                stop();
+                m_isRotationRunning = false;
             }
 
         }
     }
+}
 
-
-    /*
-    float targetRotation = { rotationStep.getRotation() };
-    // The rotation should take a spicific while, so calculate the rotation which the sceneNode make now
-    float actualRotation = { (targetRotation / rotationStep.getDuration()) * dt };
-    m_rotated += actualRotation;
-    std::cout << "Actual Rotation: " << actualRotation << " Target Rotation " << targetRotation << " Rotated: " << m_rotated << std::endl;
-
-    if ((m_rotated * - 1) < (targetRotation * -1))
+void Animation::updateMovement(float dt)
+{
+    const AnimationStepMovement movementStep = { m_movementSteps[m_actualMovementStep] };
+    // The movement should take a spicific while, so calculate the movement which the sceneNode make now
+    sf::Vector2f actualMovement = { movementStep.getMovementSpeed() * dt };
+    m_moved += Calc::getVec2Length<sf::Vector2f>(actualMovement);
+    m_parent->move(actualMovement);
+    if (std::fabs(m_moved) >= std::fabs(movementStep.getTotalDistance()))
     {
-        m_parent->rotate(actualRotation);
-        std::cout << "Smaller then target " << std::endl;
-    }
-    else
-    {
-        // If we have the parent rotated more then it should, set it to the exact needed rotation
-        m_parent->setRotation(m_rotationAtStepStart + targetRotation);
-        m_rotationAtStepStart = m_parent->getRotation();
-        if (m_actualRotationStep < m_rotationSteps.size() - 1)
+        if (m_actualMovementStep < m_movementSteps.size() - 1)
         {
-            m_actualRotationStep++;
+            startMovementStep(m_actualMovementStep + 1);
         }
         else
         {
-            m_actualRotationStep = 0;
-            if (!m_repeat)
+            if (m_repeat)
             {
-                m_isRunning = false;
+                startMovementStep(0);
             }
-        }
-    }
-    */
+            else
+            {
+                m_isMovementRunning = false;
+            }
 
+        }
+
+    }
 }
+
 /*
 void pause()
 {
@@ -131,7 +166,8 @@ void pause()
 */
 void Animation::stop()
 {
-    m_isRunning = false;
+    m_isRotationRunning = false;
+    m_isMovementRunning = false;
 }
 
 

@@ -2,12 +2,10 @@
 #define ANIMATION_HPP
 #include <SFML/Graphics.hpp>
 #include <vector>
-#include <chrono>
+#include "Animation/AnimationStepMovement.hpp"
 #include "Animation/AnimationStepRotation.hpp"
 
 class SceneNode;
-
-typedef std::chrono::high_resolution_clock CLOCK;
 
 class Animation
 {
@@ -17,15 +15,21 @@ class Animation
         size_t m_actualRotationStep;
         float m_rotated;
 
+        std::vector<AnimationStepMovement> m_movementSteps;
+        size_t m_actualMovementStep;
+        float m_moved;
+
         SceneNode *m_parent;
 
-        bool m_isRunning;
+        bool m_isRotationRunning;
+        bool m_isMovementRunning;
 
     public:
         Animation(SceneNode *parent, bool repeat);
-        Animation(std::vector<AnimationStepRotation> rotationSteps, SceneNode *parent, bool repeat);
+        Animation(std::vector<AnimationStepRotation> rotationSteps, std::vector<AnimationStepMovement> movementSteps, SceneNode *parent, bool repeat);
 
         void setRotationSteps(std::vector<AnimationStepRotation> rotationSteps);
+        void setMovementSteps(std::vector<AnimationStepMovement> movementSteps);
         void setParent(SceneNode *parent);
         bool isRunning() const;
 
@@ -35,7 +39,10 @@ class Animation
         void stop();
 
     private:
-        void startStep(int index);
+        void startRotationStep(int index);
+        void startMovementStep(int index);
+        void updateRotation(float dt);
+        void updateMovement(float dt);
 };
 
 #endif // ANIMATION_HPP
