@@ -27,8 +27,8 @@ class Weapon : public Entity
         int getDamage() const;
         void setDamage(const int damage);
 
-        int getSpriteWidth() const;
-        int getSpriteHeight() const;
+        float getSpriteWidth() const;
+        float getSpriteHeight() const;
 
         bool isAttacking() const;
 

@@ -35,12 +35,12 @@ void Weapon::setDamage(const int damage)
     m_damage = damage;
 }
 
-int Weapon::getSpriteWidth() const
+float Weapon::getSpriteWidth() const
 {
     return m_sprite.getLocalBounds().width;
 }
 
-int Weapon::getSpriteHeight() const
+float Weapon::getSpriteHeight() const
 {
     return m_sprite.getLocalBounds().height;
 }

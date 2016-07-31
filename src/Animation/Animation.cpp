@@ -3,22 +3,22 @@
 #include "Components/SceneNode.hpp"
 
 Animation::Animation(SceneNode *parent, bool repeat)
-: m_rotationSteps{ }
+: m_repeat{ repeat }
+, m_rotationSteps{ }
 , m_actualRotationStep{ 0 }
 , m_rotated{ 0.f }
 , m_parent{ parent }
-, m_repeat{ repeat }
 , m_isRunning{ false }
 {
 
 }
 
 Animation::Animation(std::vector<AnimationStepRotation> rotationSteps, SceneNode *parent, bool repeat)
-: m_rotationSteps{ rotationSteps }
+: m_repeat{ repeat }
+, m_rotationSteps{ rotationSteps }
 , m_actualRotationStep{ 0 }
 , m_rotated{ 0.f }
 , m_parent{ parent }
-, m_repeat{ repeat }
 , m_isRunning{ false }
 {
 

@@ -14,7 +14,7 @@ class Animation
     private:
         bool m_repeat;
         std::vector<AnimationStepRotation> m_rotationSteps;
-        int m_actualRotationStep;
+        size_t m_actualRotationStep;
         float m_rotated;
 
         SceneNode *m_parent;
