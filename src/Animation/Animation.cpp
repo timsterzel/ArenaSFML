@@ -152,9 +152,7 @@ void Animation::updateMovement(float dt)
             {
                 m_isMovementRunning = false;
             }
-
         }
-
     }
 }
 
