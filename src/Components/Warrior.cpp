@@ -54,13 +54,13 @@ void Warrior::setBodyParts(SpriteNode *leftShoe, SpriteNode *rightShoe, SpriteNo
     m_animationLeftShoe.setParent(m_leftShoe);
     m_animationRightShoe.setParent(m_rightShoe);
     std::vector<AnimationStepMovement>  leftShoeMovementSteps;
-    leftShoeMovementSteps.push_back({ m_leftShoe->getPosition(), 2.f, sf::Vector2f(1.f, 0.f) , 0.5f });
+    leftShoeMovementSteps.push_back({ 2.f, sf::Vector2f(1.f, 0.f) , 0.5f });
+    leftShoeMovementSteps.push_back({ 2.f, sf::Vector2f(-1.f, 0.f) , 0.5f });
     m_animationLeftShoe.setMovementSteps(leftShoeMovementSteps);
     m_animationLeftShoe.start();
 
     m_animationRightShoe.setMovementSteps(leftShoeMovementSteps);
     m_animationRightShoe.start();
-    std::cout << "Start Body Animation" << std::endl;
 }
 
 void Warrior::setWeapon(Weapon *weapon)

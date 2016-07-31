@@ -6,6 +6,8 @@
 class AnimationStepRotation : public AnimationStep
 {
     private:
+        // If a start rotation is set the parent can get rotated to this position at the beginning,
+        // else the animation is relative to parents rotation
         bool m_isStartRotationSet;
         float m_startRotation;
         float m_totalRotation;

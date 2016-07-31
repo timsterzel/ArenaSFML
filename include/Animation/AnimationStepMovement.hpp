@@ -6,7 +6,7 @@
 class AnimationStepMovement : public AnimationStep
 {
     private:
-        // If a start position is set the parent can get moved to this position at the begining,
+        // If a start position is set the parent can get moved to this position at the beginning,
         // else the animation is relative to parents position
         bool m_isStartPositionSet;
         sf::Vector2f m_startPosition;
