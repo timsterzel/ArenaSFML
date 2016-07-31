@@ -13,7 +13,9 @@ Warrior::Warrior(const int health, Textures textureId, const ResourceHolder<sf::
 , m_weapon{ nullptr }
 , m_upperBody{ nullptr }
 , m_weaponPos(0.f, 10.f)
-, m_animationSword( m_weapon, false )
+, m_animationSword( nullptr, false )
+, m_animationLeftShoe{  nullptr ,true }
+, m_animationRightShoe{  nullptr ,true }
 {
     sf::FloatRect bounds = m_sprite.getLocalBounds();
     m_sprite.setOrigin(bounds.width / 2.f, bounds.height / 2.f);
@@ -23,6 +25,9 @@ Warrior::Warrior(const int health, Textures textureId, const ResourceHolder<sf::
     std::vector<AnimationStepRotation>  swordRoationSteps;
     swordRoationSteps.push_back({ 0.f, -60.f,  0.5f });
     m_animationSword.setRotationSteps(swordRoationSteps);
+
+
+
 
     /*
     std::vector<AnimationStepMovement>  swordMovementSteps;
@@ -46,6 +51,16 @@ void Warrior::setBodyParts(SpriteNode *leftShoe, SpriteNode *rightShoe, SpriteNo
     m_leftShoe = leftShoe;
     m_rightShoe = rightShoe;
     m_upperBody = upperBody;
+    m_animationLeftShoe.setParent(m_leftShoe);
+    m_animationRightShoe.setParent(m_rightShoe);
+    std::vector<AnimationStepMovement>  leftShoeMovementSteps;
+    leftShoeMovementSteps.push_back({ m_leftShoe->getPosition(), 2.f, sf::Vector2f(1.f, 0.f) , 0.5f });
+    m_animationLeftShoe.setMovementSteps(leftShoeMovementSteps);
+    m_animationLeftShoe.start();
+
+    m_animationRightShoe.setMovementSteps(leftShoeMovementSteps);
+    m_animationRightShoe.start();
+    std::cout << "Start Body Animation" << std::endl;
 }
 
 void Warrior::setWeapon(Weapon *weapon)
@@ -112,20 +127,15 @@ void Warrior::updateCurrent(float dt)
 {
     if (m_weapon)
     {
-        /*
-        const float rotation = { -60.f * dt };
-        m_weapon->rotate(rotation);
-        */
-        /*
-        if (!m_animationSword.isRunning())
-        {
-
-        }
-        */
-
         m_animationSword.update(dt);
-
-
+    }
+    if (m_leftShoe)
+    {
+        m_animationLeftShoe.update(dt);
+    }
+    if (m_rightShoe)
+    {
+        m_animationRightShoe.update(dt);
     }
     //std::cout << "WorldPos: " << getWorldPosition().x << "|" << getWorldPosition().y
     //<< "WeaponWorldPos: " << getWorldWeaponPos().x << "|" << getWorldWeaponPos().y << std::endl;

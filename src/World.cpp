@@ -129,6 +129,7 @@ void World::buildScene()
     m_playerWarrior->setVelocity(60.f, 60.f);
     m_playerWarrior->setType(WorldObjectTypes::PLAYER);
     m_playerWarrior->setWeapon(swordPlayer.get());
+    m_playerWarrior->setBodyParts(playerLeftShoe.get(), playerRightShoe.get(), playerUpperBody.get());
     // Add Parts to player
     m_playerWarrior->attachChild(std::move(playerLeftShoe));
     m_playerWarrior->attachChild(std::move(playerRightShoe));

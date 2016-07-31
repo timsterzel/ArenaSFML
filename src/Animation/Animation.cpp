@@ -72,7 +72,10 @@ void Animation::startRotationStep(int index)
 {
     m_actualRotationStep = index;
     const AnimationStepRotation rotationStep = { m_rotationSteps[index] };
-    m_parent->setRotation(rotationStep.getStartRotation());
+    if (rotationStep.isStartRotationSet())
+    {
+        m_parent->setRotation(rotationStep.getStartRotation());
+    }
     m_rotated = 0.f;
     std::cout << "Rotation Parent Start Step: " << m_parent->getRotation() << std::endl;
 }
@@ -81,7 +84,10 @@ void Animation::startMovementStep(int index)
 {
     m_actualMovementStep = index;
     const AnimationStepMovement movementStep = { m_movementSteps[index] };
-    m_parent->setPosition(movementStep.getStartPosition());
+    if (movementStep.isStartPositionSet())
+    {
+        m_parent->setPosition(movementStep.getStartPosition());
+    }
     m_moved = 0.f;
 }
 

@@ -25,6 +25,8 @@ class Warrior : public Entity
         sf::Vector2f m_weaponPos;
 
         Animation m_animationSword;
+        Animation m_animationLeftShoe;
+        Animation m_animationRightShoe;
         //CollisionCircle m_collisionCircle;
 
     public:
