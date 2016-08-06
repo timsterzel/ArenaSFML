@@ -16,9 +16,6 @@ Knight::Knight(const int health, Textures textureId, const ResourceHolder<sf::Te
     */
 }
 
-
-
-
 void Knight::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const
 {
     Warrior::drawCurrent(target, states);
