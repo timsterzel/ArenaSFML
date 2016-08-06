@@ -44,6 +44,7 @@
 		</Compiler>
 		<Unit filename="include/Animation/Animation.hpp" />
 		<Unit filename="include/Animation/AnimationStep.hpp" />
+		<Unit filename="include/Animation/AnimationStepMovement.hpp" />
 		<Unit filename="include/Animation/AnimationStepRotation.hpp" />
 		<Unit filename="include/Calc.hpp" />
 		<Unit filename="include/Calc.inl" />
@@ -73,6 +74,7 @@
 		<Unit filename="main.cpp" />
 		<Unit filename="src/Animation/Animation.cpp" />
 		<Unit filename="src/Animation/AnimationStep.cpp" />
+		<Unit filename="src/Animation/AnimationStepMovement.cpp" />
 		<Unit filename="src/Animation/AnimationStepRotation.cpp" />
 		<Unit filename="src/Calc.cpp" />
 		<Unit filename="src/Collision/CollisionCircle.cpp" />
