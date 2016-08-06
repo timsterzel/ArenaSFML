@@ -150,11 +150,35 @@ void Warrior::onCommandCurrent(const Command &command, float dt)
     {
         m_currentVelocity.x = 0.f;
         m_currentVelocity.y = 0.f;
-        onCommandCurrentWarrior(command, dt);
+
+        switch (command.getCommandType())
+        {
+            case CommandTypes::LOOK_AT :
+                lookAt(command.getValues());
+                break;
+            case CommandTypes::ROTATE :
+                break;
+            case CommandTypes::MOVE_UP:
+                m_currentVelocity.y = -m_velocity.y;
+                break;
+            case CommandTypes::MOVE_DOWN:
+                m_currentVelocity.y = m_velocity.y;
+                break;
+            case CommandTypes::MOVE_LEFT:
+                m_currentVelocity.x = -m_velocity.x;
+                break;
+            case CommandTypes::MOVE_RIGHT:
+                m_currentVelocity.x = m_velocity.x;
+                break;
+        }
+
+        //onCommandCurrentWarrior(command, dt);
         // Move is the same as setPosition(getPosition() + offset) of the sf::Transformable class
         move(m_currentVelocity * dt);
     }
 }
+
+/*
 void Warrior::onCommandCurrentWarrior(const Command &command, float dt)
 {
     switch (command.getCommandType())
@@ -178,6 +202,7 @@ void Warrior::onCommandCurrentWarrior(const Command &command, float dt)
             break;
     }
 }
+*/
 
 void Warrior::lookAt(const sf::Vector2f LookPos)
 {

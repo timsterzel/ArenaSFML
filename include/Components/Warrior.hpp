@@ -46,13 +46,13 @@ class Warrior : public Entity
 
         virtual void drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const;
 
-    private:
+
+    protected:
         virtual void updateCurrent(float dt);
         virtual void onCommandCurrent(const Command &command, float dt);
         void lookAt(sf::Vector2f pos);
-    protected:
         // The command which are for every Warrior equal
-        void onCommandCurrentWarrior(const Command &command, float dt);
+        //void onCommandCurrentWarrior(const Command &command, float dt);
 };
 
 #endif // WARRIOR_HPP
