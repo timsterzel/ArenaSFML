@@ -22,51 +22,18 @@ Knight::Knight(const int health, Textures textureId, const ResourceHolder<sf::Te
 void Knight::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const
 {
     Warrior::drawCurrent(target, states);
-    // Only draw weapon when it is not nullptr
-    /*
-    if (m_weapon)
-    {
-        // Add weapons transform here, because we call drawCurrent directly
-        //states.transform *= m_weapon->getTransform();
-        m_weapon->draw(target, states);
-
-
-        // Draw weapon pos (TMP)
-        sf::CircleShape circleShape{ 3.f };
-        circleShape.setFillColor(sf::Color::Green);
-        circleShape.setOrigin(3.f, 3.f);
-        circleShape.setPosition(getWorldWeaponPos());
-        target.draw(circleShape);
-    }
-    */
 }
 
 void Knight::updateCurrent(float dt)
 {
     Warrior::updateCurrent(dt);
-    /*
-    if (m_weapon)
-    {
-        m_animationWeapon.update(dt);
-    }
-    if (m_leftShoe)
-    {
-        m_animationLeftShoe.update(dt);
-    }
-    if (m_rightShoe)
-    {
-        m_animationRightShoe.update(dt);
-    }*/
-    //std::cout << "WorldPos: " << getWorldPosition().x << "|" << getWorldPosition().y
-    //<< "WeaponWorldPos: " << getWorldWeaponPos().x << "|" << getWorldWeaponPos().y << std::endl;
-
 }
 
 void Knight::onCommandCurrent(const Command &command, float dt)
 {
     // Do command handling of parent class
     //Entity::onCommand(command, dt);
-    Warrior::onCommandCurrent(command, dt);a
+    Warrior::onCommandCurrent(command, dt);
     if (command.getWorldObjectType() == m_type)
     {
         m_currentVelocity.x = 0.f;

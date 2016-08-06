@@ -16,6 +16,7 @@ class Warrior : public Entity
         int m_maxHealth;
         int m_currentHealth;
 
+        // Delete m_sprite later
         sf::Sprite m_sprite;
         SpriteNode *m_leftShoe;
         SpriteNode *m_rightShoe;
