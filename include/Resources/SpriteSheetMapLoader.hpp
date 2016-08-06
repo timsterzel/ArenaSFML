@@ -1,0 +1,9 @@
+#ifndef SPRITESHEETMAPLOADER_HPP
+#define SPRITESHEETMAPLOADER_HPP
+
+class SpriteSheetMapLoader
+{
+
+};
+
+#endif // SPRITESHEETMAPLOADER_HPP
