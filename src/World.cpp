@@ -5,6 +5,7 @@
 #include "Components/SpriteNode.hpp"
 #include "Components/Warrior.hpp"
 #include "Components/Weapon.hpp"
+#include "Components/Knight.hpp"
 #include "Calc.hpp"
 #include <memory>
 
@@ -120,7 +121,7 @@ void World::buildScene()
     std::unique_ptr<SpriteNode> playerUpperBody(new SpriteNode(m_TextureHolder.get(Textures::KNIGHT_UPPER_BODY), true));
 
     // Warrior
-    std::unique_ptr<Warrior> warrior(new Warrior(100, Textures::KNIGHT, m_TextureHolder));
+    std::unique_ptr<Knight> warrior(new Knight(100, Textures::KNIGHT, m_TextureHolder));
     m_playerWarrior = warrior.get();
     std::unique_ptr<CollisionShape> collisionShapeWarrior(new CollisionCircle(12.f, &m_drawCollisionShape));
     //std::unique_ptr<CollisionShape> collisionShapeWarrior(new CollisionRect({ 32.f, 32.f }));
