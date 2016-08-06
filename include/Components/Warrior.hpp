@@ -16,7 +16,6 @@ class Warrior : public Entity
         int m_maxHealth;
         int m_currentHealth;
 
-    private:
         sf::Sprite m_sprite;
         SpriteNode *m_leftShoe;
         SpriteNode *m_rightShoe;
@@ -24,7 +23,7 @@ class Warrior : public Entity
         SpriteNode *m_upperBody;
         sf::Vector2f m_weaponPos;
 
-        Animation m_animationSword;
+        Animation m_animationWeapon;
         Animation m_animationLeftShoe;
         Animation m_animationRightShoe;
         //CollisionCircle m_collisionCircle;
@@ -51,6 +50,9 @@ class Warrior : public Entity
         virtual void updateCurrent(float dt);
         virtual void onCommandCurrent(const Command &command, float dt);
         void lookAt(sf::Vector2f pos);
+    protected:
+        // The command which are for every Warrior equal
+        void onCommandCurrentWarrior(const Command &command, float dt);
 };
 
 #endif // WARRIOR_HPP
