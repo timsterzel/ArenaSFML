@@ -62,8 +62,6 @@ class World : private sf::NonCopyable
         bool matchesCategories(SceneNode::Pair &colliders, WorldObjectTypes type1, WorldObjectTypes type2);
         void render();
 
-    private:
-
 };
 
 #endif // WORLD_HPP

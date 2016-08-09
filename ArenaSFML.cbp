@@ -72,7 +72,7 @@
 		<Unit filename="include/Resources/EnumResourceIdentifiers.hpp" />
 		<Unit filename="include/Resources/ResourceHolder.hpp" />
 		<Unit filename="include/Resources/ResourceHolder.inl" />
-		<Unit filename="include/Resources/SpriteSheetMapLoader.hpp" />
+		<Unit filename="include/Resources/SpriteSheetMapHolder.hpp" />
 		<Unit filename="include/World.hpp" />
 		<Unit filename="main.cpp">
 			<Option virtualFolder="src/" />
@@ -97,7 +97,7 @@
 		<Unit filename="src/Input/Command.cpp" />
 		<Unit filename="src/Input/Input.cpp" />
 		<Unit filename="src/Input/InputHandler.cpp" />
-		<Unit filename="src/Resources/SpriteSheetMapLoader.cpp" />
+		<Unit filename="src/Resources/SpriteSheetMapHolder.cpp" />
 		<Unit filename="src/World.cpp" />
 		<Extensions>
 			<code_completion />

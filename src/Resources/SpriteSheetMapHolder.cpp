@@ -1,6 +1,7 @@
 #include "Resources/SpriteSheetMapHolder.hpp"
 #include <fstream>
 #include <sstream>
+#include <cassert>
 
 void SpriteSheetMapHolder::load(Textures id, const std::string &fileName)
 {
@@ -30,13 +31,15 @@ std::map<std::string, sf::IntRect> SpriteSheetMapHolder::get(const Textures &id)
 
 sf::IntRect SpriteSheetMapHolder::getRectData(Textures &id, const std::string &identefier) const
 {
-    //return m_resourceMap[id][identefier];
+    assert(m_resourceMap.find(id) != m_resourceMap.end());
+    assert(m_resourceMap.at(id).find(identefier) != m_resourceMap.at(id).end());
     return m_resourceMap.at(id).at(identefier);
 }
 
 sf::IntRect SpriteSheetMapHolder::getRectData(Textures &id, const std::string &identefier)
 {
-    //return m_resourceMap[id][identefier];
+    assert(m_resourceMap.find(id) != m_resourceMap.end());
+    assert(m_resourceMap.at(id).find(identefier) != m_resourceMap.at(id).end());
     return m_resourceMap.at(id).at(identefier);
 }
 
