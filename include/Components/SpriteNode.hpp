@@ -14,6 +14,7 @@ class SpriteNode : public SceneNode
         virtual void drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const;
 
         void init(bool centerOrigin);
+        void init(bool centerOrigin, const sf::IntRect &rect);
 
 };
 

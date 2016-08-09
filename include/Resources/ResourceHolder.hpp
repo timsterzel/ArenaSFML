@@ -20,7 +20,6 @@ class ResourceHolder
         void load(Identifier id, const std::string &fileName, const Parameter &secondParam);
 
         Resource& get(Identifier id);
-
         Resource& get(Identifier id) const;
         //const Resource& get(Identifier id) const;
 

@@ -14,14 +14,15 @@ class SpriteSheetMapHolder
     public:
         void load(Textures id, const std::string &fileName);
 
-        std::map<std::string, sf::IntRect> get(Textures id);
+        //std::map<std::string, sf::IntRect> get(const Textures &id) const;
 
-        sf::IntRect getRectData(Textures id, const std::string &identefier);
+        sf::IntRect getRectData(Textures &id, const std::string &identefier) const;
+        sf::IntRect getRectData(Textures &id, const std::string &identefier);
 
     private:
         //void loadRectData(const std::string &fileName);
-        std::string getIdentifier(const std::string &line);
-        sf::IntRect getIntRect(const std::string &line);
+        std::string getIdentifier(const std::string &line) const;
+        sf::IntRect getIntRect(const std::string &line) const;
 };
 
 

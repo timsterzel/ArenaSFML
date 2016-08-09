@@ -21,14 +21,23 @@ void SpriteSheetMapHolder::load(Textures id, const std::string &fileName)
     m_resourceMap.insert( { id, rectMap } );
 }
 
-std::map<std::string, sf::IntRect> SpriteSheetMapHolder::get(Textures id)
+/*
+std::map<std::string, sf::IntRect> SpriteSheetMapHolder::get(const Textures &id) const
 {
     return m_resourceMap[id];
 }
+*/
 
-sf::IntRect SpriteSheetMapHolder::getRectData(Textures id, const std::string &identefier)
+sf::IntRect SpriteSheetMapHolder::getRectData(Textures &id, const std::string &identefier) const
 {
-    return m_resourceMap[id][identefier];
+    //return m_resourceMap[id][identefier];
+    return m_resourceMap.at(id).at(identefier);
+}
+
+sf::IntRect SpriteSheetMapHolder::getRectData(Textures &id, const std::string &identefier)
+{
+    //return m_resourceMap[id][identefier];
+    return m_resourceMap.at(id).at(identefier);
 }
 
 /*
@@ -52,7 +61,7 @@ void SpriteSheetMapLoader::loadRectData(std::string fileName)
 }
 */
 
-std::string SpriteSheetMapHolder::getIdentifier(const std::string &line)
+std::string SpriteSheetMapHolder::getIdentifier(const std::string &line) const
 {
     // The identifier comes bevor the '=' and habe a white space after the identifier.
     // So we use line.find('=') -1, so we remove the white space, too.
@@ -60,7 +69,7 @@ std::string SpriteSheetMapHolder::getIdentifier(const std::string &line)
     return identifier;
 }
 
-sf::IntRect SpriteSheetMapHolder::getIntRect(const std::string &line)
+sf::IntRect SpriteSheetMapHolder::getIntRect(const std::string &line) const
 {
     // Only get the numbers, which come after the '='
     std::string numbers = line.substr(line.find('=') + 1, line.length() + 1);

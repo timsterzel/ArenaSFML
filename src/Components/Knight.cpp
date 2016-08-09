@@ -2,8 +2,8 @@
 #include <Components/Weapon.hpp>
 #include <iostream>
 
-Knight::Knight(const int health, Textures textureId, const ResourceHolder<sf::Texture, Textures> &textureHolder)
-: Warrior(health, textureId, textureHolder)
+Knight::Knight(const int health, Textures textureId, const ResourceHolder<sf::Texture, Textures> &textureHolder, const SpriteSheetMapHolder &spriteSheetMapHolder)
+: Warrior(health, textureId, textureHolder, spriteSheetMapHolder)
 {
     std::vector<AnimationStepRotation>  swordRoationSteps;
     swordRoationSteps.push_back({ 0.f, -60.f,  0.5f });

@@ -7,6 +7,7 @@
 #include "Components/SpriteNode.hpp"
 #include "Resources/EnumResourceIdentifiers.hpp"
 #include "Resources/ResourceHolder.hpp"
+#include "Resources/SpriteSheetMapHolder.hpp"
 
 class Weapon;
 
@@ -30,7 +31,7 @@ class Warrior : public Entity
         //CollisionCircle m_collisionCircle;
 
     public:
-        Warrior(const int health, Textures textureId, const ResourceHolder<sf::Texture, Textures> &textureHolder);
+        Warrior(const int health, Textures textureId, const ResourceHolder<sf::Texture, Textures> &textureHolder, const SpriteSheetMapHolder &spriteSheetMapHolder);
 
         int getCurrentHealth() const;
         void setCurrentHealth(const int health);
