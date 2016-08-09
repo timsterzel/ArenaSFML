@@ -10,13 +10,14 @@
 #include <memory>
 
 World::World(const bool isInDebug, sf::RenderWindow *window, const ResourceHolder<sf::Font, Fonts> &FontHolder,
-const ResourceHolder<sf::Texture, Textures> &TextureHolder)
+const ResourceHolder<sf::Texture, Textures> &TextureHolder, const SpriteSheetMapHolder &spriteSheetMapHolder)
 : m_isInDebug { isInDebug }
 , m_drawCollisionShape{ false }
 , m_window{ window }
 , m_worldView{ m_window->getDefaultView() }
 , m_FontHolder{ FontHolder }
 , m_TextureHolder{ TextureHolder }
+, m_SpriteSheetMapHolder{ spriteSheetMapHolder }
 //, m_inputQueue{inputQueue}
 , m_worldBounds{ 0.f, 0.f, 800.f, 480.f }
 , m_playerWarrior{ nullptr }

@@ -13,6 +13,7 @@
 #include "Input/EnumInputTypes.hpp"
 #include "Resources/ResourceHolder.hpp"
 #include "Resources/EnumResourceIdentifiers.hpp"
+#include "Resources/SpriteSheetMapHolder.hpp"
 
 typedef std::chrono::high_resolution_clock CLOCK;
 
@@ -40,8 +41,7 @@ class Game
         // Assets
         ResourceHolder<sf::Font, Fonts> m_fontHolder;
         ResourceHolder<sf::Texture, Textures> m_textureHolder;
-        // Store the path to the textures sprite sheets
-        std::map<Textures, std::string> m_textureSheets;
+        SpriteSheetMapHolder m_spriteSheetMapHolder;
 
         // The game class handle all inputs which get later translated to commands
         QueueHelper<Input> m_inputQueue;

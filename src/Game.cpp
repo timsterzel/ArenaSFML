@@ -14,7 +14,7 @@ Game::Game(const bool showStats, const bool isInDebug)
 , m_fps{ 0 }
 , m_timePoint1{ CLOCK::now() }
 , m_inputHandler{ &m_window }
-, m_world{ isInDebug, &m_window, m_fontHolder, m_textureHolder }
+, m_world{ isInDebug, &m_window, m_fontHolder, m_textureHolder, m_spriteSheetMapHolder }
 {
     m_window.setFramerateLimit(60);
     loadFonts();
@@ -33,7 +33,7 @@ void Game::loadTextures()
     //sf::Rect<int> rect;
     //m_textureHolder.load<sf::Rect<int>>(Textures::KNIGHT, "assets/sprites/knight.png", rect);
     m_textureHolder.load(Textures::KNIGHT, "assets/sprites/warriors/knight.png");
-    m_textureSheets.insert({ Textures::KNIGHT, "assets/sprites/warriors/knight.txt" });
+    m_spriteSheetMapHolder.load(Textures::KNIGHT, "assets/sprites/warriors/knight.txt");
 
     m_textureHolder.load(Textures::CHESS_WHITE, "assets/sprites/chess_white.png");
 

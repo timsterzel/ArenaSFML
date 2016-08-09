@@ -8,6 +8,7 @@
 #include "Components/SceneNode.hpp"
 #include "Resources/ResourceHolder.hpp"
 #include "Resources/EnumResourceIdentifiers.hpp"
+#include "Resources/SpriteSheetMapHolder.hpp"
 #include "Input/QueueHelper.hpp"
 #include "Input/Input.hpp"
 #include "Input/Command.hpp"
@@ -35,7 +36,7 @@ class World : private sf::NonCopyable
 
         const ResourceHolder<sf::Font, Fonts> &m_FontHolder;
         const ResourceHolder<sf::Texture, Textures> &m_TextureHolder;
-        //const std::map<Textures, std::string> &m_TextureSheets;
+        const SpriteSheetMapHolder &m_SpriteSheetMapHolder;
 
         QueueHelper<Input> *m_inputQueue;
         QueueHelper<Command> m_commandQueue;
@@ -47,7 +48,7 @@ class World : private sf::NonCopyable
 
     public:
         World(const bool isInDebug, sf::RenderWindow *window, const ResourceHolder<sf::Font, Fonts> &fontHolder,
-                const ResourceHolder<sf::Texture, Textures> &textureHolder);
+                const ResourceHolder<sf::Texture, Textures> &textureHolder, const SpriteSheetMapHolder &spriteSheetMapHolder);
 
         void buildScene();
         // Safe the actual position, rotation and scale of the SceneNode
