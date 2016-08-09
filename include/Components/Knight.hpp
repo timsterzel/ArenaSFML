@@ -2,6 +2,7 @@
 #define KNIGHT_HPP
 #include <SFML/Graphics.hpp>
 #include "Components/Warrior.hpp"
+#include <iostream>
 
 
 

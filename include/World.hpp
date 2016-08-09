@@ -2,6 +2,7 @@
 #define WORLD_HPP
 #include <SFML/Graphics.hpp>
 #include <memory>
+#include <map>
 #include "Components/Warrior.hpp"
 #include "Components/EnumWorldObjectTypes.hpp"
 #include "Components/SceneNode.hpp"
@@ -10,7 +11,6 @@
 #include "Input/QueueHelper.hpp"
 #include "Input/Input.hpp"
 #include "Input/Command.hpp"
-
 
 class World : private sf::NonCopyable
 {
@@ -35,6 +35,7 @@ class World : private sf::NonCopyable
 
         const ResourceHolder<sf::Font, Fonts> &m_FontHolder;
         const ResourceHolder<sf::Texture, Textures> &m_TextureHolder;
+        //const std::map<Textures, std::string> &m_TextureSheets;
 
         QueueHelper<Input> *m_inputQueue;
         QueueHelper<Command> m_commandQueue;

@@ -4,7 +4,7 @@
 #include "Resources/SpriteSheetMapLoader.hpp"
 int main()
 {
-    SpriteSheetMapLoader::loadRectData("assets/sprites/Warriors/knight.txt");
+    //SpriteSheetMapLoader::loadRectData("assets/sprites/Warriors/knight.txt");
     Game game(true, true);
     game.run();
 

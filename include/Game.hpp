@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <memory>
 #include <chrono>
+#include <map>
 #include "World.hpp"
 #include "Components/Warrior.hpp"
 #include "Components/EnumWorldObjectTypes.hpp"
@@ -39,6 +40,8 @@ class Game
         // Assets
         ResourceHolder<sf::Font, Fonts> m_fontHolder;
         ResourceHolder<sf::Texture, Textures> m_textureHolder;
+        // Store the path to the textures sprite sheets
+        std::map<Textures, std::string> m_textureSheets;
 
         // The game class handle all inputs which get later translated to commands
         QueueHelper<Input> m_inputQueue;

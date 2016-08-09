@@ -5,6 +5,7 @@
 		<Option title="ArenaSFML" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
+		<Option virtualFolders="src/;" />
 		<Build>
 			<Target title="Debug">
 				<Option output="bin/Debug/SFMLTemplate" prefix_auto="1" extension_auto="1" />
@@ -55,6 +56,7 @@
 		<Unit filename="include/Collision/CollisionShape.hpp" />
 		<Unit filename="include/Components/Entity.hpp" />
 		<Unit filename="include/Components/EnumWorldObjectTypes.hpp" />
+		<Unit filename="include/Components/Knight.hpp" />
 		<Unit filename="include/Components/SceneNode.hpp" />
 		<Unit filename="include/Components/SpriteNode.hpp" />
 		<Unit filename="include/Components/Warrior.hpp" />
@@ -70,8 +72,11 @@
 		<Unit filename="include/Resources/EnumResourceIdentifiers.hpp" />
 		<Unit filename="include/Resources/ResourceHolder.hpp" />
 		<Unit filename="include/Resources/ResourceHolder.inl" />
+		<Unit filename="include/Resources/SpriteSheetMapLoader.hpp" />
 		<Unit filename="include/World.hpp" />
-		<Unit filename="main.cpp" />
+		<Unit filename="main.cpp">
+			<Option virtualFolder="src/" />
+		</Unit>
 		<Unit filename="src/Animation/Animation.cpp" />
 		<Unit filename="src/Animation/AnimationStep.cpp" />
 		<Unit filename="src/Animation/AnimationStepMovement.cpp" />
@@ -83,6 +88,7 @@
 		<Unit filename="src/Collision/CollisionRect.cpp" />
 		<Unit filename="src/Collision/CollisionShape.cpp" />
 		<Unit filename="src/Components/Entity.cpp" />
+		<Unit filename="src/Components/Knight.cpp" />
 		<Unit filename="src/Components/SceneNode.cpp" />
 		<Unit filename="src/Components/SpriteNode.cpp" />
 		<Unit filename="src/Components/Warrior.cpp" />
@@ -91,6 +97,7 @@
 		<Unit filename="src/Input/Command.cpp" />
 		<Unit filename="src/Input/Input.cpp" />
 		<Unit filename="src/Input/InputHandler.cpp" />
+		<Unit filename="src/Resources/SpriteSheetMapLoader.cpp" />
 		<Unit filename="src/World.cpp" />
 		<Extensions>
 			<code_completion />
