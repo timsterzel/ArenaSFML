@@ -36,7 +36,6 @@ void Game::loadTextures()
     m_spriteSheetMapHolder.load(Textures::KNIGHT, "assets/sprites/warriors/knight.txt");
     m_textureHolder.load(Textures::WIZARD, "assets/sprites/warriors/wizard.png");
     m_spriteSheetMapHolder.load(Textures::WIZARD, "assets/sprites/warriors/wizard.txt");
-
     m_textureHolder.load(Textures::SWORD, "assets/sprites/sword.png");
     m_textureHolder.load(Textures::CHESS_WHITE, "assets/sprites/chess_white.png");
 }
@@ -59,7 +58,8 @@ void Game::run()
     }
 }
 
-void Game::determineDeltaTime() {
+void Game::determineDeltaTime()
+{
     CLOCK::time_point timePoint2 = { CLOCK::now() };
     std::chrono::duration<float> timeSpan = { timePoint2 - m_timePoint1 };
     m_timePoint1 = CLOCK::now();
