@@ -6,6 +6,7 @@
 #include "Components/Warrior.hpp"
 #include "Components/EnumWorldObjectTypes.hpp"
 #include "Components/SceneNode.hpp"
+#include "Render/RenderManager.hpp"
 #include "Resources/ResourceHolder.hpp"
 #include "Resources/EnumResourceIdentifiers.hpp"
 #include "Resources/SpriteSheetMapHolder.hpp"
@@ -26,6 +27,7 @@ class World : private sf::NonCopyable
         sf::View m_worldView;
 
         SceneNode m_sceneGraph;
+        RenderManager m_renderManager;
         //std::array<SceneNode*, Layers::COUNT> m_sceneLayers;
 
         const ResourceHolder<sf::Font, Fonts> &m_FontHolder;

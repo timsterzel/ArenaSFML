@@ -6,9 +6,9 @@
 #include <set>
 #include <tuple>
 #include "Collision/CollisionShape.hpp"
-#include "Components/EnumRenderLayers.hpp"
 #include "Components/EnumWorldObjectTypes.hpp"
 #include "Input/Command.hpp"
+#include "Render/EnumRenderLayers.hpp"
 
 class CollisionShape;
 class CollisionInfo;
@@ -21,6 +21,7 @@ class SceneNode : public sf::Transformable, public sf::Drawable, public sf::NonC
         //typedef std::tuple<SceneNode*, SceneNode*, CollisionInfo> Pair;
 
     private:
+        //bool m_isRoot;
         RenderLayers m_layer;
         std::vector<Ptr> m_children;
         SceneNode *m_parent;

@@ -12,6 +12,18 @@ SceneNode::SceneNode()
 {
 
 }
+/*
+SceneNode::SceneNode(bool isRoot)
+: m_isRoot{ isRoot }
+, m_layer{ RenderLayers::NONE }
+, m_parent{ nullptr }
+, m_collisionShape{ nullptr }
+, m_type{ WorldObjectTypes::NONE }
+, m_isActive{ true }
+{
+
+}
+*/
 
 SceneNode::SceneNode(RenderLayers layer)
 : m_layer{ layer }

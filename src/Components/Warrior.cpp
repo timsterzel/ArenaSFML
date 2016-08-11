@@ -27,11 +27,11 @@ Warrior::Warrior(RenderLayers layer, const int health, Textures textureId, const
     std::vector<AnimationStepRotation>  swordRoationSteps;
     swordRoationSteps.push_back({ 0.f, -60.f,  0.5f });
     m_animationWeapon.setRotationSteps(swordRoationSteps);
-    std::unique_ptr<SpriteNode> leftShoe(new SpriteNode(RenderLayers::MAIN, textureHolder.get(textureId), spriteSheetMapHolder.getRectData(textureId, "left_shoe"), true));
+    std::unique_ptr<SpriteNode> leftShoe(new SpriteNode(RenderLayers::SHOES, textureHolder.get(textureId), spriteSheetMapHolder.getRectData(textureId, "left_shoe"), true));
     leftShoe->setPosition(8.f, -5.f);
-    std::unique_ptr<SpriteNode> rightShoe(new SpriteNode(RenderLayers::MAIN, textureHolder.get(textureId), spriteSheetMapHolder.getRectData(textureId, "right_shoe"), true));
+    std::unique_ptr<SpriteNode> rightShoe(new SpriteNode(RenderLayers::WEAPON, textureHolder.get(textureId), spriteSheetMapHolder.getRectData(textureId, "right_shoe"), true));
     rightShoe->setPosition(8.f, 5.f);
-    std::unique_ptr<SpriteNode> upperBody(new SpriteNode(RenderLayers::MAIN, textureHolder.get(textureId), spriteSheetMapHolder.getRectData(textureId, "upper_body"), true));
+    std::unique_ptr<SpriteNode> upperBody(new SpriteNode(RenderLayers::UPPER_BODY, textureHolder.get(textureId), spriteSheetMapHolder.getRectData(textureId, "upper_body"), true));
 
     // Start body animation
     setBodyParts(leftShoe.get(), rightShoe.get(), upperBody.get());
@@ -118,11 +118,12 @@ void Warrior::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) con
 {
     //target.draw(m_sprite, states);
     // Only draw weapon when it is not nullptr
+    /*
     if (m_weapon)
     {
         // Add weapons transform here, because we call drawCurrent directly
         //states.transform *= m_weapon->getTransform();
-        m_weapon->draw(target, states);
+        //m_weapon->draw(target, states);
 
 
         // Draw weapon pos (TMP)
@@ -131,7 +132,7 @@ void Warrior::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) con
         circleShape.setOrigin(3.f, 3.f);
         circleShape.setPosition(getWorldWeaponPos());
         target.draw(circleShape);
-    }
+    }*/
 }
 
 void Warrior::updateCurrent(float dt)

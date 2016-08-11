@@ -36,7 +36,6 @@ class Warrior : public Entity
         int getCurrentHealth() const;
         void setCurrentHealth(const int health);
 
-        void setBodyParts(SpriteNode *leftShoe, SpriteNode *rightShoe, SpriteNode *upperBody);
         void setWeapon(Weapon *weapon);
         Weapon* getWeapon() const;
 
@@ -50,6 +49,8 @@ class Warrior : public Entity
 
 
     protected:
+        void setBodyParts(SpriteNode *leftShoe, SpriteNode *rightShoe, SpriteNode *upperBody);
+
         virtual void updateCurrent(float dt);
         virtual void onCommandCurrent(const Command &command, float dt);
         void lookAt(sf::Vector2f pos);

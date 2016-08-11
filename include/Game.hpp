@@ -11,6 +11,7 @@
 #include "Input/QueueHelper.hpp"
 #include "Input/InputHandler.hpp"
 #include "Input/EnumInputTypes.hpp"
+#include "Render/RenderManager.hpp"
 #include "Resources/ResourceHolder.hpp"
 #include "Resources/EnumResourceIdentifiers.hpp"
 #include "Resources/SpriteSheetMapHolder.hpp"
@@ -33,6 +34,7 @@ class Game
         bool m_isRunning;
 
         SceneNode m_sceneGraph;
+        RenderManager m_renderManager;
 
         // Delta time
         float m_dt;

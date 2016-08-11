@@ -10,6 +10,7 @@ Game::Game(const bool showStats, const bool isInDebug)
 , m_isInDebug{ isInDebug }
 , m_window{ sf::VideoMode{ m_screenHeight, m_screenWidth} , "ArenaSFML" }
 , m_isRunning{ true }
+, m_renderManager{ &m_sceneGraph }
 , m_dt{ 0 }
 , m_fps{ 0 }
 , m_timePoint1{ CLOCK::now() }
@@ -114,7 +115,7 @@ void Game::render()
 {
     //std::cout << "Render" << std::endl;
     m_window.clear();
-    m_window.draw(m_sceneGraph);
+    m_window.draw(m_renderManager);
     m_world.render();
     if (m_showStats)
     {

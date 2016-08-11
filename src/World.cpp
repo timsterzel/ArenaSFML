@@ -15,6 +15,7 @@ const ResourceHolder<sf::Texture, Textures> &TextureHolder, const SpriteSheetMap
 , m_drawCollisionShape{ false }
 , m_window{ window }
 , m_worldView{ m_window->getDefaultView() }
+, m_renderManager{ &m_sceneGraph }
 , m_FontHolder{ FontHolder }
 , m_TextureHolder{ TextureHolder }
 , m_SpriteSheetMapHolder{ spriteSheetMapHolder }
@@ -399,7 +400,7 @@ void World::render()
 {
     //std::cout << "Render" << std::endl;
     //m_window->clear();
-    m_window->draw(m_sceneGraph);
+    m_window->draw(m_renderManager);
     //m_window->display();
 }
 
