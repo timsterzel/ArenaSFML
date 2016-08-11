@@ -13,7 +13,7 @@
 class CollisionShape;
 class CollisionInfo;
 
-class SceneNode : public sf::Transformable, public sf::Drawable, public sf::NonCopyable
+class SceneNode : public sf::Transformable, /*public sf::Drawable,*/ public sf::NonCopyable
 {
     public:
         typedef std::unique_ptr<SceneNode> Ptr;
@@ -84,13 +84,14 @@ class SceneNode : public sf::Transformable, public sf::Drawable, public sf::NonC
 
 
         // draw should not get overridden
-        virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const final;
+        virtual void draw(RenderLayers layer, sf::RenderTarget &target, sf::RenderStates states) const final;
+        //virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const final;
 
     private:
 
         virtual void drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const;
         virtual void drawCollisionShape(sf::RenderTarget &target, sf::RenderStates states) const;
-        void drawChildren(sf::RenderTarget &target, sf::RenderStates states) const;
+        void drawChildren(RenderLayers layer, sf::RenderTarget &target, sf::RenderStates states) const;
         virtual void updateCurrent(float dt);
         void updateChildren(float dt);
         virtual void onCommandCurrent(const Command &command, float dt);

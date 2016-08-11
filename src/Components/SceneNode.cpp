@@ -69,14 +69,21 @@ void SceneNode::setCollisionShape(std::unique_ptr<CollisionShape> collisionShape
     m_collisionShape->setParent(this);
 }
 
-void SceneNode::draw(sf::RenderTarget &target, sf::RenderStates states) const
+void SceneNode::draw(RenderLayers layer, sf::RenderTarget &target, sf::RenderStates states) const
 {
         states.transform *= getTransform();
-        drawCurrent(target, states);
+        if (m_layer == layer) {
+            drawCurrent(target, states);
+        }
         drawCollisionShape(target, states);
-        drawChildren(target, states);
+        drawChildren(layer, target, states);
 }
+/*
+void SceneNode::draw(sf::RenderTarget &target, sf::RenderStates states) const
+{
 
+}
+*/
 void SceneNode::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const
 {
     //Do nothing by default
@@ -91,11 +98,11 @@ void SceneNode::drawCollisionShape(sf::RenderTarget &target, sf::RenderStates st
     }
 }
 
-void SceneNode::drawChildren(sf::RenderTarget &target, sf::RenderStates states) const
+void SceneNode::drawChildren(RenderLayers layer, sf::RenderTarget &target, sf::RenderStates states) const
 {
     for (const Ptr &child : m_children)
     {
-        child->draw(target, states);
+        child->draw(layer, target, states);
     }
 }
 

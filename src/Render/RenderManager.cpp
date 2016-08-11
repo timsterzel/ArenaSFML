@@ -13,7 +13,7 @@ void RenderManager::draw(sf::RenderTarget &target, sf::RenderStates states) cons
 {
     for (int i = { 0 }; i < static_cast<int>(RenderLayers::COUNT); i++)
     {
-        m_sceneGraph->draw(target, states);
+        m_sceneGraph->draw(static_cast<RenderLayers>(i), target, states);
     }
 }
 
