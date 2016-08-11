@@ -11,11 +11,9 @@ RenderManager::RenderManager(SceneNode *sceneGraph)
 
 void RenderManager::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-    for (std::size_t i = { 0 }; i < RenderLayers::COUNT; i++)
+    for (int i = { 0 }; i < static_cast<int>(RenderLayers::COUNT); i++)
     {
         m_sceneGraph->draw(target, states);
     }
-
-
 }
 

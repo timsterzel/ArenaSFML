@@ -3,7 +3,7 @@
 
 
 // Use of enum instead of enum class, so we can use Layer as int
-enum RenderLayers
+enum class RenderLayers
 {
     NONE,
     BACKGROUND,
