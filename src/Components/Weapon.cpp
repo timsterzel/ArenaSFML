@@ -3,8 +3,9 @@
 #include <iostream>
 #include <cmath>
 
-Weapon::Weapon(const int damage, Textures textureId, const ResourceHolder<sf::Texture, Textures> &textureHolder)
-: m_damage{ damage }
+Weapon::Weapon(RenderLayers layer, const int damage, Textures textureId, const ResourceHolder<sf::Texture, Textures> &textureHolder)
+: Entity(layer)
+, m_damage{ damage }
 , m_sprite{ textureHolder.get(textureId) }
 , m_isAttacking{ false }
 , m_rotationPoint{ 0.f, 0.f }

@@ -4,7 +4,8 @@
 #include <iostream>
 
 SceneNode::SceneNode()
-: m_parent{ nullptr }
+: m_layer{ RenderLayers::NONE }
+, m_parent{ nullptr }
 , m_collisionShape{ nullptr }
 , m_type{ WorldObjectTypes::NONE }
 , m_isActive{ true }
@@ -12,8 +13,19 @@ SceneNode::SceneNode()
 
 }
 
-SceneNode::SceneNode(WorldObjectTypes type)
-: m_parent{ nullptr }
+SceneNode::SceneNode(RenderLayers layer)
+: m_layer{ layer }
+, m_parent{ nullptr }
+, m_collisionShape{ nullptr }
+, m_type{ WorldObjectTypes::NONE }
+, m_isActive{ true }
+{
+
+}
+
+SceneNode::SceneNode(RenderLayers layer, WorldObjectTypes type)
+: m_layer{ layer }
+, m_parent{ nullptr }
 , m_collisionShape{ nullptr }
 , m_type{ type }
 , m_isActive{ true }

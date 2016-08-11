@@ -31,7 +31,7 @@ class Warrior : public Entity
         //CollisionCircle m_collisionCircle;
 
     public:
-        Warrior(const int health, Textures textureId, const ResourceHolder<sf::Texture, Textures> &textureHolder, const SpriteSheetMapHolder &spriteSheetMapHolder);
+        Warrior(RenderLayers layer, const int health, Textures textureId, const ResourceHolder<sf::Texture, Textures> &textureHolder, const SpriteSheetMapHolder &spriteSheetMapHolder);
 
         int getCurrentHealth() const;
         void setCurrentHealth(const int health);

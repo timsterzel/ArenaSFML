@@ -20,7 +20,7 @@ class Weapon : public Entity
         sf::Vector2f m_relEquipPoint;
 
     public:
-        Weapon(const int damage, Textures textureId, const ResourceHolder<sf::Texture, Textures> &textureHolder);
+        Weapon(RenderLayers layer, const int damage, Textures textureId, const ResourceHolder<sf::Texture, Textures> &textureHolder);
 
         virtual ~Weapon();
 

@@ -2,8 +2,9 @@
 #include "Calc.hpp"
 #include <iostream>
 
-Entity::Entity()
-: m_width{ 0.f }
+Entity::Entity(RenderLayers layer)
+: SceneNode(layer)
+, m_width{ 0.f }
 , m_height{ 0.f }
 {
 

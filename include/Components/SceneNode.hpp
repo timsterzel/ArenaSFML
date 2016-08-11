@@ -6,6 +6,7 @@
 #include <set>
 #include <tuple>
 #include "Collision/CollisionShape.hpp"
+#include "Components/EnumRenderLayers.hpp"
 #include "Components/EnumWorldObjectTypes.hpp"
 #include "Input/Command.hpp"
 
@@ -20,12 +21,13 @@ class SceneNode : public sf::Transformable, public sf::Drawable, public sf::NonC
         //typedef std::tuple<SceneNode*, SceneNode*, CollisionInfo> Pair;
 
     private:
+        RenderLayers m_layer;
         std::vector<Ptr> m_children;
         SceneNode *m_parent;
     protected:
         std::unique_ptr<CollisionShape> m_collisionShape;
         WorldObjectTypes m_type;
-        // A SceneNode is active it moves or rotate.
+        // When a SceneNode is active it can move or rotate.
         // If it is only passive, so it dont move, rotate etc things can possibly collide with it (If it have a collision shape),
         // but a passive object can not do anything to collide with something. But Other SceneNodes can do things so they collides
         // with it. When we know that a SceneNode is passive we dont have to check collision twice. We just have to check if the
@@ -33,14 +35,13 @@ class SceneNode : public sf::Transformable, public sf::Drawable, public sf::NonC
         // In a nutshell: When the SceneNode change his position or rotate its active.
         bool m_isActive;
 
-
-
         sf::Vector2f m_lastPos;
         float m_lastRot;
         sf::Vector2f m_lastScal;
     public:
         SceneNode();
-        SceneNode(WorldObjectTypes type);
+        SceneNode(RenderLayers layer);
+        SceneNode(RenderLayers layer, WorldObjectTypes type);
         void attachChild(Ptr child);
         Ptr detachChild(const SceneNode& node);
 

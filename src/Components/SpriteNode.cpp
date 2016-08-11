@@ -1,13 +1,15 @@
 #include "Components/SpriteNode.hpp"
 
-SpriteNode::SpriteNode(const sf::Texture &texture, bool centerOrigin)
-: m_sprite(texture)
+SpriteNode::SpriteNode(RenderLayers layer, const sf::Texture &texture, bool centerOrigin)
+: SceneNode(layer)
+, m_sprite(texture)
 {
     init(centerOrigin);
 }
 
-SpriteNode::SpriteNode(const sf::Texture &texture, const sf::IntRect &rect, bool centerOrigin)
-: m_sprite(texture, rect)
+SpriteNode::SpriteNode(RenderLayers layer, const sf::Texture &texture, const sf::IntRect &rect, bool centerOrigin)
+: SceneNode(layer)
+, m_sprite(texture, rect)
 {
     init(centerOrigin, rect);
 }

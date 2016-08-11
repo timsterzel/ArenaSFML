@@ -13,7 +13,7 @@ class Entity : public SceneNode
     private:
 
     public:
-        Entity();
+        Entity(RenderLayers layer);
 
         void setVelocity(sf::Vector2f velocity);
         void setVelocity(float velX, float velY);

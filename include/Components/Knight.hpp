@@ -12,7 +12,7 @@ class Knight : public Warrior
     private:
 
     public:
-        Knight(const int health, Textures textureId, const ResourceHolder<sf::Texture, Textures> &textureHolder, const SpriteSheetMapHolder &spriteSheetMapHolder);
+        Knight(RenderLayers layer, const int health, Textures textureId, const ResourceHolder<sf::Texture, Textures> &textureHolder, const SpriteSheetMapHolder &spriteSheetMapHolder);
 
         virtual void drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const;
 

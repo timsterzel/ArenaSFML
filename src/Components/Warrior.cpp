@@ -4,8 +4,10 @@
 #include <iostream>
 #include <vector>
 
-Warrior::Warrior(const int health, Textures textureId, const ResourceHolder<sf::Texture, Textures> &textureHolder, const SpriteSheetMapHolder &spriteSheetMapHolder)
-: m_maxHealth{ health }
+Warrior::Warrior(RenderLayers layer, const int health, Textures textureId, const ResourceHolder<sf::Texture, Textures> &textureHolder,
+    const SpriteSheetMapHolder &spriteSheetMapHolder)
+: Entity(layer)
+, m_maxHealth{ health }
 , m_currentHealth{ health }
 , m_sprite{ textureHolder.get(textureId) }
 , m_leftShoe{ nullptr }
@@ -25,11 +27,11 @@ Warrior::Warrior(const int health, Textures textureId, const ResourceHolder<sf::
     std::vector<AnimationStepRotation>  swordRoationSteps;
     swordRoationSteps.push_back({ 0.f, -60.f,  0.5f });
     m_animationWeapon.setRotationSteps(swordRoationSteps);
-    std::unique_ptr<SpriteNode> leftShoe(new SpriteNode(textureHolder.get(textureId), spriteSheetMapHolder.getRectData(textureId, "left_shoe"), true));
+    std::unique_ptr<SpriteNode> leftShoe(new SpriteNode(RenderLayers::MAIN, textureHolder.get(textureId), spriteSheetMapHolder.getRectData(textureId, "left_shoe"), true));
     leftShoe->setPosition(8.f, -5.f);
-    std::unique_ptr<SpriteNode> rightShoe(new SpriteNode(textureHolder.get(textureId), spriteSheetMapHolder.getRectData(textureId, "right_shoe"), true));
+    std::unique_ptr<SpriteNode> rightShoe(new SpriteNode(RenderLayers::MAIN, textureHolder.get(textureId), spriteSheetMapHolder.getRectData(textureId, "right_shoe"), true));
     rightShoe->setPosition(8.f, 5.f);
-    std::unique_ptr<SpriteNode> upperBody(new SpriteNode(textureHolder.get(textureId), spriteSheetMapHolder.getRectData(textureId, "upper_body"), true));
+    std::unique_ptr<SpriteNode> upperBody(new SpriteNode(RenderLayers::MAIN, textureHolder.get(textureId), spriteSheetMapHolder.getRectData(textureId, "upper_body"), true));
 
     // Start body animation
     setBodyParts(leftShoe.get(), rightShoe.get(), upperBody.get());

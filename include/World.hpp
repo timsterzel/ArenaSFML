@@ -16,13 +16,7 @@
 class World : private sf::NonCopyable
 {
     private:
-        // Use of enum instead of enum class, so we can use Layer as int
-        enum Layers
-        {
-            BACKGROUND,
-            MAIN,
-            COUNT
-        };
+
 
     private:
         bool m_isInDebug;
@@ -32,7 +26,7 @@ class World : private sf::NonCopyable
         sf::View m_worldView;
 
         SceneNode m_sceneGraph;
-        std::array<SceneNode*, Layers::COUNT> m_sceneLayers;
+        //std::array<SceneNode*, Layers::COUNT> m_sceneLayers;
 
         const ResourceHolder<sf::Font, Fonts> &m_FontHolder;
         const ResourceHolder<sf::Texture, Textures> &m_TextureHolder;
