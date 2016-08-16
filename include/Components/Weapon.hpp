@@ -12,7 +12,7 @@ class Weapon : public Entity
 
     private:
         sf::Sprite m_sprite;
-        bool m_isAttacking;
+        //bool m_isAttacking;
         // The point of which it should be rotated
         sf::Vector2f m_rotationPoint;
 
@@ -29,8 +29,6 @@ class Weapon : public Entity
 
         float getSpriteWidth() const;
         float getSpriteHeight() const;
-
-        bool isAttacking() const;
 
         void setRotationPoint(sf::Vector2f point);
         void setRotationPoint(float x, float y);

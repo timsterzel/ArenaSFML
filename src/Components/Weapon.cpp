@@ -7,7 +7,7 @@ Weapon::Weapon(RenderLayers layer, const int damage, Textures textureId, const R
 : Entity(layer)
 , m_damage{ damage }
 , m_sprite{ textureHolder.get(textureId) }
-, m_isAttacking{ false }
+//, m_isAttacking{ false }
 , m_rotationPoint{ 0.f, 0.f }
 , m_relEquipPoint{ 0.f, 0.f }
 {
@@ -46,11 +46,12 @@ float Weapon::getSpriteHeight() const
     return m_sprite.getLocalBounds().height;
 }
 
+/*
 bool Weapon::isAttacking() const
 {
     return m_isAttacking;
 }
-
+*/
 void Weapon::setRotationPoint(sf::Vector2f point)
 {
     m_rotationPoint = point;

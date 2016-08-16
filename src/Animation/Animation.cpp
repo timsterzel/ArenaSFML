@@ -104,7 +104,6 @@ void Animation::update(float dt)
 {
     if (m_pastStartTime < m_startAfterSeconds && isRunning())
     {
-        std::cout << "LOWER !!!!!!!!!!!!!!!!!";
         m_pastStartTime += dt;
         return;
     }

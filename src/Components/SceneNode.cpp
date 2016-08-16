@@ -9,6 +9,7 @@ SceneNode::SceneNode()
 , m_collisionShape{ nullptr }
 , m_type{ WorldObjectTypes::NONE }
 , m_isActive{ true }
+, m_isCollisionCheckOn{ true }
 {
 
 }
@@ -31,6 +32,7 @@ SceneNode::SceneNode(RenderLayers layer)
 , m_collisionShape{ nullptr }
 , m_type{ WorldObjectTypes::NONE }
 , m_isActive{ true }
+, m_isCollisionCheckOn{ true }
 {
 
 }
@@ -41,6 +43,7 @@ SceneNode::SceneNode(RenderLayers layer, WorldObjectTypes type)
 , m_collisionShape{ nullptr }
 , m_type{ type }
 , m_isActive{ true }
+, m_isCollisionCheckOn{ true }
 {
 
 }
@@ -195,6 +198,16 @@ void SceneNode::setIsActive(bool isActive)
     m_isActive = isActive;
 }
 
+bool SceneNode::isCollisionCheckOn() const
+{
+    return m_isCollisionCheckOn;
+}
+
+void SceneNode::setIsCollisionCheckOn(bool isCollisionCheckOn)
+{
+    m_isCollisionCheckOn = isCollisionCheckOn;
+}
+
 void SceneNode::setRotation(float angle)
 {
     sf::Transformable::setRotation(angle);
@@ -207,8 +220,9 @@ void SceneNode::rotate(float angle)
 
 CollisionInfo SceneNode::isColliding(SceneNode &node) const
 {
-    // If there is no collision shape specified there can not be a collision
-    if (m_collisionShape == nullptr || node.getCollisionShape() == nullptr)
+    // If there is no collision shape specified there can not be a collision and if the collision is not on by one of the two SceneNodesm there
+    // can be no collision, too.
+    if (m_collisionShape == nullptr || node.getCollisionShape() == nullptr || !m_isCollisionCheckOn || !node.isCollisionCheckOn())
     {
         return CollisionInfo(false);
     }

@@ -35,6 +35,8 @@ class SceneNode : public sf::Transformable, /*public sf::Drawable,*/ public sf::
         // active SceneNode collides with the inActive SceneNode.
         // In a nutshell: When the SceneNode change his position or rotate its active.
         bool m_isActive;
+        // When its false,the collision check is ignored for this SceneNode
+        bool m_isCollisionCheckOn;
 
         sf::Vector2f m_lastPos;
         float m_lastRot;
@@ -66,6 +68,8 @@ class SceneNode : public sf::Transformable, /*public sf::Drawable,*/ public sf::
         bool isActive() const;
         void setIsActive(bool isActive);
 
+        bool isCollisionCheckOn() const;
+        void setIsCollisionCheckOn(bool isCollisionCheckOn);
         // Override transformables setRotation() method with virtual so we can modify it in classes
         virtual void setRotation(float angle);
         // Override transformables rotate() method with virtual so we can modify it in classes
