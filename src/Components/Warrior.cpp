@@ -150,7 +150,14 @@ void Warrior::updateCurrent(float dt)
 {
     if (m_weapon)
     {
-        m_animationWeapon.update(dt);
+        if (!m_animationWeapon.isRunning())
+        {
+            m_weapon->setIsCollisionCheckOn(false);
+        }
+        else
+        {
+            m_animationWeapon.update(dt);
+        }
     }
     if (m_isMoving)
     {
