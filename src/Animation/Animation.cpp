@@ -12,6 +12,8 @@ Animation::Animation(SceneNode *parent, bool repeat)
 , m_parent{ parent }
 , m_isRotationRunning{ false }
 , m_isMovementRunning{ false }
+, m_startAfterSeconds{ 0.f }
+, m_pastStartTime{ 0.f }
 {
 
 }
@@ -27,6 +29,8 @@ Animation::Animation(std::vector<AnimationStepRotation> rotationSteps, std::vect
 , m_parent{ parent }
 , m_isRotationRunning{ false }
 , m_isMovementRunning{ false }
+, m_startAfterSeconds{ 0.f }
+, m_pastStartTime{ 0.f }
 {
 
 }
@@ -49,6 +53,11 @@ void Animation::setParent(SceneNode *parent)
 bool Animation::isRunning() const
 {
     return m_isRotationRunning || m_isMovementRunning;
+}
+
+void Animation::setStartTime(float startTime)
+{
+    m_startAfterSeconds = startTime;
 }
 
 void Animation::start()
@@ -93,6 +102,12 @@ void Animation::startMovementStep(int index)
 
 void Animation::update(float dt)
 {
+    if (m_pastStartTime < m_startAfterSeconds)
+    {
+        std::cout << "LOWER !!!!!!!!!!!!!!!!!";
+        m_pastStartTime += dt;
+        return;
+    }
     if (!isRunning() || m_parent == nullptr)
     {
         return;

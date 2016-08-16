@@ -69,6 +69,8 @@
 		<Unit filename="include/Input/InputHandler.hpp" />
 		<Unit filename="include/Input/QueueHelper.hpp" />
 		<Unit filename="include/Input/QueueHelper.inl" />
+		<Unit filename="include/Render/EnumRenderLayers.hpp" />
+		<Unit filename="include/Render/RenderManager.hpp" />
 		<Unit filename="include/Resources/EnumResourceIdentifiers.hpp" />
 		<Unit filename="include/Resources/ResourceHolder.hpp" />
 		<Unit filename="include/Resources/ResourceHolder.inl" />
@@ -97,6 +99,7 @@
 		<Unit filename="src/Input/Command.cpp" />
 		<Unit filename="src/Input/Input.cpp" />
 		<Unit filename="src/Input/InputHandler.cpp" />
+		<Unit filename="src/Render/RenderManager.cpp" />
 		<Unit filename="src/Resources/SpriteSheetMapHolder.cpp" />
 		<Unit filename="src/World.cpp" />
 		<Extensions>
