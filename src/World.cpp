@@ -360,8 +360,14 @@ void World::handleCollision(float dt)
             std::cout << "WEAPON collision" << std::endl;
             Weapon *weapon = { static_cast<Weapon*>(getSceneNodeOfType(sceneNodes, WorldObjectTypes::WEAPON)) };
             Warrior *warrior = { static_cast<Warrior*>(getSceneNodeOfType(sceneNodes, WorldObjectTypes::ENEMY)) };
+            warrior->damage(weapon->getDamage());
+            // To prevent multiple damage, turn off collison check
+            weapon->setIsCollisionCheckOn(false);
+            std::cout << "Rest health: " << warrior->getCurrentHealth() << std::endl;
         }
         std::cout << "Collision: " << colCnt++ << std::endl;
+
+
     }
 }
 /*

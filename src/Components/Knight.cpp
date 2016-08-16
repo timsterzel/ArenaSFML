@@ -38,8 +38,11 @@ void Knight::onCommandCurrent(const Command &command, float dt)
         switch (command.getCommandType())
         {
             case CommandTypes::ATTACK:
-                m_animationWeapon.start();
-                m_weapon->setIsCollisionCheckOn(true);
+                if (!m_animationWeapon.isRunning())
+                {
+                    m_animationWeapon.start();
+                    m_weapon->setIsCollisionCheckOn(true);
+                }
                 break;
         }
         // Move is the same as setPosition(getPosition() + offset) of the sf::Transformable class
