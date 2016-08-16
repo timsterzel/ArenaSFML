@@ -102,7 +102,7 @@ void Animation::startMovementStep(int index)
 
 void Animation::update(float dt)
 {
-    if (m_pastStartTime < m_startAfterSeconds)
+    if (m_pastStartTime < m_startAfterSeconds && isRunning())
     {
         std::cout << "LOWER !!!!!!!!!!!!!!!!!";
         m_pastStartTime += dt;
