@@ -9,6 +9,7 @@ Warrior::Warrior(RenderLayers layer, const int health, Textures textureId, const
 : Entity(layer)
 , m_maxHealth{ health }
 , m_currentHealth{ health }
+, m_isMoving{ false }
 , m_sprite{ textureHolder.get(textureId) }
 , m_leftShoe{ nullptr }
 , m_rightShoe{ nullptr }
@@ -65,16 +66,16 @@ void Warrior::setBodyParts(SpriteNode *leftShoe, SpriteNode *rightShoe, SpriteNo
     m_animationLeftShoe.setParent(m_leftShoe);
     m_animationRightShoe.setParent(m_rightShoe);
     std::vector<AnimationStepMovement>  leftShoeMovementSteps;
-    leftShoeMovementSteps.push_back({ 2.f, sf::Vector2f(1.f, 0.f) , 0.5f });
-    leftShoeMovementSteps.push_back({ 2.f, sf::Vector2f(-1.f, 0.f) , 0.5f });
+    leftShoeMovementSteps.push_back({ 2.f, sf::Vector2f(1.f, 0.f) , 0.3f });
+    leftShoeMovementSteps.push_back({ 2.f, sf::Vector2f(-1.f, 0.f) , 0.3f });
     m_animationLeftShoe.setMovementSteps(leftShoeMovementSteps);
     m_animationLeftShoe.start();
 
     std::vector<AnimationStepMovement>  rightShoeMovementSteps;
-    rightShoeMovementSteps.push_back({ 2.f, sf::Vector2f(1.f, 0.f) , 0.5f });
-    rightShoeMovementSteps.push_back({ 2.f, sf::Vector2f(-1.f, 0.f) , 0.5f });
+    rightShoeMovementSteps.push_back({ 2.f, sf::Vector2f(1.f, 0.f) , 0.3f });
+    rightShoeMovementSteps.push_back({ 2.f, sf::Vector2f(-1.f, 0.f) , 0.3f });
     m_animationRightShoe.setMovementSteps(rightShoeMovementSteps);
-    m_animationRightShoe.setStartTime(0.5f);
+    m_animationRightShoe.setStartTime(0.3f);
     m_animationRightShoe.start();
 }
 
@@ -145,14 +146,18 @@ void Warrior::updateCurrent(float dt)
     {
         m_animationWeapon.update(dt);
     }
-    if (m_leftShoe)
+    if (m_isMoving)
     {
-        m_animationLeftShoe.update(dt);
+        if (m_leftShoe)
+        {
+            m_animationLeftShoe.update(dt);
+        }
+        if (m_rightShoe)
+        {
+            m_animationRightShoe.update(dt);
+        }
     }
-    if (m_rightShoe)
-    {
-        m_animationRightShoe.update(dt);
-    }
+
     //std::cout << "WorldPos: " << getWorldPosition().x << "|" << getWorldPosition().y
     //<< "WeaponWorldPos: " << getWorldWeaponPos().x << "|" << getWorldWeaponPos().y << std::endl;
 
@@ -166,6 +171,7 @@ void Warrior::onCommandCurrent(const Command &command, float dt)
     {
         m_currentVelocity.x = 0.f;
         m_currentVelocity.y = 0.f;
+        m_isMoving = false;
 
         switch (command.getCommandType())
         {
@@ -176,15 +182,19 @@ void Warrior::onCommandCurrent(const Command &command, float dt)
                 break;
             case CommandTypes::MOVE_UP:
                 m_currentVelocity.y = -m_velocity.y;
+                m_isMoving = true;
                 break;
             case CommandTypes::MOVE_DOWN:
                 m_currentVelocity.y = m_velocity.y;
+                m_isMoving = true;
                 break;
             case CommandTypes::MOVE_LEFT:
                 m_currentVelocity.x = -m_velocity.x;
+                m_isMoving = true;
                 break;
             case CommandTypes::MOVE_RIGHT:
                 m_currentVelocity.x = m_velocity.x;
+                m_isMoving = true;
                 break;
         }
 

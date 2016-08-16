@@ -16,6 +16,8 @@ class Warrior : public Entity
     protected:
         int m_maxHealth;
         int m_currentHealth;
+        // Used to check if movement animation shout get updated
+        bool m_isMoving;
 
         // Delete m_sprite later
         sf::Sprite m_sprite;
