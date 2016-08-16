@@ -99,6 +99,12 @@ sf::Vector2f Warrior::getWorldWeaponPos() const
 {
     return getWorldTransform() * m_weaponPos;
 }
+/*
+int Warrior::getDamage() const
+{
+    return 0;
+}
+*/
 
 bool Warrior::isAlive() const
 {

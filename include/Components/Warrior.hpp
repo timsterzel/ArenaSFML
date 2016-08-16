@@ -43,6 +43,8 @@ class Warrior : public Entity
 
         sf::Vector2f getWorldWeaponPos() const;
 
+        //int getDamage() const;
+
         bool isAlive() const;
         void damage(const int damage);
         void heal(const int health);

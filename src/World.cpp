@@ -355,6 +355,12 @@ void World::handleCollision(float dt)
             //pairTmp.first->restoreLastTransform();
             //pairTmp.second->restoreLastTransform();
         }
+        else if (matchesCategories(sceneNodes, WorldObjectTypes::WEAPON, WorldObjectTypes::ENEMY))
+        {
+            std::cout << "WEAPON collision" << std::endl;
+            Weapon *weapon = { static_cast<Weapon*>(getSceneNodeOfType(sceneNodes, WorldObjectTypes::WEAPON)) };
+            Warrior *warrior = { static_cast<Warrior*>(getSceneNodeOfType(sceneNodes, WorldObjectTypes::ENEMY)) };
+        }
         std::cout << "Collision: " << colCnt++ << std::endl;
     }
 }
@@ -378,6 +384,22 @@ bool World::matchesCategories(SceneNode::Pair &colliders, WorldObjectTypes world
     return false;
 }
 */
+
+SceneNode* World::getSceneNodeOfType(SceneNode::Pair sceneNodePair, WorldObjectTypes type)
+{
+    SceneNode *sceneNodeOne = sceneNodePair.first;
+    SceneNode *sceneNodeTwo = sceneNodePair.second;
+    if (sceneNodeOne->getType() == type)
+    {
+        return sceneNodeOne;
+    }
+    else if (sceneNodeTwo->getType() == type)
+    {
+        return sceneNodeTwo;
+    }
+    return nullptr;
+}
+
 bool World::matchesCategories(SceneNode::Pair &colliders, WorldObjectTypes type1, WorldObjectTypes type2)
 {
     WorldObjectTypes category1 = colliders.first->getType();
