@@ -21,6 +21,25 @@ Weapon::Weapon(RenderLayers layer, const int damage, Textures textureId, const R
     //m_sprite.setOrigin(0.f, 0.f);
 }
 
+
+Weapon::Weapon(RenderLayers layer, const int damage, const sf::Texture &texture, const sf::IntRect &rect)
+: Entity(layer)
+, m_damage{ damage }
+, m_sprite{ texture, rect }
+//, m_isAttacking{ false }
+, m_rotationPoint{ 0.f, 0.f }
+, m_relEquipPoint{ 0.f, 0.f }
+{
+    sf::FloatRect bounds = m_sprite.getLocalBounds();
+    m_sprite.setOrigin(bounds.width / 2.f, bounds.height / 2.f);
+    setWidth(bounds.width);
+    setHeight(bounds.height);
+    //setEquipPoint(10.f, 0.f);
+    //m_relEquipPoint.x = -bounds.width / 2.f;
+    //m_relEquipPoint.y = 0.f;
+    //m_sprite.setOrigin(0.f, 0.f);
+}
+
 Weapon::~Weapon()
 {
     std::cout << "Weapon destructor" << std::endl;

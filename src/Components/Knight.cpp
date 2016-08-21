@@ -1,5 +1,6 @@
 #include "Components/Knight.hpp"
 #include <Components/Weapon.hpp>
+#include <Collision/CollisionRect.hpp>
 #include <iostream>
 
 Knight::Knight(RenderLayers layer, const int health, Textures textureId, const ResourceHolder<sf::Texture, Textures> &textureHolder, const SpriteSheetMapHolder &spriteSheetMapHolder)
@@ -8,6 +9,17 @@ Knight::Knight(RenderLayers layer, const int health, Textures textureId, const R
     std::vector<AnimationStepRotation>  swordRoationSteps;
     swordRoationSteps.push_back({ 0.f, -60.f,  0.5f });
     m_animationWeapon.setRotationSteps(swordRoationSteps);
+
+    std::unique_ptr<Weapon> sword(new Weapon(RenderLayers::WEAPON, 60, Textures::SWORD, textureHolder));
+    sword->setType(WorldObjectTypes::WEAPON);
+    sword->setPosition(0.f, 0.f);
+    //swordPlayer->setRotationPoint(0.f, swordPlayer->getSpriteHeight() / 2.f);
+    sword->setEquipPoint(-10.f, 0.f);
+    //std::unique_ptr<CollisionShape> collisionShapeSword(new CollisionRect({ sword->getSpriteWidth(), sword->getSpriteHeight() }, false));
+    //sword->setCollisionShape(std::move(collisionShapeSword));
+    setWeapon(sword.get());
+    attachChild(std::move(sword));
+    std::cout << "After sowrd Init" << std::endl;
 
     /*
     std::vector<AnimationStepMovement>  swordMovementSteps;
