@@ -15,8 +15,8 @@ Knight::Knight(RenderLayers layer, const int health, Textures textureId, const R
     sword->setPosition(0.f, 0.f);
     //swordPlayer->setRotationPoint(0.f, swordPlayer->getSpriteHeight() / 2.f);
     sword->setEquipPoint(-10.f, 0.f);
-    //std::unique_ptr<CollisionShape> collisionShapeSword(new CollisionRect({ sword->getSpriteWidth(), sword->getSpriteHeight() }, false));
-    //sword->setCollisionShape(std::move(collisionShapeSword));
+    std::unique_ptr<CollisionShape> collisionShapeSword(new CollisionRect({ sword->getSpriteWidth(), sword->getSpriteHeight() }));
+    sword->setCollisionShape(std::move(collisionShapeSword));
     setWeapon(sword.get());
     attachChild(std::move(sword));
     std::cout << "After sowrd Init" << std::endl;
