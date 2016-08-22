@@ -327,7 +327,7 @@ void SceneNode::changeCollisionShapeDraw(const bool draw)
 
 void SceneNode::removeDestroyed()
 {
-    // Get iterator of the SceneNodes which are marked for removal
+    // Get iterator, pointing on the first element which should get erased
     auto destroyBegin = std::remove_if(m_children.begin(), m_children.end(), std::mem_fn(&SceneNode::isMarkedForRemoval));
     // Remove the SceneNides which are marked for removal
     m_children.erase(destroyBegin, m_children.end());

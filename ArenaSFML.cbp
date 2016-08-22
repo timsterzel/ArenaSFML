@@ -55,6 +55,7 @@
 		<Unit filename="include/Collision/CollisionRect.hpp" />
 		<Unit filename="include/Collision/CollisionShape.hpp" />
 		<Unit filename="include/Components/Entity.hpp" />
+		<Unit filename="include/Components/EnumWorldObjectStatus.hpp" />
 		<Unit filename="include/Components/EnumWorldObjectTypes.hpp" />
 		<Unit filename="include/Components/Knight.hpp" />
 		<Unit filename="include/Components/SceneNode.hpp" />
