@@ -37,7 +37,6 @@ void Game::loadTextures()
     m_spriteSheetMapHolder.load(Textures::KNIGHT, "assets/sprites/warriors/knight.txt");
     m_textureHolder.load(Textures::WIZARD, "assets/sprites/warriors/wizard.png");
     m_spriteSheetMapHolder.load(Textures::WIZARD, "assets/sprites/warriors/wizard.txt");
-    m_textureHolder.load(Textures::SWORD, "assets/sprites/sword.png");
     m_textureHolder.load(Textures::CHESS_WHITE, "assets/sprites/chess_white.png");
 }
 
