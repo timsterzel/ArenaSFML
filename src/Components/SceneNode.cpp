@@ -208,6 +208,14 @@ void SceneNode::setIsCollisionCheckOn(bool isCollisionCheckOn)
     m_isCollisionCheckOn = isCollisionCheckOn;
 }
 
+void SceneNode::setCollisionDraw(bool draw)
+{
+    if (m_collisionShape)
+    {
+        m_collisionShape->setDraw(draw);
+    }
+}
+
 void SceneNode::setRotation(float angle)
 {
     sf::Transformable::setRotation(angle);
@@ -279,6 +287,18 @@ void SceneNode::checkNodeCollision(SceneNode &node, std::set<Pair> &collisionPai
     for (Ptr &child: m_children)
     {
         child->checkNodeCollision(node, collisionPairs, collisionData);
+    }
+}
+
+void SceneNode::changeCollisionShapeDraw(const bool draw)
+{
+    if (m_collisionShape)
+    {
+        m_collisionShape->setDraw(draw);
+    }
+    for (const Ptr &child : m_children)
+    {
+        child->changeCollisionShapeDraw(draw);
     }
 }
 

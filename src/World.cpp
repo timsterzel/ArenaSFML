@@ -136,7 +136,7 @@ void World::buildScene()
 
     std::unique_ptr<Warrior> wizard(new Warrior(RenderLayers::MAIN, 100, Textures::WIZARD, m_TextureHolder, m_SpriteSheetMapHolder));
     SceneNode *wizardEnemyTmp = wizard.get();
-    std::unique_ptr<CollisionShape> collisionShapeWizard(new CollisionCircle(12.f , &m_drawCollisionShape));
+    std::unique_ptr<CollisionShape> collisionShapeWizard(new CollisionCircle(12.f));
     wizard->setCollisionShape(std::move(collisionShapeWizard));
     //wizard->setPosition(800 / 2.f + 100.f, 480 / 2.f);
     wizard->setPosition(800 / 2.f - 60.f, 480 / 2.f - 10.f);
@@ -159,7 +159,7 @@ void World::buildScene()
     // Warrior
     std::unique_ptr<Knight> warrior(new Knight(RenderLayers::MAIN, 100, Textures::KNIGHT, m_TextureHolder, m_SpriteSheetMapHolder));
     m_playerWarrior = warrior.get();
-    std::unique_ptr<CollisionShape> collisionShapeWarrior(new CollisionCircle(12.f, &m_drawCollisionShape));
+    std::unique_ptr<CollisionShape> collisionShapeWarrior(new CollisionCircle(12.f));
     //std::unique_ptr<CollisionShape> collisionShapeWarrior(new CollisionRect({ 32.f, 32.f }));
     m_playerWarrior->setCollisionShape(std::move(collisionShapeWarrior));
     m_playerWarrior->setPosition(800 / 2.f, 480 / 2.f);
@@ -242,6 +242,7 @@ void World::translateInput(Input input, float dt)
             break;
         case InputTypes::D3 :
             m_drawCollisionShape = !m_drawCollisionShape;
+            m_sceneGraph.changeCollisionShapeDraw(m_drawCollisionShape);
             break;
         case InputTypes::D4 :
 

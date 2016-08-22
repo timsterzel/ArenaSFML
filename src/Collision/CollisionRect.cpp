@@ -2,9 +2,8 @@
 #include "Collision/CollisionHandler.hpp"
 #include "Calc.hpp"
 
-CollisionRect::CollisionRect(sf::Vector2f rectSize, bool *draw)
-: CollisionShape(draw)
-, m_width{ rectSize.x }
+CollisionRect::CollisionRect(sf::Vector2f rectSize)
+: m_width{ rectSize.x }
 , m_height{ rectSize.y }
 {
 
@@ -51,7 +50,7 @@ std::vector<sf::Vector2f> CollisionRect::getVertices() const
 
 void CollisionRect::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-    if (*m_draw)
+    if (m_draw)
     {
         sf::RectangleShape rect({ m_width, m_height });
         rect.setFillColor(sf::Color(255, 0, 0, 160));

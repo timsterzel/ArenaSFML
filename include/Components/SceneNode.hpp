@@ -70,6 +70,8 @@ class SceneNode : public sf::Transformable, /*public sf::Drawable,*/ public sf::
 
         bool isCollisionCheckOn() const;
         void setIsCollisionCheckOn(bool isCollisionCheckOn);
+        // If it is true, the collision shape get drawn, if a collision shape is set
+        void setCollisionDraw(bool draw);
         // Override transformables setRotation() method with virtual so we can modify it in classes
         virtual void setRotation(float angle);
         // Override transformables rotate() method with virtual so we can modify it in classes
@@ -85,7 +87,8 @@ class SceneNode : public sf::Transformable, /*public sf::Drawable,*/ public sf::
         void restoreLastTransform();
 
         void checkSceneCollision(SceneNode &sceneGraph, std::vector<CollisionInfo> &collisionData);
-
+        // Set if the collision shape should get draw by this SceneNode and its children
+        void changeCollisionShapeDraw(const bool draw);
 
         // draw should not get overridden
         virtual void draw(RenderLayers layer, sf::RenderTarget &target, sf::RenderStates states) const final;

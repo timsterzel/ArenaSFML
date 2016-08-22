@@ -10,7 +10,7 @@ class CollisionCircle : public CollisionShape
         float m_radius;
     public:
 
-        explicit CollisionCircle(float radius, bool *draw);
+        explicit CollisionCircle(float radius);
 
         float getRadius() const;
 

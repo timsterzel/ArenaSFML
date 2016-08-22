@@ -13,7 +13,7 @@ class CollisionRect : public CollisionShape
         std::vector<sf::Vector2f> m_vertices;
     public:
 
-        explicit CollisionRect(sf::Vector2f rectSize, bool *draw);
+        explicit CollisionRect(sf::Vector2f rectSize);
 
         float getWidth() const;
         float getHeight() const;
