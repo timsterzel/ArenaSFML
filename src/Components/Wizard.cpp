@@ -16,6 +16,11 @@ Wizard::Wizard(RenderLayers layer, const int health, Textures textureId, const R
     */
 }
 
+Wizard::~Wizard()
+{
+    std::cout << "Destructor Wizard" << std::endl;
+}
+
 void Wizard::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const
 {
     Warrior::drawCurrent(target, states);

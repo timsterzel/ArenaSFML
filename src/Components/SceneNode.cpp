@@ -8,6 +8,7 @@ SceneNode::SceneNode()
 , m_parent{ nullptr }
 , m_collisionShape{ nullptr }
 , m_type{ WorldObjectTypes::NONE }
+, m_status{ WorldObjectStatus::ALIVE }
 , m_isActive{ true }
 , m_isCollisionCheckOn{ true }
 {
@@ -31,6 +32,7 @@ SceneNode::SceneNode(RenderLayers layer)
 , m_parent{ nullptr }
 , m_collisionShape{ nullptr }
 , m_type{ WorldObjectTypes::NONE }
+, m_status{ WorldObjectStatus::ALIVE }
 , m_isActive{ true }
 , m_isCollisionCheckOn{ true }
 {
@@ -42,10 +44,16 @@ SceneNode::SceneNode(RenderLayers layer, WorldObjectTypes type)
 , m_parent{ nullptr }
 , m_collisionShape{ nullptr }
 , m_type{ type }
+, m_status{ WorldObjectStatus::ALIVE }
 , m_isActive{ true }
 , m_isCollisionCheckOn{ true }
 {
 
+}
+
+SceneNode::~SceneNode()
+{
+    std::cout << "Destructor SceneNode" << std::endl;
 }
 
 void SceneNode::attachChild(Ptr child)
@@ -184,6 +192,16 @@ void SceneNode::setType(WorldObjectTypes type)
     m_type = type;
 }
 
+WorldObjectStatus SceneNode::getStatus() const
+{
+    return m_status;
+}
+
+void SceneNode::setStatus(WorldObjectStatus status)
+{
+    m_status = status;
+}
+
 CollisionShape* SceneNode::getCollisionShape() const
 {
     return m_collisionShape.get();
@@ -226,11 +244,16 @@ void SceneNode::rotate(float angle)
     sf::Transformable::rotate(angle);
 }
 
+bool SceneNode::isMarkedForRemoval() const
+{
+    return m_status == WorldObjectStatus::DESTORYED;
+}
+
 CollisionInfo SceneNode::isColliding(SceneNode &node) const
 {
     // If there is no collision shape specified there can not be a collision and if the collision is not on by one of the two SceneNodesm there
     // can be no collision, too.
-    if (m_collisionShape == nullptr || node.getCollisionShape() == nullptr || !m_isCollisionCheckOn || !node.isCollisionCheckOn())
+    if (m_collisionShape == nullptr || node.getCollisionShape() == nullptr || !m_isCollisionCheckOn || !node.isCollisionCheckOn() || m_status == WorldObjectStatus::DESTORYED)
     {
         return CollisionInfo(false);
     }
@@ -300,6 +323,16 @@ void SceneNode::changeCollisionShapeDraw(const bool draw)
     {
         child->changeCollisionShapeDraw(draw);
     }
+}
+
+void SceneNode::removeDestroyed()
+{
+    // Get iterator of the SceneNodes which are marked for removal
+    auto destroyBegin = std::remove_if(m_children.begin(), m_children.end(), std::mem_fn(&SceneNode::isMarkedForRemoval));
+    // Remove the SceneNides which are marked for removal
+    m_children.erase(destroyBegin, m_children.end());
+    // Call this function for the childrens of the current SceneNode
+    std::for_each(m_children.begin(), m_children.end(), std::mem_fn(&SceneNode::removeDestroyed));
 }
 
 void SceneNode::safeTransform()

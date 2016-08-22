@@ -1,4 +1,5 @@
 #include "Components/SpriteNode.hpp"
+#include <iostream>
 
 SpriteNode::SpriteNode(RenderLayers layer, const sf::Texture &texture, bool centerOrigin)
 : SceneNode(layer)
@@ -12,6 +13,11 @@ SpriteNode::SpriteNode(RenderLayers layer, const sf::Texture &texture, const sf:
 , m_sprite(texture, rect)
 {
     init(centerOrigin, rect);
+}
+
+SpriteNode::~SpriteNode()
+{
+    std::cout << "Destructor SpriteNode" << std::endl;
 }
 
 void SpriteNode::init(bool centerOrigin)

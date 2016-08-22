@@ -42,7 +42,7 @@ Weapon::Weapon(RenderLayers layer, const int damage, const sf::Texture &texture,
 
 Weapon::~Weapon()
 {
-    std::cout << "Weapon destructor" << std::endl;
+    std::cout << "Destructor Weapon" << std::endl;
 }
 
 int Weapon::getDamage() const

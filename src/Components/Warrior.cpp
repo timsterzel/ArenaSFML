@@ -48,6 +48,11 @@ Warrior::Warrior(RenderLayers layer, const int health, Textures textureId, const
     */
 }
 
+Warrior::~Warrior()
+{
+    std::cout << "Destructor Warrior" << std::endl;
+}
+
 int Warrior::getCurrentHealth() const
 {
     return m_currentHealth;
@@ -114,6 +119,10 @@ bool Warrior::isAlive() const
 void Warrior::damage(const int damage)
 {
     m_currentHealth -= damage;
+    if (m_currentHealth <= 0)
+    {
+        m_status = WorldObjectStatus::DESTORYED;
+    }
 }
 
 void Warrior::heal(const int health)

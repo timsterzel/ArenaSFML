@@ -302,6 +302,7 @@ void World::handleCommands(float dt)
 
 void World::update(float dt)
 {
+    m_sceneGraph.removeDestroyed();
     m_sceneGraph.update(dt);
 }
 

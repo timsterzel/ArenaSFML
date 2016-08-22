@@ -6,6 +6,7 @@
 #include <set>
 #include <tuple>
 #include "Collision/CollisionShape.hpp"
+#include "Components/EnumWorldObjectStatus.hpp"
 #include "Components/EnumWorldObjectTypes.hpp"
 #include "Input/Command.hpp"
 #include "Render/EnumRenderLayers.hpp"
@@ -28,6 +29,7 @@ class SceneNode : public sf::Transformable, /*public sf::Drawable,*/ public sf::
     protected:
         std::unique_ptr<CollisionShape> m_collisionShape;
         WorldObjectTypes m_type;
+        WorldObjectStatus m_status;
         // When a SceneNode is active it can move or rotate.
         // If it is only passive, so it dont move, rotate etc things can possibly collide with it (If it have a collision shape),
         // but a passive object can not do anything to collide with something. But Other SceneNodes can do things so they collides
@@ -45,6 +47,8 @@ class SceneNode : public sf::Transformable, /*public sf::Drawable,*/ public sf::
         SceneNode();
         SceneNode(RenderLayers layer);
         SceneNode(RenderLayers layer, WorldObjectTypes type);
+        virtual ~SceneNode();
+
         void attachChild(Ptr child);
         Ptr detachChild(const SceneNode& node);
 
@@ -62,6 +66,9 @@ class SceneNode : public sf::Transformable, /*public sf::Drawable,*/ public sf::
         WorldObjectTypes getType() const;
         void setType(WorldObjectTypes type);
 
+        WorldObjectStatus getStatus() const;
+        void setStatus(WorldObjectStatus status);
+
         CollisionShape* getCollisionShape() const;
         CollisionInfo isColliding(SceneNode &node) const;
 
@@ -77,6 +84,8 @@ class SceneNode : public sf::Transformable, /*public sf::Drawable,*/ public sf::
         // Override transformables rotate() method with virtual so we can modify it in classes
         virtual void rotate(float angle);
 
+        virtual bool isMarkedForRemoval() const;
+
         // Safe transform of the actual and parent nodes (position, rotation and scale)
         void safeTransform();
         // Safe the actual transform of the actual sceneNode and childs (position, rotation and scale)
@@ -89,6 +98,8 @@ class SceneNode : public sf::Transformable, /*public sf::Drawable,*/ public sf::
         void checkSceneCollision(SceneNode &sceneGraph, std::vector<CollisionInfo> &collisionData);
         // Set if the collision shape should get draw by this SceneNode and its children
         void changeCollisionShapeDraw(const bool draw);
+        // Remove the children SceneNodes which are marked as destroyed
+        void removeDestroyed();
 
         // draw should not get overridden
         virtual void draw(RenderLayers layer, sf::RenderTarget &target, sf::RenderStates states) const final;
@@ -108,10 +119,6 @@ class SceneNode : public sf::Transformable, /*public sf::Drawable,*/ public sf::
         // In the collisionData vector are the collisionInfos and the SceneNodes stored, which are affected from the collision
         void checkNodeCollision(SceneNode &node, std::set<Pair> &collisionPairs, std::vector<CollisionInfo> &collisionData);
         void checkSceneCollision(SceneNode &sceneGraph, std::set<Pair> &collisionPairs, std::vector<CollisionInfo> &collisionData);
-
-
-
-
 };
 
 #endif // SCENENODE_HPP

@@ -13,6 +13,7 @@ class Wizard : public Warrior
 
     public:
         Wizard(RenderLayers layer, const int health, Textures textureId, const ResourceHolder<sf::Texture, Textures> &textureHolder, const SpriteSheetMapHolder &spriteSheetMapHolder);
+        ~Wizard();
 
         virtual void drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const;
 

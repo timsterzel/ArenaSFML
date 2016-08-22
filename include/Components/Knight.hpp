@@ -14,6 +14,8 @@ class Knight : public Warrior
     public:
         Knight(RenderLayers layer, const int health, Textures textureId, const ResourceHolder<sf::Texture, Textures> &textureHolder, const SpriteSheetMapHolder &spriteSheetMapHolder);
 
+        virtual ~Knight();
+
         virtual void drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const;
 
     private:

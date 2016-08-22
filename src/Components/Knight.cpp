@@ -29,6 +29,11 @@ Knight::Knight(RenderLayers layer, const int health, Textures textureId, const R
     */
 }
 
+Knight::~Knight()
+{
+    std::cout << "Destructor Knight" << std::endl;
+}
+
 void Knight::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const
 {
     Warrior::drawCurrent(target, states);

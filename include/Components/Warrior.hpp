@@ -34,6 +34,7 @@ class Warrior : public Entity
 
     public:
         Warrior(RenderLayers layer, const int health, Textures textureId, const ResourceHolder<sf::Texture, Textures> &textureHolder, const SpriteSheetMapHolder &spriteSheetMapHolder);
+        virtual ~Warrior();
 
         int getCurrentHealth() const;
         void setCurrentHealth(const int health);

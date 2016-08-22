@@ -10,6 +10,11 @@ Entity::Entity(RenderLayers layer)
 
 }
 
+Entity::~Entity()
+{
+    std::cout << "Destructor Entity" << std::endl;
+}
+
 void Entity::setVelocity(sf::Vector2f velocity)
 {
     m_velocity = velocity;
