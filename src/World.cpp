@@ -173,13 +173,6 @@ void World::buildScene()
     //m_sceneLayers[Layers::MAIN]->attachChild(std::move(warrior));
     //***********
 
-
-
-
-
-
-
-
     // Collision Tests
     /*
     if (m_playerWarrior->getCollisionShape()->isColliding(*wizardEnemyTmp->getCollisionShape()))

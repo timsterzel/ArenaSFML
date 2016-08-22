@@ -17,9 +17,6 @@
 class World : private sf::NonCopyable
 {
     private:
-
-
-    private:
         bool m_isInDebug;
         bool m_showCollisionInfo;
 
@@ -39,7 +36,7 @@ class World : private sf::NonCopyable
 
         sf::FloatRect m_worldBounds;
         Warrior *m_playerWarrior;
-        // TMP
+        // TMP, Collision counter
         long colCnt = 0;
 
     public:
