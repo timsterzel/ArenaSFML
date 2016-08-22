@@ -12,7 +12,7 @@
 World::World(const bool isInDebug, sf::RenderWindow *window, const ResourceHolder<sf::Font, Fonts> &FontHolder,
 const ResourceHolder<sf::Texture, Textures> &TextureHolder, const SpriteSheetMapHolder &spriteSheetMapHolder)
 : m_isInDebug { isInDebug }
-, m_drawCollisionShape{ false }
+, m_showCollisionInfo{ false }
 , m_window{ window }
 , m_worldView{ m_window->getDefaultView() }
 , m_renderManager{ &m_sceneGraph }
@@ -241,8 +241,8 @@ void World::translateInput(Input input, float dt)
 
             break;
         case InputTypes::D3 :
-            m_drawCollisionShape = !m_drawCollisionShape;
-            m_sceneGraph.changeCollisionShapeDraw(m_drawCollisionShape);
+            m_showCollisionInfo = !m_showCollisionInfo;
+            m_sceneGraph.changeCollisionShapeDraw(m_showCollisionInfo);
             break;
         case InputTypes::D4 :
 
@@ -368,8 +368,10 @@ void World::handleCollision(float dt)
             weapon->setIsCollisionCheckOn(false);
             std::cout << "Rest health: " << warrior->getCurrentHealth() << std::endl;
         }
-        std::cout << "Collision: " << colCnt++ << std::endl;
-
+        if (m_showCollisionInfo)
+        {
+            std::cout << "Collision: " << colCnt++ << std::endl;
+        }
 
     }
 }
