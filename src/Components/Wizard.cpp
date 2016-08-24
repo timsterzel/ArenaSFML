@@ -38,8 +38,9 @@ void Wizard::onCommandCurrent(const Command &command, float dt)
     Warrior::onCommandCurrent(command, dt);
     if (command.getWorldObjectType() == m_type)
     {
-        m_currentVelocity.x = 0.f;
-        m_currentVelocity.y = 0.f;
+        m_currentVelocity = 0.f;
+        m_currentDirection.x = 0.f;
+        m_currentDirection.y = 0.f;
         switch (command.getCommandType())
         {
             case CommandTypes::ATTACK:
@@ -51,7 +52,9 @@ void Wizard::onCommandCurrent(const Command &command, float dt)
                 break;
         }
         // Move is the same as setPosition(getPosition() + offset) of the sf::Transformable class
-        move(m_currentVelocity * dt);
+        //move(m_currentVelocity * dt);
+        //moveInDirection(m_currentDirection, m_currentVelocity * dt);
+        moveInActualDirection(m_currentVelocity * dt);
     }
 }
 

@@ -6,8 +6,12 @@
 class Entity : public SceneNode
 {
     protected:
-        sf::Vector2f m_velocity;
-        sf::Vector2f m_currentVelocity;
+        // The velocity with which the entity can move
+        float m_velocity;
+        // The current velocity of the entity
+        float m_currentVelocity;
+        // The current direction of the entity
+        sf::Vector2f m_currentDirection;
         float m_width;
         float m_height;
     private:
@@ -16,10 +20,13 @@ class Entity : public SceneNode
         explicit Entity(RenderLayers layer);
         virtual ~Entity();
 
-        void setVelocity(sf::Vector2f velocity);
-        void setVelocity(float velX, float velY);
-        sf::Vector2f getVelocity() const;
-        sf::Vector2f getCurrentVelocity() const;
+        void setVelocity(float velocity);
+        float getVelocity() const;
+        void setCurrentVelocity(float currentVelocity);
+        float getCurrentVelocity() const;
+        void setCurrentDirection(sf::Vector2f currentDirection);
+        sf::Vector2f getCurrentDirection() const;
+
         float getWidth() const;
         void setWidth(float width);
         float getHeight() const;

@@ -84,22 +84,43 @@ void InputHandler::handleRealTimeInput(QueueHelper<Input> &inputQueue)
     }
     */
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && sf::Keyboard::isKeyPressed(sf::Keyboard::A))
     {
-        inputQueue.push({ InputTypes::UP });
+        inputQueue.push({ InputTypes::UP_LEFT });
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::W) && sf::Keyboard::isKeyPressed(sf::Keyboard::D))
     {
-        inputQueue.push({ InputTypes::DOWN });
+        inputQueue.push({ InputTypes::UP_RIGHT });
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::S) && sf::Keyboard::isKeyPressed(sf::Keyboard::A))
     {
-        inputQueue.push({ InputTypes::LEFT });
+        inputQueue.push({ InputTypes::DOWN_LEFT });
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::S) && sf::Keyboard::isKeyPressed(sf::Keyboard::D))
     {
-        inputQueue.push({ InputTypes::RIGHT });
+        inputQueue.push({ InputTypes::DOWN_RIGHT });
     }
+    // Dont handle W A S D separately, when there are pairs like W+A or W+D or S+A or S+D
+    else
+    {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+        {
+            inputQueue.push({ InputTypes::UP });
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+        {
+            inputQueue.push({ InputTypes::DOWN });
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+        {
+            inputQueue.push({ InputTypes::LEFT });
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+        {
+            inputQueue.push({ InputTypes::RIGHT });
+        }
+    }
+
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
     {

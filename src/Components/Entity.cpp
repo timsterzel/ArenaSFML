@@ -4,6 +4,9 @@
 
 Entity::Entity(RenderLayers layer)
 : SceneNode(layer)
+, m_velocity{ 0.f }
+, m_currentVelocity{ 0.f }
+, m_currentDirection{ 0.f, 0.f }
 , m_width{ 0.f }
 , m_height{ 0.f }
 {
@@ -15,25 +18,34 @@ Entity::~Entity()
     std::cout << "Destructor Entity" << std::endl;
 }
 
-void Entity::setVelocity(sf::Vector2f velocity)
+void Entity::setVelocity(float velocity)
 {
     m_velocity = velocity;
 }
 
-void Entity::setVelocity(float velX, float velY)
-{
-    m_velocity.x = velX;
-    m_velocity.y = velY;
-}
-
-sf::Vector2f Entity::getVelocity() const
+float Entity::getVelocity() const
 {
     return m_velocity;
 }
 
-sf::Vector2f Entity::getCurrentVelocity() const
+void Entity::setCurrentVelocity(float currentVelocity)
+{
+    m_currentVelocity = currentVelocity;
+}
+
+float Entity::getCurrentVelocity() const
 {
     return m_currentVelocity;
+}
+
+void Entity::setCurrentDirection(sf::Vector2f currentDirection)
+{
+    m_currentDirection = currentDirection;
+}
+
+sf::Vector2f Entity::getCurrentDirection() const
+{
+    return m_currentDirection;
 }
 
 float Entity::getWidth() const
@@ -58,12 +70,22 @@ void Entity::setHeight(float height)
 
 void Entity::moveInActualDirection(const float length)
 {
-    sf::Vector2f normalizedDir = { Calc::normalizeVec2<sf::Vector2f>(m_velocity) };
+    // If the length is zero or less then zero there is nothing to move
+    if (length <= 0.f)
+    {
+        return;
+    }
+    sf::Vector2f normalizedDir = { Calc::normalizeVec2<sf::Vector2f>(m_currentDirection) };
     move(normalizedDir.x * length, normalizedDir.y * length);
 }
 
 void Entity::moveInDirection(const sf::Vector2f direction, const float length)
 {
+    // If the length is zero or less then zero there is nothing to move
+    if (length <= 0.f)
+    {
+        return;
+    }
     sf::Vector2f normalizedDir = { Calc::normalizeVec2<sf::Vector2f>(direction) };
     move(normalizedDir.x * length, normalizedDir.y * length);
 }

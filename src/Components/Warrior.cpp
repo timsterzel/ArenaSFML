@@ -191,8 +191,9 @@ void Warrior::onCommandCurrent(const Command &command, float dt)
     //Entity::onCommand(command, dt);
     if (command.getWorldObjectType() == m_type)
     {
-        m_currentVelocity.x = 0.f;
-        m_currentVelocity.y = 0.f;
+        m_currentVelocity = 0.f;
+        m_currentDirection.x = 0.f;
+        m_currentDirection.y = 0.f;
         m_isMoving = false;
 
         switch (command.getCommandType())
@@ -203,26 +204,56 @@ void Warrior::onCommandCurrent(const Command &command, float dt)
             case CommandTypes::ROTATE :
                 break;
             case CommandTypes::MOVE_UP:
-                m_currentVelocity.y = -m_velocity.y;
+                m_currentVelocity = m_velocity;
+                m_currentDirection.y = -m_velocity;
                 m_isMoving = true;
                 break;
             case CommandTypes::MOVE_DOWN:
-                m_currentVelocity.y = m_velocity.y;
+                m_currentVelocity = m_velocity;
+                m_currentDirection.y = m_velocity;
                 m_isMoving = true;
                 break;
             case CommandTypes::MOVE_LEFT:
-                m_currentVelocity.x = -m_velocity.x;
+                m_currentVelocity = m_velocity;
+                m_currentDirection.x = -m_velocity;
                 m_isMoving = true;
                 break;
             case CommandTypes::MOVE_RIGHT:
-                m_currentVelocity.x = m_velocity.x;
+                m_currentVelocity = m_velocity;
+                m_currentDirection.x = m_velocity;
+                m_isMoving = true;
+                break;
+            case CommandTypes::MOVE_UP_LEFT:
+                m_currentVelocity = m_velocity;
+                m_currentDirection.x = -(m_velocity / 2.f);
+                m_currentDirection.y = -(m_velocity / 2.f);
+                m_isMoving = true;
+                break;
+            case CommandTypes::MOVE_UP_RIGHT:
+                m_currentVelocity = m_velocity;
+                m_currentDirection.x = (m_velocity / 2.f);
+                m_currentDirection.y = -(m_velocity / 2.f);
+                m_isMoving = true;
+                break;
+            case CommandTypes::MOVE_DOWN_LEFT:
+                m_currentVelocity = m_velocity;
+                m_currentDirection.x = -(m_velocity / 2.f);
+                m_currentDirection.y = (m_velocity / 2.f);
+                m_isMoving = true;
+                break;
+            case CommandTypes::MOVE_DOWN_RIGHT:
+                m_currentVelocity = m_velocity;
+                m_currentDirection.x = (m_velocity / 2.f);
+                m_currentDirection.y = (m_velocity / 2.f);
                 m_isMoving = true;
                 break;
         }
 
         //onCommandCurrentWarrior(command, dt);
         // Move is the same as setPosition(getPosition() + offset) of the sf::Transformable class
-        move(m_currentVelocity * dt);
+        //move(m_currentVelocity * dt);
+        //moveInDirection(m_currentDirection, m_currentVelocity * dt);
+        moveInActualDirection(m_currentVelocity * dt);
     }
 }
 

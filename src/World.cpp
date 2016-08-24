@@ -140,7 +140,7 @@ void World::buildScene()
     wizard->setCollisionShape(std::move(collisionShapeWizard));
     //wizard->setPosition(800 / 2.f + 100.f, 480 / 2.f);
     wizard->setPosition(800 / 2.f - 60.f, 480 / 2.f - 10.f);
-    wizard->setVelocity(30.f, 30.f);
+    wizard->setVelocity(60.f);
     wizard->setType(WorldObjectTypes::ENEMY);
     m_sceneGraph.attachChild(std::move(wizard));
 
@@ -163,7 +163,7 @@ void World::buildScene()
     //std::unique_ptr<CollisionShape> collisionShapeWarrior(new CollisionRect({ 32.f, 32.f }));
     m_playerWarrior->setCollisionShape(std::move(collisionShapeWarrior));
     m_playerWarrior->setPosition(800 / 2.f, 480 / 2.f);
-    m_playerWarrior->setVelocity(60.f, 60.f);
+    m_playerWarrior->setVelocity(60.f);
     m_playerWarrior->setType(WorldObjectTypes::PLAYER);
     //m_playerWarrior->setWeapon(swordPlayer.get());
     //m_playerWarrior->setBodyParts(playerLeftShoe.get(), playerRightShoe.get(), playerUpperBody.get());
@@ -223,6 +223,19 @@ void World::translateInput(Input input, float dt)
         case InputTypes::RIGHT :
             m_commandQueue.push({ CommandTypes::MOVE_RIGHT, WorldObjectTypes::PLAYER });
             break;
+        case InputTypes::UP_LEFT :
+            m_commandQueue.push({ CommandTypes::MOVE_UP_LEFT, WorldObjectTypes::PLAYER });
+            break;
+        case InputTypes::UP_RIGHT :
+            m_commandQueue.push({ CommandTypes::MOVE_UP_RIGHT, WorldObjectTypes::PLAYER });
+            break;
+        case InputTypes::DOWN_LEFT :
+            m_commandQueue.push({ CommandTypes::MOVE_DOWN_LEFT, WorldObjectTypes::PLAYER });
+            break;
+        case InputTypes::DOWN_RIGHT :
+            m_commandQueue.push({ CommandTypes::MOVE_DOWN_RIGHT, WorldObjectTypes::PLAYER });
+            break;
+
         case InputTypes::LEFT_CLICK :
             m_commandQueue.push({ CommandTypes::ATTACK, WorldObjectTypes::PLAYER });
             break;

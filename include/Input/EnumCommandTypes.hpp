@@ -9,6 +9,10 @@ enum class CommandTypes
     MOVE_RIGHT,
     MOVE_UP,
     MOVE_DOWN,
+    MOVE_UP_LEFT,
+    MOVE_UP_RIGHT,
+    MOVE_DOWN_LEFT,
+    MOVE_DOWN_RIGHT,
     ATTACK,
 };
 
