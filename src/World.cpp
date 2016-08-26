@@ -239,8 +239,11 @@ void World::translateInput(Input input, float dt)
         case InputTypes::LEFT_CLICK :
             m_commandQueue.push({ CommandTypes::ATTACK, WorldObjectTypes::PLAYER });
             break;
-        case InputTypes::RIGHT_CLICK :
-            m_commandQueue.push({ CommandTypes::BLOCK, WorldObjectTypes::PLAYER });
+        case InputTypes::RIGHT_CLICK_START :
+            m_commandQueue.push({ CommandTypes::START_BLOCKING, WorldObjectTypes::PLAYER });
+            break;
+        case InputTypes::RIGHT_CLICK_STOPED :
+            m_commandQueue.push({ CommandTypes::STOP_BLOCKING, WorldObjectTypes::PLAYER });
             break;
         // Debug
         case InputTypes::D1 :
@@ -268,6 +271,8 @@ void World::translateInput(Input input, float dt)
             break;
         case InputTypes::RIGHT_A :
             m_commandQueue.push({ CommandTypes::MOVE_RIGHT, WorldObjectTypes::PLAYER_TWO });
+            break;
+        default:
             break;
     }
     /*

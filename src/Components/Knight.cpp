@@ -8,7 +8,7 @@ Knight::Knight(RenderLayers layer, const int health, Textures textureId, const R
 , m_isBlocking{ false }
 {
     std::vector<AnimationStepRotation>  swordRoationSteps;
-    swordRoationSteps.push_back({ 0.f, -60.f,  0.5f });
+    swordRoationSteps.push_back({ 0.f, -60.f,  0.3f });
     m_animationWeapon.setRotationSteps(swordRoationSteps);
 
     //std::unique_ptr<Weapon> sword(new Weapon(RenderLayers::WEAPON, 60, Textures::SWORD, textureHolder));
@@ -43,18 +43,10 @@ void Knight::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) cons
 void Knight::updateCurrent(float dt)
 {
     Warrior::updateCurrent(dt);
-    std::cout << "Update Current Knight" << std::endl;
-    if (m_isBlocking)
-    {
-        m_weapon->setRotation(-40.f);
-        std::cout << "m_isBlocking" << std::endl;
-
-    }
 }
 
 void Knight::onCommandCurrent(const Command &command, float dt)
 {
-    m_isBlocking = false;
     // Do command handling of parent class
     //Entity::onCommand(command, dt);
     Warrior::onCommandCurrent(command, dt);
@@ -72,10 +64,17 @@ void Knight::onCommandCurrent(const Command &command, float dt)
                     m_weapon->setIsCollisionCheckOn(true);
                 }
                 break;
-            case CommandTypes::BLOCK:
-                block();
+            case CommandTypes::START_BLOCKING:
+                startBlocking();
                 break;
+            case CommandTypes::STOP_BLOCKING:
+                stopBlocking();
+                break;
+            default:
+                break;
+
         }
+
         // Move is the same as setPosition(getPosition() + offset) of the sf::Transformable class
         //move(m_currentVelocity * dt);
         //moveInDirection(m_currentDirection, m_currentVelocity * dt);
@@ -83,10 +82,26 @@ void Knight::onCommandCurrent(const Command &command, float dt)
     }
 }
 
-void Knight::block()
+void Knight::startBlocking()
 {
-    m_isBlocking = true;
-    std::cout << "Block" << std::endl;
+    m_animationWeapon.stop();
+    std::cout << "startBlocking" << std::endl;
+    // Knight can only block with a weapon
+    if (m_weapon)
+    {
+        m_isBlocking = true;
+        m_weapon->setRotation(-30.f);
+    }
+}
+
+void Knight::stopBlocking()
+{
+    std::cout << "stopBlocking" << std::endl;
+    m_isBlocking = false;
+    if (m_weapon)
+    {
+        m_weapon->setRotation(0.f);
+    }
 }
 
 

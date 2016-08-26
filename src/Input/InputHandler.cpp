@@ -5,6 +5,8 @@
 
 InputHandler::InputHandler(sf::RenderWindow *window)
 : m_window{window}
+, m_lastMousePos{ 0, 0 }
+, m_rightMouseClickState{ 0 }
 {
 
 }
@@ -138,45 +140,36 @@ void InputHandler::handleRealTimeInput(QueueHelper<Input> &inputQueue)
     {
         inputQueue.push({ InputTypes::RIGHT_A });
     }
-    if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
-    {
-        inputQueue.push({ InputTypes::RIGHT_CLICK });
-    }
-    m_lastMousePos.x = CurrentMousePos.x;
-    m_lastMousePos.y = CurrentMousePos.y;
-    /*
-    const sf::Vector2i UnitVecX(1, 0);
-    const sf::Vector2i WindowCenter(static_cast<int>(m_window->getSize().x / 2), static_cast<int>(m_window->getSize().y / 2));
-    const sf::Vector2i CurrentMousePos = { sf::Mouse::getPosition(*m_window) };
-    // The angle which should be calculated have the coordinate systems midpoint a the center of the window,
-    // so we have to translate the mouse position so its relativ to the center of the window
-    const sf::Vector2i TranslatedMousePos = { CurrentMousePos - WindowCenter };
-    // Calculate angle between the unit vector and the translated mouse position
-    const float Angle = { Calc::radToDeg(Calc::getVec2Angle<sf::Vector2i, sf::Vector2i>(UnitVecX, TranslatedMousePos)) };
-    const float AngleSigned = TranslatedMousePos.y < 0 ? -Angle : Angle;
-    if (CurrentMousePos != m_lastMousePos)
-    {
-        commandQueue.push({ CommandTypes::ROTATE, WorldObjectTypes::Player, { AngleSigned, 0.f } });
-    }
-
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-    {
-        commandQueue.push({ CommandTypes::MOVE_UP, WorldObjectTypes::Player });
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-    {
-        commandQueue.push({ CommandTypes::MOVE_DOWN, WorldObjectTypes::Player });
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-    {
-        commandQueue.push({ CommandTypes::MOVE_LEFT, WorldObjectTypes::Player });
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-    {
-        commandQueue.push({ CommandTypes::MOVE_RIGHT, WorldObjectTypes::Player });
-    }
+    handleRealTimeRightClick(inputQueue);
 
     m_lastMousePos.x = CurrentMousePos.x;
     m_lastMousePos.y = CurrentMousePos.y;
-    */
+}
+
+void InputHandler::handleRealTimeRightClick(QueueHelper<Input> &inputQueue)
+{
+    bool isPressed = { sf::Mouse::isButtonPressed(sf::Mouse::Right) };
+    // Left mouse key was not pressed and is not pressed (start pressing)
+    if (isPressed && m_rightMouseClickState == 0)
+    {
+        m_rightMouseClickState = 1;
+        inputQueue.push({ InputTypes::RIGHT_CLICK_START });
+    }
+    // Left mouse key was pressed and is still pressed (still pressing)
+    else if (isPressed && m_rightMouseClickState == 1)
+    {
+        m_rightMouseClickState = 2;
+        inputQueue.push({ InputTypes::RIGHT_CLICK_STILL });
+    }
+    // Left mouse key was pressed and is not pressed anymore(stop pressing)
+    else if (!isPressed && m_rightMouseClickState == 2)
+    {
+        m_rightMouseClickState = 3;
+        inputQueue.push({ InputTypes::RIGHT_CLICK_STOPED });
+    }
+    // Left mouse key was not pressed and is not pressed at the moment
+    else if (!isPressed && m_rightMouseClickState == 3)
+    {
+        m_rightMouseClickState = 0;
+    }
 }

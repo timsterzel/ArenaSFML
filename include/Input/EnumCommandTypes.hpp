@@ -14,7 +14,8 @@ enum class CommandTypes
     MOVE_DOWN_LEFT,
     MOVE_DOWN_RIGHT,
     ATTACK,
-    BLOCK,
+    START_BLOCKING,
+    STOP_BLOCKING,
 };
 
 #endif // ENUMCOMMANDTYPES_HPP
