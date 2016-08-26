@@ -247,6 +247,8 @@ void Warrior::onCommandCurrent(const Command &command, float dt)
                 m_currentDirection.y = (m_velocity / 2.f);
                 m_isMoving = true;
                 break;
+            default:
+                break;
         }
 
         //onCommandCurrentWarrior(command, dt);

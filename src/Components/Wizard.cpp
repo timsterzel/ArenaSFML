@@ -50,6 +50,8 @@ void Wizard::onCommandCurrent(const Command &command, float dt)
                     m_weapon->setIsCollisionCheckOn(true);
                 }
                 break;
+            default:
+                break;
         }
         // Move is the same as setPosition(getPosition() + offset) of the sf::Transformable class
         //move(m_currentVelocity * dt);

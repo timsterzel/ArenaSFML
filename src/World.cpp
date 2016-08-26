@@ -119,7 +119,7 @@ void World::buildScene()
     m_playerWarrior->attachChild(std::move(swordPlayer));
     m_playerWarrior->attachChild(std::move(playerUpperBody));
     m_sceneLayers[Layers::MAIN]->attachChild(std::move(warrior));
-    //***********
+
 
 
 
@@ -135,7 +135,7 @@ void World::buildScene()
     */
 
     std::unique_ptr<Warrior> wizard(new Warrior(RenderLayers::MAIN, 100, Textures::WIZARD, m_TextureHolder, m_SpriteSheetMapHolder));
-    SceneNode *wizardEnemyTmp = wizard.get();
+    //SceneNode *wizardEnemyTmp = wizard.get();
     std::unique_ptr<CollisionShape> collisionShapeWizard(new CollisionCircle(12.f));
     wizard->setCollisionShape(std::move(collisionShapeWizard));
     //wizard->setPosition(800 / 2.f + 100.f, 480 / 2.f);

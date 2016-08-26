@@ -22,7 +22,6 @@ Knight::Knight(RenderLayers layer, const int health, Textures textureId, const R
     setWeapon(sword.get());
     attachChild(std::move(sword));
     std::cout << "After sowrd Init" << std::endl;
-
     /*
     std::vector<AnimationStepMovement>  swordMovementSteps;
     swordMovementSteps.push_back({ sf::Vector2f(0.f, 0.f), 100.f, sf::Vector2f(10.f, 0.f) , 1.5f });

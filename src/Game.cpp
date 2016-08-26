@@ -93,6 +93,8 @@ void Game::handleInput()
                 case InputTypes::D4 :
 
                     break;
+                default:
+                    break;
             }
         }
         // Let world class translate the input to commands
