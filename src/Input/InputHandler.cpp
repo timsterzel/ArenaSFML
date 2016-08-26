@@ -138,7 +138,10 @@ void InputHandler::handleRealTimeInput(QueueHelper<Input> &inputQueue)
     {
         inputQueue.push({ InputTypes::RIGHT_A });
     }
-
+    if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
+    {
+        inputQueue.push({ InputTypes::RIGHT_CLICK });
+    }
     m_lastMousePos.x = CurrentMousePos.x;
     m_lastMousePos.y = CurrentMousePos.y;
     /*

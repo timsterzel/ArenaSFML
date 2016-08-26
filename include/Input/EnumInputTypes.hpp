@@ -25,6 +25,7 @@ enum class InputTypes
     D3,
     D4,
     LEFT_CLICK,
+    RIGHT_CLICK,
     // TMP
     LEFT_A,
     RIGHT_A,

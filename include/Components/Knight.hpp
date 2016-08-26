@@ -8,9 +8,8 @@
 
 class Knight : public Warrior
 {
-
     private:
-
+        bool m_isBlocking;
     public:
         Knight(RenderLayers layer, const int health, Textures textureId, const ResourceHolder<sf::Texture, Textures> &textureHolder, const SpriteSheetMapHolder &spriteSheetMapHolder);
 
@@ -18,11 +17,11 @@ class Knight : public Warrior
 
         virtual void drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const;
 
-
-
     private:
         virtual void updateCurrent(float dt);
         virtual void onCommandCurrent(const Command &command, float dt);
+
+        void block();
 };
 
 #endif // KNIGHT_HPP

@@ -5,6 +5,7 @@
 
 Knight::Knight(RenderLayers layer, const int health, Textures textureId, const ResourceHolder<sf::Texture, Textures> &textureHolder, const SpriteSheetMapHolder &spriteSheetMapHolder)
 : Warrior(layer, health, textureId, textureHolder, spriteSheetMapHolder)
+, m_isBlocking{ false }
 {
     std::vector<AnimationStepRotation>  swordRoationSteps;
     swordRoationSteps.push_back({ 0.f, -60.f,  0.5f });
@@ -42,10 +43,18 @@ void Knight::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) cons
 void Knight::updateCurrent(float dt)
 {
     Warrior::updateCurrent(dt);
+    std::cout << "Update Current Knight" << std::endl;
+    if (m_isBlocking)
+    {
+        m_weapon->setRotation(-40.f);
+        std::cout << "m_isBlocking" << std::endl;
+
+    }
 }
 
 void Knight::onCommandCurrent(const Command &command, float dt)
 {
+    m_isBlocking = false;
     // Do command handling of parent class
     //Entity::onCommand(command, dt);
     Warrior::onCommandCurrent(command, dt);
@@ -63,6 +72,9 @@ void Knight::onCommandCurrent(const Command &command, float dt)
                     m_weapon->setIsCollisionCheckOn(true);
                 }
                 break;
+            case CommandTypes::BLOCK:
+                block();
+                break;
         }
         // Move is the same as setPosition(getPosition() + offset) of the sf::Transformable class
         //move(m_currentVelocity * dt);
@@ -71,5 +83,10 @@ void Knight::onCommandCurrent(const Command &command, float dt)
     }
 }
 
+void Knight::block()
+{
+    m_isBlocking = true;
+    std::cout << "Block" << std::endl;
+}
 
 
