@@ -18,10 +18,11 @@ class Knight : public Warrior
 
         virtual void drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const;
 
+
+
     private:
         virtual void updateCurrent(float dt);
         virtual void onCommandCurrent(const Command &command, float dt);
-        void lookAt(sf::Vector2f pos);
 };
 
 #endif // KNIGHT_HPP
