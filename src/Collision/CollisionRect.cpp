@@ -53,6 +53,7 @@ void CollisionRect::draw(sf::RenderTarget &target, sf::RenderStates states) cons
     if (m_draw)
     {
         sf::RectangleShape rect({ m_width, m_height });
+        rect.setPosition(getPosition());
         rect.setFillColor(sf::Color(255, 0, 0, 160));
         rect.setOrigin(m_width / 2.f, m_height / 2.f);
         target.draw(rect, states);

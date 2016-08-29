@@ -22,6 +22,12 @@ Knight::Knight(RenderLayers layer, const int health, Textures textureId, const R
     setWeapon(sword.get());
     attachChild(std::move(sword));
     std::cout << "After sowrd Init" << std::endl;
+
+    std::unique_ptr<CollisionShape> closeCombatArea(new CollisionCircle(10.f));
+    m_closeCombatArea = std::move(closeCombatArea);
+    m_closeCombatArea->setParent(this);
+    m_closeCombatArea->setPosition(100.f, 0.f);
+    m_closeCombatArea->setDraw(true);
     /*
     std::vector<AnimationStepMovement>  swordMovementSteps;
     swordMovementSteps.push_back({ sf::Vector2f(0.f, 0.f), 100.f, sf::Vector2f(10.f, 0.f) , 1.5f });

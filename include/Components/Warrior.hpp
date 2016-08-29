@@ -13,6 +13,7 @@ class Weapon;
 
 class Warrior : public Entity
 {
+
     protected:
         int m_maxHealth;
         int m_currentHealth;
@@ -31,6 +32,13 @@ class Warrior : public Entity
         Animation m_animationLeftShoe;
         Animation m_animationRightShoe;
         //CollisionCircle m_collisionCircle;
+
+        std::unique_ptr<CollisionShape> m_closeCombatArea;
+
+        // Used for AI
+        bool m_isAiActive;
+        std::vector<Warrior*> m_warriorsInWord;
+        Warrior *m_actualTarget;
 
     public:
         Warrior(RenderLayers layer, const int health, Textures textureId, const ResourceHolder<sf::Texture, Textures> &textureHolder, const SpriteSheetMapHolder &spriteSheetMapHolder);

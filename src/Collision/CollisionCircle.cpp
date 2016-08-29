@@ -17,6 +17,7 @@ void CollisionCircle::draw(sf::RenderTarget &target, sf::RenderStates states) co
     if (m_draw)
     {
         sf::CircleShape circleShape{ m_radius };
+        circleShape.setPosition(getPosition());
         circleShape.setFillColor(sf::Color(255, 0, 0, 160));
         circleShape.setOrigin(m_radius, m_radius);
         target.draw(circleShape, states);

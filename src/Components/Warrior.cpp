@@ -19,6 +19,7 @@ Warrior::Warrior(RenderLayers layer, const int health, Textures textureId, const
 , m_animationWeapon( nullptr, false )
 , m_animationLeftShoe{  nullptr ,true }
 , m_animationRightShoe{  nullptr ,true }
+, m_closeCombatArea{ nullptr }
 {
     sf::FloatRect bounds = m_sprite.getLocalBounds();
     m_sprite.setOrigin(bounds.width / 2.f, bounds.height / 2.f);
@@ -136,6 +137,11 @@ void Warrior::heal(const int health)
 
 void Warrior::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const
 {
+    if (m_closeCombatArea)
+    {
+        std::cout << "draw closeCombatArea" << std::endl;
+        m_closeCombatArea->draw(target, states);
+    }
     //target.draw(m_sprite, states);
     // Only draw weapon when it is not nullptr
     /*
