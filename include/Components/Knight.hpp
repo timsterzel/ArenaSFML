@@ -19,8 +19,10 @@ class Knight : public Warrior
 
     private:
         virtual void updateCurrent(float dt);
+        virtual void updateAI(float dt);
         virtual void onCommandCurrent(const Command &command, float dt);
 
+        void startCloseAttack();
         void startBlocking();
         void stopBlocking();
 };

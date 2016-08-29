@@ -20,6 +20,8 @@ Warrior::Warrior(RenderLayers layer, const int health, Textures textureId, const
 , m_animationLeftShoe{  nullptr ,true }
 , m_animationRightShoe{  nullptr ,true }
 , m_closeCombatArea{ nullptr }
+, m_isAiActive{ false }
+, m_actualTarget{ nullptr }
 {
     sf::FloatRect bounds = m_sprite.getLocalBounds();
     m_sprite.setOrigin(bounds.width / 2.f, bounds.height / 2.f);
@@ -105,6 +107,16 @@ sf::Vector2f Warrior::getWorldWeaponPos() const
 {
     return getWorldTransform() * m_weaponPos;
 }
+
+void Warrior::setIsAiActive(bool isAiActive)
+{
+    m_isAiActive = isAiActive;
+}
+
+void Warrior::setActualTarget(Warrior *target)
+{
+    m_actualTarget = target;
+}
 /*
 int Warrior::getDamage() const
 {
@@ -142,6 +154,7 @@ void Warrior::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) con
         std::cout << "draw closeCombatArea" << std::endl;
         m_closeCombatArea->draw(target, states);
     }
+
     //target.draw(m_sprite, states);
     // Only draw weapon when it is not nullptr
     /*
@@ -163,6 +176,10 @@ void Warrior::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) con
 
 void Warrior::updateCurrent(float dt)
 {
+    if (m_isAiActive)
+    {
+        updateAI(dt);
+    }
     if (m_weapon)
     {
         if (!m_animationWeapon.isRunning())
@@ -188,6 +205,11 @@ void Warrior::updateCurrent(float dt)
 
     //std::cout << "WorldPos: " << getWorldPosition().x << "|" << getWorldPosition().y
     //<< "WeaponWorldPos: " << getWorldWeaponPos().x << "|" << getWorldWeaponPos().y << std::endl;
+
+}
+
+void Warrior::updateAI(float dt)
+{
 
 }
 

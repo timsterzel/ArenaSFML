@@ -52,6 +52,8 @@ class Warrior : public Entity
 
         sf::Vector2f getWorldWeaponPos() const;
 
+        void setIsAiActive(bool isAiActive);
+        void setActualTarget(Warrior *target);
         //int getDamage() const;
 
         bool isAlive() const;
@@ -65,6 +67,7 @@ class Warrior : public Entity
         void setBodyParts(SpriteNode *leftShoe, SpriteNode *rightShoe, SpriteNode *upperBody);
 
         virtual void updateCurrent(float dt);
+        virtual void updateAI(float dt);
         virtual void onCommandCurrent(const Command &command, float dt);
         void lookAt(sf::Vector2f pos);
         // The command which are for every Warrior equal

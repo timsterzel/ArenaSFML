@@ -45,95 +45,7 @@ void World::buildScene()
     std::unique_ptr<SpriteNode> background(new SpriteNode(RenderLayers::BACKGROUND, texture, textureRect, false));
     m_sceneGraph.attachChild(std::move(background));
     //m_sceneLayers[Layers::BACKGROUND]->attachChild(std::move(background));
-
     /*
-    std::unique_ptr<Warrior> wizard(new Warrior(100, Textures::WIZARD, m_TextureHolder));
-    SceneNode *wizardEnemyTmp = wizard.get();
-    std::unique_ptr<CollisionShape> collisionShapeWizard(new CollisionCircle(12.f , &m_drawCollisionShape));
-    wizard->setCollisionShape(std::move(collisionShapeWizard));
-    //wizard->setPosition(800 / 2.f + 100.f, 480 / 2.f);
-    wizard->setPosition(800 / 2.f - 60.f, 480 / 2.f - 10.f);
-    wizard->setVelocity(30.f, 30.f);
-    wizard->setType(WorldObjectTypes::ENEMY);
-    m_sceneLayers[Layers::MAIN]->attachChild(std::move(wizard));
-
-
-    std::unique_ptr<Warrior> warriorEnemy(new Warrior(100, Textures::KNIGHT, m_TextureHolder));
-    SceneNode *warriorEnemyTmp = warriorEnemy.get();
-    std::unique_ptr<CollisionShape> collisionShapeWarriorEnemy(new CollisionRect({ 32.f, 32.f }, &m_drawCollisionShape));
-    warriorEnemy->setCollisionShape(std::move(collisionShapeWarriorEnemy));
-    warriorEnemy->setPosition(800 / 3.f + 100.f, 480 / 3.f);
-    warriorEnemy->setVelocity(30.f, 30.f);
-    warriorEnemy->setType(WorldObjectTypes::ENEMY);
-    m_sceneLayers[Layers::MAIN]->attachChild(std::move(warriorEnemy));
-
-
-    std::unique_ptr<Warrior> warriorEnemy2(new Warrior(100, Textures::KNIGHT, m_TextureHolder));
-    SceneNode *warriorEnemy2Tmp = warriorEnemy2.get();
-    std::unique_ptr<CollisionShape> collisionShapeWarriorEnemy2(new CollisionRect({ 32.f, 32.f }, &m_drawCollisionShape));
-    warriorEnemy2->setCollisionShape(std::move(collisionShapeWarriorEnemy2));
-    warriorEnemy2->setPosition(800 / 3.f + 300.f, 480 / 3.f);
-    warriorEnemy2->setVelocity(30.f, 30.f);
-    warriorEnemy2->setType(WorldObjectTypes::NONE);
-    m_sceneLayers[Layers::MAIN]->attachChild(std::move(warriorEnemy2));
-
-    std::unique_ptr<Warrior> warriorEnemy3(new Warrior(100, Textures::KNIGHT, m_TextureHolder));
-    SceneNode *warriorEnemy3Tmp = warriorEnemy3.get();
-    std::unique_ptr<CollisionShape> collisionShapeWarriorEnemy3(new CollisionRect({ 32.f, 32.f }, &m_drawCollisionShape));
-    warriorEnemy3->setCollisionShape(std::move(collisionShapeWarriorEnemy3));
-    warriorEnemy3->setPosition(800 / 3.f + 300.f, 380);
-    warriorEnemy3->setVelocity(30.f, 30.f);
-    warriorEnemy3->setType(WorldObjectTypes::NONE);
-    warriorEnemy3->setRotation(50.f);
-    m_sceneLayers[Layers::MAIN]->attachChild(std::move(warriorEnemy3));
-    // ******* PLAYER *********
-    // SWORD
-    std::unique_ptr<Weapon> swordPlayer(new Weapon(60 ,Textures::SWORD, m_TextureHolder));
-    swordPlayer->setType(WorldObjectTypes::WEAPON);
-    swordPlayer->setPosition(0.f, 0.f);
-    //swordPlayer->setRotationPoint(0.f, swordPlayer->getSpriteHeight() / 2.f);
-    swordPlayer->setEquipPoint(-10.f, 0.f);
-    std::unique_ptr<CollisionShape> collisionShapePlayerSword(new CollisionRect({ swordPlayer->getSpriteWidth(), swordPlayer->getSpriteHeight() }, &m_drawCollisionShape));
-    swordPlayer->setCollisionShape(std::move(collisionShapePlayerSword));
-    // Parts
-    std::unique_ptr<SpriteNode> playerLeftShoe(new SpriteNode(m_TextureHolder.get(Textures::KNIGHT_LEFT_SHOE), true));
-    playerLeftShoe->setPosition(8.f, -5.f);
-    std::unique_ptr<SpriteNode> playerRightShoe(new SpriteNode(m_TextureHolder.get(Textures::KNIGHT_RIGHT_SHOE), true));
-    playerRightShoe->setPosition(8.f, 5.f);
-    std::unique_ptr<SpriteNode> playerUpperBody(new SpriteNode(m_TextureHolder.get(Textures::KNIGHT_UPPER_BODY), true));
-
-    // Warrior
-    std::unique_ptr<Knight> warrior(new Knight(100, Textures::KNIGHT, m_TextureHolder));
-    m_playerWarrior = warrior.get();
-    std::unique_ptr<CollisionShape> collisionShapeWarrior(new CollisionCircle(12.f, &m_drawCollisionShape));
-    //std::unique_ptr<CollisionShape> collisionShapeWarrior(new CollisionRect({ 32.f, 32.f }));
-    m_playerWarrior->setCollisionShape(std::move(collisionShapeWarrior));
-    m_playerWarrior->setPosition(800 / 2.f, 480 / 2.f);
-    m_playerWarrior->setVelocity(60.f, 60.f);
-    m_playerWarrior->setType(WorldObjectTypes::PLAYER);
-    m_playerWarrior->setWeapon(swordPlayer.get());
-    m_playerWarrior->setBodyParts(playerLeftShoe.get(), playerRightShoe.get(), playerUpperBody.get());
-    // Add Parts to player
-    m_playerWarrior->attachChild(std::move(playerLeftShoe));
-    m_playerWarrior->attachChild(std::move(playerRightShoe));
-    m_playerWarrior->attachChild(std::move(swordPlayer));
-    m_playerWarrior->attachChild(std::move(playerUpperBody));
-    m_sceneLayers[Layers::MAIN]->attachChild(std::move(warrior));
-
-
-
-
-    std::unique_ptr<Warrior> warriorPlayerTwo(new Warrior(100, Textures::KNIGHT, m_TextureHolder));
-    Warrior *playerWarriorTwo = warriorPlayerTwo.get();
-    //std::unique_ptr<CollisionShape> collisionShapeWarriorPlayer2(new CollisionCircle(12.f));
-    std::unique_ptr<CollisionShape> collisionShapeWarriorPlayer2(new CollisionRect({ 32.f, 32.f }, &m_drawCollisionShape));
-    playerWarriorTwo->setCollisionShape(std::move(collisionShapeWarriorPlayer2));
-    playerWarriorTwo->setPosition(800 / 2.f - 160.f, 480 / 2.f + 90.f);
-    playerWarriorTwo->setVelocity(60.f, 60.f);
-    playerWarriorTwo->setType(WorldObjectTypes::PLAYER_TWO);
-    m_sceneLayers[Layers::MAIN]->attachChild(std::move(warriorPlayerTwo));
-    */
-
     std::unique_ptr<Warrior> wizard(new Warrior(RenderLayers::MAIN, 100, Textures::WIZARD, m_TextureHolder, m_SpriteSheetMapHolder));
     //SceneNode *wizardEnemyTmp = wizard.get();
     std::unique_ptr<CollisionShape> collisionShapeWizard(new CollisionCircle(12.f));
@@ -143,19 +55,8 @@ void World::buildScene()
     wizard->setVelocity(60.f);
     wizard->setType(WorldObjectTypes::ENEMY);
     m_sceneGraph.attachChild(std::move(wizard));
-
-
-    // ******* PLAYER *********
-    // SWORD
-    /*
-    std::unique_ptr<Weapon> swordPlayer(new Weapon(RenderLayers::WEAPON, 60 ,Textures::SWORD, m_TextureHolder));
-    swordPlayer->setType(WorldObjectTypes::WEAPON);
-    swordPlayer->setPosition(0.f, 0.f);
-    //swordPlayer->setRotationPoint(0.f, swordPlayer->getSpriteHeight() / 2.f);
-    swordPlayer->setEquipPoint(-10.f, 0.f);
-    std::unique_ptr<CollisionShape> collisionShapePlayerSword(new CollisionRect({ swordPlayer->getSpriteWidth(), swordPlayer->getSpriteHeight() }, &m_drawCollisionShape));
-    swordPlayer->setCollisionShape(std::move(collisionShapePlayerSword));
     */
+
     // Warrior
     std::unique_ptr<Knight> warrior(new Knight(RenderLayers::MAIN, 100, Textures::KNIGHT, m_TextureHolder, m_SpriteSheetMapHolder));
     m_playerWarrior = warrior.get();
@@ -170,6 +71,23 @@ void World::buildScene()
     // Add Parts to player
     //m_playerWarrior->attachChild(std::move(swordPlayer));
     m_sceneGraph.attachChild(std::move(warrior));
+
+
+    std::unique_ptr<Warrior> enemy1(new Knight(RenderLayers::MAIN, 100, Textures::KNIGHT, m_TextureHolder, m_SpriteSheetMapHolder));
+    //SceneNode *wizardEnemyTmp = wizard.get();
+    std::unique_ptr<CollisionShape> collisionShapeEnemy(new CollisionCircle(12.f));
+    enemy1->setCollisionShape(std::move(collisionShapeEnemy));
+    //wizard->setPosition(800 / 2.f + 100.f, 480 / 2.f);
+    enemy1->setPosition(800 / 2.f - 60.f, 480 / 2.f - 10.f);
+    enemy1->setVelocity(60.f);
+    enemy1->setType(WorldObjectTypes::ENEMY);
+    enemy1->setActualTarget(m_playerWarrior);
+    enemy1->setIsAiActive(true);
+    m_sceneGraph.attachChild(std::move(enemy1));
+
+
+
+
     //m_sceneLayers[Layers::MAIN]->attachChild(std::move(warrior));
     //***********
 
@@ -377,10 +295,15 @@ void World::handleCollision(float dt)
             //std::cout << "WEAPON collision" << std::endl;
             Weapon *weapon = { static_cast<Weapon*>(getSceneNodeOfType(sceneNodes, WorldObjectTypes::WEAPON)) };
             Warrior *warrior = { static_cast<Warrior*>(getSceneNodeOfType(sceneNodes, WorldObjectTypes::ENEMY)) };
-            warrior->damage(weapon->getDamage());
-            // To prevent multiple damage, turn off collison check
-            weapon->setIsCollisionCheckOn(false);
-            //std::cout << "Rest health: " << warrior->getCurrentHealth() << std::endl;
+            // Only damage warrior if the weapon is not its own
+            // Alternative implementation for future (?): no collision check with parent nodes
+            if (warrior->getWeapon() != weapon)
+            {
+                warrior->damage(weapon->getDamage());
+                // To prevent multiple damage, turn off collison check
+                weapon->setIsCollisionCheckOn(false);
+                //std::cout << "Rest health: " << warrior->getCurrentHealth() << std::endl;
+            }
         }
         if (m_showCollisionInfo)
         {

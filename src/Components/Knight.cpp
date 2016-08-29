@@ -1,6 +1,7 @@
 #include "Components/Knight.hpp"
 #include <Components/Weapon.hpp>
 #include <Collision/CollisionRect.hpp>
+#include <Collision/CollisionHandler.hpp>
 #include <iostream>
 
 Knight::Knight(RenderLayers layer, const int health, Textures textureId, const ResourceHolder<sf::Texture, Textures> &textureHolder, const SpriteSheetMapHolder &spriteSheetMapHolder)
@@ -23,10 +24,10 @@ Knight::Knight(RenderLayers layer, const int health, Textures textureId, const R
     attachChild(std::move(sword));
     std::cout << "After sowrd Init" << std::endl;
 
-    std::unique_ptr<CollisionShape> closeCombatArea(new CollisionCircle(10.f));
+    std::unique_ptr<CollisionShape> closeCombatArea(new CollisionCircle(9.f));
     m_closeCombatArea = std::move(closeCombatArea);
     m_closeCombatArea->setParent(this);
-    m_closeCombatArea->setPosition(100.f, 0.f);
+    m_closeCombatArea->setPosition(9.f, 0.f);
     m_closeCombatArea->setDraw(true);
     /*
     std::vector<AnimationStepMovement>  swordMovementSteps;
@@ -65,8 +66,7 @@ void Knight::onCommandCurrent(const Command &command, float dt)
             case CommandTypes::ATTACK:
                 if (!m_animationWeapon.isRunning())
                 {
-                    m_animationWeapon.start();
-                    m_weapon->setIsCollisionCheckOn(true);
+                    startCloseAttack();
                 }
                 break;
             case CommandTypes::START_BLOCKING:
@@ -84,6 +84,24 @@ void Knight::onCommandCurrent(const Command &command, float dt)
         //move(m_currentVelocity * dt);
         //moveInDirection(m_currentDirection, m_currentVelocity * dt);
         moveInActualDirection(m_currentVelocity * dt);
+    }
+}
+
+void Knight::updateAI(float dt)
+{
+    CollisionInfo collisionInfo = m_closeCombatArea->isColliding(*m_actualTarget->getCollisionShape());
+    if (collisionInfo.isCollision())
+    {
+        startCloseAttack();
+    }
+}
+
+void Knight::startCloseAttack()
+{
+    if (m_weapon)
+    {
+        m_animationWeapon.start();
+        m_weapon->setIsCollisionCheckOn(true);
     }
 }
 
