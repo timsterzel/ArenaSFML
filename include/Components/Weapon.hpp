@@ -8,7 +8,7 @@
 class Weapon : public Entity
 {
     protected:
-        int m_damage;
+        float m_damage;
         // The damage multiplicator is multiplied with the standart damage to get the final damage
         float m_damageMultiplicator;
 
@@ -23,12 +23,12 @@ class Weapon : public Entity
 
 
     public:
-        Weapon(RenderLayers layer, const int damage, Textures textureId, const ResourceHolder<sf::Texture, Textures> &textureHolder);
-        Weapon(RenderLayers layer, const int damage, const sf::Texture &texture, const sf::IntRect &rect);
+        Weapon(RenderLayers layer, const float damage, Textures textureId, const ResourceHolder<sf::Texture, Textures> &textureHolder);
+        Weapon(RenderLayers layer, const float damage, const sf::Texture &texture, const sf::IntRect &rect);
         virtual ~Weapon();
 
-        int getTotalDamage() const;
-        void setStandartDamage(const int damage);
+        float getTotalDamage() const;
+        void setStandartDamage(const float damage);
         void setDamageMultiplicator(float multiplicator);
 
         float getSpriteWidth() const;

@@ -13,7 +13,7 @@ Knight::Knight(RenderLayers layer, const int health, Textures textureId, const R
     m_animationWeapon.setRotationSteps(swordRoationSteps);
 
     //std::unique_ptr<Weapon> sword(new Weapon(RenderLayers::WEAPON, 60, Textures::SWORD, textureHolder));
-    std::unique_ptr<Weapon> sword(new Weapon(RenderLayers::WEAPON, 60, textureHolder.get(textureId), spriteSheetMapHolder.getRectData(textureId, "sword")));
+    std::unique_ptr<Weapon> sword(new Weapon(RenderLayers::WEAPON, 60.f, textureHolder.get(textureId), spriteSheetMapHolder.getRectData(textureId, "sword")));
     sword->setType(WorldObjectTypes::WEAPON);
     sword->setPosition(0.f, 0.f);
     //swordPlayer->setRotationPoint(0.f, swordPlayer->getSpriteHeight() / 2.f);

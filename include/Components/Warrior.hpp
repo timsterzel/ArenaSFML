@@ -15,8 +15,8 @@ class Warrior : public Entity
 {
 
     protected:
-        int m_maxHealth;
-        int m_currentHealth;
+        float m_maxHealth;
+        float m_currentHealth;
 
         float m_maxStamina;
         float m_currentStamina;
@@ -49,11 +49,11 @@ class Warrior : public Entity
 
 
     public:
-        Warrior(RenderLayers layer, const int health, Textures textureId, const ResourceHolder<sf::Texture, Textures> &textureHolder, const SpriteSheetMapHolder &spriteSheetMapHolder);
+        Warrior(RenderLayers layer, const float health, Textures textureId, const ResourceHolder<sf::Texture, Textures> &textureHolder, const SpriteSheetMapHolder &spriteSheetMapHolder);
         virtual ~Warrior();
 
-        int getCurrentHealth() const;
-        void setCurrentHealth(const int health);
+        float getCurrentHealth() const;
+        void setCurrentHealth(const float health);
 
         float getCurrentStanima() const;
         void setCurrentStanima(const float stanima);
@@ -68,8 +68,8 @@ class Warrior : public Entity
         //int getDamage() const;
 
         bool isAlive() const;
-        void damage(const int damage);
-        void heal(const int health);
+        void damage(const float damage);
+        void heal(const float health);
 
         virtual void drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const;
 

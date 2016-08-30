@@ -4,7 +4,7 @@
 #include <iostream>
 #include <vector>
 
-Warrior::Warrior(RenderLayers layer, const int health, Textures textureId, const ResourceHolder<sf::Texture, Textures> &textureHolder,
+Warrior::Warrior(RenderLayers layer, const float health, Textures textureId, const ResourceHolder<sf::Texture, Textures> &textureHolder,
     const SpriteSheetMapHolder &spriteSheetMapHolder)
 : Entity(layer)
 , m_maxHealth{ health }
@@ -59,12 +59,12 @@ Warrior::~Warrior()
     std::cout << "Destructor Warrior" << std::endl;
 }
 
-int Warrior::getCurrentHealth() const
+float Warrior::getCurrentHealth() const
 {
     return m_currentHealth;
 }
 
-void Warrior::setCurrentHealth(const int health)
+void Warrior::setCurrentHealth(const float health)
 {
     m_currentHealth = health;
 }
@@ -139,19 +139,19 @@ int Warrior::getDamage() const
 
 bool Warrior::isAlive() const
 {
-    return m_currentHealth > 0;
+    return m_currentHealth > 0.f;
 }
 
-void Warrior::damage(const int damage)
+void Warrior::damage(const float damage)
 {
     m_currentHealth -= damage;
-    if (m_currentHealth <= 0)
+    if (m_currentHealth <= 0.f)
     {
         m_status = WorldObjectStatus::DESTORYED;
     }
 }
 
-void Warrior::heal(const int health)
+void Warrior::heal(const float health)
 {
     m_currentHealth += health;
     if (m_currentHealth > m_maxHealth)

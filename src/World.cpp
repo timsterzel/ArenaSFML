@@ -58,7 +58,7 @@ void World::buildScene()
     */
 
     // Warrior
-    std::unique_ptr<Knight> warrior(new Knight(RenderLayers::MAIN, 100, Textures::KNIGHT, m_TextureHolder, m_SpriteSheetMapHolder));
+    std::unique_ptr<Knight> warrior(new Knight(RenderLayers::MAIN, 100.f, Textures::KNIGHT, m_TextureHolder, m_SpriteSheetMapHolder));
     m_playerWarrior = warrior.get();
     std::unique_ptr<CollisionShape> collisionShapeWarrior(new CollisionCircle(12.f));
     //std::unique_ptr<CollisionShape> collisionShapeWarrior(new CollisionRect({ 32.f, 32.f }));
@@ -73,7 +73,7 @@ void World::buildScene()
     m_sceneGraph.attachChild(std::move(warrior));
 
 
-    std::unique_ptr<Warrior> enemy1(new Knight(RenderLayers::MAIN, 100, Textures::KNIGHT, m_TextureHolder, m_SpriteSheetMapHolder));
+    std::unique_ptr<Warrior> enemy1(new Knight(RenderLayers::MAIN, 100.f, Textures::KNIGHT, m_TextureHolder, m_SpriteSheetMapHolder));
     //SceneNode *wizardEnemyTmp = wizard.get();
     std::unique_ptr<CollisionShape> collisionShapeEnemy(new CollisionCircle(12.f));
     enemy1->setCollisionShape(std::move(collisionShapeEnemy));

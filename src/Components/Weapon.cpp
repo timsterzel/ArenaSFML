@@ -3,7 +3,7 @@
 #include <iostream>
 #include <cmath>
 
-Weapon::Weapon(RenderLayers layer, const int damage, Textures textureId, const ResourceHolder<sf::Texture, Textures> &textureHolder)
+Weapon::Weapon(RenderLayers layer, const float damage, Textures textureId, const ResourceHolder<sf::Texture, Textures> &textureHolder)
 : Entity(layer)
 , m_damage{ damage }
 , m_damageMultiplicator{ 1.f }
@@ -23,7 +23,7 @@ Weapon::Weapon(RenderLayers layer, const int damage, Textures textureId, const R
 }
 
 
-Weapon::Weapon(RenderLayers layer, const int damage, const sf::Texture &texture, const sf::IntRect &rect)
+Weapon::Weapon(RenderLayers layer, const float damage, const sf::Texture &texture, const sf::IntRect &rect)
 : Entity(layer)
 , m_damage{ damage }
 , m_damageMultiplicator{ 1.f }
@@ -47,12 +47,12 @@ Weapon::~Weapon()
     std::cout << "Destructor Weapon" << std::endl;
 }
 
-int Weapon::getTotalDamage() const
+float Weapon::getTotalDamage() const
 {
-    return static_cast<int>(m_damage * m_damageMultiplicator + 0.5);
+    return m_damage * m_damageMultiplicator;
 }
 
-void Weapon::setStandartDamage(const int damage)
+void Weapon::setStandartDamage(const float damage)
 {
     m_damage = damage;
 }
