@@ -18,10 +18,11 @@ Warrior::Warrior(RenderLayers layer, const float health, Textures textureId, con
 , m_weapon{ nullptr }
 , m_upperBody{ nullptr }
 , m_weaponPos(0.f, 10.f)
-, m_closeAttackStanima{ 10.f }
 , m_animationWeapon( nullptr, false )
 , m_animationLeftShoe{  nullptr ,true }
 , m_animationRightShoe{  nullptr ,true }
+, m_closeAttackStanima{ 10.f }
+, m_closeAttackDamageMul{ 1.0 }
 , m_closeCombatArea{ nullptr }
 , m_isAiActive{ false }
 , m_actualTarget{ nullptr }

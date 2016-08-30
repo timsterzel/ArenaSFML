@@ -110,6 +110,7 @@ void Knight::startCloseAttack()
     {
         m_animationWeapon.start();
         m_weapon->setIsCollisionCheckOn(true);
+        m_weapon->setDamageMultiplicator(m_closeAttackDamageMul);
         removeStanima(m_closeAttackStanima);
         std::cout << "Current Stanima: " << m_currentStamina << std::endl;
     }

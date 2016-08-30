@@ -38,7 +38,7 @@ class Warrior : public Entity
 
         float m_closeAttackStanima;
         // The multiplicator of of the attack for damage calculation
-        float m_cloaseAttackDamageMul;
+        float m_closeAttackDamageMul;
 
         std::unique_ptr<CollisionShape> m_closeCombatArea;
 
