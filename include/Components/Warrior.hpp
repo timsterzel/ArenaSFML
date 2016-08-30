@@ -70,6 +70,8 @@ class Warrior : public Entity
         bool isAlive() const;
         void damage(const float damage);
         void heal(const float health);
+        void removeStanima(float stanima);
+        void addStanima(float stanima);
 
         virtual void drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const;
 

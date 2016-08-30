@@ -106,10 +106,12 @@ void Knight::updateAI(float dt)
 
 void Knight::startCloseAttack()
 {
-    if (m_weapon && !m_animationWeapon.isRunning())
+    if (m_weapon && !m_animationWeapon.isRunning() && m_currentStamina >= m_closeAttackStanima)
     {
         m_animationWeapon.start();
         m_weapon->setIsCollisionCheckOn(true);
+        removeStanima(m_closeAttackStanima);
+        std::cout << "Current Stanima: " << m_currentStamina << std::endl;
     }
 }
 

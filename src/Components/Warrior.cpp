@@ -160,6 +160,24 @@ void Warrior::heal(const float health)
     }
 }
 
+void Warrior::removeStanima(float stanima)
+{
+    m_currentStamina -= stanima;
+    if (m_currentStamina < 0.f)
+    {
+        m_currentStamina = 0.f;
+    }
+}
+
+void Warrior::addStanima(float stanima)
+{
+    m_currentStamina += stanima;
+    if (m_currentStamina > m_maxStamina)
+    {
+        m_currentStamina = m_maxStamina;
+    }
+}
+
 void Warrior::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const
 {
     if (m_closeCombatArea)
