@@ -89,10 +89,20 @@ void Knight::onCommandCurrent(const Command &command, float dt)
 
 void Knight::updateAI(float dt)
 {
+    m_isMoving = false;
+    Warrior::updateAI(dt);
+    lookAt(m_actualTarget->getPosition());
     CollisionInfo collisionInfo = m_closeCombatArea->isColliding(*m_actualTarget->getCollisionShape());
     if (collisionInfo.isCollision())
     {
         startCloseAttack();
+    }
+    else
+    {
+        m_currentVelocity = m_velocity;
+        m_currentDirection = m_actualTarget->getWorldPosition() - getWorldPosition();
+        m_isMoving = true;
+        moveInActualDirection(m_currentVelocity * dt);
     }
 }
 

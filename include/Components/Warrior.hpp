@@ -40,6 +40,7 @@ class Warrior : public Entity
         std::vector<Warrior*> m_warriorsInWord;
         Warrior *m_actualTarget;
 
+
     public:
         Warrior(RenderLayers layer, const int health, Textures textureId, const ResourceHolder<sf::Texture, Textures> &textureHolder, const SpriteSheetMapHolder &spriteSheetMapHolder);
         virtual ~Warrior();
