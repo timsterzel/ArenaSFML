@@ -17,6 +17,9 @@ class Warrior : public Entity
     protected:
         int m_maxHealth;
         int m_currentHealth;
+
+        float m_maxStamina;
+        float m_currentStamina;
         // Used to check if movement animation shout get updated
         bool m_isMoving;
 
@@ -33,6 +36,10 @@ class Warrior : public Entity
         Animation m_animationRightShoe;
         //CollisionCircle m_collisionCircle;
 
+        float m_closeAttackStanima;
+        // The multiplicator of of the attack for damage calculation
+        float m_cloaseAttackDamageMul;
+
         std::unique_ptr<CollisionShape> m_closeCombatArea;
 
         // Used for AI
@@ -47,6 +54,9 @@ class Warrior : public Entity
 
         int getCurrentHealth() const;
         void setCurrentHealth(const int health);
+
+        float getCurrentStanima() const;
+        void setCurrentStanima(const float stanima);
 
         void setWeapon(Weapon *weapon);
         Weapon* getWeapon() const;

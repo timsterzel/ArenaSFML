@@ -64,10 +64,7 @@ void Knight::onCommandCurrent(const Command &command, float dt)
         switch (command.getCommandType())
         {
             case CommandTypes::ATTACK:
-                if (!m_animationWeapon.isRunning())
-                {
-                    startCloseAttack();
-                }
+                startCloseAttack();
                 break;
             case CommandTypes::START_BLOCKING:
                 startBlocking();
@@ -99,6 +96,7 @@ void Knight::updateAI(float dt)
     }
     else
     {
+        // Follow target
         m_currentVelocity = m_velocity;
         m_currentDirection = m_actualTarget->getWorldPosition() - getWorldPosition();
         m_isMoving = true;
@@ -108,7 +106,7 @@ void Knight::updateAI(float dt)
 
 void Knight::startCloseAttack()
 {
-    if (m_weapon)
+    if (m_weapon && !m_animationWeapon.isRunning())
     {
         m_animationWeapon.start();
         m_weapon->setIsCollisionCheckOn(true);

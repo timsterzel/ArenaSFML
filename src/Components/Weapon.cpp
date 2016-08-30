@@ -6,6 +6,7 @@
 Weapon::Weapon(RenderLayers layer, const int damage, Textures textureId, const ResourceHolder<sf::Texture, Textures> &textureHolder)
 : Entity(layer)
 , m_damage{ damage }
+, m_damageMultiplicator{ 1.f }
 , m_sprite{ textureHolder.get(textureId) }
 //, m_isAttacking{ false }
 , m_rotationPoint{ 0.f, 0.f }
@@ -25,6 +26,7 @@ Weapon::Weapon(RenderLayers layer, const int damage, Textures textureId, const R
 Weapon::Weapon(RenderLayers layer, const int damage, const sf::Texture &texture, const sf::IntRect &rect)
 : Entity(layer)
 , m_damage{ damage }
+, m_damageMultiplicator{ 1.f }
 , m_sprite{ texture, rect }
 //, m_isAttacking{ false }
 , m_rotationPoint{ 0.f, 0.f }
@@ -45,14 +47,19 @@ Weapon::~Weapon()
     std::cout << "Destructor Weapon" << std::endl;
 }
 
-int Weapon::getDamage() const
+int Weapon::getTotalDamage() const
 {
-    return m_damage;
+    return static_cast<int>(m_damage * m_damageMultiplicator + 0.5);
 }
 
-void Weapon::setDamage(const int damage)
+void Weapon::setStandartDamage(const int damage)
 {
     m_damage = damage;
+}
+
+void Weapon::setDamageMultiplicator(float multiplicator)
+{
+    m_damageMultiplicator = multiplicator;
 }
 
 float Weapon::getSpriteWidth() const

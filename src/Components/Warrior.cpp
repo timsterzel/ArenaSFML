@@ -9,6 +9,8 @@ Warrior::Warrior(RenderLayers layer, const int health, Textures textureId, const
 : Entity(layer)
 , m_maxHealth{ health }
 , m_currentHealth{ health }
+, m_maxStamina{ 100.f }
+, m_currentStamina{ 100.f }
 , m_isMoving{ false }
 , m_sprite{ textureHolder.get(textureId) }
 , m_leftShoe{ nullptr }
@@ -16,6 +18,7 @@ Warrior::Warrior(RenderLayers layer, const int health, Textures textureId, const
 , m_weapon{ nullptr }
 , m_upperBody{ nullptr }
 , m_weaponPos(0.f, 10.f)
+, m_closeAttackStanima{ 10.f }
 , m_animationWeapon( nullptr, false )
 , m_animationLeftShoe{  nullptr ,true }
 , m_animationRightShoe{  nullptr ,true }
@@ -64,6 +67,16 @@ int Warrior::getCurrentHealth() const
 void Warrior::setCurrentHealth(const int health)
 {
     m_currentHealth = health;
+}
+
+float Warrior::getCurrentStanima() const
+{
+    return m_currentStamina;
+}
+
+void Warrior::setCurrentStanima(const float stanima)
+{
+    m_currentStamina = stanima;
 }
 
 void Warrior::setBodyParts(SpriteNode *leftShoe, SpriteNode *rightShoe, SpriteNode *upperBody)
@@ -151,7 +164,6 @@ void Warrior::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) con
 {
     if (m_closeCombatArea)
     {
-        std::cout << "draw closeCombatArea" << std::endl;
         m_closeCombatArea->draw(target, states);
     }
 

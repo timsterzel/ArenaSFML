@@ -9,6 +9,8 @@ class Weapon : public Entity
 {
     protected:
         int m_damage;
+        // The damage multiplicator is multiplied with the standart damage to get the final damage
+        float m_damageMultiplicator;
 
     private:
         sf::Sprite m_sprite;
@@ -19,13 +21,15 @@ class Weapon : public Entity
         // The point on the weapon on which the weapon is connected to the parent, relative to the origin
         sf::Vector2f m_relEquipPoint;
 
+
     public:
         Weapon(RenderLayers layer, const int damage, Textures textureId, const ResourceHolder<sf::Texture, Textures> &textureHolder);
         Weapon(RenderLayers layer, const int damage, const sf::Texture &texture, const sf::IntRect &rect);
         virtual ~Weapon();
 
-        int getDamage() const;
-        void setDamage(const int damage);
+        int getTotalDamage() const;
+        void setStandartDamage(const int damage);
+        void setDamageMultiplicator(float multiplicator);
 
         float getSpriteWidth() const;
         float getSpriteHeight() const;

@@ -299,7 +299,8 @@ void World::handleCollision(float dt)
             // Alternative implementation for future (?): no collision check with parent nodes
             if (warrior->getWeapon() != weapon)
             {
-                warrior->damage(weapon->getDamage());
+                std::cout << "Total Damage: " << weapon->getTotalDamage() << std::endl;
+                warrior->damage(weapon->getTotalDamage());
                 // To prevent multiple damage, turn off collison check
                 weapon->setIsCollisionCheckOn(false);
                 //std::cout << "Rest health: " << warrior->getCurrentHealth() << std::endl;
