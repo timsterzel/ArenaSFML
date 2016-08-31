@@ -79,7 +79,7 @@ void World::buildScene()
     std::unique_ptr<CollisionShape> collisionShapeEnemy(new CollisionCircle(12.f));
     enemy1->setCollisionShape(std::move(collisionShapeEnemy));
     //wizard->setPosition(800 / 2.f + 100.f, 480 / 2.f);
-    enemy1->setPosition(800 / 2.f - 60.f, 480 / 2.f - 10.f);
+    enemy1->setPosition(800 / 2.f - 160.f, 480 / 2.f - 100.f);
     enemy1->setVelocity(60.f);
     enemy1->setType(WorldObjectTypes::ENEMY);
     //enemy1->setActualTarget(m_playerWarrior);
