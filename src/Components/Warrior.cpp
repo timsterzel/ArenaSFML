@@ -12,6 +12,7 @@ Warrior::Warrior(RenderLayers layer, const float health, Textures textureId, con
 , m_maxStamina{ 100.f }
 , m_currentStamina{ 100.f }
 , m_isMoving{ false }
+, m_isBlocking{ false }
 , m_sprite{ textureHolder.get(textureId) }
 , m_leftShoe{ nullptr }
 , m_rightShoe{ nullptr }
@@ -79,6 +80,12 @@ void Warrior::setCurrentStanima(const float stanima)
 {
     m_currentStamina = stanima;
 }
+
+bool Warrior::isBlocking() const
+{
+    return m_isBlocking;
+}
+
 
 void Warrior::setBodyParts(SpriteNode *leftShoe, SpriteNode *rightShoe, SpriteNode *upperBody)
 {

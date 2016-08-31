@@ -8,8 +8,7 @@
 
 class Knight : public Warrior
 {
-    private:
-        bool m_isBlocking;
+
     public:
         Knight(RenderLayers layer, const int health, Textures textureId, const ResourceHolder<sf::Texture, Textures> &textureHolder, const SpriteSheetMapHolder &spriteSheetMapHolder);
 

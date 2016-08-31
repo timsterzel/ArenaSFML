@@ -22,6 +22,7 @@ class Warrior : public Entity
         float m_currentStamina;
         // Used to check if movement animation shout get updated
         bool m_isMoving;
+        bool m_isBlocking;
 
         // Delete m_sprite later
         sf::Sprite m_sprite;
@@ -57,6 +58,8 @@ class Warrior : public Entity
 
         float getCurrentStanima() const;
         void setCurrentStanima(const float stanima);
+
+        bool isBlocking() const;
 
         void setWeapon(Weapon *weapon);
         Weapon* getWeapon() const;

@@ -369,6 +369,7 @@ bool World::matchesCategories(SceneNode::Pair &colliders, WorldObjectTypes type1
 
 void World::render()
 {
+    std::cout << "Players Stamina: " << m_playerWarrior->getCurrentStanima() << std::endl;
     //std::cout << "Render" << std::endl;
     //m_window->clear();
     m_window->draw(m_renderManager);
