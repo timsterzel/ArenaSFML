@@ -5,7 +5,7 @@
 #include <vector>
 
 Warrior::Warrior(RenderLayers layer, const float health, Textures textureId, const ResourceHolder<sf::Texture, Textures> &textureHolder,
-    const SpriteSheetMapHolder &spriteSheetMapHolder)
+    const SpriteSheetMapHolder &spriteSheetMapHolder, std::vector<Warrior*> &possibleTargetsInWord)
 : Entity(layer)
 , m_maxHealth{ health }
 , m_currentHealth{ health }
@@ -26,6 +26,7 @@ Warrior::Warrior(RenderLayers layer, const float health, Textures textureId, con
 , m_closeAttackDamageMul{ 1.0 }
 , m_closeCombatArea{ nullptr }
 , m_isAiActive{ false }
+, m_possibleTargetsInWord{ possibleTargetsInWord }
 , m_actualTarget{ nullptr }
 {
     sf::FloatRect bounds = m_sprite.getLocalBounds();
@@ -133,11 +134,13 @@ void Warrior::setIsAiActive(bool isAiActive)
 {
     m_isAiActive = isAiActive;
 }
-
+/*
 void Warrior::setActualTarget(Warrior *target)
 {
     m_actualTarget = target;
 }
+*/
+
 /*
 int Warrior::getDamage() const
 {
@@ -157,6 +160,7 @@ void Warrior::damage(const float damage)
     {
         m_status = WorldObjectStatus::DESTORYED;
     }
+
 }
 
 void Warrior::heal(const float health)
@@ -246,9 +250,37 @@ void Warrior::updateCurrent(float dt)
 
 }
 
+Warrior* Warrior::determineActualTarget() const
+{
+    if (m_possibleTargetsInWord.size() == 0)
+    {
+        return nullptr;
+    }
+    Warrior* nearestWar = nullptr;
+    // Use very high value, so that the possible warrios are under this value
+    float nearestDist = { 999999.f };
+    for (std::size_t i = { 0 }; i != m_possibleTargetsInWord.size(); i++)
+    {
+        Warrior *warrior = { m_possibleTargetsInWord[i] };
+        sf::Vector2f disVec = { getWorldPosition() - warrior->getWorldPosition() };
+        float distance = Calc::getVec2Length<sf::Vector2f>(disVec);
+        std::cout << "dist: " << distance << std::endl;
+        if (distance < nearestDist && warrior != this)
+        {
+            nearestDist = distance;
+            nearestWar = warrior;
+        }
+        std::cout << "THIS POS X: " << getWorldPosition().x << " Y: " << getWorldPosition().y << std::endl;
+        std::cout << "WARRIOR POS X: " << warrior->getWorldPosition().x << " Y: " << warrior->getWorldPosition().y << std::endl;
+    }
+    std::cout << "Nearest dist: " << nearestDist << std::endl;
+    std::cout << "SIZE: " << m_possibleTargetsInWord.size() << std::endl;
+    return nearestWar;
+}
+
 void Warrior::updateAI(float dt)
 {
-
+    m_actualTarget = determineActualTarget();
 }
 
 void Warrior::onCommandCurrent(const Command &command, float dt)

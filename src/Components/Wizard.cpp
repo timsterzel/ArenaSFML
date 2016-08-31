@@ -2,8 +2,9 @@
 #include <Components/Weapon.hpp>
 #include <iostream>
 
-Wizard::Wizard(RenderLayers layer, const int health, Textures textureId, const ResourceHolder<sf::Texture, Textures> &textureHolder, const SpriteSheetMapHolder &spriteSheetMapHolder)
-: Warrior(layer, health, textureId, textureHolder, spriteSheetMapHolder)
+Wizard::Wizard(RenderLayers layer, const int health, Textures textureId, const ResourceHolder<sf::Texture, Textures> &textureHolder,
+    const SpriteSheetMapHolder &spriteSheetMapHolder, std::vector<Warrior*> &possibleTargetsInWord)
+: Warrior(layer, health, textureId, textureHolder, spriteSheetMapHolder, possibleTargetsInWord)
 {
     std::vector<AnimationStepRotation>  swordRoationSteps;
     swordRoationSteps.push_back({ 0.f, -60.f,  0.5f });

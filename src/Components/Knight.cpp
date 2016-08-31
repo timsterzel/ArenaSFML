@@ -4,8 +4,9 @@
 #include <Collision/CollisionHandler.hpp>
 #include <iostream>
 
-Knight::Knight(RenderLayers layer, const int health, Textures textureId, const ResourceHolder<sf::Texture, Textures> &textureHolder, const SpriteSheetMapHolder &spriteSheetMapHolder)
-: Warrior(layer, health, textureId, textureHolder, spriteSheetMapHolder)
+Knight::Knight(RenderLayers layer, const int health, Textures textureId, const ResourceHolder<sf::Texture, Textures> &textureHolder,
+    const SpriteSheetMapHolder &spriteSheetMapHolder, std::vector<Warrior*> &possibleTargetsInWord)
+: Warrior(layer, health, textureId, textureHolder, spriteSheetMapHolder, possibleTargetsInWord)
 {
     std::vector<AnimationStepRotation>  swordRoationSteps;
     swordRoationSteps.push_back({ 0.f, -60.f,  0.3f });
@@ -87,6 +88,11 @@ void Knight::updateAI(float dt)
 {
     m_isMoving = false;
     Warrior::updateAI(dt);
+    if (!m_actualTarget)
+    {
+        return;
+    }
+
     lookAt(m_actualTarget->getPosition());
     CollisionInfo collisionInfo = m_closeCombatArea->isColliding(*m_actualTarget->getCollisionShape());
     if (collisionInfo.isCollision())
@@ -111,7 +117,7 @@ void Knight::startCloseAttack()
         m_weapon->setIsCollisionCheckOn(true);
         m_weapon->setDamageMultiplicator(m_closeAttackDamageMul);
         removeStanima(m_closeAttackStanima);
-        std::cout << "Current Stanima: " << m_currentStamina << std::endl;
+        //std::cout << "Current Stanima: " << m_currentStamina << std::endl;
     }
 }
 
@@ -120,7 +126,7 @@ void Knight::startBlocking()
     m_animationWeapon.stop();
     std::cout << "startBlocking" << std::endl;
     // Knight can only block with a weapon
-    if (m_weapon)
+    if (m_weapon && !m_isBlocking)
     {
         m_isBlocking = true;
         m_weapon->setRotation(-30.f);

@@ -329,7 +329,7 @@ void SceneNode::removeDestroyed()
 {
     // Get iterator, pointing on the first element which should get erased
     auto destroyBegin = std::remove_if(m_children.begin(), m_children.end(), std::mem_fn(&SceneNode::isMarkedForRemoval));
-    // Remove the SceneNides which are marked for removal
+    // Remove the SceneNodes which are marked for removal
     m_children.erase(destroyBegin, m_children.end());
     // Call this function for the childrens of the current SceneNode
     std::for_each(m_children.begin(), m_children.end(), std::mem_fn(&SceneNode::removeDestroyed));

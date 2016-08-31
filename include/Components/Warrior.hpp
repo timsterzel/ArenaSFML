@@ -45,12 +45,13 @@ class Warrior : public Entity
 
         // Used for AI
         bool m_isAiActive;
-        std::vector<Warrior*> m_warriorsInWord;
+        std::vector<Warrior*> &m_possibleTargetsInWord;
         Warrior *m_actualTarget;
 
 
     public:
-        Warrior(RenderLayers layer, const float health, Textures textureId, const ResourceHolder<sf::Texture, Textures> &textureHolder, const SpriteSheetMapHolder &spriteSheetMapHolder);
+        Warrior(RenderLayers layer, const float health, Textures textureId, const ResourceHolder<sf::Texture, Textures> &textureHolder,
+            const SpriteSheetMapHolder &spriteSheetMapHolder, std::vector<Warrior*> &possibleTargetsInWord);
         virtual ~Warrior();
 
         float getCurrentHealth() const;
@@ -83,6 +84,7 @@ class Warrior : public Entity
         void setBodyParts(SpriteNode *leftShoe, SpriteNode *rightShoe, SpriteNode *upperBody);
 
         virtual void updateCurrent(float dt);
+        virtual Warrior* determineActualTarget() const;
         virtual void updateAI(float dt);
         virtual void onCommandCurrent(const Command &command, float dt);
         void lookAt(sf::Vector2f pos);

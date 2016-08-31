@@ -58,7 +58,7 @@ void World::buildScene()
     */
 
     // Warrior
-    std::unique_ptr<Knight> warrior(new Knight(RenderLayers::MAIN, 100.f, Textures::KNIGHT, m_TextureHolder, m_SpriteSheetMapHolder));
+    std::unique_ptr<Knight> warrior(new Knight(RenderLayers::MAIN, 100.f, Textures::KNIGHT, m_TextureHolder, m_SpriteSheetMapHolder, m_possibleTargetWarriors));
     m_playerWarrior = warrior.get();
     std::unique_ptr<CollisionShape> collisionShapeWarrior(new CollisionCircle(12.f));
     //std::unique_ptr<CollisionShape> collisionShapeWarrior(new CollisionRect({ 32.f, 32.f }));
@@ -70,10 +70,11 @@ void World::buildScene()
     //m_playerWarrior->setBodyParts(playerLeftShoe.get(), playerRightShoe.get(), playerUpperBody.get());
     // Add Parts to player
     //m_playerWarrior->attachChild(std::move(swordPlayer));
+    m_possibleTargetWarriors.push_back(warrior.get());
     m_sceneGraph.attachChild(std::move(warrior));
 
 
-    std::unique_ptr<Warrior> enemy1(new Knight(RenderLayers::MAIN, 100.f, Textures::KNIGHT, m_TextureHolder, m_SpriteSheetMapHolder));
+    std::unique_ptr<Warrior> enemy1(new Knight(RenderLayers::MAIN, 100.f, Textures::KNIGHT, m_TextureHolder, m_SpriteSheetMapHolder, m_possibleTargetWarriors));
     //SceneNode *wizardEnemyTmp = wizard.get();
     std::unique_ptr<CollisionShape> collisionShapeEnemy(new CollisionCircle(12.f));
     enemy1->setCollisionShape(std::move(collisionShapeEnemy));
@@ -81,10 +82,10 @@ void World::buildScene()
     enemy1->setPosition(800 / 2.f - 60.f, 480 / 2.f - 10.f);
     enemy1->setVelocity(60.f);
     enemy1->setType(WorldObjectTypes::ENEMY);
-    enemy1->setActualTarget(m_playerWarrior);
+    //enemy1->setActualTarget(m_playerWarrior);
     enemy1->setIsAiActive(true);
+    m_possibleTargetWarriors.push_back(enemy1.get());
     m_sceneGraph.attachChild(std::move(enemy1));
-
 
 
 
@@ -218,11 +219,13 @@ void World::translateInput(Input input, float dt)
 }
 
 // Tmp (better implemention later)
+/*
 void World::controlWorldEntities()
 {
     // Let Enemy look to player
     m_commandQueue.push({ CommandTypes::LOOK_AT, WorldObjectTypes::ENEMY, m_playerWarrior->getPosition() });
 }
+*/
 
 void World::handleCommands(float dt)
 {
@@ -234,6 +237,11 @@ void World::handleCommands(float dt)
 
 void World::update(float dt)
 {
+    // Get iterator, pointing on the first element which should get erased
+    auto destroyBegin = std::remove_if(m_possibleTargetWarriors.begin(), m_possibleTargetWarriors.end(), std::mem_fn(&Warrior::isMarkedForRemoval));
+    // Remove the Warriors which are marked for removal
+    m_possibleTargetWarriors.erase(destroyBegin, m_possibleTargetWarriors.end());
+
     m_sceneGraph.removeDestroyed();
     m_sceneGraph.update(dt);
 }
@@ -290,21 +298,61 @@ void World::handleCollision(float dt)
             //pairTmp.first->restoreLastTransform();
             //pairTmp.second->restoreLastTransform();
         }
-        else if (matchesCategories(sceneNodes, WorldObjectTypes::WEAPON, WorldObjectTypes::ENEMY))
+        else if (matchesCategories(sceneNodes, WorldObjectTypes::WEAPON, WorldObjectTypes::ENEMY) || matchesCategories(sceneNodes, WorldObjectTypes::WEAPON, WorldObjectTypes::PLAYER))
         {
-            //std::cout << "WEAPON collision" << std::endl;
-            Weapon *weapon = { static_cast<Weapon*>(getSceneNodeOfType(sceneNodes, WorldObjectTypes::WEAPON)) };
-            Warrior *warrior = { static_cast<Warrior*>(getSceneNodeOfType(sceneNodes, WorldObjectTypes::ENEMY)) };
+            std::cout << "WEARPON COL STARRT" << std::endl;
+            Weapon *weapon = { nullptr };
+            Warrior *warrior = { nullptr };
+            if (matchesCategories(sceneNodes, WorldObjectTypes::WEAPON, WorldObjectTypes::ENEMY))
+            {
+                weapon = { static_cast<Weapon*>(getSceneNodeOfType(sceneNodes, WorldObjectTypes::WEAPON)) };
+                warrior = { static_cast<Warrior*>(getSceneNodeOfType(sceneNodes, WorldObjectTypes::ENEMY)) };
+            }
+            else
+            {
+                weapon = { static_cast<Weapon*>(getSceneNodeOfType(sceneNodes, WorldObjectTypes::WEAPON)) };
+                warrior = { static_cast<Warrior*>(getSceneNodeOfType(sceneNodes, WorldObjectTypes::PLAYER)) };
+            }
+            if (weapon)
+            {
+                std::cout << "WEAPON NOT NULL" << std::endl;
+            }
+            else
+            {
+                std::cout << "WEAPON IS NULL" << std::endl;
+            }
+            if (warrior)
+            {
+                std::cout << "WARRIOR NOT NULL" << std::endl;
+            }
+            else
+            {
+                std::cout << "WARRIOR IS NULL" << std::endl;
+            }
             // Only damage warrior if the weapon is not its own
             // Alternative implementation for future (?): no collision check with parent nodes
+
             if (warrior->getWeapon() != weapon)
             {
-                std::cout << "Total Damage: " << weapon->getTotalDamage() << std::endl;
-                warrior->damage(weapon->getTotalDamage());
+
+                std::cout << "WEAPON NOT EQUALS" << std::endl;
+                //std::cout << "Total Damage: " << weapon->getTotalDamage() << std::endl;
+                if (!warrior->isBlocking())
+                {
+                    std::cout << "REMOVE HEALTH" << std::endl;
+                    warrior->damage(weapon->getTotalDamage());
+                    //std::cout << "Rest health: " << warrior->getCurrentHealth() << std::endl;
+                }
+                else
+                {
+                    std::cout << "REMOVE STANIMA" << std::endl;
+                    warrior->removeStanima(weapon->getTotalDamage());
+                }
                 // To prevent multiple damage, turn off collison check
                 weapon->setIsCollisionCheckOn(false);
-                //std::cout << "Rest health: " << warrior->getCurrentHealth() << std::endl;
+
             }
+
         }
         if (m_showCollisionInfo)
         {
@@ -369,7 +417,10 @@ bool World::matchesCategories(SceneNode::Pair &colliders, WorldObjectTypes type1
 
 void World::render()
 {
-    std::cout << "Players Stamina: " << m_playerWarrior->getCurrentStanima() << std::endl;
+    if (m_playerWarrior)
+    {
+        std::cout << "Players Stamina: " << m_playerWarrior->getCurrentStanima() << std::endl;
+    }
     //std::cout << "Render" << std::endl;
     //m_window->clear();
     m_window->draw(m_renderManager);

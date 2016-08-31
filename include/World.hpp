@@ -24,6 +24,8 @@ class World : private sf::NonCopyable
         sf::View m_worldView;
 
         SceneNode m_sceneGraph;
+        // Warriors which fighting
+        std::vector<Warrior*> m_possibleTargetWarriors;
         RenderManager m_renderManager;
         //std::array<SceneNode*, Layers::COUNT> m_sceneLayers;
 
@@ -47,7 +49,7 @@ class World : private sf::NonCopyable
         // Safe the actual position, rotation and scale of the SceneNode
         void safeSceneNodeTrasform();
         void translateInput(Input input, float dt);
-        void controlWorldEntities();
+        //void controlWorldEntities();
         void handleCommands(float dt);
         void update(float dt);
 
