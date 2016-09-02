@@ -278,17 +278,8 @@ void World::handleCollision(float dt)
         {
             resolveEntityCollisions(sceneNodeFirst, sceneNodeSecond, collisionInfo);
         }
-        /*
-        else if (matchesCategories(sceneNodes, WorldObjectTypes::NONE, WorldObjectTypes::PLAYER))
-        {
-            resolveEntityCollisions(sceneNodeFirst, sceneNodeSecond, collisionInfo);
-            //pairTmp.first->restoreLastTransform();
-            //pairTmp.second->restoreLastTransform();
-        }
-        */
         else if (matchesCategories(sceneNodes, WorldObjectTypes::WEAPON, WorldObjectTypes::WARRIOR))
         {
-            std::cout << "WEARPON COL STARRT" << std::endl;
             Weapon *weapon = { static_cast<Weapon*>(getSceneNodeOfType(sceneNodes, WorldObjectTypes::WEAPON)) };
             Warrior *warrior = { static_cast<Warrior*>(getSceneNodeOfType(sceneNodes, WorldObjectTypes::WARRIOR)) };
 
