@@ -56,7 +56,7 @@ void Knight::onCommandCurrent(const Command &command, float dt)
     // Do command handling of parent class
     //Entity::onCommand(command, dt);
     Warrior::onCommandCurrent(command, dt);
-    if (command.getWorldObjectType() == m_type)
+    if (command.getWorldObjectType() & m_type)
     {
         m_currentVelocity = 0.f;
         m_currentDirection.x = 0.f;

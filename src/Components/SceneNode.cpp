@@ -182,12 +182,12 @@ float SceneNode::getWorldRotation() const
     return rotation;
 }
 
-WorldObjectTypes SceneNode::getType() const
+unsigned int SceneNode::getType() const
 {
     return m_type;
 }
 
-void SceneNode::setType(WorldObjectTypes type)
+void SceneNode::setType(unsigned int type)
 {
     m_type = type;
 }

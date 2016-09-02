@@ -58,7 +58,7 @@ class World : private sf::NonCopyable
         void render();
     private:
         SceneNode* getSceneNodeOfType(SceneNode::Pair sceneNodePair, WorldObjectTypes type);
-        bool matchesCategories(SceneNode::Pair &colliders, WorldObjectTypes type1, WorldObjectTypes type2);
+        bool matchesCategories(SceneNode::Pair &colliders, unsigned int type1, unsigned int type2);
         void resolveEntityCollisions(SceneNode *sceneNodeFirst, SceneNode *sceneNodeSecond, CollisionInfo &collisionInfo);
 };
 

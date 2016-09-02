@@ -1,14 +1,15 @@
 #ifndef ENUMWORLDOBJECTTYPE_HPP
 #define ENUMWORLDOBJECTTYPE_HPP
 
-enum class WorldObjectTypes
+enum WorldObjectTypes
 {
-    NONE,
-    PLAYER,
-    ENEMY,
+    NONE = 0,
+    PLAYER = 1 << 1,
+    ENEMY = 1 << 2,
+    WARRIOR = 1 << 3,
+    WEAPON = 1 << 4,
     // TMP
-    PLAYER_TWO,
-    WEAPON
+    PLAYER_TWO = 1 << 5
 };
 
 #endif // ENUMWORLDOBJECTTYPE

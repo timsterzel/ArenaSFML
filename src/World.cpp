@@ -65,7 +65,7 @@ void World::buildScene()
     m_playerWarrior->setCollisionShape(std::move(collisionShapeWarrior));
     m_playerWarrior->setPosition(800 / 2.f, 480 / 2.f);
     m_playerWarrior->setVelocity(60.f);
-    m_playerWarrior->setType(WorldObjectTypes::PLAYER);
+    m_playerWarrior->setType(WorldObjectTypes::PLAYER | WorldObjectTypes::WARRIOR);
     //m_playerWarrior->setWeapon(swordPlayer.get());
     //m_playerWarrior->setBodyParts(playerLeftShoe.get(), playerRightShoe.get(), playerUpperBody.get());
     // Add Parts to player
@@ -81,7 +81,7 @@ void World::buildScene()
     //wizard->setPosition(800 / 2.f + 100.f, 480 / 2.f);
     enemy1->setPosition(800 / 2.f - 160.f, 480 / 2.f - 100.f);
     enemy1->setVelocity(60.f);
-    enemy1->setType(WorldObjectTypes::ENEMY);
+    enemy1->setType(WorldObjectTypes::ENEMY | WorldObjectTypes::WARRIOR);
     //enemy1->setActualTarget(m_playerWarrior);
     enemy1->setIsAiActive(true);
     m_possibleTargetWarriors.push_back(enemy1.get());
@@ -274,89 +274,43 @@ void World::handleCollision(float dt)
         SceneNode *sceneNodeFirst = { collisionInfo.getCollidedFirst() };
         SceneNode *sceneNodeSecond = { collisionInfo.getCollidedSecond() };
         SceneNode::Pair sceneNodes = { collisionInfo.getCollidedFirst(), collisionInfo.getCollidedSecond() };
-        if (matchesCategories(sceneNodes, WorldObjectTypes::PLAYER, WorldObjectTypes::ENEMY))
+        if (matchesCategories(sceneNodes, WorldObjectTypes::WARRIOR, WorldObjectTypes::WARRIOR))
         {
             resolveEntityCollisions(sceneNodeFirst, sceneNodeSecond, collisionInfo);
         }
-        else if (matchesCategories(sceneNodes, WorldObjectTypes::ENEMY, WorldObjectTypes::ENEMY))
-        {
-            resolveEntityCollisions(sceneNodeFirst, sceneNodeSecond, collisionInfo);
-        }
-        else if (matchesCategories(sceneNodes, WorldObjectTypes::PLAYER, WorldObjectTypes::PLAYER_TWO))
-        {
-            resolveEntityCollisions(sceneNodeFirst, sceneNodeSecond, collisionInfo);
-        }
-        else if (matchesCategories(sceneNodes, WorldObjectTypes::ENEMY, WorldObjectTypes::PLAYER_TWO))
-        {
-            resolveEntityCollisions(sceneNodeFirst, sceneNodeSecond, collisionInfo);
-            //pairTmp.first->restoreLastTransform();
-            //pairTmp.second->restoreLastTransform();
-        }
+        /*
         else if (matchesCategories(sceneNodes, WorldObjectTypes::NONE, WorldObjectTypes::PLAYER))
         {
             resolveEntityCollisions(sceneNodeFirst, sceneNodeSecond, collisionInfo);
             //pairTmp.first->restoreLastTransform();
             //pairTmp.second->restoreLastTransform();
         }
-        else if (matchesCategories(sceneNodes, WorldObjectTypes::WEAPON, WorldObjectTypes::ENEMY) || matchesCategories(sceneNodes, WorldObjectTypes::WEAPON, WorldObjectTypes::PLAYER))
+        */
+        else if (matchesCategories(sceneNodes, WorldObjectTypes::WEAPON, WorldObjectTypes::WARRIOR))
         {
             std::cout << "WEARPON COL STARRT" << std::endl;
-            Weapon *weapon = { nullptr };
-            Warrior *warrior = { nullptr };
-            if (matchesCategories(sceneNodes, WorldObjectTypes::WEAPON, WorldObjectTypes::ENEMY))
-            {
-                weapon = { static_cast<Weapon*>(getSceneNodeOfType(sceneNodes, WorldObjectTypes::WEAPON)) };
-                warrior = { static_cast<Warrior*>(getSceneNodeOfType(sceneNodes, WorldObjectTypes::ENEMY)) };
-            }
-            else
-            {
-                weapon = { static_cast<Weapon*>(getSceneNodeOfType(sceneNodes, WorldObjectTypes::WEAPON)) };
-                warrior = { static_cast<Warrior*>(getSceneNodeOfType(sceneNodes, WorldObjectTypes::PLAYER)) };
-            }
-            if (weapon)
-            {
-                std::cout << "WEAPON NOT NULL" << std::endl;
-            }
-            else
-            {
-                std::cout << "WEAPON IS NULL" << std::endl;
-            }
-            if (warrior)
-            {
-                std::cout << "WARRIOR NOT NULL" << std::endl;
-            }
-            else
-            {
-                std::cout << "WARRIOR IS NULL" << std::endl;
-            }
+            Weapon *weapon = { static_cast<Weapon*>(getSceneNodeOfType(sceneNodes, WorldObjectTypes::WEAPON)) };
+            Warrior *warrior = { static_cast<Warrior*>(getSceneNodeOfType(sceneNodes, WorldObjectTypes::WARRIOR)) };
+
             // Only damage warrior if the weapon is not its own
             // Alternative implementation for future (?): no collision check with parent nodes
-
             if (warrior->getWeapon() != weapon)
             {
-
-                std::cout << "WEAPON NOT EQUALS" << std::endl;
-                //std::cout << "Total Damage: " << weapon->getTotalDamage() << std::endl;
                 if (!warrior->isBlocking())
                 {
-                    std::cout << "REMOVE HEALTH" << std::endl;
                     warrior->damage(weapon->getTotalDamage());
-                    //std::cout << "Rest health: " << warrior->getCurrentHealth() << std::endl;
                 }
                 else
                 {
-                    std::cout << "REMOVE STANIMA" << std::endl;
                     warrior->removeStanima(weapon->getTotalDamage());
                 }
                 // To prevent multiple damage, turn off collison check
                 weapon->setIsCollisionCheckOn(false);
-
             }
-
         }
         if (m_showCollisionInfo)
         {
-            std::cout << "Collision: " << colCnt++ << std::endl;
+            //std::cout << "Collision: " << colCnt++ << std::endl;
         }
 
     }
@@ -386,28 +340,28 @@ SceneNode* World::getSceneNodeOfType(SceneNode::Pair sceneNodePair, WorldObjectT
 {
     SceneNode *sceneNodeOne = sceneNodePair.first;
     SceneNode *sceneNodeTwo = sceneNodePair.second;
-    if (sceneNodeOne->getType() == type)
+    if (sceneNodeOne->getType() & type)
     {
         return sceneNodeOne;
     }
-    else if (sceneNodeTwo->getType() == type)
+    else if (sceneNodeTwo->getType() & type)
     {
         return sceneNodeTwo;
     }
     return nullptr;
 }
 
-bool World::matchesCategories(SceneNode::Pair &colliders, WorldObjectTypes type1, WorldObjectTypes type2)
+bool World::matchesCategories(SceneNode::Pair &colliders, unsigned int type1, unsigned int type2)
 {
-    WorldObjectTypes category1 = colliders.first->getType();
-    WorldObjectTypes category2 = colliders.second->getType();
+    unsigned int category1 = colliders.first->getType();
+    unsigned int category2 = colliders.second->getType();
 
     //std::cout << "Cat1: " << category1 << " Cat2: " << category2 << " Type1: " << type1 << " Type2: " << type2 << std::endl;
-    if (type1 == category1 && type2 == category2)
+    if (type1 & category1 && type2 & category2)
     {
         return true;
     }
-    else if (type1 == category2 && type2 == category1)
+    else if (type1 & category2 && type2 & category1)
     {
         std::swap(colliders.first, colliders.second);
         return true;

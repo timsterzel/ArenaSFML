@@ -28,7 +28,7 @@ class SceneNode : public sf::Transformable, /*public sf::Drawable,*/ public sf::
         SceneNode *m_parent;
     protected:
         std::unique_ptr<CollisionShape> m_collisionShape;
-        WorldObjectTypes m_type;
+        unsigned int m_type;
         WorldObjectStatus m_status;
         // When a SceneNode is active it can move or rotate.
         // If it is only passive, so it dont move, rotate etc things can possibly collide with it (If it have a collision shape),
@@ -63,8 +63,8 @@ class SceneNode : public sf::Transformable, /*public sf::Drawable,*/ public sf::
         // Get absolute rotation in world
         float getWorldRotation() const;
 
-        WorldObjectTypes getType() const;
-        void setType(WorldObjectTypes type);
+        unsigned int getType() const;
+        void setType(unsigned int type);
 
         WorldObjectStatus getStatus() const;
         void setStatus(WorldObjectStatus status);
