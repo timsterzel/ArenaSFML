@@ -242,8 +242,27 @@ void World::update(float dt)
     // Remove the Warriors which are marked for removal
     m_possibleTargetWarriors.erase(destroyBegin, m_possibleTargetWarriors.end());
 
+    // If player is not still in game we have to make the player pointer nullptr
+    if (!isStillPlayerIsInGame())
+    {
+        m_playerWarrior = nullptr;
+    }
+
     m_sceneGraph.removeDestroyed();
     m_sceneGraph.update(dt);
+}
+
+bool World::isStillPlayerIsInGame()
+{
+    // Check if player is still in container
+    for (Warrior *warrior : m_possibleTargetWarriors)
+    {
+        if (warrior->getType() & WorldObjectTypes::PLAYER)
+        {
+            return true;
+        }
+    }
+    return false;
 }
 
 void World::resolveEntityCollisions(SceneNode *sceneNodeFirst, SceneNode *sceneNodeSecond, CollisionInfo &collisionInfo)
@@ -365,6 +384,10 @@ void World::render()
     if (m_playerWarrior)
     {
         std::cout << "Players Stamina: " << m_playerWarrior->getCurrentStanima() << std::endl;
+    }
+    else
+    {
+        std::cout << "Players is null" << std::endl;
     }
     //std::cout << "Render" << std::endl;
     //m_window->clear();

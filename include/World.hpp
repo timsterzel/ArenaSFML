@@ -60,6 +60,8 @@ class World : private sf::NonCopyable
         SceneNode* getSceneNodeOfType(SceneNode::Pair sceneNodePair, WorldObjectTypes type);
         bool matchesCategories(SceneNode::Pair &colliders, unsigned int type1, unsigned int type2);
         void resolveEntityCollisions(SceneNode *sceneNodeFirst, SceneNode *sceneNodeSecond, CollisionInfo &collisionInfo);
+        // Check if the player is still in game
+        bool isStillPlayerIsInGame();
 };
 
 #endif // WORLD_HPP
