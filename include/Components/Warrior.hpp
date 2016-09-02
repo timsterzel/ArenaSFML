@@ -20,6 +20,8 @@ class Warrior : public Entity
 
         float m_maxStamina;
         float m_currentStamina;
+        // The rate whith the stanima automatic fill up
+        float m_stanimaRefreshRate;
         // Used to check if movement animation shout get updated
         bool m_isMoving;
         bool m_isBlocking;

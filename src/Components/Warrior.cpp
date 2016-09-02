@@ -11,6 +11,7 @@ Warrior::Warrior(RenderLayers layer, const float health, Textures textureId, con
 , m_currentHealth{ health }
 , m_maxStamina{ 100.f }
 , m_currentStamina{ 100.f }
+, m_stanimaRefreshRate{ 5.f }
 , m_isMoving{ false }
 , m_isBlocking{ false }
 , m_sprite{ textureHolder.get(textureId) }
@@ -218,6 +219,8 @@ void Warrior::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) con
 
 void Warrior::updateCurrent(float dt)
 {
+    // Automatic fill up Stanima with the given rate
+    addStanima(m_stanimaRefreshRate * dt);
     if (m_isAiActive)
     {
         updateAI(dt);
