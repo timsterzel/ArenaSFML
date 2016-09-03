@@ -9,6 +9,7 @@
 
 enum class InputTypes
 {
+    WINDOW_RESIZED,
     CURSOR_POS,
     TRANSLATED_CURSOR_POS,
     LEFT,

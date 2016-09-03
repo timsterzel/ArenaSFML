@@ -1,13 +1,15 @@
 #include "Game.hpp"
 #include <iostream>
 #include <memory>
-
+#include <cmath>
 
 Game::Game(const bool showStats, const bool isInDebug)
 : m_screenHeight{ 1024 }
 , m_screenWidth{ 768 }
 , m_showStats{ showStats }
 , m_isInDebug{ isInDebug }
+, m_referenceWorldWidth{ 800 }
+, m_referenceWorldHeight{ 480 }
 , m_window{ sf::VideoMode{ m_screenHeight, m_screenWidth} , "ArenaSFML" }
 , m_isRunning{ true }
 , m_renderManager{ &m_sceneGraph }
@@ -18,10 +20,23 @@ Game::Game(const bool showStats, const bool isInDebug)
 , m_world{ isInDebug, &m_window, m_fontHolder, m_textureHolder, m_spriteSheetMapHolder }
 {
     m_window.setFramerateLimit(60);
+    adjustShownWorldToWindowSize(m_window.getSize().x, m_window.getSize().y);
     loadFonts();
     loadTextures();
     buildScene();
     m_world.buildScene();
+}
+
+void Game::adjustShownWorldToWindowSize(unsigned int windowWidth, unsigned int windowHeight)
+{
+    float scaleWidth = static_cast<float>(m_referenceWorldWidth) / static_cast<float>(windowWidth);
+    float scaleHeight = static_cast<float>(m_referenceWorldHeight) / static_cast<float>(windowHeight);
+    // We have to choose one scale so the shown area from game is approximately the same (depending on the aspect ratio), but without distort
+    // the drawn world.
+    float scale = std::min(scaleWidth, scaleHeight);
+    sf::FloatRect visibleArea(0, 0, windowWidth * scale, windowHeight * scale);
+    sf::View view(visibleArea);
+    m_window.setView(view);
 }
 
 void Game::loadFonts()
@@ -80,6 +95,9 @@ void Game::handleInput()
         {
             switch (input.getInputType())
             {
+                case InputTypes::WINDOW_RESIZED :
+                    adjustShownWorldToWindowSize(m_window.getSize().x, m_window.getSize().y);
+                    break;
                 case InputTypes::D1 :
 
                     break;
@@ -115,7 +133,6 @@ void Game::update()
 
 void Game::render()
 {
-    //std::cout << "Render" << std::endl;
     m_window.clear();
     m_window.draw(m_renderManager);
     m_world.render();

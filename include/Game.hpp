@@ -26,6 +26,10 @@ class Game
         unsigned int m_screenWidth;
         bool m_showStats;
         bool m_isInDebug;
+        // The area of the world which should be shown in the window
+        // Is used to resize the view correctly depending on the window size.
+        unsigned int m_referenceWorldWidth;
+        unsigned int m_referenceWorldHeight;
 
         sf::RenderWindow m_window;
         sf::Font m_fontDefault;
@@ -52,6 +56,7 @@ class Game
         World m_world;
 
     private:
+        void adjustShownWorldToWindowSize(unsigned int windowWidth, unsigned int windowHeight);
         void loadFonts();
         void loadTextures();
         void buildScene();

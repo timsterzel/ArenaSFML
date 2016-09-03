@@ -28,23 +28,7 @@ void InputHandler::handleEvents(QueueHelper<Input> &inputQueue)
         }
         else if (event.type == sf::Event::Resized)
         {
-            // The default width of the shown area
-            unsigned int defaultWidth = 800;
-            unsigned int defaultHeight = 480;
-
-            unsigned int widthNew = { event.size.width };
-            unsigned int heightNew = { event.size.height };
-
-            float scaleWidth = static_cast<float>(defaultWidth) / static_cast<float>(widthNew);
-            float scaleHeight = static_cast<float>(defaultHeight) / static_cast<float>(heightNew);
-            // We have to choose one scale so the shown area from game is approximately the same, but without distort
-            // the drawn world.
-            float scale = std::min(scaleWidth, scaleHeight);
-            sf::FloatRect visibleArea(0, 0, widthNew * scale, heightNew * scale);
-            sf::View view(visibleArea);
-            //view.zoom(scale);
-            m_window->setView(view);
-
+            inputQueue.push({ InputTypes::WINDOW_RESIZED });
         }
         else if (event.type == sf::Event::LostFocus)
         {
