@@ -30,7 +30,10 @@ void InputHandler::handleEvents(QueueHelper<Input> &inputQueue)
         {
             // update the view to the new size of the window
             sf::FloatRect visibleArea(0, 0, event.size.width, event.size.height);
-            m_window->setView(sf::View(visibleArea));
+            sf::View view(visibleArea);
+            //view.zoom(0.5f);
+            m_window->setView(view);
+
         }
         else if (event.type == sf::Event::LostFocus)
         {
