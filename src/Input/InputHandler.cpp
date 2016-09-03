@@ -76,9 +76,12 @@ void InputHandler::handleEvents(QueueHelper<Input> &inputQueue)
 
 void InputHandler::handleRealTimeInput(QueueHelper<Input> &inputQueue)
 {
-    const sf::Vector2i CurrentMousePos = { sf::Mouse::getPosition(*m_window) };
+    // Get the current mouse pos at the window
+    const sf::Vector2i CurrentMousePosPixel = { sf::Mouse::getPosition(*m_window) };
+    // Convert the current window mouse pos to the world coordinates
+    const sf::Vector2f CurrentMousePosWorld = { m_window->mapPixelToCoords(CurrentMousePosPixel) };
 
-    inputQueue.push({ InputTypes::CURSOR_POS, static_cast<sf::Vector2f>(CurrentMousePos) });
+    inputQueue.push({ InputTypes::CURSOR_POS, CurrentMousePosWorld });
     /*
     if (CurrentMousePos != m_lastMousePos)
     {
@@ -147,8 +150,8 @@ void InputHandler::handleRealTimeInput(QueueHelper<Input> &inputQueue)
     }
     handleRealTimeRightClick(inputQueue);
 
-    m_lastMousePos.x = CurrentMousePos.x;
-    m_lastMousePos.y = CurrentMousePos.y;
+    m_lastMousePos.x = CurrentMousePosPixel.x;
+    m_lastMousePos.y = CurrentMousePosPixel.y;
 }
 
 void InputHandler::handleRealTimeRightClick(QueueHelper<Input> &inputQueue)
