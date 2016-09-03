@@ -4,8 +4,8 @@
 
 
 Game::Game(const bool showStats, const bool isInDebug)
-: m_screenHeight{ 800 }
-, m_screenWidth{ 480 }
+: m_screenHeight{ 1024 }
+, m_screenWidth{ 768 }
 , m_showStats{ showStats }
 , m_isInDebug{ isInDebug }
 , m_window{ sf::VideoMode{ m_screenHeight, m_screenWidth} , "ArenaSFML" }

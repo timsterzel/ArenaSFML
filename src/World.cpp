@@ -20,7 +20,7 @@ const ResourceHolder<sf::Texture, Textures> &TextureHolder, const SpriteSheetMap
 , m_TextureHolder{ TextureHolder }
 , m_SpriteSheetMapHolder{ spriteSheetMapHolder }
 //, m_inputQueue{inputQueue}
-, m_worldBounds{ 0.f, 0.f, 800.f, 480.f }
+, m_worldBounds{ 0.f, 0.f, 6000.f, 6000.f }
 , m_playerWarrior{ nullptr }
 {
 
@@ -83,7 +83,7 @@ void World::buildScene()
     enemy1->setVelocity(60.f);
     enemy1->setType(WorldObjectTypes::ENEMY | WorldObjectTypes::WARRIOR);
     //enemy1->setActualTarget(m_playerWarrior);
-    enemy1->setIsAiActive(true);
+    enemy1->setIsAiActive(false);
     m_possibleTargetWarriors.push_back(enemy1.get());
     m_sceneGraph.attachChild(std::move(enemy1));
 
