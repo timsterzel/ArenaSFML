@@ -28,7 +28,9 @@ void InputHandler::handleEvents(QueueHelper<Input> &inputQueue)
         }
         else if (event.type == sf::Event::Resized)
         {
-            // Do nothing at the moment
+            // update the view to the new size of the window
+            sf::FloatRect visibleArea(0, 0, event.size.width, event.size.height);
+            m_window->setView(sf::View(visibleArea));
         }
         else if (event.type == sf::Event::LostFocus)
         {
