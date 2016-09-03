@@ -10,6 +10,8 @@
 enum class InputTypes
 {
     WINDOW_RESIZED,
+    LOST_FOCUS,
+    GAINED_FOCUS,
     CURSOR_POS,
     TRANSLATED_CURSOR_POS,
     LEFT,

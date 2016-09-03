@@ -12,6 +12,7 @@ Game::Game(const bool showStats, const bool isInDebug)
 , m_referenceWorldHeight{ 480 }
 , m_window{ sf::VideoMode{ m_screenHeight, m_screenWidth} , "ArenaSFML" }
 , m_isRunning{ true }
+, m_isPaused{ false }
 , m_renderManager{ &m_sceneGraph }
 , m_dt{ 0 }
 , m_fps{ 0 }
@@ -91,13 +92,26 @@ void Game::handleInput()
     while(!m_inputQueue.isEmpty())
     {
         Input input = m_inputQueue.pop();
+        switch (input.getInputType())
+        {
+            case InputTypes::WINDOW_RESIZED :
+                adjustShownWorldToWindowSize(m_window.getSize().x, m_window.getSize().y);
+                break;
+            case InputTypes::LOST_FOCUS :
+                m_isPaused = true;
+                std::cout << "Lost Focus" << std::endl;
+                break;
+            case InputTypes::GAINED_FOCUS :
+                m_isPaused = false;
+                std::cout << "Gained Focus" << std::endl;
+                break;
+            default:
+                break;
+        }
         if (m_isInDebug)
         {
             switch (input.getInputType())
             {
-                case InputTypes::WINDOW_RESIZED :
-                    adjustShownWorldToWindowSize(m_window.getSize().x, m_window.getSize().y);
-                    break;
                 case InputTypes::D1 :
 
                     break;
@@ -115,20 +129,26 @@ void Game::handleInput()
                     break;
             }
         }
-        // Let world class translate the input to commands
-        m_world.translateInput(input, m_dt);
+        // Let world class translate the input to commands, bit only when the game is not paused
+        if (!m_isPaused)
+        {
+            m_world.translateInput(input, m_dt);
+        }
     }
 }
 
 void Game::update()
 {
-    m_world.safeSceneNodeTrasform();
-    //m_world.controlWorldEntities();
-    m_world.handleCommands(m_dt);
-    m_world.update(m_dt);
-    m_world.handleCollision(m_dt);
-    m_sceneGraph.removeDestroyed();
-    m_sceneGraph.update(m_dt);
+    if (!m_isPaused)
+    {
+        m_world.safeSceneNodeTrasform();
+        //m_world.controlWorldEntities();
+        m_world.handleCommands(m_dt);
+        m_world.update(m_dt);
+        m_world.handleCollision(m_dt);
+        m_sceneGraph.removeDestroyed();
+        m_sceneGraph.update(m_dt);
+    }
 }
 
 void Game::render()

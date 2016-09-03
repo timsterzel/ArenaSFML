@@ -32,11 +32,11 @@ void InputHandler::handleEvents(QueueHelper<Input> &inputQueue)
         }
         else if (event.type == sf::Event::LostFocus)
         {
-            // Do nothing at the moment
+            inputQueue.push({ InputTypes::LOST_FOCUS });
         }
         else if (event.type == sf::Event::GainedFocus)
         {
-            // Do nothing at the moment
+            inputQueue.push({ InputTypes::GAINED_FOCUS });
         }
         else if (event.type == sf::Event::KeyPressed)
         {

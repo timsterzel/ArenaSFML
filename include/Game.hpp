@@ -36,6 +36,7 @@ class Game
         sf::Text m_txtStatFPS;
 
         bool m_isRunning;
+        bool m_isPaused;
 
         SceneNode m_sceneGraph;
         RenderManager m_renderManager;
