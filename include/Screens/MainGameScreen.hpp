@@ -31,8 +31,10 @@ class MainGameScreen : public Screen
         long colCnt = 0;
 
     public:
-        MainGameScreen(const bool isInDebug, sf::RenderWindow *window, const ResourceHolder<sf::Font, Fonts> &fontHolder,
+        MainGameScreen(const bool isInDebug, Game *game, sf::RenderWindow *window, const ResourceHolder<sf::Font, Fonts> &fontHolder,
                 const ResourceHolder<sf::Texture, Textures> &textureHolder, const SpriteSheetMapHolder &spriteSheetMapHolder);
+
+        virtual ~MainGameScreen();
 
         virtual void buildScene();
         // Safe the actual position, rotation and scale of the SceneNode

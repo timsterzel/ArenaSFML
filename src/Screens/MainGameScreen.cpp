@@ -9,12 +9,17 @@
 #include "Calc.hpp"
 #include <memory>
 
-MainGameScreen::MainGameScreen(const bool isInDebug, sf::RenderWindow *window, const ResourceHolder<sf::Font, Fonts> &FontHolder,
+MainGameScreen::MainGameScreen(const bool isInDebug, Game *game, sf::RenderWindow *window, const ResourceHolder<sf::Font, Fonts> &FontHolder,
 const ResourceHolder<sf::Texture, Textures> &TextureHolder, const SpriteSheetMapHolder &spriteSheetMapHolder)
-: Screen(isInDebug, window, FontHolder, TextureHolder, spriteSheetMapHolder)
+: Screen(isInDebug, game, window, FontHolder, TextureHolder, spriteSheetMapHolder)
 , m_showCollisionInfo{ false }
 , m_worldBounds{ 0.f, 0.f, 6000.f, 6000.f }
 , m_playerWarrior{ nullptr }
+{
+
+}
+
+MainGameScreen::~MainGameScreen()
 {
 
 }

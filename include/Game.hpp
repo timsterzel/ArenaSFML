@@ -14,9 +14,11 @@
 #include "Resources/ResourceHolder.hpp"
 #include "Resources/EnumResourceIdentifiers.hpp"
 #include "Resources/SpriteSheetMapHolder.hpp"
-#include "Screens/Screen.hpp"
 
 typedef std::chrono::high_resolution_clock CLOCK;
+
+class Screen;
+
 
 class Game
 {
@@ -71,6 +73,7 @@ class Game
 
     public:
         Game(const bool showStats, const bool isInDebug);
+        ~Game();
         void run();
 };
 

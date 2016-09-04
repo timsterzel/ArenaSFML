@@ -1,5 +1,6 @@
 #include "Game.hpp"
-#include <Screens/MainGameScreen.hpp>
+#include "Screens/Screen.hpp"
+#include "Screens/MainGameScreen.hpp"
 #include <iostream>
 #include <memory>
 #include <cmath>
@@ -19,8 +20,10 @@ Game::Game(const bool showStats, const bool isInDebug)
 , m_fps{ 0 }
 , m_timePoint1{ CLOCK::now() }
 , m_inputHandler{ &m_window }
-, m_actualScreen{ std::make_unique<MainGameScreen>(isInDebug, &m_window, m_fontHolder, m_textureHolder, m_spriteSheetMapHolder) }
+, m_actualScreen{ std::make_unique<MainGameScreen>(isInDebug, this, &m_window, m_fontHolder, m_textureHolder, m_spriteSheetMapHolder) }
 {
+    //std::unique_ptr<Screen> actualScreen = { std::make_unique<MainGameScreen>(isInDebug, this, &m_window, m_fontHolder, m_textureHolder, m_spriteSheetMapHolder) };
+    //m_actualScreen = std::move(actualScreen);
     m_window.setFramerateLimit(60);
     adjustShownWorldToWindowSize(m_window.getSize().x, m_window.getSize().y);
     loadFonts();
@@ -28,6 +31,11 @@ Game::Game(const bool showStats, const bool isInDebug)
     buildScene();
     //m_world.buildScene();
     m_actualScreen->buildScene();
+
+}
+
+Game::~Game()
+{
 
 }
 

@@ -14,11 +14,14 @@
 #include "Input/Input.hpp"
 #include "Input/Command.hpp"
 
+class Game;
+
 class Screen : private sf::NonCopyable
 {
     protected:
         bool m_isInDebug;
 
+        Game *m_game;
         sf::RenderWindow *m_window;
 
         SceneNode m_sceneGraph;
@@ -32,8 +35,10 @@ class Screen : private sf::NonCopyable
         //QueueHelper<Command> m_commandQueue;
 
     public:
-        Screen(const bool isInDebug, sf::RenderWindow *window, const ResourceHolder<sf::Font, Fonts> &fontHolder,
+        Screen(const bool isInDebug, Game *game, sf::RenderWindow *window, const ResourceHolder<sf::Font, Fonts> &fontHolder,
                 const ResourceHolder<sf::Texture, Textures> &textureHolder, const SpriteSheetMapHolder &spriteSheetMapHolder);
+
+        virtual ~Screen();
 
         virtual void buildScene();
 
