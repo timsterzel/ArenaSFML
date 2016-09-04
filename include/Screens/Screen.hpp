@@ -20,7 +20,6 @@ class Screen : private sf::NonCopyable
         bool m_isInDebug;
 
         sf::RenderWindow *m_window;
-        sf::View m_worldView;
 
         SceneNode m_sceneGraph;
         RenderManager m_renderManager;

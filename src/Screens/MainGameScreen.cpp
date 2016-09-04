@@ -1,4 +1,4 @@
-#include "World.hpp"
+#include "Screens/MainGameScreen.hpp"
 #include "Collision/CollisionShape.hpp"
 #include "Collision/CollisionCircle.hpp"
 #include "Collision/CollisionRect.hpp"
@@ -9,24 +9,19 @@
 #include "Calc.hpp"
 #include <memory>
 
-World::World(const bool isInDebug, sf::RenderWindow *window, const ResourceHolder<sf::Font, Fonts> &FontHolder,
+MainGameScreen::MainGameScreen(const bool isInDebug, sf::RenderWindow *window, const ResourceHolder<sf::Font, Fonts> &FontHolder,
 const ResourceHolder<sf::Texture, Textures> &TextureHolder, const SpriteSheetMapHolder &spriteSheetMapHolder)
-: m_isInDebug { isInDebug }
+: Screen(isInDebug, window, FontHolder, TextureHolder, spriteSheetMapHolder)
 , m_showCollisionInfo{ false }
-, m_window{ window }
-, m_renderManager{ &m_sceneGraph }
-, m_FontHolder{ FontHolder }
-, m_TextureHolder{ TextureHolder }
-, m_SpriteSheetMapHolder{ spriteSheetMapHolder }
 , m_worldBounds{ 0.f, 0.f, 6000.f, 6000.f }
 , m_playerWarrior{ nullptr }
 {
 
 }
 
-void World::buildScene()
+void MainGameScreen::buildScene()
 {
-    std::cout << "World::buildScene" << std::endl;
+    std::cout << "MainGameScreen::buildScene" << std::endl;
     /*
     for (std::size_t i = { 0 }; i < Layers::COUNT; i++)
     {
@@ -98,15 +93,15 @@ void World::buildScene()
     }
     */
     //m_playerWarrior->getCollisionShape()->isColliding(*warriorEnemyTmp->getCollisionShape());
-    std::cout << "World::buildScene End" << std::endl;
+    std::cout << "MainGameScreen::buildScene End" << std::endl;
 }
 
-void World::safeSceneNodeTrasform()
+void MainGameScreen::safeSceneNodeTrasform()
 {
     m_sceneGraph.safeTransform();
 }
 
-void World::translateInput(Input input, float dt)
+void MainGameScreen::translateInput(Input input, float dt)
 {
     switch (input.getInputType())
     {
@@ -225,7 +220,7 @@ void World::controlWorldEntities()
 }
 */
 
-void World::handleCommands(float dt)
+void MainGameScreen::handleCommands(float dt)
 {
     while(!m_commandQueue.isEmpty())
     {
@@ -233,7 +228,7 @@ void World::handleCommands(float dt)
     }
 }
 
-void World::update(float dt)
+void MainGameScreen::update(float dt)
 {
     // Get iterator, pointing on the first element which should get erased
     auto destroyBegin = std::remove_if(m_possibleTargetWarriors.begin(), m_possibleTargetWarriors.end(), std::mem_fn(&Warrior::isMarkedForRemoval));
@@ -250,7 +245,7 @@ void World::update(float dt)
     m_sceneGraph.update(dt);
 }
 
-bool World::isStillPlayerIsInGame()
+bool MainGameScreen::isStillPlayerIsInGame()
 {
     // Check if player is still in container
     for (Warrior *warrior : m_possibleTargetWarriors)
@@ -263,7 +258,7 @@ bool World::isStillPlayerIsInGame()
     return false;
 }
 
-void World::resolveEntityCollisions(SceneNode *sceneNodeFirst, SceneNode *sceneNodeSecond, CollisionInfo &collisionInfo)
+void MainGameScreen::resolveEntityCollisions(SceneNode *sceneNodeFirst, SceneNode *sceneNodeSecond, CollisionInfo &collisionInfo)
 {
     Entity *entityOne = { static_cast<Entity*>(sceneNodeFirst) };
     Entity *entityTwo = { static_cast<Entity*>(sceneNodeSecond) };
@@ -280,7 +275,7 @@ void World::resolveEntityCollisions(SceneNode *sceneNodeFirst, SceneNode *sceneN
     */
 }
 
-void World::handleCollision(float dt)
+void MainGameScreen::handleCollision(float dt)
 {
     // Here are the collision information stored, which we use later and the affected SceneNodes
     std::vector<CollisionInfo> collisionData;
@@ -344,7 +339,7 @@ bool World::matchesCategories(SceneNode::Pair &colliders, WorldObjectTypes world
 }
 */
 
-SceneNode* World::getSceneNodeOfType(SceneNode::Pair sceneNodePair, WorldObjectTypes type)
+SceneNode* MainGameScreen::getSceneNodeOfType(SceneNode::Pair sceneNodePair, WorldObjectTypes type)
 {
     SceneNode *sceneNodeOne = sceneNodePair.first;
     SceneNode *sceneNodeTwo = sceneNodePair.second;
@@ -359,7 +354,7 @@ SceneNode* World::getSceneNodeOfType(SceneNode::Pair sceneNodePair, WorldObjectT
     return nullptr;
 }
 
-bool World::matchesCategories(SceneNode::Pair &colliders, unsigned int type1, unsigned int type2)
+bool MainGameScreen::matchesCategories(SceneNode::Pair &colliders, unsigned int type1, unsigned int type2)
 {
     unsigned int category1 = colliders.first->getType();
     unsigned int category2 = colliders.second->getType();
@@ -377,7 +372,7 @@ bool World::matchesCategories(SceneNode::Pair &colliders, unsigned int type1, un
     return false;
 }
 
-void World::render()
+void MainGameScreen::render()
 {
     if (m_playerWarrior)
     {

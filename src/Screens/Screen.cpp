@@ -13,7 +13,6 @@ Screen::Screen(const bool isInDebug, sf::RenderWindow *window, const ResourceHol
 const ResourceHolder<sf::Texture, Textures> &TextureHolder, const SpriteSheetMapHolder &spriteSheetMapHolder)
 : m_isInDebug { isInDebug }
 , m_window{ window }
-, m_worldView{ m_window->getDefaultView() }
 , m_renderManager{ &m_sceneGraph }
 , m_FontHolder{ FontHolder }
 , m_TextureHolder{ TextureHolder }
@@ -24,14 +23,12 @@ const ResourceHolder<sf::Texture, Textures> &TextureHolder, const SpriteSheetMap
 
 void Screen::buildScene()
 {
-    std::cout << "Screen::buildScene" << std::endl;
-
-    std::cout << "Screen::buildScene End" << std::endl;
+    // Do nothing by default
 }
 
 void Screen::handleInput(Input input, float dt)
 {
-    // do nothing by default
+    // Do nothing by default
 }
 
 void Screen::update(float dt)
@@ -41,8 +38,6 @@ void Screen::update(float dt)
 
 void Screen::render()
 {
-    std::cout << "Players is null" << std::endl;
     m_window->draw(m_renderManager);
-
 }
 

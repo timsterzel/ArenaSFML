@@ -1,36 +1,27 @@
-#ifndef WORLD_HPP
-#define WORLD_HPP
-#include <SFML/Graphics.hpp>
-#include <memory>
-#include <map>
+#ifndef MAINGAMESCREEN_HPP
+#define MAINGAMESCREEN_HPP
 #include "Components/Warrior.hpp"
 #include "Components/EnumWorldObjectTypes.hpp"
 #include "Components/SceneNode.hpp"
+#include "Input/QueueHelper.hpp"
+#include "Input/Input.hpp"
+#include "Input/Command.hpp"
 #include "Render/RenderManager.hpp"
 #include "Resources/ResourceHolder.hpp"
 #include "Resources/EnumResourceIdentifiers.hpp"
 #include "Resources/SpriteSheetMapHolder.hpp"
-#include "Input/QueueHelper.hpp"
-#include "Input/Input.hpp"
-#include "Input/Command.hpp"
+#include "Screens/Screen.hpp"
+#include <map>
+#include <memory>
+#include <SFML/Graphics.hpp>
 
-class World : private sf::NonCopyable
+class MainGameScreen : public Screen
 {
     private:
-        bool m_isInDebug;
         bool m_showCollisionInfo;
 
-        sf::RenderWindow *m_window;
-
-        SceneNode m_sceneGraph;
-        // Warriors which fighting
+        // Warriors which are in the game
         std::vector<Warrior*> m_possibleTargetWarriors;
-        RenderManager m_renderManager;
-        //std::array<SceneNode*, Layers::COUNT> m_sceneLayers;
-
-        const ResourceHolder<sf::Font, Fonts> &m_FontHolder;
-        const ResourceHolder<sf::Texture, Textures> &m_TextureHolder;
-        const SpriteSheetMapHolder &m_SpriteSheetMapHolder;
 
         QueueHelper<Command> m_commandQueue;
 
@@ -40,20 +31,20 @@ class World : private sf::NonCopyable
         long colCnt = 0;
 
     public:
-        World(const bool isInDebug, sf::RenderWindow *window, const ResourceHolder<sf::Font, Fonts> &fontHolder,
+        MainGameScreen(const bool isInDebug, sf::RenderWindow *window, const ResourceHolder<sf::Font, Fonts> &fontHolder,
                 const ResourceHolder<sf::Texture, Textures> &textureHolder, const SpriteSheetMapHolder &spriteSheetMapHolder);
 
-        void buildScene();
+        virtual void buildScene();
         // Safe the actual position, rotation and scale of the SceneNode
         void safeSceneNodeTrasform();
         void translateInput(Input input, float dt);
         //void controlWorldEntities();
         void handleCommands(float dt);
-        void update(float dt);
+        virtual void update(float dt);
 
         void handleCollision(float dt);
 
-        void render();
+        virtual void render();
     private:
         SceneNode* getSceneNodeOfType(SceneNode::Pair sceneNodePair, WorldObjectTypes type);
         bool matchesCategories(SceneNode::Pair &colliders, unsigned int type1, unsigned int type2);
@@ -62,4 +53,4 @@ class World : private sf::NonCopyable
         bool isStillPlayerIsInGame();
 };
 
-#endif // WORLD_HPP
+#endif // MAINGAMESCREEN_HPP
