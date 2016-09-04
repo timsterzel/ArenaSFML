@@ -35,7 +35,7 @@ void MainGameScreen::buildScene()
     sf::Texture &texture = m_TextureHolder.get(Textures::CHESS_WHITE);
     sf::IntRect textureRect(m_worldBounds);
     texture.setRepeated(true);
-    std::unique_ptr<SpriteNode> background(new SpriteNode(RenderLayers::BACKGROUND, texture, textureRect, false));
+    std::unique_ptr<SpriteNode> background = { std::make_unique<SpriteNode>(RenderLayers::BACKGROUND, texture, textureRect, false) };
     m_sceneGraph.attachChild(std::move(background));
     //m_sceneLayers[Layers::BACKGROUND]->attachChild(std::move(background));
     /*
@@ -51,10 +51,10 @@ void MainGameScreen::buildScene()
     */
 
     // Warrior
-    std::unique_ptr<Knight> warrior(new Knight(RenderLayers::MAIN, 100.f, Textures::KNIGHT, m_TextureHolder, m_SpriteSheetMapHolder, m_possibleTargetWarriors));
+    std::unique_ptr<Knight> warrior =
+        { std::make_unique<Knight>(RenderLayers::MAIN, 100.f, Textures::KNIGHT, m_TextureHolder, m_SpriteSheetMapHolder, m_possibleTargetWarriors) };
     m_playerWarrior = warrior.get();
-    std::unique_ptr<CollisionShape> collisionShapeWarrior(new CollisionCircle(12.f));
-    //std::unique_ptr<CollisionShape> collisionShapeWarrior(new CollisionRect({ 32.f, 32.f }));
+    std::unique_ptr<CollisionShape> collisionShapeWarrior = { std::make_unique<CollisionCircle>(12.f) };
     m_playerWarrior->setCollisionShape(std::move(collisionShapeWarrior));
     m_playerWarrior->setPosition(800 / 2.f, 480 / 2.f);
     m_playerWarrior->setVelocity(60.f);
@@ -67,9 +67,10 @@ void MainGameScreen::buildScene()
     m_sceneGraph.attachChild(std::move(warrior));
 
 
-    std::unique_ptr<Warrior> enemy1(new Knight(RenderLayers::MAIN, 100.f, Textures::KNIGHT, m_TextureHolder, m_SpriteSheetMapHolder, m_possibleTargetWarriors));
+    std::unique_ptr<Warrior> enemy1 =
+        { std::make_unique<Knight>(RenderLayers::MAIN, 100.f, Textures::KNIGHT, m_TextureHolder, m_SpriteSheetMapHolder, m_possibleTargetWarriors) };
     //SceneNode *wizardEnemyTmp = wizard.get();
-    std::unique_ptr<CollisionShape> collisionShapeEnemy(new CollisionCircle(12.f));
+    std::unique_ptr<CollisionShape> collisionShapeEnemy = { std::make_unique<CollisionCircle>(12.f) };
     enemy1->setCollisionShape(std::move(collisionShapeEnemy));
     //wizard->setPosition(800 / 2.f + 100.f, 480 / 2.f);
     enemy1->setPosition(800 / 2.f - 160.f, 480 / 2.f - 100.f);

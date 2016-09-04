@@ -1,7 +1,7 @@
 template <typename Resource, typename Identifier>
 void ResourceHolder<Resource, Identifier>::load(Identifier id, const std::string &fileName)
 {
-    std::unique_ptr<Resource> resource(new Resource);
+    std::unique_ptr<Resource> resource = { std::make_unique<Resource>() };
     if (!resource->loadFromFile(fileName))
     {
         throw std::runtime_error("ResourceHolder::load - Failed to load " + fileName);
@@ -16,7 +16,7 @@ template <typename Resource, typename Identifier>
 template <typename Parameter>
 void ResourceHolder<Resource, Identifier>::load(Identifier id, const std::string &fileName, const Parameter &secondParam)
 {
-    std::unique_ptr<Resource> resource(new Resource);
+    std::unique_ptr<Resource> resource = { std::make_unique<Resource>() };
     if (!resource->loadFromFile(fileName, secondParam))
     {
         throw std::runtime_error("ResourceHolder::load - Failed to load " + fileName);
