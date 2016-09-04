@@ -35,7 +35,7 @@ class Screen : private sf::NonCopyable
         Screen(const bool isInDebug, sf::RenderWindow *window, const ResourceHolder<sf::Font, Fonts> &fontHolder,
                 const ResourceHolder<sf::Texture, Textures> &textureHolder, const SpriteSheetMapHolder &spriteSheetMapHolder);
 
-        void buildScene();
+        virtual void buildScene();
 
         virtual void handleInput(Input input, float dt);
         //void controlWorldEntities();

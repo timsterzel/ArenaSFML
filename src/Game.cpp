@@ -1,4 +1,5 @@
 #include "Game.hpp"
+#include <Screens/MainGameScreen.hpp>
 #include <iostream>
 #include <memory>
 #include <cmath>
@@ -18,14 +19,16 @@ Game::Game(const bool showStats, const bool isInDebug)
 , m_fps{ 0 }
 , m_timePoint1{ CLOCK::now() }
 , m_inputHandler{ &m_window }
-, m_world{ isInDebug, &m_window, m_fontHolder, m_textureHolder, m_spriteSheetMapHolder }
+, m_actualScreen{ std::make_unique<MainGameScreen>(isInDebug, &m_window, m_fontHolder, m_textureHolder, m_spriteSheetMapHolder) }
 {
     m_window.setFramerateLimit(60);
     adjustShownWorldToWindowSize(m_window.getSize().x, m_window.getSize().y);
     loadFonts();
     loadTextures();
     buildScene();
-    m_world.buildScene();
+    //m_world.buildScene();
+    m_actualScreen->buildScene();
+
 }
 
 void Game::adjustShownWorldToWindowSize(unsigned int windowWidth, unsigned int windowHeight)
@@ -132,7 +135,8 @@ void Game::handleInput()
         // Let world class translate the input to commands, but only when the game is not paused
         if (!m_isPaused)
         {
-            m_world.translateInput(input, m_dt);
+            //m_world.translateInput(input, m_dt);
+            m_actualScreen->handleInput(input, m_dt);
         }
     }
 }
@@ -141,11 +145,14 @@ void Game::update()
 {
     if (!m_isPaused)
     {
+        m_actualScreen->update(m_dt);
+        /*
         m_world.safeSceneNodeTrasform();
         //m_world.controlWorldEntities();
         m_world.handleCommands(m_dt);
         m_world.update(m_dt);
         m_world.handleCollision(m_dt);
+        */
         m_sceneGraph.removeDestroyed();
         m_sceneGraph.update(m_dt);
     }
@@ -155,7 +162,8 @@ void Game::render()
 {
     m_window.clear();
     m_window.draw(m_renderManager);
-    m_world.render();
+    //m_world.render();
+    m_actualScreen->render();
     if (m_showStats)
     {
         m_window.draw(m_txtStatFPS);

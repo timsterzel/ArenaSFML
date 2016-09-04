@@ -4,7 +4,6 @@
 #include <memory>
 #include <chrono>
 #include <map>
-#include "World.hpp"
 #include "Components/Warrior.hpp"
 #include "Components/EnumWorldObjectTypes.hpp"
 #include "Components/SceneNode.hpp"
@@ -15,6 +14,7 @@
 #include "Resources/ResourceHolder.hpp"
 #include "Resources/EnumResourceIdentifiers.hpp"
 #include "Resources/SpriteSheetMapHolder.hpp"
+#include "Screens/Screen.hpp"
 
 typedef std::chrono::high_resolution_clock CLOCK;
 
@@ -55,7 +55,9 @@ class Game
         QueueHelper<Input> m_inputQueue;
         InputHandler m_inputHandler;
 
-        World m_world;
+        // Actual shown screen
+        std::unique_ptr<Screen> m_actualScreen;
+        //World m_world;
 
     private:
         void adjustShownWorldToWindowSize(unsigned int windowWidth, unsigned int windowHeight);

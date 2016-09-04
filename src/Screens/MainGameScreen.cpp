@@ -101,7 +101,7 @@ void MainGameScreen::safeSceneNodeTrasform()
     m_sceneGraph.safeTransform();
 }
 
-void MainGameScreen::translateInput(Input input, float dt)
+void MainGameScreen::handleInput(Input input, float dt)
 {
     switch (input.getInputType())
     {
@@ -230,6 +230,8 @@ void MainGameScreen::handleCommands(float dt)
 
 void MainGameScreen::update(float dt)
 {
+    safeSceneNodeTrasform();
+    handleCommands(dt);
     // Get iterator, pointing on the first element which should get erased
     auto destroyBegin = std::remove_if(m_possibleTargetWarriors.begin(), m_possibleTargetWarriors.end(), std::mem_fn(&Warrior::isMarkedForRemoval));
     // Remove the Warriors which are marked for removal
@@ -243,6 +245,8 @@ void MainGameScreen::update(float dt)
 
     m_sceneGraph.removeDestroyed();
     m_sceneGraph.update(dt);
+
+    handleCollision(dt);
 }
 
 bool MainGameScreen::isStillPlayerIsInGame()
