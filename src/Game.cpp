@@ -129,7 +129,7 @@ void Game::handleInput()
                     break;
             }
         }
-        // Let world class translate the input to commands, bit only when the game is not paused
+        // Let world class translate the input to commands, but only when the game is not paused
         if (!m_isPaused)
         {
             m_world.translateInput(input, m_dt);
