@@ -77,8 +77,8 @@
 		<Unit filename="include/Resources/ResourceHolder.hpp" />
 		<Unit filename="include/Resources/ResourceHolder.inl" />
 		<Unit filename="include/Resources/SpriteSheetMapHolder.hpp" />
+		<Unit filename="include/Screens/MainGameScreen.hpp" />
 		<Unit filename="include/Screens/Screen.hpp" />
-		<Unit filename="include/World.hpp" />
 		<Unit filename="main.cpp">
 			<Option virtualFolder="src/" />
 		</Unit>
@@ -105,9 +105,8 @@
 		<Unit filename="src/Input/InputHandler.cpp" />
 		<Unit filename="src/Render/RenderManager.cpp" />
 		<Unit filename="src/Resources/SpriteSheetMapHolder.cpp" />
-		<Unit filename="src/Screens/MainGameScreen.hpp" />
+		<Unit filename="src/Screens/MainGameScreen.cpp" />
 		<Unit filename="src/Screens/Screen.cpp" />
-		<Unit filename="src/World.cpp" />
 		<Extensions>
 			<code_completion />
 			<debugger />
