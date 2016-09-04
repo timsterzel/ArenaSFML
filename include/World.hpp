@@ -21,7 +21,6 @@ class World : private sf::NonCopyable
         bool m_showCollisionInfo;
 
         sf::RenderWindow *m_window;
-        sf::View m_worldView;
 
         SceneNode m_sceneGraph;
         // Warriors which fighting

@@ -14,7 +14,6 @@ const ResourceHolder<sf::Texture, Textures> &TextureHolder, const SpriteSheetMap
 : m_isInDebug { isInDebug }
 , m_showCollisionInfo{ false }
 , m_window{ window }
-, m_worldView{ m_window->getDefaultView() }
 , m_renderManager{ &m_sceneGraph }
 , m_FontHolder{ FontHolder }
 , m_TextureHolder{ TextureHolder }
