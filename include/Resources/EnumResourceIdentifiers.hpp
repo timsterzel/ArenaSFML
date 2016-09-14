@@ -13,4 +13,10 @@ enum class Fonts
     DEFAULT
 };
 
+enum class Musics
+{
+    GameTheme01,
+
+};
+
 #endif // RESOURCEIDENTIFIERS_HPP
