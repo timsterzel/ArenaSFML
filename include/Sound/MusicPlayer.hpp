@@ -16,7 +16,7 @@ class MusicPlayer : private sf::NonCopyable
     public:
         MusicPlayer();
 
-        void play(Musics soundId);
+        void play(Musics id);
         void stop();
 
         void setPaused(bool paused);
