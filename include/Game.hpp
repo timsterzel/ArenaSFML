@@ -23,6 +23,7 @@ class Screen;
 
 class Game
 {
+
     private:
         // Options
         unsigned int m_screenHeight;
@@ -78,8 +79,6 @@ class Game
         Game(const bool showStats, const bool isInDebug);
         ~Game();
         void run();
-
-        MusicPlayer& getMusicPlayer();
 };
 
 #endif // GAME_HPP

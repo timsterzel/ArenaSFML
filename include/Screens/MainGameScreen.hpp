@@ -31,8 +31,7 @@ class MainGameScreen : public Screen
         long colCnt = 0;
 
     public:
-        MainGameScreen(const bool isInDebug, Game *game, sf::RenderWindow *window, const ResourceHolder<sf::Font, Fonts> &fontHolder,
-                const ResourceHolder<sf::Texture, Textures> &textureHolder, const SpriteSheetMapHolder &spriteSheetMapHolder);
+        MainGameScreen(const bool isInDebug, Context context);
 
         virtual ~MainGameScreen();
 

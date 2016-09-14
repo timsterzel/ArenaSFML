@@ -7,19 +7,25 @@
 #include "Components/Weapon.hpp"
 #include "Components/Knight.hpp"
 #include "Calc.hpp"
-#include "Game.hpp"
+#include "Sound/MusicPlayer.hpp"
 #include <memory>
 
 
-Screen::Screen(const bool isInDebug, Game *game, sf::RenderWindow *window, const ResourceHolder<sf::Font, Fonts> &FontHolder,
-const ResourceHolder<sf::Texture, Textures> &TextureHolder, const SpriteSheetMapHolder &spriteSheetMapHolder)
+Screen::Screen(const bool isInDebug, Context context)
 : m_isInDebug { isInDebug }
-, m_game{ game }
-, m_window{ window }
+, m_context{ context }
 , m_renderManager{ &m_sceneGraph }
-, m_FontHolder{ FontHolder }
-, m_TextureHolder{ TextureHolder }
-, m_SpriteSheetMapHolder{ spriteSheetMapHolder }
+{
+
+}
+
+Screen::Context::Context(sf::RenderWindow *window, ResourceHolder<sf::Font, Fonts> *fontHolder, ResourceHolder<sf::Texture, Textures> *textureHolder,
+SpriteSheetMapHolder *spriteSheetMapHolder, MusicPlayer *music)
+: window{ window }
+, fontHolder{ fontHolder }
+, textureHolder{ textureHolder }
+, spriteSheetMapHolder{ spriteSheetMapHolder }
+, music{ music }
 {
 
 }
@@ -46,6 +52,6 @@ void Screen::update(float dt)
 
 void Screen::render()
 {
-    m_window->draw(m_renderManager);
+    m_context.window->draw(m_renderManager);
 }
 

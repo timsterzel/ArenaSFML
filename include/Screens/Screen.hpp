@@ -14,29 +14,37 @@
 #include "Input/Input.hpp"
 #include "Input/Command.hpp"
 
-class Game;
+
+class MusicPlayer;
 
 class Screen : private sf::NonCopyable
 {
+    public:
+        struct Context
+        {
+            sf::RenderWindow *window;
+            ResourceHolder<sf::Font, Fonts> *fontHolder;
+            ResourceHolder<sf::Texture, Textures> *textureHolder;
+            SpriteSheetMapHolder *spriteSheetMapHolder;
+            MusicPlayer *music;
+
+            Context(sf::RenderWindow *window, ResourceHolder<sf::Font, Fonts> *fontHolder, ResourceHolder<sf::Texture, Textures> *textureHolder,
+            SpriteSheetMapHolder *spriteSheetMapHolder, MusicPlayer *music);
+        };
+
     protected:
         bool m_isInDebug;
 
-        Game *m_game;
-        sf::RenderWindow *m_window;
+        Context m_context;
 
         SceneNode m_sceneGraph;
         RenderManager m_renderManager;
 
-        const ResourceHolder<sf::Font, Fonts> &m_FontHolder;
-        const ResourceHolder<sf::Texture, Textures> &m_TextureHolder;
-        const SpriteSheetMapHolder &m_SpriteSheetMapHolder;
-
-        QueueHelper<Input> *m_inputQueue;
+        //QueueHelper<Input> *m_inputQueue;
         //QueueHelper<Command> m_commandQueue;
 
     public:
-        Screen(const bool isInDebug, Game *game, sf::RenderWindow *window, const ResourceHolder<sf::Font, Fonts> &fontHolder,
-                const ResourceHolder<sf::Texture, Textures> &textureHolder, const SpriteSheetMapHolder &spriteSheetMapHolder);
+        Screen(const bool isInDebug, Context context);
 
         virtual ~Screen();
 

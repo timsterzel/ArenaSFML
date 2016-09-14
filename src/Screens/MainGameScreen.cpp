@@ -10,9 +10,8 @@
 #include <memory>
 #include "Game.hpp"
 
-MainGameScreen::MainGameScreen(const bool isInDebug, Game *game, sf::RenderWindow *window, const ResourceHolder<sf::Font, Fonts> &FontHolder,
-const ResourceHolder<sf::Texture, Textures> &TextureHolder, const SpriteSheetMapHolder &spriteSheetMapHolder)
-: Screen(isInDebug, game, window, FontHolder, TextureHolder, spriteSheetMapHolder)
+MainGameScreen::MainGameScreen(const bool isInDebug, Context context)
+: Screen(isInDebug, context)
 , m_showCollisionInfo{ false }
 , m_worldBounds{ 0.f, 0.f, 6000.f, 6000.f }
 , m_playerWarrior{ nullptr }
@@ -29,7 +28,7 @@ void MainGameScreen::buildScene()
 {
     std::cout << "MainGameScreen::buildScene" << std::endl;
     // Play music
-    m_game->getMusicPlayer().play(Musics::GameTheme01);
+    m_context.music->play(Musics::GameTheme01);
 
     /*
     for (std::size_t i = { 0 }; i < Layers::COUNT; i++)
@@ -41,7 +40,7 @@ void MainGameScreen::buildScene()
     }
     */
 
-    sf::Texture &texture = m_TextureHolder.get(Textures::CHESS_WHITE);
+    sf::Texture &texture = m_context.textureHolder->get(Textures::CHESS_WHITE);
     sf::IntRect textureRect(m_worldBounds);
     texture.setRepeated(true);
     std::unique_ptr<SpriteNode> background = { std::make_unique<SpriteNode>(RenderLayers::BACKGROUND, texture, textureRect, false) };
@@ -61,7 +60,7 @@ void MainGameScreen::buildScene()
 
     // Warrior
     std::unique_ptr<Knight> warrior =
-        { std::make_unique<Knight>(RenderLayers::MAIN, 100.f, Textures::KNIGHT, m_TextureHolder, m_SpriteSheetMapHolder, m_possibleTargetWarriors) };
+        { std::make_unique<Knight>(RenderLayers::MAIN, 100.f, Textures::KNIGHT, *m_context.textureHolder, *m_context.spriteSheetMapHolder, m_possibleTargetWarriors) };
     m_playerWarrior = warrior.get();
     std::unique_ptr<CollisionShape> collisionShapeWarrior = { std::make_unique<CollisionCircle>(12.f) };
     m_playerWarrior->setCollisionShape(std::move(collisionShapeWarrior));
@@ -77,7 +76,7 @@ void MainGameScreen::buildScene()
 
 
     std::unique_ptr<Warrior> enemy1 =
-        { std::make_unique<Knight>(RenderLayers::MAIN, 100.f, Textures::KNIGHT, m_TextureHolder, m_SpriteSheetMapHolder, m_possibleTargetWarriors) };
+        { std::make_unique<Knight>(RenderLayers::MAIN, 100.f, Textures::KNIGHT, *m_context.textureHolder, *m_context.spriteSheetMapHolder, m_possibleTargetWarriors) };
     //SceneNode *wizardEnemyTmp = wizard.get();
     std::unique_ptr<CollisionShape> collisionShapeEnemy = { std::make_unique<CollisionCircle>(12.f) };
     enemy1->setCollisionShape(std::move(collisionShapeEnemy));
@@ -399,7 +398,7 @@ void MainGameScreen::render()
     }
     //std::cout << "Render" << std::endl;
     //m_window->clear();
-    m_window->draw(m_renderManager);
+    m_context.window->draw(m_renderManager);
     //m_window->display();
 }
 

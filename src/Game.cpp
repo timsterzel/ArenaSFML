@@ -21,7 +21,7 @@ Game::Game(const bool showStats, const bool isInDebug)
 , m_fps{ 0 }
 , m_timePoint1{ CLOCK::now() }
 , m_inputHandler{ &m_window }
-, m_actualScreen{ std::make_unique<MainGameScreen>(isInDebug, this, &m_window, m_fontHolder, m_textureHolder, m_spriteSheetMapHolder) }
+, m_actualScreen{ std::make_unique<MainGameScreen>(isInDebug, Screen::Context( &m_window, &m_fontHolder, &m_textureHolder, &m_spriteSheetMapHolder, &m_music ) ) }
 {
     //std::unique_ptr<Screen> actualScreen = { std::make_unique<MainGameScreen>(isInDebug, this, &m_window, m_fontHolder, m_textureHolder, m_spriteSheetMapHolder) };
     //m_actualScreen = std::move(actualScreen);
@@ -38,11 +38,6 @@ Game::Game(const bool showStats, const bool isInDebug)
 Game::~Game()
 {
 
-}
-
-MusicPlayer& Game::getMusicPlayer()
-{
-    return m_music;
 }
 
 void Game::adjustShownWorldToWindowSize(unsigned int windowWidth, unsigned int windowHeight)
