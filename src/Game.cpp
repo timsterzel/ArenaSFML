@@ -13,6 +13,7 @@ Game::Game(const bool showStats, const bool isInDebug)
 , m_referenceWorldWidth{ 800 }
 , m_referenceWorldHeight{ 480 }
 , m_window{ sf::VideoMode{ m_screenHeight, m_screenWidth} , "ArenaSFML" }
+, m_music{ }
 , m_isRunning{ true }
 , m_isPaused{ false }
 , m_renderManager{ &m_sceneGraph }
@@ -37,6 +38,11 @@ Game::Game(const bool showStats, const bool isInDebug)
 Game::~Game()
 {
 
+}
+
+MusicPlayer& Game::getMusicPlayer()
+{
+    return m_music;
 }
 
 void Game::adjustShownWorldToWindowSize(unsigned int windowWidth, unsigned int windowHeight)
@@ -178,6 +184,7 @@ void Game::render()
     }
     m_window.display();
 }
+
 
 
 

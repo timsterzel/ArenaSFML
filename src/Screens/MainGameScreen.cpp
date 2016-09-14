@@ -8,6 +8,7 @@
 #include "Components/Knight.hpp"
 #include "Calc.hpp"
 #include <memory>
+#include "Game.hpp"
 
 MainGameScreen::MainGameScreen(const bool isInDebug, Game *game, sf::RenderWindow *window, const ResourceHolder<sf::Font, Fonts> &FontHolder,
 const ResourceHolder<sf::Texture, Textures> &TextureHolder, const SpriteSheetMapHolder &spriteSheetMapHolder)
@@ -27,6 +28,9 @@ MainGameScreen::~MainGameScreen()
 void MainGameScreen::buildScene()
 {
     std::cout << "MainGameScreen::buildScene" << std::endl;
+    // Play music
+    m_game->getMusicPlayer().play(Musics::GameTheme01);
+
     /*
     for (std::size_t i = { 0 }; i < Layers::COUNT; i++)
     {
@@ -100,6 +104,7 @@ void MainGameScreen::buildScene()
     */
     //m_playerWarrior->getCollisionShape()->isColliding(*warriorEnemyTmp->getCollisionShape());
     std::cout << "MainGameScreen::buildScene End" << std::endl;
+
 }
 
 void MainGameScreen::safeSceneNodeTrasform()

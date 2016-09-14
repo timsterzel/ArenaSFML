@@ -14,6 +14,7 @@
 #include "Resources/ResourceHolder.hpp"
 #include "Resources/EnumResourceIdentifiers.hpp"
 #include "Resources/SpriteSheetMapHolder.hpp"
+#include "Sound/MusicPlayer.hpp"
 
 typedef std::chrono::high_resolution_clock CLOCK;
 
@@ -35,8 +36,10 @@ class Game
 
         sf::RenderWindow m_window;
         sf::View m_view;
+        MusicPlayer m_music;
         sf::Font m_fontDefault;
         sf::Text m_txtStatFPS;
+
 
         bool m_isRunning;
         bool m_isPaused;
@@ -75,6 +78,8 @@ class Game
         Game(const bool showStats, const bool isInDebug);
         ~Game();
         void run();
+
+        MusicPlayer& getMusicPlayer();
 };
 
 #endif // GAME_HPP

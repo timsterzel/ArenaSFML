@@ -5,7 +5,7 @@ MusicPlayer::MusicPlayer()
 , m_fileNames{ }
 , m_volume{ 100.f }
 {
-    m_fileNames[Musics::GameTheme01] =  "sounds/themes/Juhani_Junkala_-_Epic_Boss_Battle.ogg";
+    m_fileNames[Musics::GameTheme01] =  "assets/sounds/themes/Juhani_Junkala_-_Epic_Boss_Battle.ogg";
 }
 
 void MusicPlayer::play(Musics id)
