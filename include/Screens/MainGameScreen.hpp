@@ -31,7 +31,7 @@ class MainGameScreen : public Screen
         long colCnt = 0;
 
     public:
-        MainGameScreen(const bool isInDebug, Context context);
+        MainGameScreen(ScreenStack *screenStack, Context context);
 
         virtual ~MainGameScreen();
 

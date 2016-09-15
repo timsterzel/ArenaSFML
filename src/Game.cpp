@@ -21,7 +21,7 @@ Game::Game(const bool showStats, const bool isInDebug)
 , m_fps{ 0 }
 , m_timePoint1{ CLOCK::now() }
 , m_inputHandler{ &m_window }
-, m_actualScreen{ std::make_unique<MainGameScreen>(isInDebug, Screen::Context( &m_window, &m_fontHolder, &m_textureHolder, &m_spriteSheetMapHolder, &m_music ) ) }
+, m_screenStack{ Screen::Context( isInDebug, &m_window, &m_fontHolder, &m_textureHolder, &m_spriteSheetMapHolder, &m_music ) }
 {
     //std::unique_ptr<Screen> actualScreen = { std::make_unique<MainGameScreen>(isInDebug, this, &m_window, m_fontHolder, m_textureHolder, m_spriteSheetMapHolder) };
     //m_actualScreen = std::move(actualScreen);
@@ -30,8 +30,12 @@ Game::Game(const bool showStats, const bool isInDebug)
     loadFonts();
     loadTextures();
     buildScene();
+    // Register all screens
+    m_screenStack.registerScreen<MainGameScreen>(ScreenID::GAME);
+    // Show Game screen
+    m_screenStack.pushScreen(ScreenID::GAME);
     //m_world.buildScene();
-    m_actualScreen->buildScene();
+    //m_actualScreen->buildScene();
 
 }
 
@@ -145,7 +149,8 @@ void Game::handleInput()
         if (!m_isPaused)
         {
             //m_world.translateInput(input, m_dt);
-            m_actualScreen->handleInput(input, m_dt);
+            //m_actualScreen->handleInput(input, m_dt);
+            m_screenStack.handleInput(input, m_dt);
         }
     }
 }
@@ -154,7 +159,8 @@ void Game::update()
 {
     if (!m_isPaused)
     {
-        m_actualScreen->update(m_dt);
+        //m_actualScreen->update(m_dt);
+        m_screenStack.update(m_dt);
         /*
         m_world.safeSceneNodeTrasform();
         //m_world.controlWorldEntities();
@@ -172,7 +178,8 @@ void Game::render()
     m_window.clear();
     m_window.draw(m_renderManager);
     //m_world.render();
-    m_actualScreen->render();
+    //m_actualScreen->render();
+    m_screenStack.render();
     if (m_showStats)
     {
         m_window.draw(m_txtStatFPS);

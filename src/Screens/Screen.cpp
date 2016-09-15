@@ -11,17 +11,18 @@
 #include <memory>
 
 
-Screen::Screen(const bool isInDebug, Context context)
-: m_isInDebug { isInDebug }
-, m_context{ context }
+Screen::Screen(ScreenStack *screenStack, Context context)
+: m_context{ context }
+, m_screenStack{ screenStack }
 , m_renderManager{ &m_sceneGraph }
 {
 
 }
 
-Screen::Context::Context(sf::RenderWindow *window, ResourceHolder<sf::Font, Fonts> *fontHolder, ResourceHolder<sf::Texture, Textures> *textureHolder,
+Screen::Context::Context(bool isInDebugMode, sf::RenderWindow *window, ResourceHolder<sf::Font, Fonts> *fontHolder, ResourceHolder<sf::Texture, Textures> *textureHolder,
 SpriteSheetMapHolder *spriteSheetMapHolder, MusicPlayer *music)
-: window{ window }
+: isInDebugMode{ isInDebugMode }
+, window{ window }
 , fontHolder{ fontHolder }
 , textureHolder{ textureHolder }
 , spriteSheetMapHolder{ spriteSheetMapHolder }

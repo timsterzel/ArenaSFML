@@ -10,13 +10,13 @@
 #include <memory>
 #include "Game.hpp"
 
-MainGameScreen::MainGameScreen(const bool isInDebug, Context context)
-: Screen(isInDebug, context)
+MainGameScreen::MainGameScreen(ScreenStack *screenStack, Context context)
+: Screen(screenStack, context)
 , m_showCollisionInfo{ false }
 , m_worldBounds{ 0.f, 0.f, 6000.f, 6000.f }
 , m_playerWarrior{ nullptr }
 {
-
+    buildScene();
 }
 
 MainGameScreen::~MainGameScreen()

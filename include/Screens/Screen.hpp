@@ -16,6 +16,7 @@
 
 
 class MusicPlayer;
+class ScreenStack;
 
 class Screen : private sf::NonCopyable
 {
@@ -24,20 +25,21 @@ class Screen : private sf::NonCopyable
 
         struct Context
         {
+            bool isInDebugMode;
             sf::RenderWindow *window;
             ResourceHolder<sf::Font, Fonts> *fontHolder;
             ResourceHolder<sf::Texture, Textures> *textureHolder;
             SpriteSheetMapHolder *spriteSheetMapHolder;
             MusicPlayer *music;
 
-            Context(sf::RenderWindow *window, ResourceHolder<sf::Font, Fonts> *fontHolder, ResourceHolder<sf::Texture, Textures> *textureHolder,
+            Context(bool isInDebugMode, sf::RenderWindow *window, ResourceHolder<sf::Font, Fonts> *fontHolder, ResourceHolder<sf::Texture, Textures> *textureHolder,
             SpriteSheetMapHolder *spriteSheetMapHolder, MusicPlayer *music);
         };
 
     protected:
-        bool m_isInDebug;
 
         Context m_context;
+        ScreenStack *m_screenStack;
 
         SceneNode m_sceneGraph;
         RenderManager m_renderManager;
@@ -46,7 +48,7 @@ class Screen : private sf::NonCopyable
         //QueueHelper<Command> m_commandQueue;
 
     public:
-        Screen(const bool isInDebug, Context context);
+        Screen(ScreenStack *screenStack, Context context);
 
         virtual ~Screen();
 

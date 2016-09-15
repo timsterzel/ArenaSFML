@@ -26,6 +26,6 @@ class ResourceHolder
 
 };
 
-#include "ResourceHolder.inl"
+#include "Resources/ResourceHolder.inl"
 
 #endif // TEXTUREHOLDER_HPP

@@ -14,6 +14,7 @@
 #include "Resources/ResourceHolder.hpp"
 #include "Resources/EnumResourceIdentifiers.hpp"
 #include "Resources/SpriteSheetMapHolder.hpp"
+#include "Screens/ScreenStack.hpp"
 #include "Sound/MusicPlayer.hpp"
 
 typedef std::chrono::high_resolution_clock CLOCK;
@@ -41,7 +42,6 @@ class Game
         sf::Font m_fontDefault;
         sf::Text m_txtStatFPS;
 
-
         bool m_isRunning;
         bool m_isPaused;
 
@@ -61,8 +61,9 @@ class Game
         QueueHelper<Input> m_inputQueue;
         InputHandler m_inputHandler;
 
+        ScreenStack m_screenStack;
         // Actual shown screen
-        std::unique_ptr<Screen> m_actualScreen;
+        //std::unique_ptr<Screen> m_actualScreen;
         //World m_world;
 
     private:
