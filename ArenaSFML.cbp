@@ -20,6 +20,7 @@
 					<Add library="sfml-system" />
 					<Add library="sfml-window" />
 					<Add library="sfml-graphics" />
+					<Add library="sfml-audio" />
 				</Linker>
 			</Target>
 			<Target title="Release">
@@ -79,6 +80,7 @@
 		<Unit filename="include/Resources/SpriteSheetMapHolder.hpp" />
 		<Unit filename="include/Screens/MainGameScreen.hpp" />
 		<Unit filename="include/Screens/Screen.hpp" />
+		<Unit filename="include/Sound/MusicPlayer.hpp" />
 		<Unit filename="main.cpp">
 			<Option virtualFolder="src/" />
 		</Unit>
@@ -107,6 +109,7 @@
 		<Unit filename="src/Resources/SpriteSheetMapHolder.cpp" />
 		<Unit filename="src/Screens/MainGameScreen.cpp" />
 		<Unit filename="src/Screens/Screen.cpp" />
+		<Unit filename="src/Sound/MusicPlayer.cpp" />
 		<Extensions>
 			<code_completion />
 			<debugger />
