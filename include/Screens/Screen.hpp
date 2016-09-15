@@ -20,6 +20,8 @@ class MusicPlayer;
 class Screen : private sf::NonCopyable
 {
     public:
+        typedef std::unique_ptr<Screen> Ptr;
+
         struct Context
         {
             sf::RenderWindow *window;

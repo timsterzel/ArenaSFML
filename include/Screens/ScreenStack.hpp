@@ -3,11 +3,22 @@
 #include <SFML/Graphics.hpp>
 #include <memory>
 #include <map>
+#include <vector>
 #include "Screens/Screen.hpp"
 
 class ScreenStack : private sf::NonCopyable
 {
+    public:
+        enum class Action
+        {
+            Push,
+            Pop,
+            Clear,
+        };
+
     private:
+        std::vector<Screen::Ptr> m_stack;
+
         Screen::Context m_context;
 
 
