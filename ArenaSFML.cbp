@@ -80,6 +80,9 @@
 		<Unit filename="include/Resources/SpriteSheetMapHolder.hpp" />
 		<Unit filename="include/Screens/MainGameScreen.hpp" />
 		<Unit filename="include/Screens/Screen.hpp" />
+		<Unit filename="include/Screens/ScreenIdentifiers.hpp" />
+		<Unit filename="include/Screens/ScreenStack.hpp" />
+		<Unit filename="include/Screens/ScreenStack.inl" />
 		<Unit filename="include/Sound/MusicPlayer.hpp" />
 		<Unit filename="main.cpp">
 			<Option virtualFolder="src/" />
@@ -109,6 +112,7 @@
 		<Unit filename="src/Resources/SpriteSheetMapHolder.cpp" />
 		<Unit filename="src/Screens/MainGameScreen.cpp" />
 		<Unit filename="src/Screens/Screen.cpp" />
+		<Unit filename="src/Screens/ScreenStack.cpp" />
 		<Unit filename="src/Sound/MusicPlayer.cpp" />
 		<Extensions>
 			<code_completion />
