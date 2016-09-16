@@ -23,3 +23,13 @@ bool QueueHelper<T>::isEmpty() const
 {
 	return m_queue.empty();
 }
+
+template <typename T>
+void QueueHelper<T>::clear()
+{
+    while(!m_queue.empty())
+    {
+        m_queue.pop();
+    }
+}
+

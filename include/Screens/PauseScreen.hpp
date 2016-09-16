@@ -6,6 +6,7 @@
 class PauseScreen : public Screen
 {
     private:
+        sf::Text m_txtPaused;
 
     public:
         PauseScreen(ScreenStack *screenStack, Context context);

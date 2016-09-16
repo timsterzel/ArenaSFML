@@ -12,6 +12,7 @@
 
 MainGameScreen::MainGameScreen(ScreenStack *screenStack, Context context)
 : Screen(screenStack, context)
+, m_isGamePaused{ false }
 , m_showCollisionInfo{ false }
 , m_worldBounds{ 0.f, 0.f, 6000.f, 6000.f }
 , m_playerWarrior{ nullptr }
@@ -167,6 +168,17 @@ void MainGameScreen::handleInput(Input input, float dt)
         case InputTypes::RIGHT_CLICK_STOPED :
             m_commandQueue.push({ CommandTypes::STOP_BLOCKING, WorldObjectTypes::PLAYER });
             break;
+        case InputTypes::PAUSE :
+            m_isGamePaused = !m_isGamePaused;
+            if (m_isGamePaused)
+            {
+                m_screenStack->pushScreen(ScreenID::PAUSE);
+            }
+            else
+            {
+                m_screenStack->popScreen();
+            }
+            break;
         // Debug
         case InputTypes::D1 :
 
@@ -232,6 +244,12 @@ void World::controlWorldEntities()
 
 void MainGameScreen::handleCommands(float dt)
 {
+    // Nothing to do when game is paused
+    if (m_isGamePaused)
+    {
+        m_commandQueue.clear();
+        return;
+    }
     while(!m_commandQueue.isEmpty())
     {
         m_sceneGraph.onCommand(m_commandQueue.pop(), dt);
@@ -240,6 +258,12 @@ void MainGameScreen::handleCommands(float dt)
 
 void MainGameScreen::update(float dt)
 {
+     // Nothing to update when game is paused
+    if (m_isGamePaused)
+    {
+        return;
+    }
+
     safeSceneNodeTrasform();
     handleCommands(dt);
     // Get iterator, pointing on the first element which should get erased

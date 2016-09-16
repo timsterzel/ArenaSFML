@@ -14,7 +14,7 @@ class QueueHelper
         void push(const T &value);
         T pop();
         bool isEmpty() const;
-
+        void clear();
 
 };
 

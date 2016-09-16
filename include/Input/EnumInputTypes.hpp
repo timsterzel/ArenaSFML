@@ -22,15 +22,18 @@ enum class InputTypes
     UP_RIGHT,
     DOWN_LEFT,
     DOWN_RIGHT,
+    LEFT_CLICK,
+    RIGHT_CLICK_START,
+    RIGHT_CLICK_STILL,
+    RIGHT_CLICK_STOPED,
+    PAUSE,
     // Debug
     D1,
     D2,
     D3,
     D4,
-    LEFT_CLICK,
-    RIGHT_CLICK_START,
-    RIGHT_CLICK_STILL,
-    RIGHT_CLICK_STOPED,
+
+
 
     // TMP
     LEFT_A,

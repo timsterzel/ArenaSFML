@@ -1,6 +1,7 @@
 #include "Game.hpp"
 #include "Screens/Screen.hpp"
 #include "Screens/MainGameScreen.hpp"
+#include "Screens/PauseScreen.hpp"
 #include <iostream>
 #include <memory>
 #include <cmath>
@@ -32,6 +33,7 @@ Game::Game(const bool showStats, const bool isInDebug)
     buildScene();
     // Register all screens
     m_screenStack.registerScreen<MainGameScreen>(ScreenID::GAME);
+    m_screenStack.registerScreen<PauseScreen>(ScreenID::PAUSE);
     // Show Game screen
     m_screenStack.pushScreen(ScreenID::GAME);
     //m_world.buildScene();

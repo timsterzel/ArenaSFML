@@ -18,6 +18,7 @@
 class MainGameScreen : public Screen
 {
     private:
+        bool m_isGamePaused;
         bool m_showCollisionInfo;
 
         // Warriors which are in the game

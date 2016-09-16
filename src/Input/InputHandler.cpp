@@ -56,6 +56,10 @@ void InputHandler::handleEvents(QueueHelper<Input> &inputQueue)
             {
                 inputQueue.push({ InputTypes::D4 });
             }
+            else if (event.key.code == sf::Keyboard::Escape)
+            {
+                inputQueue.push({ InputTypes::PAUSE });
+            }
 
         }
         else if (event.type == sf::Event::MouseButtonPressed)
