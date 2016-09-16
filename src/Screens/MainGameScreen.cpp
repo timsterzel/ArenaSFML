@@ -176,6 +176,7 @@ bool MainGameScreen::handleInput(Input input, float dt)
             }
             else
             {
+                // Remove pause screen
                 m_screenStack->popScreen();
             }
             break;
@@ -246,24 +247,28 @@ void World::controlWorldEntities()
 void MainGameScreen::handleCommands(float dt)
 {
     // Nothing to do when game is paused
+    /*
     if (m_isGamePaused)
     {
         m_commandQueue.clear();
         return;
     }
+    */
     while(!m_commandQueue.isEmpty())
     {
         m_sceneGraph.onCommand(m_commandQueue.pop(), dt);
     }
 }
 
-void MainGameScreen::update(float dt)
+bool MainGameScreen::update(float dt)
 {
      // Nothing to update when game is paused
+    /*
     if (m_isGamePaused)
     {
         return;
     }
+    */
 
     safeSceneNodeTrasform();
     handleCommands(dt);
@@ -282,6 +287,8 @@ void MainGameScreen::update(float dt)
     m_sceneGraph.update(dt);
 
     handleCollision(dt);
+
+    return false;
 }
 
 bool MainGameScreen::isStillPlayerIsInGame()

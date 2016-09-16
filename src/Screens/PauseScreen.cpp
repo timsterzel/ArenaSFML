@@ -40,10 +40,11 @@ bool PauseScreen::handleInput(Input input, float dt)
     return false;
 }
 
-void PauseScreen::update(float dt)
+bool PauseScreen::update(float dt)
 {
     //m_sceneGraph.removeDestroyed();
     //m_sceneGraph.update(dt);
+    return false;
 }
 
 void PauseScreen::render()

@@ -58,7 +58,7 @@ class Screen : private sf::NonCopyable
         virtual bool handleInput(Input input, float dt);
         //void controlWorldEntities();
         //void handleCommands(float dt);
-        virtual void update(float dt);
+        virtual bool update(float dt);
 
         virtual void render();
 

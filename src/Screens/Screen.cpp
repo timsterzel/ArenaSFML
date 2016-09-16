@@ -47,9 +47,10 @@ bool Screen::handleInput(Input input, float dt)
     // Do nothing by default
 }
 
-void Screen::update(float dt)
+bool Screen::update(float dt)
 {
     m_sceneGraph.update(dt);
+    return false;
 }
 
 void Screen::render()

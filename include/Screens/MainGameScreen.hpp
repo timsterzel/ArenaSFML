@@ -42,7 +42,7 @@ class MainGameScreen : public Screen
         virtual bool handleInput(Input input, float dt);
         //void controlWorldEntities();
         void handleCommands(float dt);
-        virtual void update(float dt);
+        virtual bool update(float dt);
 
         void handleCollision(float dt);
 
