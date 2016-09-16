@@ -17,11 +17,14 @@ ScreenStack::~ScreenStack()
 
 void ScreenStack::handleInput(Input input, float dt)
 {
-    // Iterate from end to the beginning so we can later implement that inputs are to handled when
+    // Iterate from end to the beginning so inputs are only handled by the next screen when
     // the higher screen return false
     for (auto itr = m_stack.rbegin(); itr != m_stack.rend(); itr++)
     {
-        (*itr)->handleInput(input, dt);
+        if (!(*itr)->handleInput(input, dt))
+        {
+            break;
+        }
     }
     applyPendingChanges();
 }
@@ -31,7 +34,14 @@ void ScreenStack::update(float dt)
     for (auto itr = m_stack.rbegin(); itr != m_stack.rend(); itr++)
     {
         (*itr)->update(dt);
+        /*
+        if (!(*itr)->update(dt))
+        {
+            break;
+        }
+        */
     }
+    applyPendingChanges();
 }
 
 void ScreenStack::render()

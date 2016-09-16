@@ -24,9 +24,20 @@ void PauseScreen::buildScene()
     //m_sceneGraph.attachChild(std::move(background));
 }
 
-void PauseScreen::handleInput(Input input, float dt)
+bool PauseScreen::handleInput(Input input, float dt)
 {
-
+    switch (input.getInputType())
+    {
+        case InputTypes::PAUSE :
+        {
+            // Let the Game screen handle this input
+            return true;
+            break;
+        }
+        default:
+            break;
+    }
+    return false;
 }
 
 void PauseScreen::update(float dt)

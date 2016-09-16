@@ -54,7 +54,8 @@ class Screen : private sf::NonCopyable
 
         virtual void buildScene();
 
-        virtual void handleInput(Input input, float dt);
+        // return false when no lower screen should handle the input
+        virtual bool handleInput(Input input, float dt);
         //void controlWorldEntities();
         //void handleCommands(float dt);
         virtual void update(float dt);

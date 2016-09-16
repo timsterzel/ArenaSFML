@@ -39,7 +39,7 @@ class MainGameScreen : public Screen
         virtual void buildScene();
         // Safe the actual position, rotation and scale of the SceneNode
         void safeSceneNodeTrasform();
-        virtual void handleInput(Input input, float dt);
+        virtual bool handleInput(Input input, float dt);
         //void controlWorldEntities();
         void handleCommands(float dt);
         virtual void update(float dt);

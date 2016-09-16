@@ -112,7 +112,7 @@ void MainGameScreen::safeSceneNodeTrasform()
     m_sceneGraph.safeTransform();
 }
 
-void MainGameScreen::handleInput(Input input, float dt)
+bool MainGameScreen::handleInput(Input input, float dt)
 {
     switch (input.getInputType())
     {
@@ -231,6 +231,7 @@ void MainGameScreen::handleInput(Input input, float dt)
     {
         commandQueue.push({ CommandTypes::MOVE_RIGHT, WorldObjectTypes::Player });
     }*/
+    return false;
 }
 
 // Tmp (better implemention later)

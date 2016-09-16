@@ -15,7 +15,7 @@ class PauseScreen : public Screen
 
         virtual void buildScene();
 
-        virtual void handleInput(Input input, float dt);
+        virtual bool handleInput(Input input, float dt);
 
         virtual void update(float dt);
 

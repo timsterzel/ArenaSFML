@@ -41,8 +41,9 @@ void Screen::buildScene()
     // Do nothing by default
 }
 
-void Screen::handleInput(Input input, float dt)
+bool Screen::handleInput(Input input, float dt)
 {
+    return true;
     // Do nothing by default
 }
 
