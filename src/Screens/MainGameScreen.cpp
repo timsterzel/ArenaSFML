@@ -437,9 +437,16 @@ void MainGameScreen::render()
     {
         std::cout << "Players is null" << std::endl;
     }
-    m_context.window->draw(m_renderManager, &m_shader);
+    if (m_isGamePaused)
+    {
+        m_context.window->draw(m_renderManager, &m_shader);
+    }
+    else
+    {
+        m_context.window->draw(m_renderManager);
+    }
     //m_context.window->draw(circleShape, &m_shader);
-    m_context.window->draw(m_renderManager);
+
 
 }
 
