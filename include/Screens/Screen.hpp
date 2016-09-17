@@ -29,11 +29,13 @@ class Screen : private sf::NonCopyable
             sf::RenderWindow *window;
             ResourceHolder<sf::Font, Fonts> *fontHolder;
             ResourceHolder<sf::Texture, Textures> *textureHolder;
+            ResourceHolder<sf::Shader, Shaders> *shaderHolder;
             SpriteSheetMapHolder *spriteSheetMapHolder;
             MusicPlayer *music;
 
-            Context(bool isInDebugMode, sf::RenderWindow *window, ResourceHolder<sf::Font, Fonts> *fontHolder, ResourceHolder<sf::Texture, Textures> *textureHolder,
-            SpriteSheetMapHolder *spriteSheetMapHolder, MusicPlayer *music);
+            Context(bool isInDebugMode, sf::RenderWindow *window, ResourceHolder<sf::Font, Fonts> *fontHolder,
+                ResourceHolder<sf::Texture, Textures> *textureHolder, ResourceHolder<sf::Shader, Shaders> *shaderHolder,
+                SpriteSheetMapHolder *spriteSheetMapHolder, MusicPlayer *music);
         };
 
     protected:

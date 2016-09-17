@@ -29,16 +29,7 @@ void MainGameScreen::buildScene()
 {
     std::cout << "MainGameScreen::buildScene" << std::endl;
     // Play music
-    m_context.music->play(Musics::GameTheme01);
-
-    if (!sf::Shader::isAvailable())
-    {
-        std::cout << "Shaders not available" << std::endl;
-    }
-    if (!m_shader.loadFromFile("assets/shaders/grayscale.c", sf::Shader::Fragment))
-    {
-        std::cout << "Error by loading shader" << std::endl;
-    }
+    m_context.music->play(Musics::GAMETHEME01);
 
     /*
     for (std::size_t i = { 0 }; i < Layers::COUNT; i++)
@@ -439,7 +430,7 @@ void MainGameScreen::render()
     }
     if (m_isGamePaused)
     {
-        m_context.window->draw(m_renderManager, &m_shader);
+        m_context.window->draw(m_renderManager, &m_context.shaderHolder->get(Shaders::GRAYSCALE));
     }
     else
     {

@@ -54,6 +54,7 @@ class Game
         // Assets
         ResourceHolder<sf::Font, Fonts> m_fontHolder;
         ResourceHolder<sf::Texture, Textures> m_textureHolder;
+        ResourceHolder<sf::Shader, Shaders> m_shaderHolder;
         SpriteSheetMapHolder m_spriteSheetMapHolder;
 
         // The game class handle all inputs which get later translated to commands
@@ -69,6 +70,7 @@ class Game
         void adjustShownWorldToWindowSize(unsigned int windowWidth, unsigned int windowHeight);
         void loadFonts();
         void loadTextures();
+        void loadShaders();
         void buildScene();
         void determineDeltaTime();
         void handleInput();

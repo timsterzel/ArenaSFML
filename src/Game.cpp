@@ -22,7 +22,7 @@ Game::Game(const bool showStats, const bool isInDebug)
 , m_fps{ 0 }
 , m_timePoint1{ CLOCK::now() }
 , m_inputHandler{ &m_window }
-, m_screenStack{ Screen::Context( isInDebug, &m_window, &m_fontHolder, &m_textureHolder, &m_spriteSheetMapHolder, &m_music ) }
+, m_screenStack{ Screen::Context( isInDebug, &m_window, &m_fontHolder, &m_textureHolder, &m_shaderHolder, &m_spriteSheetMapHolder, &m_music ) }
 {
     //std::unique_ptr<Screen> actualScreen = { std::make_unique<MainGameScreen>(isInDebug, this, &m_window, m_fontHolder, m_textureHolder, m_spriteSheetMapHolder) };
     //m_actualScreen = std::move(actualScreen);
@@ -30,6 +30,7 @@ Game::Game(const bool showStats, const bool isInDebug)
     adjustShownWorldToWindowSize(m_window.getSize().x, m_window.getSize().y);
     loadFonts();
     loadTextures();
+    loadShaders();
     buildScene();
     // Register all screens
     m_screenStack.registerScreen<MainGameScreen>(ScreenID::GAME);
@@ -72,6 +73,17 @@ void Game::loadTextures()
     m_textureHolder.load(Textures::WIZARD, "assets/sprites/warriors/wizard.png");
     m_spriteSheetMapHolder.load(Textures::WIZARD, "assets/sprites/warriors/wizard.txt");
     m_textureHolder.load(Textures::CHESS_WHITE, "assets/sprites/chess_white.png");
+}
+
+void Game::loadShaders()
+{
+    // Dont load shaders, if there are not supportet
+    if (!sf::Shader::isAvailable())
+    {
+        std::cout << "Shaders not supported" << std::endl;
+        return;
+    }
+    m_shaderHolder.load<sf::Shader::Type>(Shaders::GRAYSCALE, "assets/shaders/grayscale.frag", sf::Shader::Fragment);
 }
 
 void Game::buildScene()

@@ -15,7 +15,13 @@ enum class Fonts
 
 enum class Musics
 {
-    GameTheme01,
+    GAMETHEME01,
+
+};
+
+enum class Shaders
+{
+    GRAYSCALE,
 
 };
 
