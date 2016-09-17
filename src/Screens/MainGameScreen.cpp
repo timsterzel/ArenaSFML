@@ -428,7 +428,7 @@ void MainGameScreen::render()
     {
         std::cout << "Players is null" << std::endl;
     }
-    if (m_isGamePaused)
+    if (m_isGamePaused && sf::Shader::isAvailable())
     {
         m_context.window->draw(m_renderManager, &m_context.shaderHolder->get(Shaders::GRAYSCALE));
     }
