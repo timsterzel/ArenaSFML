@@ -31,6 +31,8 @@ class MainGameScreen : public Screen
         // TMP, Collision counter
         long colCnt = 0;
 
+        sf::Shader m_shader;
+
     public:
         MainGameScreen(ScreenStack *screenStack, Context context);
 

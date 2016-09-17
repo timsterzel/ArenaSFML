@@ -31,6 +31,15 @@ void MainGameScreen::buildScene()
     // Play music
     m_context.music->play(Musics::GameTheme01);
 
+    if (!sf::Shader::isAvailable())
+    {
+        std::cout << "Shaders not available" << std::endl;
+    }
+    if (!m_shader.loadFromFile("assets/shaders/grayscale.c", sf::Shader::Fragment))
+    {
+        std::cout << "Error by loading shader" << std::endl;
+    }
+
     /*
     for (std::size_t i = { 0 }; i < Layers::COUNT; i++)
     {
@@ -428,9 +437,9 @@ void MainGameScreen::render()
     {
         std::cout << "Players is null" << std::endl;
     }
-    //std::cout << "Render" << std::endl;
-    //m_window->clear();
+    m_context.window->draw(m_renderManager, &m_shader);
+    //m_context.window->draw(circleShape, &m_shader);
     m_context.window->draw(m_renderManager);
-    //m_window->display();
+
 }
 

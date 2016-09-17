@@ -200,7 +200,8 @@ void Warrior::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) con
 {
     if (m_closeCombatArea)
     {
-        m_closeCombatArea->draw(target, states);
+        //m_closeCombatArea->draw(target, states);
+        target.draw(*m_closeCombatArea, states);
     }
 
     //target.draw(m_sprite, states);
