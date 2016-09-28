@@ -198,6 +198,11 @@ void Game::render()
     {
         m_window.draw(m_txtStatFPS);
     }
+    /*
+    TextWidget textTest("Test", m_fontHolder.get(Fonts::DEFAULT), 20, sf::Color::Red);
+    textTest.setPosition(30.f, 30.f);
+    m_window.draw(textTest);
+    */
     m_window.display();
 }
 

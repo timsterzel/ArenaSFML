@@ -2,7 +2,7 @@
 #define WIDGET_HPP
 #include <SFML/Graphics.hpp>
 
-class Widget: public sf::Transformable
+class Widget: public sf::Transformable, public sf::Drawable
 {
     public:
         typedef std::unique_ptr<Widget> Ptr;

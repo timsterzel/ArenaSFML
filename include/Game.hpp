@@ -7,6 +7,7 @@
 #include "Components/Warrior.hpp"
 #include "Components/EnumWorldObjectTypes.hpp"
 #include "Components/SceneNode.hpp"
+#include "GUI/TextWidget.hpp"
 #include "Input/QueueHelper.hpp"
 #include "Input/InputHandler.hpp"
 #include "Input/EnumInputTypes.hpp"
