@@ -3,25 +3,25 @@
 #include <cassert>
 #include <iostream>
 
-Widget::Widget()
+gsf::Widget::Widget()
 : m_parent{ nullptr }
 //, m_isCollisionCheckOn{ true }
 {
 
 }
 
-Widget::~Widget()
+gsf::Widget::~Widget()
 {
 
 }
 
-void Widget::attachChild(Ptr child)
+void gsf::Widget::attachChild(Ptr child)
 {
     child->m_parent = this;
     m_children.push_back(std::move(child));
 }
 
-Widget::Ptr Widget::detachChild(const Widget& node)
+gsf::Widget::Ptr gsf::Widget::detachChild(const Widget& node)
 {
     auto found = std::find_if(m_children.begin(), m_children.end(), [&] (Ptr &p) -> bool { return p.get() == &node; });
     // There is an error when we try to detach a child which does not exists,so stop execution in debug mode
@@ -33,19 +33,19 @@ Widget::Ptr Widget::detachChild(const Widget& node)
     return result;
 }
 
-void Widget::draw(sf::RenderTarget &target, sf::RenderStates states) const
+void gsf::Widget::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
         states.transform *= getTransform();
         drawCurrent(target, states);
         drawChildren(target, states);
 }
 
-void Widget::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const
+void gsf::Widget::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const
 {
     //Do nothing by default
 }
 
-void Widget::drawChildren(sf::RenderTarget &target, sf::RenderStates states) const
+void gsf::Widget::drawChildren(sf::RenderTarget &target, sf::RenderStates states) const
 {
     for (const Ptr &child : m_children)
     {
@@ -53,18 +53,18 @@ void Widget::drawChildren(sf::RenderTarget &target, sf::RenderStates states) con
     }
 }
 
-void Widget::update(float dt)
+void gsf::Widget::update(float dt)
 {
     updateCurrent(dt);
     updateChildren(dt);
 }
 
-void Widget::updateCurrent(float dt)
+void gsf::Widget::updateCurrent(float dt)
 {
     // Do nothing by default
 }
 
-void Widget::updateChildren(float dt)
+void gsf::Widget::updateChildren(float dt)
 {
     for (const Ptr &child : m_children)
     {
@@ -72,7 +72,7 @@ void Widget::updateChildren(float dt)
     }
 }
 
-sf::Transform Widget::getWorldTransform() const
+sf::Transform gsf::Widget::getWorldTransform() const
 {
     sf::Transform trform = { sf::Transform::Identity };
     for (const Widget *node = this; node != nullptr; node = node->m_parent)
@@ -82,7 +82,7 @@ sf::Transform Widget::getWorldTransform() const
     return trform;
 }
 
-sf::Vector2f Widget::getWorldPosition() const
+sf::Vector2f gsf::Widget::getWorldPosition() const
 {
     return getWorldTransform() * sf::Vector2f();
 }

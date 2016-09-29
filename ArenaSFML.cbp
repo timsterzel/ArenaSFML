@@ -64,6 +64,8 @@
 		<Unit filename="include/Components/Warrior.hpp" />
 		<Unit filename="include/Components/Weapon.hpp" />
 		<Unit filename="include/Components/Wizard.hpp" />
+		<Unit filename="include/GUI/TextWidget.hpp" />
+		<Unit filename="include/GUI/Widget.hpp" />
 		<Unit filename="include/Game.hpp" />
 		<Unit filename="include/Input/Command.hpp" />
 		<Unit filename="include/Input/EnumCommandTypes.hpp" />
@@ -105,6 +107,8 @@
 		<Unit filename="src/Components/Warrior.cpp" />
 		<Unit filename="src/Components/Weapon.cpp" />
 		<Unit filename="src/Components/Wizard.cpp" />
+		<Unit filename="src/GUI/TextWidget.cpp" />
+		<Unit filename="src/GUI/Widget.cpp" />
 		<Unit filename="src/Game.cpp" />
 		<Unit filename="src/Input/Command.cpp" />
 		<Unit filename="src/Input/Input.cpp" />
