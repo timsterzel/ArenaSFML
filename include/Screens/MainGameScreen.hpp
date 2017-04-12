@@ -1,5 +1,6 @@
 #ifndef MAINGAMESCREEN_HPP
 #define MAINGAMESCREEN_HPP
+#include "libs/GUI-SFML/include/GUI-SFML.hpp"
 #include "Components/Warrior.hpp"
 #include "Components/EnumWorldObjectTypes.hpp"
 #include "Components/SceneNode.hpp"
@@ -20,7 +21,8 @@ class MainGameScreen : public Screen
     private:
         bool m_isGamePaused;
         bool m_showCollisionInfo;
-
+        
+        gsf::GUIEnvironment m_guiEnvironment;
         // Warriors which are in the game
         std::vector<Warrior*> m_possibleTargetWarriors;
 

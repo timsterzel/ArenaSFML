@@ -14,6 +14,7 @@ MainGameScreen::MainGameScreen(ScreenStack *screenStack, Context context)
 : Screen(screenStack, context)
 , m_isGamePaused{ false }
 , m_showCollisionInfo{ false }
+, m_guiEnvironment{ *context.window }
 , m_worldBounds{ 0.f, 0.f, 6000.f, 6000.f }
 , m_playerWarrior{ nullptr }
 {
@@ -46,18 +47,6 @@ void MainGameScreen::buildScene()
     texture.setRepeated(true);
     std::unique_ptr<SpriteNode> background = { std::make_unique<SpriteNode>(RenderLayers::BACKGROUND, texture, textureRect, false) };
     m_sceneGraph.attachChild(std::move(background));
-    //m_sceneLayers[Layers::BACKGROUND]->attachChild(std::move(background));
-    /*
-    std::unique_ptr<Warrior> wizard(new Warrior(RenderLayers::MAIN, 100, Textures::WIZARD, m_TextureHolder, m_SpriteSheetMapHolder));
-    //SceneNode *wizardEnemyTmp = wizard.get();
-    std::unique_ptr<CollisionShape> collisionShapeWizard(new CollisionCircle(12.f));
-    wizard->setCollisionShape(std::move(collisionShapeWizard));
-    //wizard->setPosition(800 / 2.f + 100.f, 480 / 2.f);
-    wizard->setPosition(800 / 2.f - 60.f, 480 / 2.f - 10.f);
-    wizard->setVelocity(60.f);
-    wizard->setType(WorldObjectTypes::ENEMY);
-    m_sceneGraph.attachChild(std::move(wizard));
-    */
 
     // Warrior
     std::unique_ptr<Knight> warrior =
