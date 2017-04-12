@@ -90,7 +90,7 @@ void Game::buildScene()
 {
     m_txtStatFPS.setFont(m_fontHolder.get(Fonts::DEFAULT));
 	m_txtStatFPS.setCharacterSize(12);
-	m_txtStatFPS.setColor(sf::Color::White);
+	m_txtStatFPS.setFillColor(sf::Color::White);
 }
 
 void Game::run()

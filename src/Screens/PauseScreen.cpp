@@ -17,7 +17,7 @@ void PauseScreen::buildScene()
 
     m_txtPaused.setFont(m_context.fontHolder->get(Fonts::DEFAULT));
 	m_txtPaused.setCharacterSize(12);
-	m_txtPaused.setColor(sf::Color::White);
+	m_txtPaused.setFillColor(sf::Color::White);
     m_txtPaused.setString("--PAUSED--");
     m_txtPaused.setOrigin(m_txtPaused.getLocalBounds().width / 2.f, m_txtPaused.getLocalBounds().height / 2.f);
     m_txtPaused.setPosition(m_context.window->getView().getSize().x / 2.f, m_context.window->getView().getSize().y / 2.f);
