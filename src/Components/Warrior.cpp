@@ -78,6 +78,11 @@ void Warrior::setCurrentHealth(const float health)
     m_currentHealth = health;
 }
 
+float Warrior::getMaxHealth() const
+{
+    return m_maxHealth;
+}
+
 float Warrior::getCurrentStanima() const
 {
     return m_currentStamina;

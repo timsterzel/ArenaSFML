@@ -58,6 +58,8 @@ class Warrior : public Entity
 
         float getCurrentHealth() const;
         void setCurrentHealth(const float health);
+        
+        float getMaxHealth() const;
 
         float getCurrentStanima() const;
         void setCurrentStanima(const float stanima);

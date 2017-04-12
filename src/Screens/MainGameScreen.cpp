@@ -15,6 +15,7 @@ MainGameScreen::MainGameScreen(ScreenStack *screenStack, Context context)
 , m_isGamePaused{ false }
 , m_showCollisionInfo{ false }
 , m_guiEnvironment{ *context.window }
+, m_healthBarWarr1{ nullptr }
 , m_worldBounds{ 0.f, 0.f, 6000.f, 6000.f }
 , m_playerWarrior{ nullptr }
 {
@@ -29,6 +30,19 @@ MainGameScreen::~MainGameScreen()
 void MainGameScreen::buildScene()
 {
     std::cout << "MainGameScreen::buildScene" << std::endl;
+    gsf::ProgressWidget::Ptr healthBarWarr1{ 
+        gsf::ProgressWidget::create(80.f, 10.f) };
+    m_healthBarWarr1 = healthBarWarr1.get();
+    healthBarWarr1->setProgressColor(sf::Color::Red);
+    healthBarWarr1->setProgress(60);
+    m_healthBarWarr1->setLeftPosition(10.f);
+    m_healthBarWarr1->setBottomPosition(
+            m_context.window->getView().getSize().y - 10.f);
+    m_guiEnvironment.addWidget(std::move(healthBarWarr1));
+    //m_guiEnvironment.createScene("TestScene.xml");
+    
+
+
     // Play music
     m_context.music->play(Musics::GAMETHEME01);
 
@@ -304,7 +318,14 @@ bool MainGameScreen::update(float dt)
     m_sceneGraph.update(dt);
 
     handleCollision(dt);
-
+    
+    m_guiEnvironment.update(dt);
+    if (m_playerWarrior)
+    {
+        m_healthBarWarr1->setProgress(100);
+        //m_healthBarWarr1->setProgress((m_playerWarrior->getMaxHealth() / 100) 
+        //        * m_playerWarrior->getCurrentHealth());
+    }
     return false;
 }
 
@@ -455,11 +476,16 @@ void MainGameScreen::render()
     }
     if (m_isGamePaused && sf::Shader::isAvailable())
     {
-        m_context.window->draw(m_renderManager, &m_context.shaderHolder->get(Shaders::GRAYSCALE));
+        m_context.window->draw(m_renderManager, 
+                &m_context.shaderHolder->get(Shaders::GRAYSCALE));
+        m_context.window->draw(m_guiEnvironment, 
+                &m_context.shaderHolder->get(Shaders::GRAYSCALE));
     }
     else
     {
         m_context.window->draw(m_renderManager);
+        m_context.window->draw(m_guiEnvironment);
     }
+
     //m_context.window->draw(circleShape, &m_shader);
 }

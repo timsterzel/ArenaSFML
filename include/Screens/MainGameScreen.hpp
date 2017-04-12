@@ -23,6 +23,7 @@ class MainGameScreen : public Screen
         bool m_showCollisionInfo;
         
         gsf::GUIEnvironment m_guiEnvironment;
+        gsf::ProgressWidget *m_healthBarWarr1;
         // Warriors which are in the game
         std::vector<Warrior*> m_possibleTargetWarriors;
 
