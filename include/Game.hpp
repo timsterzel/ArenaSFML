@@ -78,7 +78,7 @@ class Game
         void render();
 
     public:
-        Game(const bool showStats, const bool isInDebug);
+        Game(const bool showStats, const bool isInDebug, const bool isMusicOn);
         ~Game();
         void run();
 };

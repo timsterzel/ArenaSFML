@@ -6,7 +6,7 @@
 #include <memory>
 #include <cmath>
 
-Game::Game(const bool showStats, const bool isInDebug)
+Game::Game(const bool showStats, const bool isInDebug, const bool isMusicOn)
 : m_screenHeight{ 1024 }
 , m_screenWidth{ 768 }
 , m_showStats{ showStats }
@@ -24,6 +24,10 @@ Game::Game(const bool showStats, const bool isInDebug)
 , m_inputHandler{ &m_window }
 , m_screenStack{ Screen::Context( isInDebug, &m_window, &m_fontHolder, &m_textureHolder, &m_shaderHolder, &m_spriteSheetMapHolder, &m_music ) }
 {
+    if (!isMusicOn)
+    {
+        m_music.setVolume(0.f);
+    }
     //std::unique_ptr<Screen> actualScreen = { std::make_unique<MainGameScreen>(isInDebug, this, &m_window, m_fontHolder, m_textureHolder, m_spriteSheetMapHolder) };
     //m_actualScreen = std::move(actualScreen);
     m_window.setFramerateLimit(60);
