@@ -43,10 +43,14 @@ void Screen::buildScene()
     // Do nothing by default
 }
 
-bool Screen::handleInput(Input input, float dt)
+bool Screen::handleInput(Input &input, float dt)
 {
     return true;
-    // Do nothing by default
+}
+
+bool Screen::handleEvent(sf::Event &event, float dt)
+{
+    return true;
 }
 
 bool Screen::update(float dt)

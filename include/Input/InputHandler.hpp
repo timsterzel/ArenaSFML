@@ -1,6 +1,7 @@
 #ifndef INPUTHANDLER_HPP
 #define INPUTHANDLER_HPP
 #include <SFML/Graphics.hpp>
+#include <queue>
 #include "Input/QueueHelper.hpp"
 #include "Input/Input.hpp"
 
@@ -14,11 +15,14 @@ class InputHandler
 
     public:
         InputHandler(sf::RenderWindow *window);
-
-        void handleInput(QueueHelper<Input> &inputQueue);
+        // Store inmodified events in enventQueue and store events which get 
+        // translated to inputs in inputQueue
+        void handleInput(std::queue<sf::Event> &eventQueue, 
+                QueueHelper<Input> &inputQueue);
 
     private:
-        void handleEvents(QueueHelper<Input> &inputQueue);
+        void handleEvents(std::queue<sf::Event> &eventQueue, 
+                QueueHelper<Input> &inputQueue);
         void handleRealTimeInput(QueueHelper<Input> &inputQueue);
         void handleRealTimeRightClick(QueueHelper<Input> &inputQueue);
 

@@ -4,24 +4,28 @@
 #include <iostream>
 
 InputHandler::InputHandler(sf::RenderWindow *window)
-: m_window{window}
+: m_window{ window }
 , m_lastMousePos{ 0, 0 }
 , m_rightMouseClickState{ 0 }
 {
 
 }
 
-void InputHandler::handleInput(QueueHelper<Input> &inputQueue)
+void InputHandler::handleInput(std::queue<sf::Event> &eventQueue, 
+        QueueHelper<Input> &inputQueue)
 {
-    handleEvents(inputQueue);
+    handleEvents(eventQueue, inputQueue);
     handleRealTimeInput(inputQueue);
 }
 
-void InputHandler::handleEvents(QueueHelper<Input> &inputQueue)
+void InputHandler::handleEvents(std::queue<sf::Event> &eventQueue, 
+        QueueHelper<Input> &inputQueue)
 {
+    
     sf::Event event;
     while (m_window->pollEvent(event))
     {
+        eventQueue.push(event);
         if (event.type == sf::Event::Closed)
         {
             m_window->close();

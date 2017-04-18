@@ -24,7 +24,7 @@ void PauseScreen::buildScene()
     //m_sceneGraph.attachChild(std::move(background));
 }
 
-bool PauseScreen::handleInput(Input input, float dt)
+bool PauseScreen::handleInput(Input &input, float dt)
 {
     switch (input.getInputType())
     {
@@ -38,6 +38,11 @@ bool PauseScreen::handleInput(Input input, float dt)
             break;
     }
     return false;
+}
+
+bool PauseScreen::handleEvent(sf::Event &event, float dt)
+{
+    return true;
 }
 
 bool PauseScreen::update(float dt)

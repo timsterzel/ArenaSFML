@@ -122,10 +122,11 @@ void Game::determineDeltaTime()
 
 void Game::handleInput()
 {
-    m_inputHandler.handleInput(m_inputQueue);
+    std::queue<sf::Event> eventQueue;
+    m_inputHandler.handleInput(eventQueue, m_inputQueue);
     while(!m_inputQueue.isEmpty())
     {
-        Input input = m_inputQueue.pop();
+        Input input{ m_inputQueue.pop() };
         switch (input.getInputType())
         {
             case InputTypes::WINDOW_RESIZED :
@@ -163,7 +164,8 @@ void Game::handleInput()
                     break;
             }
         }
-        // Let world class translate the input to commands, but only when the game is not paused
+        // Let world class translate the input to commands, but only when the game 
+        // is not paused
         if (!m_isPaused)
         {
             //m_world.translateInput(input, m_dt);
@@ -171,6 +173,13 @@ void Game::handleInput()
             m_screenStack.handleInput(input, m_dt);
         }
     }
+    
+    while(!eventQueue.empty())
+    {
+        sf::Event event{ eventQueue.front() };
+        eventQueue.pop();
+        m_screenStack.handleEvent(event, m_dt);
+    }   
 }
 
 void Game::update()

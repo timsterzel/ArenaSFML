@@ -15,13 +15,27 @@ ScreenStack::~ScreenStack()
 
 }
 
-void ScreenStack::handleInput(Input input, float dt)
+void ScreenStack::handleInput(Input &input, float dt)
 {
     // Iterate from end to the beginning so inputs are only handled by the next screen when
     // the higher screen return false
     for (auto itr = m_stack.rbegin(); itr != m_stack.rend(); itr++)
     {
         if (!(*itr)->handleInput(input, dt))
+        {
+            break;
+        }
+    }
+    applyPendingChanges();
+}
+
+void ScreenStack::handleEvent(sf::Event &event, float dt)
+{
+    // Iterate from end to the beginning so inputs are only handled by the next screen when
+    // the higher screen return false
+    for (auto itr = m_stack.rbegin(); itr != m_stack.rend(); itr++)
+    {
+        if (!(*itr)->handleEvent(event, dt))
         {
             break;
         }

@@ -134,7 +134,7 @@ void MainGameScreen::safeSceneNodeTrasform()
     m_sceneGraph.safeTransform();
 }
 
-bool MainGameScreen::handleInput(Input input, float dt)
+bool MainGameScreen::handleInput(Input &input, float dt)
 {
     switch (input.getInputType())
     {
@@ -279,6 +279,10 @@ bool MainGameScreen::handleInput(Input input, float dt)
     return false;
 }
 
+bool MainGameScreen::handleEvent(sf::Event &event, float dt)
+{
+    return true;
+}
 /*
 void World::controlWorldEntities()
 {

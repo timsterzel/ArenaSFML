@@ -15,7 +15,8 @@ class PauseScreen : public Screen
 
         virtual void buildScene();
 
-        virtual bool handleInput(Input input, float dt);
+        virtual bool handleInput(Input &input, float dt) override;
+        virtual bool handleEvent(sf::Event &event, float dt) override;
 
         virtual bool update(float dt);
 

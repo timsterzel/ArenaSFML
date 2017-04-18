@@ -41,7 +41,8 @@ class ScreenStack : private sf::NonCopyable
 
         template <typename T>
         void registerScreen(ScreenID screenID);
-        virtual void handleInput(Input input, float dt);
+        virtual void handleInput(Input &input, float dt);
+        virtual void handleEvent(sf::Event &event, float dt);
         //void controlWorldEntities();
         //void handleCommands(float dt);
         virtual void update(float dt);

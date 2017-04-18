@@ -35,18 +35,18 @@ class Game
         // Is used to resize the view correctly depending on the window size.
         unsigned int m_referenceWorldWidth;
         unsigned int m_referenceWorldHeight;
-
+        
         sf::RenderWindow m_window;
         sf::View m_view;
         MusicPlayer m_music;
         sf::Text m_txtStatFPS;
-
+        
         bool m_isRunning;
         bool m_isPaused;
-
+        
         SceneNode m_sceneGraph;
         RenderManager m_renderManager;
-
+        
         // Delta time
         float m_dt;
         float m_fps;
