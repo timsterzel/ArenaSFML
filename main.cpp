@@ -7,8 +7,9 @@ int main()
 {
     sf::RenderWindow window(sf::VideoMode(800, 600), "My window");
     //gsf::GUIEnvironment environment( window );
+	bool soundEnabled{ false };
 
-    Game game(false, true, false);
+    Game game(false, true, soundEnabled);
     game.run();
 
     return 0;
