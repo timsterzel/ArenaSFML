@@ -24,6 +24,7 @@ class MainGameScreen : public Screen
         
         gsf::GUIEnvironment m_guiEnvironment;
         gsf::ProgressWidget *m_healthBarWarr1;
+        gsf::ProgressWidget *m_healthBarWarr2;
         // Warriors which are in the game
         std::vector<Warrior*> m_possibleTargetWarriors;
 
