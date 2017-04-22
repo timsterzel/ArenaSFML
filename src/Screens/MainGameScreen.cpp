@@ -17,6 +17,8 @@ MainGameScreen::MainGameScreen(ScreenStack *screenStack, Context context)
 , m_guiEnvironment{ *context.window }
 , m_healthBarWarr1{ nullptr }
 , m_healthBarWarr2{ nullptr }
+, m_stanimaBarWarr1{ nullptr }
+, m_stanimaBarWarr2{ nullptr }
 , m_worldBounds{ 0.f, 0.f, 6000.f, 6000.f }
 , m_playerWarrior{ nullptr }
 {
@@ -31,17 +33,8 @@ MainGameScreen::~MainGameScreen()
 void MainGameScreen::buildScene()
 {
     std::cout << "MainGameScreen::buildScene" << std::endl;
-    /*
-    m_guiEnvironment.loadFont("fontTmp", "assets/fonts/UbuntuMono-R.ttf");
-    gsf::TextButtonWidget::Ptr txtBtn{ gsf::TextButtonWidget::create(
-            100.f,
-            60.f,
-            "Test",
-            m_guiEnvironment.getFont("fontTmp")) };
-    txtBtn->setLeftPosition(0.f);
-    txtBtn->setTopPosition(0.f);
-    m_guiEnvironment.addWidget(std::move(txtBtn));
-    */
+    
+    // healt bar
     gsf::ProgressWidget::Ptr healthWar1{ gsf::ProgressWidget::create(100.f, 20.f) };
     //gsf::ProgressWidget* pgrWdPtr{ pgrWd.get() };
     m_healthBarWarr1 = healthWar1.get();
@@ -56,6 +49,24 @@ void MainGameScreen::buildScene()
     healthWar2->setRightPosition(m_context.window->getView().getSize().x - 10.f);
     healthWar2->setBottomPosition(m_context.window->getView().getSize().y - 10.f);
     m_guiEnvironment.addWidget(std::move(healthWar2));
+    
+    // Stanima bar
+    gsf::ProgressWidget::Ptr stanimaWar1{ gsf::ProgressWidget::create(100.f, 20.f) };
+    m_stanimaBarWarr1 = stanimaWar1.get();
+    stanimaWar1->setProgressColor(sf::Color::Blue);
+    stanimaWar1->setLeftPosition(10.f);
+    stanimaWar1->setBottomPosition(m_context.window->getView().getSize().y 
+            - 10.f - m_healthBarWarr1->getLocalBounds().height - 10.f);
+    m_guiEnvironment.addWidget(std::move(stanimaWar1));
+    
+    gsf::ProgressWidget::Ptr stanimaWar2{ 
+        gsf::ProgressWidget::create(100.f, 20.f) };
+    m_stanimaBarWarr2 = stanimaWar2.get();
+    stanimaWar2->setProgressColor(sf::Color::Blue);
+    stanimaWar2->setRightPosition(m_context.window->getView().getSize().x - 10.f);
+    stanimaWar2->setBottomPosition(m_context.window->getView().getSize().y 
+            - 10.f - m_healthBarWarr2->getLocalBounds().height - 10.f);
+    m_guiEnvironment.addWidget(std::move(stanimaWar2));
     
     // Play music
     m_context.music->play(Musics::GAMETHEME01);
@@ -341,6 +352,7 @@ bool MainGameScreen::update(float dt)
     if (m_playerWarrior)
     {
         m_healthBarWarr1->setProgress(m_playerWarrior->getCurrentHealth());
+        m_stanimaBarWarr1->setProgress(m_playerWarrior->getCurrentStanima());
         //m_healthBarWarr1->setProgress((m_playerWarrior->getMaxHealth() / 100) 
         //        * m_playerWarrior->getCurrentHealth());
     }
@@ -349,6 +361,8 @@ bool MainGameScreen::update(float dt)
     {
         m_healthBarWarr2->setProgress(
                 m_possibleTargetWarriors[1]->getCurrentHealth());
+        m_stanimaBarWarr2->setProgress(
+                m_possibleTargetWarriors[1]->getCurrentStanima());
     }
     return false;
 }
