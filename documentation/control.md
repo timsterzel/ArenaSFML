@@ -1,7 +1,7 @@
-###Controls
+### Controls
 
 ## Keyboard
-#General:
+# General:
 ESC:					Pause
 F2:					Show FPS
 F3:					Show collision shapes
@@ -11,6 +11,6 @@ S:					Down
 D:					Right
 Right Mouse:				Block
 
-#Knight
+# Knight
 Left Mouse:				Attack
 Left Control + Left Mouse: 		Strong Attack
