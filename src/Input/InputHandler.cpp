@@ -21,7 +21,12 @@ void InputHandler::handleInput(std::queue<sf::Event> &eventQueue,
 void InputHandler::handleEvents(std::queue<sf::Event> &eventQueue, 
         QueueHelper<Input> &inputQueue)
 {
-    
+    /*
+    if (sf::Joystick::isConnected(0))
+    {
+        std::cout << "Joystick 0 is connected\n";
+    }
+    */
     sf::Event event;
     while (m_window->pollEvent(event))
     {
@@ -70,7 +75,16 @@ void InputHandler::handleEvents(std::queue<sf::Event> &eventQueue,
         {
             if (event.mouseButton.button == sf::Mouse::Left)
             {
-                inputQueue.push({ InputTypes::LEFT_CLICK });
+                // LControl + Left Button pressed
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl))
+                {
+                    inputQueue.push({ InputTypes::LCONTROL_LEFT_CLIK });
+                }
+                // Only left button mouse pressed
+                else
+                {
+                    inputQueue.push({ InputTypes::LEFT_CLICK });
+                }
             }
         }
 

@@ -4,14 +4,31 @@
 #include <Collision/CollisionHandler.hpp>
 #include <iostream>
 
-Knight::Knight(RenderLayers layer, const int health, Textures textureId, const ResourceHolder<sf::Texture, Textures> &textureHolder,
-    const SpriteSheetMapHolder &spriteSheetMapHolder, std::vector<Warrior*> &possibleTargetsInWord)
-: Warrior(layer, health, textureId, textureHolder, spriteSheetMapHolder, possibleTargetsInWord)
-{
-    std::vector<AnimationStepRotation>  swordRoationSteps;
-    swordRoationSteps.push_back({ 0.f, -60.f,  0.3f });
-    m_animationWeapon.setRotationSteps(swordRoationSteps);
+Knight::Knight(RenderLayers layer, const int health, Textures textureId, 
+        const ResourceHolder<sf::Texture, Textures> &textureHolder,
+        const SpriteSheetMapHolder &spriteSheetMapHolder, 
+        std::vector<Warrior*> &possibleTargetsInWord)
+: Warrior(layer, health, textureId, textureHolder, spriteSheetMapHolder, 
+        possibleTargetsInWord)
+, m_animCloseAttack( nullptr, false )
+, m_animStrongAttack( nullptr, false )
+, m_closeAttackStanima{ 10.f }
+, m_closeAttackDamageMul{ 1.f }
+, m_strongAttackStanima{ 30.f }
+, m_strongAttackDamageMul{ 3.f }
 
+{
+    // Animation
+    std::vector<AnimationStepRotation>  swordRoationStepsCloseAtt;
+    swordRoationStepsCloseAtt.push_back({ 0.f, -60.f,  0.3f });
+    m_animCloseAttack.setRotationSteps(swordRoationStepsCloseAtt);
+    
+    
+    std::vector<AnimationStepMovement>  swordMovementStepsStrongAtt;
+    swordMovementStepsStrongAtt.push_back({ -5.f, { 1, 0 },  0.3f });
+    swordMovementStepsStrongAtt.push_back({ 5.f, { 1, 0 },  0.3f });
+    m_animStrongAttack.setMovementSteps(swordMovementStepsStrongAtt);
+    
     //std::unique_ptr<Weapon> sword(new Weapon(RenderLayers::WEAPON, 60, Textures::SWORD, textureHolder));
     std::unique_ptr<Weapon> sword(new Weapon(RenderLayers::WEAPON, 60.f, textureHolder.get(textureId), spriteSheetMapHolder.getRectData(textureId, "sword")));
     sword->setType(WorldObjectTypes::WEAPON);
@@ -49,6 +66,25 @@ void Knight::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) cons
 void Knight::updateCurrent(float dt)
 {
     Warrior::updateCurrent(dt);
+    if (m_weapon)
+    {
+        if (!m_animCloseAttack.isRunning())
+        {
+            m_weapon->setIsCollisionCheckOn(false);
+        }
+        else
+        {
+            m_animCloseAttack.update(dt);
+        }
+        if (!m_animStrongAttack.isRunning())
+        {
+            m_weapon->setIsCollisionCheckOn(false);
+        }
+        else
+        {
+            m_animStrongAttack.update(dt);
+        }
+    }
 }
 
 void Knight::onCommandCurrent(const Command &command, float dt)
@@ -63,8 +99,11 @@ void Knight::onCommandCurrent(const Command &command, float dt)
         m_currentDirection.y = 0.f;
         switch (command.getCommandType())
         {
-            case CommandTypes::ATTACK:
+            case CommandTypes::ATTACK1:
                 startCloseAttack();
+                break;
+            case CommandTypes::ATTACK2:
+                startStrongAttack();
                 break;
             case CommandTypes::START_BLOCKING:
                 startBlocking();
@@ -111,19 +150,32 @@ void Knight::updateAI(float dt)
 
 void Knight::startCloseAttack()
 {
-    if (m_weapon && !m_animationWeapon.isRunning() && m_currentStamina >= m_closeAttackStanima)
+    if (m_weapon && !m_animCloseAttack.isRunning() && 
+            m_currentStamina >= m_closeAttackStanima)
     {
-        m_animationWeapon.start();
+        m_animCloseAttack.start();
         m_weapon->setIsCollisionCheckOn(true);
         m_weapon->setDamageMultiplicator(m_closeAttackDamageMul);
         removeStanima(m_closeAttackStanima);
-        //std::cout << "Current Stanima: " << m_currentStamina << std::endl;
+    }
+}
+
+void Knight::startStrongAttack()
+{
+    if (m_weapon && !m_animStrongAttack.isRunning() && 
+            m_currentStamina >= m_strongAttackStanima)
+    {
+        m_weapon->setRotation(0.f);
+        m_animStrongAttack.start();
+        m_weapon->setIsCollisionCheckOn(true);
+        m_weapon->setDamageMultiplicator(m_strongAttackDamageMul);
+        removeStanima(m_strongAttackStanima);
     }
 }
 
 void Knight::startBlocking()
 {
-    m_animationWeapon.stop();
+    m_animCloseAttack.stop();
     std::cout << "startBlocking" << std::endl;
     // Knight can only block with a weapon
     if (m_weapon && !m_isBlocking)
@@ -143,4 +195,8 @@ void Knight::stopBlocking()
     }
 }
 
-
+void Knight::weaponAdded()
+{
+    m_animCloseAttack.setParent(m_weapon);
+    m_animStrongAttack.setParent(m_weapon);
+}

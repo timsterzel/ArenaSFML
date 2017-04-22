@@ -10,13 +10,20 @@ class Wizard : public Warrior
 {
 
     private:
+        Animation m_animCloseAttack;
 
     public:
-        Wizard(RenderLayers layer, const int health, Textures textureId, const ResourceHolder<sf::Texture, Textures> &textureHolder,
-            const SpriteSheetMapHolder &spriteSheetMapHolder, std::vector<Warrior*> &possibleTargetsInWord);
+        Wizard(RenderLayers layer, const int health, Textures textureId, 
+                const ResourceHolder<sf::Texture, Textures> &textureHolder,
+                const SpriteSheetMapHolder &spriteSheetMapHolder, 
+                std::vector<Warrior*> &possibleTargetsInWord);
         ~Wizard();
 
-        virtual void drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const;
+        virtual void drawCurrent(sf::RenderTarget &target, 
+                sf::RenderStates states) const;
+
+    protected:
+        virtual void weaponAdded();
 
     private:
         virtual void updateCurrent(float dt);

@@ -2,13 +2,17 @@
 #include <Components/Weapon.hpp>
 #include <iostream>
 
-Wizard::Wizard(RenderLayers layer, const int health, Textures textureId, const ResourceHolder<sf::Texture, Textures> &textureHolder,
-    const SpriteSheetMapHolder &spriteSheetMapHolder, std::vector<Warrior*> &possibleTargetsInWord)
-: Warrior(layer, health, textureId, textureHolder, spriteSheetMapHolder, possibleTargetsInWord)
+Wizard::Wizard(RenderLayers layer, const int health, Textures textureId, 
+        const ResourceHolder<sf::Texture, Textures> &textureHolder,
+        const SpriteSheetMapHolder &spriteSheetMapHolder, 
+        std::vector<Warrior*> &possibleTargetsInWord)
+: Warrior(layer, health, textureId, textureHolder, spriteSheetMapHolder, 
+        possibleTargetsInWord)
+, m_animCloseAttack( nullptr, false )
 {
     std::vector<AnimationStepRotation>  swordRoationSteps;
     swordRoationSteps.push_back({ 0.f, -60.f,  0.5f });
-    m_animationWeapon.setRotationSteps(swordRoationSteps);
+    m_animCloseAttack.setRotationSteps(swordRoationSteps);
 
     /*
     std::vector<AnimationStepMovement>  swordMovementSteps;
@@ -19,7 +23,7 @@ Wizard::Wizard(RenderLayers layer, const int health, Textures textureId, const R
 
 Wizard::~Wizard()
 {
-    std::cout << "Destructor Wizard" << std::endl;
+
 }
 
 void Wizard::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const
@@ -44,10 +48,10 @@ void Wizard::onCommandCurrent(const Command &command, float dt)
         m_currentDirection.y = 0.f;
         switch (command.getCommandType())
         {
-            case CommandTypes::ATTACK:
-                if (!m_animationWeapon.isRunning())
+            case CommandTypes::ATTACK1:
+                if (!m_animCloseAttack.isRunning())
                 {
-                    m_animationWeapon.start();
+                    m_animCloseAttack.start();
                     m_weapon->setIsCollisionCheckOn(true);
                 }
                 break;
@@ -61,5 +65,9 @@ void Wizard::onCommandCurrent(const Command &command, float dt)
     }
 }
 
+void Wizard::weaponAdded()
+{
+    m_animCloseAttack.setParent(m_weapon);
+}
 
 

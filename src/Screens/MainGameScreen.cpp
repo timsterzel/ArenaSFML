@@ -207,7 +207,11 @@ bool MainGameScreen::handleInput(Input &input, float dt)
 
         case InputTypes::LEFT_CLICK :
             m_commandQueue.push(
-                    { CommandTypes::ATTACK, WorldObjectTypes::PLAYER });
+                    { CommandTypes::ATTACK1, WorldObjectTypes::PLAYER });
+            break;
+        case InputTypes::LCONTROL_LEFT_CLIK :
+            m_commandQueue.push(
+                    { CommandTypes::ATTACK2, WorldObjectTypes::PLAYER });
             break;
         case InputTypes::RIGHT_CLICK_START :
             m_commandQueue.push(

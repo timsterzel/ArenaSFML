@@ -16,8 +16,10 @@ class AnimationStepMovement : public AnimationStep
         sf::Vector2f m_movementPerSecond;
 
     public:
-        AnimationStepMovement(sf::Vector2f startPosition, float totalDistance, sf::Vector2f direction, float duration);
-        AnimationStepMovement(float totalDistance, sf::Vector2f direction, float duration);
+        AnimationStepMovement(sf::Vector2f startPosition, float totalDistance, 
+                sf::Vector2f direction, float duration);
+        AnimationStepMovement(float totalDistance, sf::Vector2f direction, 
+                float duration);
 
         bool isStartPositionSet() const;
         sf::Vector2f getStartPosition() const;

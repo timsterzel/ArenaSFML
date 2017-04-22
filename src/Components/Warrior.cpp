@@ -20,11 +20,8 @@ Warrior::Warrior(RenderLayers layer, const float health, Textures textureId, con
 , m_weapon{ nullptr }
 , m_upperBody{ nullptr }
 , m_weaponPos(0.f, 10.f)
-, m_animationWeapon( nullptr, false )
 , m_animationLeftShoe{  nullptr ,true }
 , m_animationRightShoe{  nullptr ,true }
-, m_closeAttackStanima{ 10.f }
-, m_closeAttackDamageMul{ 1.0 }
 , m_closeCombatArea{ nullptr }
 , m_isAiActive{ false }
 , m_possibleTargetsInWord{ possibleTargetsInWord }
@@ -35,9 +32,9 @@ Warrior::Warrior(RenderLayers layer, const float health, Textures textureId, con
     setWidth(bounds.width);
     setHeight(bounds.height);
 
-    std::vector<AnimationStepRotation>  swordRoationSteps;
-    swordRoationSteps.push_back({ 0.f, -60.f,  0.5f });
-    m_animationWeapon.setRotationSteps(swordRoationSteps);
+    //std::vector<AnimationStepRotation>  swordRoationSteps;
+    //swordRoationSteps.push_back({ 0.f, -60.f,  0.5f });
+    //m_animationWeapon.setRotationSteps(swordRoationSteps);
     std::unique_ptr<SpriteNode> leftShoe =
         { std::make_unique<SpriteNode>(RenderLayers::SHOES, textureHolder.get(textureId), spriteSheetMapHolder.getRectData(textureId, "left_shoe"), true) };
     leftShoe->setPosition(8.f, -5.f);
@@ -125,7 +122,7 @@ void Warrior::setWeapon(Weapon *weapon)
     m_weapon = weapon;
     m_weapon->setRotationPoint(m_weaponPos);
     m_weapon->equip(m_weaponPos);
-    m_animationWeapon.setParent(m_weapon);
+    weaponAdded();
     //m_weapon->setPosition(m_weaponPos);
     //m_weapon->setPosition(10.f, 10.f);
     //m_weapon->setParent(this);
@@ -236,17 +233,6 @@ void Warrior::updateCurrent(float dt)
     {
         updateAI(dt);
     }
-    if (m_weapon)
-    {
-        if (!m_animationWeapon.isRunning())
-        {
-            m_weapon->setIsCollisionCheckOn(false);
-        }
-        else
-        {
-            m_animationWeapon.update(dt);
-        }
-    }
     if (m_isMoving)
     {
         if (m_leftShoe)
@@ -284,11 +270,7 @@ Warrior* Warrior::determineActualTarget() const
             nearestDist = distance;
             nearestWar = warrior;
         }
-        std::cout << "THIS POS X: " << getWorldPosition().x << " Y: " << getWorldPosition().y << std::endl;
-        std::cout << "WARRIOR POS X: " << warrior->getWorldPosition().x << " Y: " << warrior->getWorldPosition().y << std::endl;
     }
-    std::cout << "Nearest dist: " << nearestDist << std::endl;
-    std::cout << "SIZE: " << m_possibleTargetsInWord.size() << std::endl;
     return nearestWar;
 }
 
@@ -413,3 +395,7 @@ void Warrior::lookAt(const sf::Vector2f LookPos)
     setRotation(AngleSigned);
 }
 
+void Warrior::weaponAdded()
+{
+    // Do nothing by default
+}

@@ -34,15 +34,17 @@ class Warrior : public Entity
         SpriteNode *m_upperBody;
         sf::Vector2f m_weaponPos;
 
-        Animation m_animationWeapon;
         Animation m_animationLeftShoe;
         Animation m_animationRightShoe;
         //CollisionCircle m_collisionCircle;
-
-        float m_closeAttackStanima;
+        /*
+        float m_attack1Stanima;
         // The multiplicator of of the attack for damage calculation
-        float m_closeAttackDamageMul;
-
+        float m_attack1DamageMul;
+        float m_attack2Stanima;
+        // The multiplicator of of the attack for damage calculation
+        float m_attack2DamageMul;
+        */
         std::unique_ptr<CollisionShape> m_closeCombatArea;
 
         // Used for AI
@@ -52,8 +54,10 @@ class Warrior : public Entity
 
 
     public:
-        Warrior(RenderLayers layer, const float health, Textures textureId, const ResourceHolder<sf::Texture, Textures> &textureHolder,
-            const SpriteSheetMapHolder &spriteSheetMapHolder, std::vector<Warrior*> &possibleTargetsInWord);
+        Warrior(RenderLayers layer, const float health, Textures textureId, 
+                const ResourceHolder<sf::Texture, Textures> &textureHolder,
+                const SpriteSheetMapHolder &spriteSheetMapHolder, 
+                std::vector<Warrior*> &possibleTargetsInWord);
         virtual ~Warrior();
 
         float getCurrentHealth() const;
@@ -81,17 +85,20 @@ class Warrior : public Entity
         void removeStanima(float stanima);
         void addStanima(float stanima);
 
-        virtual void drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const;
+        virtual void drawCurrent(sf::RenderTarget &target, 
+                sf::RenderStates states) const;
 
 
     protected:
-        void setBodyParts(SpriteNode *leftShoe, SpriteNode *rightShoe, SpriteNode *upperBody);
+        void setBodyParts(SpriteNode *leftShoe, SpriteNode *rightShoe, 
+                SpriteNode *upperBody);
 
         virtual void updateCurrent(float dt);
         virtual Warrior* determineActualTarget() const;
         virtual void updateAI(float dt);
         virtual void onCommandCurrent(const Command &command, float dt);
         void lookAt(sf::Vector2f pos);
+        virtual void weaponAdded();
         // The command which are for every Warrior equal
         //void onCommandCurrentWarrior(const Command &command, float dt);
 };
