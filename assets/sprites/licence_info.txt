@@ -1,6 +1,7 @@
 The following assets are under the Creative Commons Attribution 3.0 licence and base on assets from Xarius:
 knight.png
 knightOLD.png
+runner.png
 wizard.png
 This assets are modified. You can find the unmodified assets on the following url:
 http://opengameart.org/users/xarius

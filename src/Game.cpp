@@ -73,10 +73,21 @@ void Game::loadTextures()
 {
     //sf::Rect<int> rect;
     //m_textureHolder.load<sf::Rect<int>>(Textures::KNIGHT, "assets/sprites/knight.png", rect);
-    m_textureHolder.load(Textures::KNIGHT, "assets/sprites/warriors/knight.png");
-    m_spriteSheetMapHolder.load(Textures::KNIGHT, "assets/sprites/warriors/knight.txt");
-    m_textureHolder.load(Textures::WIZARD, "assets/sprites/warriors/wizard.png");
-    m_spriteSheetMapHolder.load(Textures::WIZARD, "assets/sprites/warriors/wizard.txt");
+    m_textureHolder.load(
+            Textures::KNIGHT, "assets/sprites/warriors/knight.png");
+    m_spriteSheetMapHolder.load(
+            Textures::KNIGHT, "assets/sprites/warriors/knight.txt");
+    
+    m_textureHolder.load(
+            Textures::RUNNER, "assets/sprites/warriors/runner.png");
+    m_spriteSheetMapHolder.load(
+            Textures::RUNNER, "assets/sprites/warriors/runner.txt");
+
+    m_textureHolder.load(
+            Textures::WIZARD, "assets/sprites/warriors/wizard.png");
+    m_spriteSheetMapHolder.load(
+            Textures::WIZARD, "assets/sprites/warriors/wizard.txt");
+    
     m_textureHolder.load(Textures::CHESS_WHITE, "assets/sprites/chess_white.png");
 }
 

@@ -1,0 +1,4 @@
+left_shoe = 0 7 9 6
+right_shoe = 0 14 9 6
+upper_body = 22 0 20 30
+sword = 0 0 21 6

@@ -108,7 +108,7 @@ void MainGameScreen::buildScene()
 
 
     std::unique_ptr<Warrior> enemy1{ std::make_unique<Knight>
-        (RenderLayers::MAIN, 100.f, Textures::KNIGHT, *m_context.textureHolder, 
+        (RenderLayers::MAIN, 100.f, Textures::RUNNER, *m_context.textureHolder, 
          *m_context.spriteSheetMapHolder, m_possibleTargetWarriors) };
     //SceneNode *wizardEnemyTmp = wizard.get();
     std::unique_ptr<CollisionShape> collisionShapeEnemy{ 
