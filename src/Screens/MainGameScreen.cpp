@@ -10,7 +10,7 @@
 #include <memory>
 #include "Game.hpp"
 
-MainGameScreen::MainGameScreen(ScreenStack *screenStack, Context context)
+MainGameScreen::MainGameScreen(ScreenStack *screenStack, Context &context)
 : Screen(screenStack, context)
 , m_isGamePaused{ false }
 , m_showCollisionInfo{ false }
@@ -421,7 +421,6 @@ void MainGameScreen::handleCollision(float dt)
                 if (!warrior->isBlocking())
                 {
                     warrior->damage(weapon->getTotalDamage());
-                    std::cout << "DAMAGED###################\n";
                 }
                 else
                 {

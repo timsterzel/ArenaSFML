@@ -9,7 +9,7 @@ class PauseScreen : public Screen
         sf::Text m_txtPaused;
 
     public:
-        PauseScreen(ScreenStack *screenStack, Context context);
+        PauseScreen(ScreenStack *screenStack, Context &context);
 
         virtual ~PauseScreen();
 

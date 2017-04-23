@@ -38,7 +38,7 @@ class MainGameScreen : public Screen
         long colCnt = 0;
 
     public:
-        MainGameScreen(ScreenStack *screenStack, Context context);
+        MainGameScreen(ScreenStack *screenStack, Context &context);
 
         virtual ~MainGameScreen();
 

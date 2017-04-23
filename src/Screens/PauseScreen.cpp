@@ -1,6 +1,6 @@
 #include "Screens/PauseScreen.hpp"
 
-PauseScreen::PauseScreen(ScreenStack *screenStack, Context context)
+PauseScreen::PauseScreen(ScreenStack *screenStack, Context &context)
 : Screen(screenStack, context)
 {
     buildScene();

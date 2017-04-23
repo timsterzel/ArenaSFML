@@ -10,8 +10,7 @@
 #include "Sound/MusicPlayer.hpp"
 #include <memory>
 
-
-Screen::Screen(ScreenStack *screenStack, Context context)
+Screen::Screen(ScreenStack *screenStack, Context &context)
 : m_context{ context }
 , m_screenStack{ screenStack }
 , m_renderManager{ &m_sceneGraph }

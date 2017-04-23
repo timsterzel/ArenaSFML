@@ -42,7 +42,7 @@ class Screen : private sf::NonCopyable
 
     protected:
 
-        Context m_context;
+        Context &m_context;
         ScreenStack *m_screenStack;
 
         SceneNode m_sceneGraph;
@@ -52,7 +52,7 @@ class Screen : private sf::NonCopyable
         //QueueHelper<Command> m_commandQueue;
 
     public:
-        Screen(ScreenStack *screenStack, Context context);
+        Screen(ScreenStack *screenStack, Context &context);
 
         virtual ~Screen();
 
