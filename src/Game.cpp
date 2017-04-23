@@ -15,6 +15,7 @@ Game::Game(const bool showStats, const bool isInDebug, const bool isMusicOn)
 , m_referenceWorldHeight{ 480 }
 , m_window{ sf::VideoMode{ m_screenHeight, m_screenWidth} , "ArenaSFML" }
 , m_music{ }
+, m_context{ isInDebug, &m_window, &m_fontHolder, &m_textureHolder, &m_shaderHolder, &m_spriteSheetMapHolder, &m_music }
 , m_isRunning{ true }
 , m_isPaused{ false }
 , m_renderManager{ &m_sceneGraph }
@@ -22,7 +23,7 @@ Game::Game(const bool showStats, const bool isInDebug, const bool isMusicOn)
 , m_fps{ 0 }
 , m_timePoint1{ CLOCK::now() }
 , m_inputHandler{ &m_window }
-, m_screenStack{ Screen::Context( isInDebug, &m_window, &m_fontHolder, &m_textureHolder, &m_shaderHolder, &m_spriteSheetMapHolder, &m_music ) }
+, m_screenStack{ m_context }
 {
     if (!isMusicOn)
     {

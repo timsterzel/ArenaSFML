@@ -40,7 +40,8 @@ class Game
         sf::View m_view;
         MusicPlayer m_music;
         sf::Text m_txtStatFPS;
-        
+        Screen::Context m_context;
+
         bool m_isRunning;
         bool m_isPaused;
         

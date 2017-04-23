@@ -1,7 +1,7 @@
 #include "Screens/ScreenStack.hpp"
 
 
-ScreenStack::ScreenStack(Screen::Context context)
+ScreenStack::ScreenStack(Screen::Context &context)
 : m_stack()
 , m_pendingList()
 , m_context{ context }

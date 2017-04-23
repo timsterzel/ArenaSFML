@@ -31,11 +31,11 @@ class ScreenStack : private sf::NonCopyable
     private:
         std::vector<Screen::Ptr> m_stack;
         std::vector<PendingChange> m_pendingList;
-        Screen::Context m_context;
+        Screen::Context &m_context;
         std::map<ScreenID, std::function<Screen::Ptr()>> m_factories;
 
     public:
-        explicit ScreenStack(Screen::Context context);
+        explicit ScreenStack(Screen::Context &context);
 
         ~ScreenStack();
 
