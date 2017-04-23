@@ -39,7 +39,6 @@ Knight::Knight(RenderLayers layer, const int health, Textures textureId,
     sword->setCollisionShape(std::move(collisionShapeSword));
     setWeapon(sword.get());
     attachChild(std::move(sword));
-    std::cout << "After sowrd Init" << std::endl;
 
     std::unique_ptr<CollisionShape> closeCombatArea(new CollisionCircle(9.f));
     m_closeCombatArea = std::move(closeCombatArea);
@@ -68,21 +67,17 @@ void Knight::updateCurrent(float dt)
     Warrior::updateCurrent(dt);
     if (m_weapon)
     {
-        if (!m_animCloseAttack.isRunning())
-        {
-            m_weapon->setIsCollisionCheckOn(false);
-        }
-        else
+        if (m_animCloseAttack.isRunning())
         {
             m_animCloseAttack.update(dt);
         }
-        if (!m_animStrongAttack.isRunning())
+        else if (m_animStrongAttack.isRunning())
         {
-            m_weapon->setIsCollisionCheckOn(false);
+            m_animStrongAttack.update(dt);
         }
         else
         {
-            m_animStrongAttack.update(dt);
+            m_weapon->setIsCollisionCheckOn(false);
         }
     }
 }
@@ -150,6 +145,10 @@ void Knight::updateAI(float dt)
 
 void Knight::startCloseAttack()
 {
+    if (m_weapon != nullptr)
+    {
+        std::cout << "Weapon is not null\n";
+    }
     if (m_weapon && !m_animCloseAttack.isRunning() && 
             m_currentStamina >= m_closeAttackStanima)
     {

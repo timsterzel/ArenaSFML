@@ -122,22 +122,6 @@ void MainGameScreen::buildScene()
     enemy1->setIsAiActive(false);
     m_possibleTargetWarriors.push_back(enemy1.get());
     m_sceneGraph.attachChild(std::move(enemy1));
-
-
-
-    //m_sceneLayers[Layers::MAIN]->attachChild(std::move(warrior));
-    //***********
-
-    // Collision Tests
-    /*
-    if (m_playerWarrior->getCollisionShape()->isColliding(*wizardEnemyTmp->getCollisionShape()))
-    {
-        std::cout << "Colliding" << std::endl;
-    }
-    */
-    //m_playerWarrior->getCollisionShape()->isColliding(*warriorEnemyTmp->getCollisionShape());
-    std::cout << "MainGameScreen::buildScene End" << std::endl;
-
 }
 
 void MainGameScreen::safeSceneNodeTrasform()
@@ -410,6 +394,7 @@ void MainGameScreen::handleCollision(float dt)
     m_sceneGraph.checkSceneCollision(m_sceneGraph, collisionData);
     for (CollisionInfo collisionInfo : collisionData)
     {
+        std::cout << "CollisionInfo\n";
         SceneNode *sceneNodeFirst{ collisionInfo.getCollidedFirst() };
         SceneNode *sceneNodeSecond{ collisionInfo.getCollidedSecond() };
         SceneNode::Pair sceneNodes{ collisionInfo.getCollidedFirst(), 
@@ -422,6 +407,7 @@ void MainGameScreen::handleCollision(float dt)
         else if (matchesCategories(sceneNodes, 
                     WorldObjectTypes::WEAPON, WorldObjectTypes::WARRIOR))
         {
+            std::cout << "Weapon Warrior collision\n";
             Weapon *weapon{ static_cast<Weapon*>
                 (getSceneNodeOfType(sceneNodes, WorldObjectTypes::WEAPON)) };
             Warrior *warrior{ static_cast<Warrior*>
@@ -435,6 +421,7 @@ void MainGameScreen::handleCollision(float dt)
                 if (!warrior->isBlocking())
                 {
                     warrior->damage(weapon->getTotalDamage());
+                    std::cout << "DAMAGED###################\n";
                 }
                 else
                 {
@@ -491,8 +478,8 @@ bool MainGameScreen::matchesCategories(SceneNode::Pair &colliders, unsigned int 
     unsigned int category1 = colliders.first->getType();
     unsigned int category2 = colliders.second->getType();
 
-    //std::cout << "Cat1: " << category1 << " Cat2: " << category2 << " Type1: " 
-    //<< type1 << " Type2: " << type2 << std::endl;
+    std::cout << "Cat1: " << category1 << " Cat2: " << category2 << " Type1: " 
+    << type1 << " Type2: " << type2 << std::endl;
     if (type1 & category1 && type2 & category2)
     {
         return true;
@@ -507,15 +494,6 @@ bool MainGameScreen::matchesCategories(SceneNode::Pair &colliders, unsigned int 
 
 void MainGameScreen::render()
 {
-    if (m_playerWarrior)
-    {
-        std::cout << "Players Stamina: " << m_playerWarrior->getCurrentStanima() 
-            << std::endl;
-    }
-    else
-    {
-        std::cout << "Players is null" << std::endl;
-    }
     if (m_isGamePaused && sf::Shader::isAvailable())
     {
         m_context.window->draw(m_renderManager, 
