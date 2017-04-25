@@ -41,8 +41,13 @@ class Weapon : public Entity
         virtual void setRotation(float angle);
         //void rotateAround(sf::Vector2f pos, float degrees);
         void rotate(float angle);
-
+        
+        // The point on the item where it is added to the parent
+        // E.g. the equipPoint of a sword is its handle
         void setEquipPoint(float x, float y);
+        // The point relative to the parent where the item is added on the parent
+        // E.g. when you want to equip a sword to a character, the parentEquip pos is
+        // its hand
         void equip(sf::Vector2f parentEqiupPos);
 
         virtual void drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const;

@@ -8,6 +8,7 @@ enum WorldObjectTypes
     ENEMY = 1 << 2,
     WARRIOR = 1 << 3,
     WEAPON = 1 << 4,
+    SHIELD = 1 << 5,
     // TMP
     PLAYER_TWO = 1 << 5
 };

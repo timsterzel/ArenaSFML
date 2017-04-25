@@ -16,7 +16,6 @@ Knight::Knight(RenderLayers layer, const int health, Textures textureId,
 , m_closeAttackDamageMul{ 1.f }
 , m_strongAttackStanima{ 30.f }
 , m_strongAttackDamageMul{ 3.f }
-
 {
     // Animation
     std::vector<AnimationStepRotation>  swordRoationStepsCloseAtt;
@@ -30,7 +29,9 @@ Knight::Knight(RenderLayers layer, const int health, Textures textureId,
     m_animStrongAttack.setMovementSteps(swordMovementStepsStrongAtt);
     
     //std::unique_ptr<Weapon> sword(new Weapon(RenderLayers::WEAPON, 60, Textures::SWORD, textureHolder));
-    std::unique_ptr<Weapon> sword(new Weapon(RenderLayers::WEAPON, 60.f, textureHolder.get(textureId), spriteSheetMapHolder.getRectData(textureId, "sword")));
+    std::unique_ptr<Weapon> sword(new Weapon(RenderLayers::WEAPON, 60.f, 
+                textureHolder.get(textureId), 
+                spriteSheetMapHolder.getRectData(textureId, "sword")));
     sword->setType(WorldObjectTypes::WEAPON);
     sword->setPosition(0.f, 0.f);
     //swordPlayer->setRotationPoint(0.f, swordPlayer->getSpriteHeight() / 2.f);
@@ -39,6 +40,27 @@ Knight::Knight(RenderLayers layer, const int health, Textures textureId,
     sword->setCollisionShape(std::move(collisionShapeSword));
     setWeapon(sword.get());
     attachChild(std::move(sword));
+
+
+    std::unique_ptr<Weapon> shield(new Weapon(RenderLayers::WEAPON, 60.f, 
+                textureHolder.get(textureId), 
+                spriteSheetMapHolder.getRectData(textureId, "shield")));
+    shield->setType(WorldObjectTypes::SHIELD);
+    //shield->setOrigin(shield->getWidth() / 2.f, shield->getHeight());
+    //shield->setEquipPoint(10.f, 0.f);
+    shield->setPosition(0.f, 0.f);
+    //shield->setEquipPoint(shield->getSpriteWidth() / 2.f, shield->getSpriteHeight()/2.f);
+    shield->setEquipPoint(0.f, shield->getSpriteHeight() / 2.f);
+    std::unique_ptr<CollisionShape> collisionShapeShield(
+            new CollisionRect({ shield->getSpriteWidth(), 
+                shield->getSpriteHeight() }));
+    shield->setCollisionShape(std::move(collisionShapeShield));
+    //setWeapon(sword.get());
+    // Shield pos
+    m_shieldEquipPos = sf::Vector2f{ 0.f, -getHeight() / 2.f + 3.f };
+    shield->equip(m_shieldEquipPos);
+    attachChild(std::move(shield));
+
 
     std::unique_ptr<CollisionShape> closeCombatArea(new CollisionCircle(9.f));
     m_closeCombatArea = std::move(closeCombatArea);

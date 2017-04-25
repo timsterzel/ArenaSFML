@@ -106,7 +106,7 @@ void MainGameScreen::buildScene()
     m_possibleTargetWarriors.push_back(warrior.get());
     m_sceneGraph.attachChild(std::move(warrior));
 
-
+    /*
     std::unique_ptr<Warrior> enemy1{ std::make_unique<Knight>
         (RenderLayers::MAIN, 100.f, Textures::RUNNER, *m_context.textureHolder, 
          *m_context.spriteSheetMapHolder, m_possibleTargetWarriors) };
@@ -122,6 +122,7 @@ void MainGameScreen::buildScene()
     enemy1->setIsAiActive(false);
     m_possibleTargetWarriors.push_back(enemy1.get());
     m_sceneGraph.attachChild(std::move(enemy1));
+    */
 }
 
 void MainGameScreen::safeSceneNodeTrasform()

@@ -12,6 +12,9 @@ class Knight : public Warrior
         Animation m_animCloseAttack;
         Animation m_animStrongAttack;
         
+        sf::Vector2f m_shieldEquipPos;
+        Weapon *m_shield;
+        
         float m_closeAttackStanima;
         float m_closeAttackDamageMul;
         float m_strongAttackStanima;
