@@ -59,6 +59,7 @@ Knight::Knight(RenderLayers layer, const int health, Textures textureId,
     // Shield pos
     m_shieldEquipPos = sf::Vector2f{ 0.f, -getHeight() / 2.f + 3.f };
     shield->equip(m_shieldEquipPos);
+    m_shield = shield.get();
     attachChild(std::move(shield));
 
 
@@ -197,22 +198,37 @@ void Knight::startStrongAttack()
 void Knight::startBlocking()
 {
     m_animCloseAttack.stop();
-    std::cout << "startBlocking" << std::endl;
     // Knight can only block with a weapon
+    /*
     if (m_weapon && !m_isBlocking)
     {
         m_isBlocking = true;
         m_weapon->setRotation(-30.f);
     }
+    */
+    if (m_shield && !m_isBlocking)
+    {
+        m_isBlocking = true;
+        m_shield->setRotation(270.f);
+        m_shield->setPosition(10.f, 0.f);
+    }
 }
 
 void Knight::stopBlocking()
 {
-    std::cout << "stopBlocking" << std::endl;
     m_isBlocking = false;
+    /*
     if (m_weapon)
     {
         m_weapon->setRotation(0.f);
+    }
+    */
+    if (m_weapon)
+    {
+        m_shield->setRotation(0.f);
+        m_shield->setPosition(0.f, 0.f);
+        m_shield->equip(m_shieldEquipPos);
+        //m_shield->setPosition(m_shieldEquipPos);
     }
 }
 

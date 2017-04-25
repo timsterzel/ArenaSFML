@@ -127,7 +127,8 @@ void Weapon::setRotation(float angle)
 void Weapon::rotate(float angle)
 {
     sf::Transformable::rotate(angle);
-    const sf::Vector2f newPos = { Calc::rotatePointAround(getPosition(), m_rotationPoint, -angle) };
+    const sf::Vector2f newPos = { 
+        Calc::rotatePointAround(getPosition(), m_rotationPoint, -angle) };
     setPosition(newPos);
 }
 
