@@ -6,6 +6,7 @@
 #include "Components/Warrior.hpp"
 #include "Components/Weapon.hpp"
 #include "Components/Knight.hpp"
+#include "Components/Runner.hpp"
 #include "Calc.hpp"
 #include <memory>
 #include "Game.hpp"
@@ -105,9 +106,8 @@ void MainGameScreen::buildScene()
     //m_playerWarrior->attachChild(std::move(swordPlayer));
     m_possibleTargetWarriors.push_back(warrior.get());
     m_sceneGraph.attachChild(std::move(warrior));
-
-    /*
-    std::unique_ptr<Warrior> enemy1{ std::make_unique<Knight>
+    
+    std::unique_ptr<Warrior> enemy1{ std::make_unique<Runner>
         (RenderLayers::MAIN, 100.f, Textures::RUNNER, *m_context.textureHolder, 
          *m_context.spriteSheetMapHolder, m_possibleTargetWarriors) };
     //SceneNode *wizardEnemyTmp = wizard.get();
@@ -122,7 +122,6 @@ void MainGameScreen::buildScene()
     enemy1->setIsAiActive(false);
     m_possibleTargetWarriors.push_back(enemy1.get());
     m_sceneGraph.attachChild(std::move(enemy1));
-    */
 }
 
 void MainGameScreen::safeSceneNodeTrasform()
@@ -395,7 +394,6 @@ void MainGameScreen::handleCollision(float dt)
     m_sceneGraph.checkSceneCollision(m_sceneGraph, collisionData);
     for (CollisionInfo collisionInfo : collisionData)
     {
-        std::cout << "CollisionInfo\n";
         SceneNode *sceneNodeFirst{ collisionInfo.getCollidedFirst() };
         SceneNode *sceneNodeSecond{ collisionInfo.getCollidedSecond() };
         SceneNode::Pair sceneNodes{ collisionInfo.getCollidedFirst(), 
@@ -408,7 +406,6 @@ void MainGameScreen::handleCollision(float dt)
         else if (matchesCategories(sceneNodes, 
                     WorldObjectTypes::WEAPON, WorldObjectTypes::WARRIOR))
         {
-            std::cout << "Weapon Warrior collision\n";
             Weapon *weapon{ static_cast<Weapon*>
                 (getSceneNodeOfType(sceneNodes, WorldObjectTypes::WEAPON)) };
             Warrior *warrior{ static_cast<Warrior*>
@@ -435,7 +432,6 @@ void MainGameScreen::handleCollision(float dt)
         {
             //std::cout << "Collision: " << colCnt++ << std::endl;
         }
-
     }
 }
 /*
