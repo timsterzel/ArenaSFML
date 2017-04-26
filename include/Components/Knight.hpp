@@ -4,7 +4,7 @@
 #include "Components/Warrior.hpp"
 #include <iostream>
 
-
+class Item;
 
 class Knight : public Warrior
 {
@@ -13,7 +13,7 @@ class Knight : public Warrior
         Animation m_animStrongAttack;
         
         sf::Vector2f m_shieldEquipPos;
-        Weapon *m_shield;
+        Item *m_shield;
         
         float m_closeAttackStanima;
         float m_closeAttackDamageMul;

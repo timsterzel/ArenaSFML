@@ -1,7 +1,8 @@
 #include "Components/Knight.hpp"
-#include <Components/Weapon.hpp>
-#include <Collision/CollisionRect.hpp>
-#include <Collision/CollisionHandler.hpp>
+#include "Components/Weapon.hpp"
+#include "Components/Item.hpp"
+#include "Collision/CollisionRect.hpp"
+#include "Collision/CollisionHandler.hpp"
 #include <iostream>
 
 Knight::Knight(RenderLayers layer, const int health, Textures textureId, 
@@ -42,6 +43,25 @@ Knight::Knight(RenderLayers layer, const int health, Textures textureId,
     attachChild(std::move(sword));
 
 
+    std::unique_ptr<Item> shield(new Item(RenderLayers::WEAPON, 
+                textureHolder.get(textureId), 
+                spriteSheetMapHolder.getRectData(textureId, "shield")));
+    shield->setType(WorldObjectTypes::SHIELD);
+    //shield->setPosition(0.f, 0.f);
+    shield->setOrigin(0.f, shield->getSpriteHeight() / 2.f);
+    //shield->setEquipPoint(0.f, shield->getSpriteHeight() / 2.f);
+    std::unique_ptr<CollisionShape> collisionShapeShield(
+            new CollisionRect({ shield->getSpriteWidth(), 
+                shield->getSpriteHeight() }));
+    shield->setCollisionShape(std::move(collisionShapeShield));
+    //setWeapon(sword.get());
+    // Shield pos
+    m_shieldEquipPos = sf::Vector2f{ 0.f, -getHeight() / 2.f + 3.f };
+    //shield->equip(m_shieldEquipPos);
+    shield->setPosition(m_shieldEquipPos);
+    m_shield = shield.get();
+    attachChild(std::move(shield));
+    /*
     std::unique_ptr<Weapon> shield(new Weapon(RenderLayers::WEAPON, 60.f, 
                 textureHolder.get(textureId), 
                 spriteSheetMapHolder.getRectData(textureId, "shield")));
@@ -61,7 +81,7 @@ Knight::Knight(RenderLayers layer, const int health, Textures textureId,
     shield->equip(m_shieldEquipPos);
     m_shield = shield.get();
     attachChild(std::move(shield));
-
+    */
 
     std::unique_ptr<CollisionShape> closeCombatArea(new CollisionCircle(9.f));
     m_closeCombatArea = std::move(closeCombatArea);
@@ -226,8 +246,9 @@ void Knight::stopBlocking()
     if (m_weapon)
     {
         m_shield->setRotation(0.f);
-        m_shield->setPosition(0.f, 0.f);
-        m_shield->equip(m_shieldEquipPos);
+        m_shield->setPosition(m_shieldEquipPos);
+        //m_shield->setPosition(0.f, 0.f);
+        //m_shield->equip(m_shieldEquipPos);
         //m_shield->setPosition(m_shieldEquipPos);
     }
 }
