@@ -33,8 +33,6 @@ MainGameScreen::~MainGameScreen()
 
 void MainGameScreen::buildScene()
 {
-    std::cout << "MainGameScreen::buildScene" << std::endl;
-    
     // healt bar
     gsf::ProgressWidget::Ptr healthWar1{ gsf::ProgressWidget::create(100.f, 20.f) };
     //gsf::ProgressWidget* pgrWdPtr{ pgrWd.get() };
@@ -474,8 +472,8 @@ bool MainGameScreen::matchesCategories(SceneNode::Pair &colliders, unsigned int 
     unsigned int category1 = colliders.first->getType();
     unsigned int category2 = colliders.second->getType();
 
-    std::cout << "Cat1: " << category1 << " Cat2: " << category2 << " Type1: " 
-    << type1 << " Type2: " << type2 << std::endl;
+    //std::cout << "Cat1: " << category1 << " Cat2: " << category2 << " Type1: " 
+    //<< type1 << " Type2: " << type2 << std::endl;
     if (type1 & category1 && type2 & category2)
     {
         return true;

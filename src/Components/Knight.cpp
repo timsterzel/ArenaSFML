@@ -11,8 +11,8 @@ Knight::Knight(RenderLayers layer, const int health, Textures textureId,
         std::vector<Warrior*> &possibleTargetsInWord)
 : Warrior(layer, health, textureId, textureHolder, spriteSheetMapHolder, 
         possibleTargetsInWord)
-, m_animCloseAttack( nullptr, false )
-, m_animStrongAttack( nullptr, false )
+, m_animCloseAttack{ nullptr, false }
+, m_animStrongAttack{ nullptr, false }
 , m_closeAttackStanima{ 10.f }
 , m_closeAttackDamageMul{ 1.f }
 , m_strongAttackStanima{ 30.f }
@@ -22,7 +22,24 @@ Knight::Knight(RenderLayers layer, const int health, Textures textureId,
     std::vector<AnimationStepRotation>  swordRoationStepsCloseAtt;
     swordRoationStepsCloseAtt.push_back({ 0.f, -60.f,  0.3f });
     m_animCloseAttack.setRotationSteps(swordRoationStepsCloseAtt);
-    
+    m_animCloseAttack.setOnAnimationStartedListener(
+            [] ()
+            {
+                std::cout << "AnimationStartedListener\n";
+            }
+    );
+    m_animCloseAttack.setOnAnimationCompletedListener(
+            [] () 
+            {
+                std::cout << "AnimationCompletedListener\n";
+            }
+    );
+    m_animCloseAttack.setOnAnimationStoppedListener(
+            [] () 
+            {
+                std::cout << "AnimationStoppedListener\n";
+            }
+    );
     
     std::vector<AnimationStepMovement>  swordMovementStepsStrongAtt;
     swordMovementStepsStrongAtt.push_back({ -5.f, { 1, 0 },  0.3f });
@@ -76,7 +93,7 @@ Knight::Knight(RenderLayers layer, const int health, Textures textureId,
 
 Knight::~Knight()
 {
-    std::cout << "Destructor Knight" << std::endl;
+
 }
 
 void Knight::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const
@@ -133,7 +150,8 @@ void Knight::onCommandCurrent(const Command &command, float dt)
 
         }
 
-        // Move is the same as setPosition(getPosition() + offset) of the sf::Transformable class
+        // Move is the same as setPosition(getPosition() + offset) of the 
+        // sf::Transformable class
         //move(m_currentVelocity * dt);
         //moveInDirection(m_currentDirection, m_currentVelocity * dt);
         moveInActualDirection(m_currentVelocity * dt);
@@ -167,10 +185,6 @@ void Knight::updateAI(float dt)
 
 void Knight::startCloseAttack()
 {
-    if (m_weapon != nullptr)
-    {
-        std::cout << "Weapon is not null\n";
-    }
     if (m_weapon && !m_animCloseAttack.isRunning() && 
             m_currentStamina >= m_closeAttackStanima)
     {
@@ -197,14 +211,6 @@ void Knight::startStrongAttack()
 void Knight::startBlocking()
 {
     m_animCloseAttack.stop();
-    // Knight can only block with a weapon
-    /*
-    if (m_weapon && !m_isBlocking)
-    {
-        m_isBlocking = true;
-        m_weapon->setRotation(-30.f);
-    }
-    */
     if (m_shield && !m_isBlocking)
     {
         m_isBlocking = true;
@@ -216,12 +222,6 @@ void Knight::startBlocking()
 void Knight::stopBlocking()
 {
     m_isBlocking = false;
-    /*
-    if (m_weapon)
-    {
-        m_weapon->setRotation(0.f);
-    }
-    */
     if (m_weapon)
     {
         m_shield->setRotation(0.f);

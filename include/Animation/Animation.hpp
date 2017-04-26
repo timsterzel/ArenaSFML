@@ -1,6 +1,7 @@
 #ifndef ANIMATION_HPP
 #define ANIMATION_HPP
 #include <SFML/Graphics.hpp>
+#include <functional>
 #include <vector>
 #include "Animation/AnimationStepMovement.hpp"
 #include "Animation/AnimationStepRotation.hpp"
@@ -27,9 +28,16 @@ class Animation
         float m_startAfterSeconds;
         // The time which is over since start and before the animation updating began
         float m_pastStartTime;
+        
+        std::function<void()> m_onAnimationStarted;
+        std::function<void()> m_onAnimationCompleted;
+        std::function<void()> m_onAnimationStopped;
+
     public:
         Animation(SceneNode *parent, bool repeat);
-        Animation(std::vector<AnimationStepRotation> rotationSteps, std::vector<AnimationStepMovement> movementSteps, SceneNode *parent, bool repeat);
+        Animation(std::vector<AnimationStepRotation> rotationSteps, 
+                std::vector<AnimationStepMovement> movementSteps, SceneNode *parent, 
+                bool repeat);
 
         void setRotationSteps(std::vector<AnimationStepRotation> rotationSteps);
         void setMovementSteps(std::vector<AnimationStepMovement> movementSteps);
@@ -42,6 +50,10 @@ class Animation
         void update(float dt);
         //void pause();
         void stop();
+
+        void setOnAnimationStartedListener(std::function<void()> listener);
+        void setOnAnimationCompletedListener(std::function<void()> listener);
+        void setOnAnimationStoppedListener(std::function<void()> listener);
 
     private:
         void startRotationStep(int index);

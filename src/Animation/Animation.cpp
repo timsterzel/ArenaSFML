@@ -74,6 +74,10 @@ void Animation::start()
             m_isMovementRunning = true;
             startMovementStep(0);
         }
+        if (m_onAnimationStarted)
+        {
+            m_onAnimationStarted();
+        }
     }
 }
 
@@ -86,7 +90,6 @@ void Animation::startRotationStep(int index)
         m_parent->setRotation(rotationStep.getStartRotation());
     }
     m_rotated = 0.f;
-    std::cout << "Rotation Parent Start Step: " << m_parent->getRotation() << std::endl;
 }
 
 void Animation::startMovementStep(int index)
@@ -111,13 +114,25 @@ void Animation::update(float dt)
     {
         return;
     }
+    bool updatedSome{ false };
     if (m_isRotationRunning)
     {
         updateRotation(dt);
+        updatedSome = true;
     }
     if (m_isMovementRunning)
     {
         updateMovement(dt);
+        updatedSome = true;
+    }
+    // When there was an update and the animation is not running anymore, the
+    // animation was completed
+    if (updatedSome && !isRunning())
+    {
+        if (m_onAnimationCompleted)
+        {
+            m_onAnimationCompleted();
+        }
     }
 }
 
@@ -151,8 +166,9 @@ void Animation::updateRotation(float dt)
 
 void Animation::updateMovement(float dt)
 {
-    const AnimationStepMovement movementStep = { m_movementSteps[m_actualMovementStep] };
-    // The movement should take a spicific while, so calculate the movement which the sceneNode make now
+    const AnimationStepMovement movementStep{ m_movementSteps[m_actualMovementStep] };
+    // The movement should take a spicific while, so calculate the movement which 
+    // the sceneNode make now
     sf::Vector2f actualMovement = { movementStep.getMovementSpeed() * dt };
     m_moved += Calc::getVec2Length<sf::Vector2f>(actualMovement);
     m_parent->move(actualMovement);
@@ -186,14 +202,23 @@ void Animation::stop()
 {
     m_isRotationRunning = false;
     m_isMovementRunning = false;
+    if (m_onAnimationStopped)
+    {
+        m_onAnimationStopped();
+    }
 }
 
+void Animation::setOnAnimationStartedListener(std::function<void()> listener)
+{
+    m_onAnimationStarted = listener;
+}
 
-/*
-CLOCK::time_point timePoint2 = { CLOCK::now() };
-std::chrono::duration<float> timeSpan = { timePoint2 - m_timePoint1 };
-m_timePoint1 = CLOCK::now();
-// Get deltaTime as float in seconds
-m_dt = std::chrono::duration_cast<std::chrono::duration<float,std::ratio<1>>> (timeSpan).count();
-m_fps = 1.f / m_dt;
-*/
+void Animation::setOnAnimationCompletedListener(std::function<void()> listener)
+{
+    m_onAnimationCompleted = listener;
+}
+
+void Animation::setOnAnimationStoppedListener(std::function<void()> listener)
+{
+    m_onAnimationStopped = listener;
+}
