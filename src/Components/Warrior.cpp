@@ -127,7 +127,8 @@ void Warrior::setWeapon(Weapon *weapon)
 {
     m_weapon = weapon;
     m_weapon->setRotationPoint(m_weaponPos);
-    m_weapon->equip(m_weaponPos);
+    m_weapon->setPosition(m_weaponPos);
+    //m_weapon->equip(m_weaponPos);
     weaponAdded();
     //m_weapon->setPosition(m_weaponPos);
     //m_weapon->setPosition(10.f, 10.f);
