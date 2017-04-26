@@ -185,7 +185,8 @@ void Knight::updateAI(float dt)
 
 void Knight::startCloseAttack()
 {
-    if (m_weapon && !m_animCloseAttack.isRunning() && 
+    if (m_weapon && !m_animCloseAttack.isRunning() &&
+            !isBlocking() &&
             m_currentStamina >= m_closeAttackStanima)
     {
         m_animCloseAttack.start();
@@ -198,6 +199,7 @@ void Knight::startCloseAttack()
 void Knight::startStrongAttack()
 {
     if (m_weapon && !m_animStrongAttack.isRunning() && 
+            !isBlocking() &&
             m_currentStamina >= m_strongAttackStanima)
     {
         m_weapon->setRotation(0.f);
