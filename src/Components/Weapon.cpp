@@ -39,3 +39,13 @@ void Weapon::setDamageMultiplicator(float multiplicator)
 {
     m_damageMultiplicator = multiplicator;
 }
+
+const std::string& Weapon::getAttackID() const
+{
+    return m_attackID;
+}
+
+void Weapon::startNewAttack()
+{
+
+}
