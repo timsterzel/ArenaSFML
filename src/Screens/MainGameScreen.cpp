@@ -97,14 +97,18 @@ void MainGameScreen::buildScene()
     m_playerWarrior->setCollisionShape(std::move(collisionShapeWarrior));
     m_playerWarrior->setPosition(800 / 2.f, 480 / 2.f);
     m_playerWarrior->setVelocity(60.f);
-    m_playerWarrior->setType(WorldObjectTypes::PLAYER | WorldObjectTypes::WARRIOR);
+    m_playerWarrior->setType(
+            WorldObjectTypes::PLAYER | 
+            WorldObjectTypes::WARRIOR | 
+            WorldObjectTypes::KNIGHT);
     //m_playerWarrior->setWeapon(swordPlayer.get());
     //m_playerWarrior->setBodyParts(playerLeftShoe.get(), playerRightShoe.get(), playerUpperBody.get());
     // Add Parts to player
     //m_playerWarrior->attachChild(std::move(swordPlayer));
     m_possibleTargetWarriors.push_back(warrior.get());
     m_sceneGraph.attachChild(std::move(warrior));
-    
+        
+    // Enemy
     std::unique_ptr<Warrior> enemy1{ std::make_unique<Runner>
         (RenderLayers::MAIN, 100.f, Textures::RUNNER, *m_context.textureHolder, 
          *m_context.spriteSheetMapHolder, m_possibleTargetWarriors) };
@@ -115,9 +119,11 @@ void MainGameScreen::buildScene()
     //wizard->setPosition(800 / 2.f + 100.f, 480 / 2.f);
     enemy1->setPosition(800 / 2.f - 160.f, 480 / 2.f - 100.f);
     enemy1->setVelocity(60.f);
-    enemy1->setType(WorldObjectTypes::ENEMY | WorldObjectTypes::WARRIOR);
+    enemy1->setType(WorldObjectTypes::ENEMY | 
+            WorldObjectTypes::WARRIOR |
+            WorldObjectTypes::RUNNER);
     //enemy1->setActualTarget(m_playerWarrior);
-    enemy1->setIsAiActive(false);
+    enemy1->setIsAiActive(true);
     m_possibleTargetWarriors.push_back(enemy1.get());
     m_sceneGraph.attachChild(std::move(enemy1));
 }
@@ -425,6 +431,11 @@ void MainGameScreen::handleCollision(float dt)
                 // To prevent multiple damage, turn off collison check
                 weapon->setIsCollisionCheckOn(false);
             }
+        }
+        if (matchesCategories(sceneNodes, 
+                    WorldObjectTypes::WEAPON, WorldObjectTypes::WARRIOR))
+        {
+            std::cout << "Weapon Shield collision \n";
         }
         if (m_showCollisionInfo)
         {
