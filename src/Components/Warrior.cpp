@@ -68,7 +68,7 @@ Warrior::Warrior(RenderLayers layer, const float health, Textures textureId, con
 
 Warrior::~Warrior()
 {
-    std::cout << "Destructor Warrior" << std::endl;
+
 }
 
 float Warrior::getCurrentHealth() const
@@ -271,7 +271,7 @@ Warrior* Warrior::determineActualTarget() const
         Warrior *warrior = { m_possibleTargetsInWord[i] };
         sf::Vector2f disVec = { getWorldPosition() - warrior->getWorldPosition() };
         float distance = Calc::getVec2Length<sf::Vector2f>(disVec);
-        std::cout << "dist: " << distance << std::endl;
+        //std::cout << "dist: " << distance << std::endl;
         if (distance < nearestDist && warrior != this)
         {
             nearestDist = distance;
