@@ -96,6 +96,11 @@ Knight::~Knight()
 
 }
 
+Item* Knight::getShield() const
+{
+    return m_shield;
+}
+
 void Knight::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const
 {
     Warrior::drawCurrent(target, states);
@@ -192,6 +197,7 @@ void Knight::startCloseAttack()
         m_animCloseAttack.start();
         m_weapon->setIsCollisionCheckOn(true);
         m_weapon->setDamageMultiplicator(m_closeAttackDamageMul);
+        m_weapon->startNewAttack();
         removeStanima(m_closeAttackStanima);
     }
 }
@@ -206,6 +212,7 @@ void Knight::startStrongAttack()
         m_animStrongAttack.start();
         m_weapon->setIsCollisionCheckOn(true);
         m_weapon->setDamageMultiplicator(m_strongAttackDamageMul);
+        m_weapon->startNewAttack();
         removeStanima(m_strongAttackStanima);
     }
 }

@@ -74,6 +74,11 @@ SceneNode::Ptr SceneNode::detachChild(const SceneNode& node)
     return result;
 }
 
+SceneNode* SceneNode::getParent() const
+{
+    return m_parent;
+}
+
 void SceneNode::setCollisionShape(std::unique_ptr<CollisionShape> collisionShape)
 {
     m_collisionShape = std::move(collisionShape);

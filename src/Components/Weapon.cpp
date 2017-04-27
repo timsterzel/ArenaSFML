@@ -2,6 +2,7 @@
 #include "Calc.hpp"
 #include <iostream>
 #include <cmath>
+#include <Helpers.hpp>
 
 Weapon::Weapon(RenderLayers layer, const float damage, Textures textureId, const ResourceHolder<sf::Texture, Textures> &textureHolder)
 : Item(layer, textureId, textureHolder)
@@ -47,5 +48,6 @@ const std::string& Weapon::getAttackID() const
 
 void Weapon::startNewAttack()
 {
-
+    // Create a random attack id
+    m_attackID = Helpers::getRandomAlphaNumString(30);
 }

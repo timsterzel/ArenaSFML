@@ -2,6 +2,7 @@
 #include "Collision/CollisionShape.hpp"
 #include "Collision/CollisionCircle.hpp"
 #include "Collision/CollisionRect.hpp"
+#include "Components/Item.hpp"
 #include "Components/SpriteNode.hpp"
 #include "Components/Warrior.hpp"
 #include "Components/Weapon.hpp"
@@ -420,22 +421,43 @@ void MainGameScreen::handleCollision(float dt)
             // parent nodes
             if (warrior->getWeapon() != weapon)
             {
-                if (!warrior->isBlocking())
+                if (warrior->getType() & WorldObjectTypes::KNIGHT)
+                {
+                    Knight* knight = static_cast<Knight*>(warrior);
+                    Item* shield = knight->getShield();
+                    if (weapon->isColliding(*shield).isCollision())
+                    {
+                        std::cout << "SHIELD COLLISON ==========>\n";
+                        warrior->setBlockedAttackID(weapon->getAttackID());
+                    }
+
+                }
+                // TODO: multiple attack resistence
+                // if warrior dont have blocked the attack, remove health
+                if (warrior->getBlockedAttackID() != weapon->getAttackID())
                 {
                     warrior->damage(weapon->getTotalDamage());
-                }
+                    // To prevent multiple damage set attack to blocked attacks
+                    warrior->setBlockedAttackID(weapon->getAttackID());
+                }                
                 else
                 {
                     warrior->removeStanima(weapon->getTotalDamage());
                 }
                 // To prevent multiple damage, turn off collison check
-                weapon->setIsCollisionCheckOn(false);
+                //weapon->setIsCollisionCheckOn(false);
             }
         }
-        if (matchesCategories(sceneNodes, 
-                    WorldObjectTypes::WEAPON, WorldObjectTypes::WARRIOR))
+        else if (matchesCategories(sceneNodes, 
+                    WorldObjectTypes::WEAPON, WorldObjectTypes::SHIELD))
         {
             std::cout << "Weapon Shield collision \n";
+            Weapon *weapon{ static_cast<Weapon*>
+                (getSceneNodeOfType(sceneNodes, WorldObjectTypes::WEAPON)) };
+            Item *shield{ static_cast<Item*>
+                (getSceneNodeOfType(sceneNodes, WorldObjectTypes::SHIELD)) };
+            Warrior *warr{ static_cast<Warrior*> (shield->getParent()) };
+            warr->setBlockedAttackID(weapon->getAttackID());
         }
         if (m_showCollisionInfo)
         {

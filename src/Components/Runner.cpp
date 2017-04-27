@@ -160,6 +160,7 @@ void Runner::startCloseAttack()
         m_animCloseAttack.start();
         m_weapon->setIsCollisionCheckOn(true);
         m_weapon->setDamageMultiplicator(m_closeAttackDamageMul);
+        m_weapon->startNewAttack();
         removeStanima(m_closeAttackStanima);
     }
 }
@@ -174,6 +175,7 @@ void Runner::startStrongAttack()
         m_animStrongAttack.start();
         m_weapon->setIsCollisionCheckOn(true);
         m_weapon->setDamageMultiplicator(m_strongAttackDamageMul);
+        m_weapon->startNewAttack();
         removeStanima(m_strongAttackStanima);
     }
 }

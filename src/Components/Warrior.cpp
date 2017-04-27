@@ -101,6 +101,15 @@ bool Warrior::isBlocking() const
     return m_isBlocking;
 }
 
+const std::string& Warrior::getBlockedAttackID() const
+{
+    return m_blockedAttackID;
+}
+
+void Warrior::setBlockedAttackID(const std::string id)
+{
+    m_blockedAttackID = id;
+}
 
 void Warrior::setBodyParts(SpriteNode *leftShoe, SpriteNode *rightShoe, SpriteNode *upperBody)
 {
