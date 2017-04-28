@@ -1,12 +1,14 @@
 #include "Components/Warrior.hpp"
 #include "Calc.hpp"
 #include "Components/Weapon.hpp"
+#include "Helpers.hpp"
 #include <iostream>
 #include <vector>
 
 Warrior::Warrior(RenderLayers layer, const float health, Textures textureId, const ResourceHolder<sf::Texture, Textures> &textureHolder,
     const SpriteSheetMapHolder &spriteSheetMapHolder, std::vector<Warrior*> &possibleTargetsInWord)
 : Entity(layer)
+, m_ID{ Helpers::createUniqueID(30) }
 , m_maxHealth{ health }
 , m_currentHealth{ health }
 , m_maxStamina{ 100.f }
@@ -69,6 +71,12 @@ Warrior::Warrior(RenderLayers layer, const float health, Textures textureId, con
 Warrior::~Warrior()
 {
 
+}
+
+
+const std::string& Warrior::getID()
+{
+    return m_ID;
 }
 
 float Warrior::getCurrentHealth() const

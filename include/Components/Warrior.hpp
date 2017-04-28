@@ -15,6 +15,9 @@ class Warrior : public Entity
 {
 
     protected:
+        // A random generated id (should be unique)
+        std::string m_ID;
+
         float m_maxHealth;
         float m_currentHealth;
 
@@ -60,6 +63,8 @@ class Warrior : public Entity
                 const SpriteSheetMapHolder &spriteSheetMapHolder, 
                 std::vector<Warrior*> &possibleTargetsInWord);
         virtual ~Warrior();
+        
+        const std::string& getID();
 
         float getCurrentHealth() const;
         void setCurrentHealth(const float health);

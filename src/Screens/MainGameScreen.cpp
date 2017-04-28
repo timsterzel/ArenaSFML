@@ -425,27 +425,32 @@ void MainGameScreen::handleCollision(float dt)
                 {
                     Knight* knight = static_cast<Knight*>(warrior);
                     Item* shield = knight->getShield();
-                    if (weapon->isColliding(*shield).isCollision())
+                    if (weapon->isColliding(
+                                *shield).isCollision() && 
+                            knight->isBlocking())
                     {
                         std::cout << "SHIELD COLLISON ==========>\n";
                         warrior->setBlockedAttackID(weapon->getAttackID());
                     }
 
                 }
-                // TODO: multiple attack resistence
-                // if warrior dont have blocked the attack, remove health
-                if (warrior->getBlockedAttackID() != weapon->getAttackID())
-                {
-                    warrior->damage(weapon->getTotalDamage());
-                    // To prevent multiple damage set attack to blocked attacks
-                    warrior->setBlockedAttackID(weapon->getAttackID());
-                }                
                 else
                 {
-                    warrior->removeStanima(weapon->getTotalDamage());
+                    // TODO: multiple attack resistence
+                    // if warrior dont have blocked the attack, remove health
+                    if (warrior->getBlockedAttackID() != weapon->getAttackID())
+                    {
+                        warrior->damage(weapon->getTotalDamage());
+                        // To prevent multiple damage set attack to blocked attacks
+                        warrior->setBlockedAttackID(weapon->getAttackID());
+                    }                
+                    else
+                    {
+                        warrior->removeStanima(weapon->getTotalDamage());
+                    }
+                    // To prevent multiple damage, turn off collison check
+                    //weapon->setIsCollisionCheckOn(false);                
                 }
-                // To prevent multiple damage, turn off collison check
-                //weapon->setIsCollisionCheckOn(false);
             }
         }
         else if (matchesCategories(sceneNodes, 
