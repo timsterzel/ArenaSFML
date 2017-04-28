@@ -43,11 +43,22 @@ void Weapon::setDamageMultiplicator(float multiplicator)
 
 const std::string& Weapon::getAttackID() const
 {
-    return m_attackID;
+    return m_ID;
+}
+
+void Weapon::addHitID(const std::string& id)
+{
+    m_hitIDs.insert(id);
+}
+
+bool Weapon::wasIDAlreadyAttacked(const std::string& id)
+{
+    return m_hitIDs.find(id) != m_hitIDs.end();
 }
 
 void Weapon::startNewAttack()
 {
     // Create a random attack id
-    m_attackID = Helpers::getRandomAlphaNumString(30);
+    m_ID = Helpers::createUniqueID(30);
+    m_hitIDs.clear();
 }
