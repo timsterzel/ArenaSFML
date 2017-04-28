@@ -30,6 +30,11 @@ class Knight : public Warrior
         virtual ~Knight();
         
         Item *getShield() const;
+        
+        void startCloseAttack();
+        void startStrongAttack();
+        void startBlocking();
+        void stopBlocking();
 
         virtual void drawCurrent(sf::RenderTarget &target, 
                 sf::RenderStates states) const;
@@ -42,10 +47,6 @@ class Knight : public Warrior
         virtual void updateAI(float dt);
         virtual void onCommandCurrent(const Command &command, float dt);
 
-        void startCloseAttack();
-        void startStrongAttack();
-        void startBlocking();
-        void stopBlocking();
 };
 
 #endif // KNIGHT_HPP

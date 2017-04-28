@@ -29,7 +29,6 @@ class Warrior : public Entity
         bool m_isMoving;
         bool m_isBlocking;
         // The id of the attack which was blocked (Attacks with this id has no effect)
-        std::string m_blockedAttackID;
         // Delete m_sprite later
         sf::Sprite m_sprite;
         SpriteNode *m_leftShoe;
@@ -75,8 +74,6 @@ class Warrior : public Entity
         void setCurrentStanima(const float stanima);
 
         bool isBlocking() const;
-        const std::string& getBlockedAttackID() const;
-        void setBlockedAttackID(const std::string id);
 
         void setWeapon(Weapon *weapon);
         Weapon* getWeapon() const;

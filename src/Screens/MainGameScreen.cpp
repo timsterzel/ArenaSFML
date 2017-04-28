@@ -11,6 +11,7 @@
 #include "Calc.hpp"
 #include <memory>
 #include "Game.hpp"
+#include <cmath>
 
 MainGameScreen::MainGameScreen(ScreenStack *screenStack, Context &context)
 : Screen(screenStack, context)
@@ -415,11 +416,13 @@ void MainGameScreen::handleCollision(float dt)
                 (getSceneNodeOfType(sceneNodes, WorldObjectTypes::WEAPON)) };
             Warrior *warrior{ static_cast<Warrior*>
                 (getSceneNodeOfType(sceneNodes, WorldObjectTypes::WARRIOR)) };
+            std::string warriorID{ warrior->getID() };
 
             // Only damage warrior if the weapon is not its own
             // Alternative implementation for future (?): no collision check with 
             // parent nodes
-            if (warrior->getWeapon() != weapon)
+            if (warrior->getWeapon() != weapon && 
+                    !weapon->wasIDAlreadyAttacked(warriorID))
             {
                 if (warrior->getType() & WorldObjectTypes::KNIGHT)
                 {
@@ -430,29 +433,35 @@ void MainGameScreen::handleCollision(float dt)
                             knight->isBlocking())
                     {
                         std::cout << "SHIELD COLLISON ==========>\n";
-                        warrior->setBlockedAttackID(weapon->getAttackID());
-                    }
+                        weapon->addHitID(warriorID);
+                        float actualStanima{ warrior->getCurrentStanima() };
+                        float weaponDamage{ weapon->getTotalDamage() };
+                        // If warrior has enough stanima, warrior lose stanima
+                        // instead of health
+                        if (actualStanima >= weaponDamage)
+                        {
+                            warrior->removeStanima(weaponDamage);
+                        }
+                        // Else the warrior remove as much health, which the warrior
+                        // cant block with stanima
+                        else
+                        {
+                            warrior->setCurrentStanima(0.f);
+                            warrior->damage(weaponDamage - actualStanima);
+                            knight->stopBlocking();
+                        }
 
+                    } 
                 }
                 else
-                {
-                    // TODO: multiple attack resistence
-                    // if warrior dont have blocked the attack, remove health
-                    if (warrior->getBlockedAttackID() != weapon->getAttackID())
-                    {
-                        warrior->damage(weapon->getTotalDamage());
-                        // To prevent multiple damage set attack to blocked attacks
-                        warrior->setBlockedAttackID(weapon->getAttackID());
-                    }                
-                    else
-                    {
-                        warrior->removeStanima(weapon->getTotalDamage());
-                    }
-                    // To prevent multiple damage, turn off collison check
-                    //weapon->setIsCollisionCheckOn(false);                
+                {                   
+                    warrior->damage(weapon->getTotalDamage());
+                    // To prevent multiple damage set attack to blocked attacks
+                    weapon->addHitID(warriorID);
                 }
             }
         }
+        /*
         else if (matchesCategories(sceneNodes, 
                     WorldObjectTypes::WEAPON, WorldObjectTypes::SHIELD))
         {
@@ -464,6 +473,7 @@ void MainGameScreen::handleCollision(float dt)
             Warrior *warr{ static_cast<Warrior*> (shield->getParent()) };
             warr->setBlockedAttackID(weapon->getAttackID());
         }
+        */
         if (m_showCollisionInfo)
         {
             //std::cout << "Collision: " << colCnt++ << std::endl;
