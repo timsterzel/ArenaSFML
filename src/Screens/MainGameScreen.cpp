@@ -125,7 +125,7 @@ void MainGameScreen::buildScene()
             WorldObjectTypes::WARRIOR |
             WorldObjectTypes::RUNNER);
     //enemy1->setActualTarget(m_playerWarrior);
-    enemy1->setIsAiActive(false);
+    enemy1->setIsAiActive(true);
     m_possibleTargetWarriors.push_back(enemy1.get());
     m_sceneGraph.attachChild(std::move(enemy1));
 }
@@ -417,55 +417,15 @@ void MainGameScreen::handleCollision(float dt)
             Warrior *warrior{ static_cast<Warrior*>
                 (getSceneNodeOfType(sceneNodes, WorldObjectTypes::WARRIOR)) };
             std::string warriorID{ warrior->getID() };
-
             // Only damage warrior if the weapon is not its own
             // Alternative implementation for future (?): no collision check with 
             // parent nodes
             if (warrior->getWeapon() != weapon && 
                     !weapon->wasIDAlreadyAttacked(warriorID))
             {
-                if (warrior->getType() & WorldObjectTypes::KNIGHT)
-                {
-                    Knight* knight = static_cast<Knight*>(warrior);
-                    Item* shield = knight->getShield();
-                    if (weapon->isColliding(
-                                *shield).isCollision() && 
-                            knight->isBlocking())
-                    {
-                        std::cout << "SHIELD COLLISON ==========>\n";
-                        weapon->addHitID(warriorID);
-                        float actualStanima{ warrior->getCurrentStanima() };
-                        float weaponDamage{ weapon->getTotalDamage() };
-                        // If warrior has enough stanima, warrior lose stanima
-                        // instead of health
-                        if (actualStanima >= weaponDamage)
-                        {
-                            warrior->removeStanima(weaponDamage);
-                        }
-                        // Else the warrior remove as much health, which the warrior
-                        // cant block with stanima
-                        else
-                        {
-                            warrior->setCurrentStanima(0.f);
-                            warrior->damage(weaponDamage - actualStanima);
-                            knight->stopBlocking();
-                        }
-
-                    } 
-                    else
-                    {                   
-                        warrior->damage(weapon->getTotalDamage());
-                        // To prevent multiple damage set attack to blocked attacks
-                        weapon->addHitID(warriorID);
-                    }
-                }
-                else
-                {
-                    warrior->damage(weapon->getTotalDamage());
-                    // To prevent multiple damage set attack to blocked attacks
-                    weapon->addHitID(warriorID);
-                }
+                warrior->handleDamage(weapon);
             }
+            
         }
         /*
         else if (matchesCategories(sceneNodes, 

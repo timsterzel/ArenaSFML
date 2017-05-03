@@ -413,3 +413,11 @@ void Warrior::weaponAdded()
 {
     // Do nothing by default
 }
+
+
+void Warrior::handleDamage(Weapon *weapon)
+{
+    damage(weapon->getTotalDamage());
+    // To prevent multiple damage set attack to blocked attacks
+    weapon->addHitID(getID());
+}

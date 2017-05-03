@@ -90,6 +90,8 @@ class Warrior : public Entity
         void removeStanima(float stanima);
         void addStanima(float stanima);
 
+        virtual void handleDamage(Weapon *weapon);
+        
         virtual void drawCurrent(sf::RenderTarget &target, 
                 sf::RenderStates states) const;
 
@@ -104,6 +106,7 @@ class Warrior : public Entity
         virtual void onCommandCurrent(const Command &command, float dt);
         void lookAt(sf::Vector2f pos);
         virtual void weaponAdded();
+        
         // The command which are for every Warrior equal
         //void onCommandCurrentWarrior(const Command &command, float dt);
 };

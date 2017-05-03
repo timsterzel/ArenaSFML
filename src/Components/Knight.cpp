@@ -116,10 +116,6 @@ void Knight::updateCurrent(float dt)
 {
     if(m_isStrongAttackRunning) 
     {
-        std::cout << "Strong Attack update, time: " << 
-            std::to_string(m_curStrongAttackTime) <<
-            " Rotation: " << getRotation() <<  
-             "\n";
         m_curStrongAttackTime += dt;
         //m_currentDirection = m_strongAttackDir;
         moveInDirection(m_strongAttackDir, m_strongAttackVelocity * dt);
@@ -279,4 +275,33 @@ void Knight::weaponAdded()
 {
     m_animCloseAttack.setParent(m_weapon);
     //m_animStrongAttack.setParent(m_weapon);
+}
+
+void Knight::handleDamage(Weapon *weapon)
+{
+
+    if (m_shield && weapon->isColliding(*m_shield).isCollision() && isBlocking())
+    {
+        weapon->addHitID(getID());
+        float actualStanima{ getCurrentStanima() };
+        float weaponDamage{ weapon->getTotalDamage() };
+        // If warrior has enough stanima, warrior lose stanima
+        // instead of health
+        if (actualStanima >= weaponDamage)
+        {
+            removeStanima(weaponDamage);
+        }
+        // Else the warrior remove as much health, which the warrior
+        // cant block with stanima
+        else
+        {
+            setCurrentStanima(0.f);
+            damage(weaponDamage - actualStanima);
+            stopBlocking();
+        }
+    }
+    else
+    {
+        Warrior::handleDamage(weapon);
+    }
 }

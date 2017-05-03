@@ -30,7 +30,7 @@ Runner::Runner(RenderLayers layer, const int health, Textures textureId,
     m_animStrongAttack.setMovementSteps(swordMovementStepsStrongAtt);
     */
 
-    std::unique_ptr<Weapon> sword(new Weapon(RenderLayers::WEAPON, 60.f, 
+    std::unique_ptr<Weapon> sword(new Weapon(RenderLayers::WEAPON, 10.f, 
                 textureHolder.get(textureId), 
                 spriteSheetMapHolder.getRectData(textureId, "sword")));
     sword->setType(WorldObjectTypes::WEAPON);

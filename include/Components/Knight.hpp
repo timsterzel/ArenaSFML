@@ -49,13 +49,14 @@ class Knight : public Warrior
         void stopStrongAttack();
         void startBlocking();
         void stopBlocking();
+        
+        virtual void handleDamage(Weapon *weapon);
 
         virtual void drawCurrent(sf::RenderTarget &target, 
                 sf::RenderStates states) const;
     protected:
 
         virtual void weaponAdded();
-
     private:
         virtual void updateCurrent(float dt);
         virtual void updateAI(float dt);
