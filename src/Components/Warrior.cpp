@@ -214,11 +214,12 @@ void Warrior::addStanima(float stanima)
 
 void Warrior::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const
 {
+    /*
     if (m_closeCombatArea)
     {
-        //m_closeCombatArea->draw(target, states);
         target.draw(*m_closeCombatArea, states);
     }
+    */
 
     //target.draw(m_sprite, states);
     // Only draw weapon when it is not nullptr

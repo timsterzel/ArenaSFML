@@ -90,8 +90,11 @@ void MainGameScreen::buildScene()
     m_sceneGraph.attachChild(std::move(background));
 
     // Warrior
-    std::unique_ptr<Knight> warrior{ std::make_unique<Knight>
-        (RenderLayers::MAIN, 100.f, Textures::KNIGHT, *m_context.textureHolder, 
+    //std::unique_ptr<Knight> warrior{ std::make_unique<Knight>
+    //    (RenderLayers::MAIN, 100.f, Textures::KNIGHT, *m_context.textureHolder, 
+    //     *m_context.spriteSheetMapHolder, m_possibleTargetWarriors) };
+    std::unique_ptr<Runner> warrior{ std::make_unique<Runner>
+        (RenderLayers::MAIN, 100.f, Textures::RUNNER, *m_context.textureHolder, 
          *m_context.spriteSheetMapHolder, m_possibleTargetWarriors) };
     m_playerWarrior = warrior.get();
     std::unique_ptr<CollisionShape> collisionShapeWarrior{ 
@@ -125,7 +128,7 @@ void MainGameScreen::buildScene()
             WorldObjectTypes::WARRIOR |
             WorldObjectTypes::RUNNER);
     //enemy1->setActualTarget(m_playerWarrior);
-    enemy1->setIsAiActive(true);
+    enemy1->setIsAiActive(false);
     m_possibleTargetWarriors.push_back(enemy1.get());
     m_sceneGraph.attachChild(std::move(enemy1));
 }
