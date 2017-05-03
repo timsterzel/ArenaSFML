@@ -14,11 +14,12 @@ Knight::Knight(RenderLayers layer, const int health, Textures textureId,
         possibleTargetsInWord)
 , m_animCloseAttack{ nullptr, false }
 //, m_animStrongAttack{ nullptr, false }
+, m_WeaponDamage{ 30.f }
 , m_closeAttackStanima{ 10.f }
 , m_closeAttackDamageMul{ 1.f }
 , m_isStrongAttackRunning{ false }
 , m_strongAttackStanima{ 80.f }
-, m_strongAttackDamageMul{ 3.f }
+, m_strongAttackDamageMul{ 2.f }
 , m_strongAttackVelocity{ 160.f }
 , m_totalStrongAttackTime{ 0.3f }
 , m_curStrongAttackTime{ 0.f }
@@ -51,7 +52,7 @@ Knight::Knight(RenderLayers layer, const int health, Textures textureId,
     swordMovementStepsStrongAtt.push_back({ 5.f, { 1, 0 },  0.3f });
     m_animStrongAttack.setMovementSteps(swordMovementStepsStrongAtt);
     */
-    std::unique_ptr<Weapon> sword(new Weapon(RenderLayers::WEAPON, 60.f, 
+    std::unique_ptr<Weapon> sword(new Weapon(RenderLayers::WEAPON, m_WeaponDamage, 
                 textureHolder.get(textureId), 
                 spriteSheetMapHolder.getRectData(textureId, "sword")));
     sword->setType(WorldObjectTypes::WEAPON);

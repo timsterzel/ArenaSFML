@@ -15,6 +15,8 @@ class Knight : public Warrior
         sf::Vector2f m_shieldEquipPos;
         Item *m_shield;
         
+        const float m_WeaponDamage;
+
         // Close Attack
         float m_closeAttackStanima;
         float m_closeAttackDamageMul;
