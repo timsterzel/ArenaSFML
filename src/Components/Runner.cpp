@@ -20,8 +20,8 @@ Runner::Runner(RenderLayers layer, const int health, Textures textureId,
 //, m_strongAttackDamageMul{ 3.f }
 , m_isDodging{ false }
 , m_dodgeStanima{ 30.f }
-, m_dodgeVelocity{ 220.f }
-, m_totalDodgeTime{ 0.4 }
+, m_dodgeVelocity{ 300.f }
+, m_totalDodgeTime{ 0.2 }
 , m_curDodgeTime{ 0.f }
 {
     // Animation
@@ -208,7 +208,7 @@ void Runner::startDodging()
     if (m_currentStamina >= m_dodgeStanima)
     {
         makeTransparent();
-        //setIsCollisionCheckOn(false);
+        setIsCollisionCheckOn(false);
         m_isDodging = true;
         m_curDodgeTime = 0.f;
         // The dodge direction is the direction where the runner looking at
@@ -220,6 +220,7 @@ void Runner::startDodging()
 void Runner::stopDodging()
 {
     m_isDodging = false;
+    setIsCollisionCheckOn(true);
     makeInTransparent();
 }
 /*
