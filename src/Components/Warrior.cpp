@@ -16,7 +16,7 @@ Warrior::Warrior(RenderLayers layer, const float health, Textures textureId, con
 , m_stanimaRefreshRate{ 5.f }
 , m_isMoving{ false }
 , m_isBlocking{ false }
-, m_sprite{ textureHolder.get(textureId) }
+//, m_sprite{ texeureHolder.get(textureId) }
 , m_leftShoe{ nullptr }
 , m_rightShoe{ nullptr }
 , m_weapon{ nullptr }
@@ -29,10 +29,10 @@ Warrior::Warrior(RenderLayers layer, const float health, Textures textureId, con
 , m_possibleTargetsInWord{ possibleTargetsInWord }
 , m_actualTarget{ nullptr }
 {
-    sf::FloatRect bounds = m_sprite.getLocalBounds();
-    m_sprite.setOrigin(bounds.width / 2.f, bounds.height / 2.f);
-    setWidth(bounds.width);
-    setHeight(bounds.height);
+    //sf::FloatRect bounds = m_sprite.getLocalBounds();
+    //m_sprite.setOrigin(bounds.width / 2.f, bounds.height / 2.f);
+    //setWidth(bounds.width);
+    //setHeight(bounds.height);
 
     //std::vector<AnimationStepRotation>  swordRoationSteps;
     //swordRoationSteps.push_back({ 0.f, -60.f,  0.5f });

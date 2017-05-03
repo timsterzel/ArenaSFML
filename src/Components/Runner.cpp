@@ -184,6 +184,8 @@ void Runner::startDodging()
 {
     if (m_currentStamina >= m_dodgeStanima)
     {
+        //m_sprite.setColor(sf::Color(255, 255, 255, 128));
+        //setIsCollisionCheckOn(false);
         m_isDodging = true;
         m_curDodgeTime = 0.f;
         // The dodge direction is the direction where the runner looking at

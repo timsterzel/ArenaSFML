@@ -30,7 +30,7 @@ class Warrior : public Entity
         bool m_isBlocking;
         // The id of the attack which was blocked (Attacks with this id has no effect)
         // Delete m_sprite later
-        sf::Sprite m_sprite;
+        //sf::Sprite m_sprite;
         SpriteNode *m_leftShoe;
         SpriteNode *m_rightShoe;
         Weapon *m_weapon;
