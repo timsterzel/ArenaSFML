@@ -13,12 +13,12 @@ Knight::Knight(RenderLayers layer, const int health, Textures textureId,
 : Warrior(layer, health, textureId, textureHolder, spriteSheetMapHolder, 
         possibleTargetsInWord)
 , m_animCloseAttack{ nullptr, false }
-, m_animStrongAttack{ nullptr, false }
+//, m_animStrongAttack{ nullptr, false }
 , m_closeAttackStanima{ 10.f }
 , m_closeAttackDamageMul{ 1.f }
-, m_strongAttackStanima{ 30.f }
-, m_strongAttackDamageMul{ 3.f }
 , m_isStrongAttackRunning{ false }
+, m_strongAttackStanima{ 80.f }
+, m_strongAttackDamageMul{ 3.f }
 , m_strongAttackVelocity{ 160.f }
 , m_totalStrongAttackTime{ 0.3f }
 , m_curStrongAttackTime{ 0.f }
@@ -45,12 +45,12 @@ Knight::Knight(RenderLayers layer, const int health, Textures textureId,
                 std::cout << "AnimationStoppedListener\n";
             }
     );
-    
+    /*
     std::vector<AnimationStepMovement>  swordMovementStepsStrongAtt;
     swordMovementStepsStrongAtt.push_back({ -5.f, { 1, 0 },  0.3f });
     swordMovementStepsStrongAtt.push_back({ 5.f, { 1, 0 },  0.3f });
     m_animStrongAttack.setMovementSteps(swordMovementStepsStrongAtt);
-    
+    */
     std::unique_ptr<Weapon> sword(new Weapon(RenderLayers::WEAPON, 60.f, 
                 textureHolder.get(textureId), 
                 spriteSheetMapHolder.getRectData(textureId, "sword")));
@@ -136,10 +136,12 @@ void Knight::updateCurrent(float dt)
             {
                 m_animCloseAttack.update(dt);
             }
+            /*
             else if (m_animStrongAttack.isRunning())
             {
                 m_animStrongAttack.update(dt);
             }
+            */
             else
             {
                 m_weapon->setIsCollisionCheckOn(false);
@@ -228,8 +230,8 @@ void Knight::startCloseAttack()
 
 void Knight::startStrongAttack()
 {
-    if (m_weapon && !m_animStrongAttack.isRunning() && 
-            !isBlocking() &&
+    if (m_weapon && /*!m_animStrongAttack.isRunning() &&*/ 
+            /*!isBlocking() &&*/ 
             m_currentStamina >= m_strongAttackStanima)
     {
         m_isStrongAttackRunning = true;
@@ -275,5 +277,5 @@ void Knight::stopBlocking()
 void Knight::weaponAdded()
 {
     m_animCloseAttack.setParent(m_weapon);
-    m_animStrongAttack.setParent(m_weapon);
+    //m_animStrongAttack.setParent(m_weapon);
 }

@@ -10,18 +10,19 @@ class Knight : public Warrior
 {
     private:
         Animation m_animCloseAttack;
-        Animation m_animStrongAttack;
+        //Animation m_animStrongAttack;
         
         sf::Vector2f m_shieldEquipPos;
         Item *m_shield;
         
+        // Close Attack
         float m_closeAttackStanima;
         float m_closeAttackDamageMul;
-        float m_strongAttackStanima;
-        float m_strongAttackDamageMul;
     
         // Strong Attack
         bool m_isStrongAttackRunning;
+        float m_strongAttackStanima;
+        float m_strongAttackDamageMul;
         float m_strongAttackVelocity;
         // Total time of the strong attack
         float m_totalStrongAttackTime;
