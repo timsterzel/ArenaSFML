@@ -10,11 +10,22 @@ class Runner : public Warrior
         Animation m_animCloseAttack;
         //Animation m_animStrongAttack;
         
+        // Close Attack
         float m_closeAttackStanima;
         float m_closeAttackDamageMul;
         //float m_strongAttackStanima;
         //float m_strongAttackDamageMul;
 
+        // Dodge move
+        bool m_isDodging;
+        float m_dodgeStanima;
+        float m_dodgeVelocity;
+        // Total time of dodging
+        float m_totalDodgeTime;
+        // The time in seconds, while the current dodging running
+        float m_curDodgeTime;
+        // The direction of the dodging
+        sf::Vector2f m_dodgeDir;
 
     public:
         Runner(RenderLayers layer, const int health, Textures textureId, 
@@ -35,9 +46,8 @@ class Runner : public Warrior
         virtual void onCommandCurrent(const Command &command, float dt);
 
         void startCloseAttack();
-        //void startStrongAttack();
-        void startBlocking();
-        void stopBlocking();
+        void startDodging();
+        void stopDodging();
 };
 
 #endif // RUNNER_HPP

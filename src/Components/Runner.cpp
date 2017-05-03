@@ -3,6 +3,7 @@
 #include "Components/Item.hpp"
 #include "Collision/CollisionRect.hpp"
 #include "Collision/CollisionHandler.hpp"
+#include "Calc.hpp"
 #include <iostream>
 
 Runner::Runner(RenderLayers layer, const int health, Textures textureId, 
@@ -17,6 +18,11 @@ Runner::Runner(RenderLayers layer, const int health, Textures textureId,
 , m_closeAttackDamageMul{ 1.f }
 //, m_strongAttackStanima{ 30.f }
 //, m_strongAttackDamageMul{ 3.f }
+, m_isDodging{ false }
+, m_dodgeStanima{ 30.f }
+, m_dodgeVelocity{ 220.f }
+, m_totalDodgeTime{ 0.4 }
+, m_curDodgeTime{ 0.f }
 {
     // Animation
     std::vector<AnimationStepRotation>  swordRoationStepsCloseAtt;
@@ -67,22 +73,28 @@ void Runner::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) cons
 
 void Runner::updateCurrent(float dt)
 {
-    Warrior::updateCurrent(dt);
-    if (m_weapon)
+    if(m_isDodging) 
     {
-        if (m_animCloseAttack.isRunning())
+        m_curDodgeTime += dt;
+        moveInDirection(m_dodgeDir, m_dodgeVelocity * dt);
+        if (m_curDodgeTime > m_totalDodgeTime)
         {
-            m_animCloseAttack.update(dt);
+            stopDodging();
         }
-        /*
-        else if (m_animStrongAttack.isRunning())
+    }
+    else
+    {
+        Warrior::updateCurrent(dt);
+        if (m_weapon)
         {
-            m_animStrongAttack.update(dt);
-        }
-        */
-        else
-        {
-            m_weapon->setIsCollisionCheckOn(false);
+            if (m_animCloseAttack.isRunning())
+            {
+                m_animCloseAttack.update(dt);
+            }
+            else
+            {
+                m_weapon->setIsCollisionCheckOn(false);
+            }
         }
     }
 }
@@ -103,14 +115,17 @@ void Runner::onCommandCurrent(const Command &command, float dt)
                 startCloseAttack();
                 break;
             case CommandTypes::ATTACK2:
+                startDodging();
                 //startStrongAttack();
                 break;
+            /*
             case CommandTypes::START_BLOCKING:
                 startBlocking();
                 break;
             case CommandTypes::STOP_BLOCKING:
                 stopBlocking();
                 break;
+            */
             default:
                 break;
 
@@ -165,6 +180,22 @@ void Runner::startCloseAttack()
     }
 }
 
+void Runner::startDodging()
+{
+    if (m_currentStamina >= m_dodgeStanima)
+    {
+        m_isDodging = true;
+        m_curDodgeTime = 0.f;
+        // The dodge direction is the direction where the runner looking at
+        m_dodgeDir = Calc::degAngleToDirectionVector(getRotation());
+        removeStanima(m_dodgeStanima);
+    }
+}
+
+void Runner::stopDodging()
+{
+    m_isDodging = false;
+}
 /*
 void Runner::startStrongAttack()
 {
@@ -180,30 +211,6 @@ void Runner::startStrongAttack()
     }
 }
 */
-
-void Runner::startBlocking()
-{
-    m_animCloseAttack.stop();
-    // Runner can only block with a weapon
-    /*
-    if (m_weapon && !m_isBlocking)
-    {
-        m_isBlocking = true;
-        m_weapon->setRotation(-30.f);
-    }
-    */
-}
-
-void Runner::stopBlocking()
-{
-    m_isBlocking = false;
-    /*
-    if (m_weapon)
-    {
-        m_weapon->setRotation(0.f);
-    }
-    */
-}
 
 void Runner::weaponAdded()
 {
