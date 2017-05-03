@@ -36,6 +36,11 @@ Item::~Item()
 
 }
 
+sf::Sprite& Item::getSprite()
+{
+    return m_sprite;
+}
+
 float Item::getSpriteWidth() const
 {
     return m_sprite.getLocalBounds().width;

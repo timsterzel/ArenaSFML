@@ -44,6 +44,11 @@ class Runner : public Warrior
         virtual void updateCurrent(float dt);
         virtual void updateAI(float dt);
         virtual void onCommandCurrent(const Command &command, float dt);
+        
+        // Make the all sprites transparent
+        void makeTransparent();
+        // Make the all sprites intransparent
+        void makeInTransparent();
 
         void startCloseAttack();
         void startDodging();

@@ -21,6 +21,8 @@ class Item : public Entity
         Item(RenderLayers layer, const sf::Texture &texture, 
                 const sf::IntRect &rect);
         virtual ~Item();
+        
+        sf::Sprite& getSprite();
 
         float getSpriteWidth() const;
         float getSpriteHeight() const;

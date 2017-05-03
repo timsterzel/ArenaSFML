@@ -163,6 +163,29 @@ void Runner::updateAI(float dt)
     }
 }
 
+void Runner::makeTransparent()
+{
+    m_leftShoe->getSprite().setColor(sf::Color(255, 255, 255, 128));
+    m_rightShoe->getSprite().setColor(sf::Color(255, 255, 255, 128));
+    m_upperBody->getSprite().setColor(sf::Color(255, 255, 255, 128));
+    if (m_weapon)
+    {
+        m_weapon->getSprite().setColor(sf::Color(255, 255, 255, 128));
+    }
+}
+        
+void Runner::makeInTransparent()
+{
+    m_leftShoe->getSprite().setColor(sf::Color::White);
+    m_rightShoe->getSprite().setColor(sf::Color::White);
+    m_upperBody->getSprite().setColor(sf::Color::White);
+    if (m_weapon)
+    {
+        m_weapon->getSprite().setColor(sf::Color::White);
+    }
+
+}
+
 void Runner::startCloseAttack()
 {
     if (m_weapon != nullptr)
@@ -184,7 +207,7 @@ void Runner::startDodging()
 {
     if (m_currentStamina >= m_dodgeStanima)
     {
-        //m_sprite.setColor(sf::Color(255, 255, 255, 128));
+        makeTransparent();
         //setIsCollisionCheckOn(false);
         m_isDodging = true;
         m_curDodgeTime = 0.f;
@@ -197,6 +220,7 @@ void Runner::startDodging()
 void Runner::stopDodging()
 {
     m_isDodging = false;
+    makeInTransparent();
 }
 /*
 void Runner::startStrongAttack()

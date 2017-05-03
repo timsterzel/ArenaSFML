@@ -37,6 +37,11 @@ void SpriteNode::init(bool centerOrigin, const sf::IntRect &rect)
     }
 }
 
+sf::Sprite& SpriteNode::getSprite()
+{
+    return m_sprite;
+}
+
 void SpriteNode::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const
 {
     target.draw(m_sprite, states);

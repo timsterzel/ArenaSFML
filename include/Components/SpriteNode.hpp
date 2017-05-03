@@ -10,6 +10,8 @@ class SpriteNode : public SceneNode
     public:
         SpriteNode(RenderLayers layer, const sf::Texture &texture, bool centerOrigin);
         SpriteNode(RenderLayers layer, const sf::Texture &texture, const sf::IntRect &rect, bool centerOrigin);
+        
+        sf::Sprite& getSprite();
 
         virtual ~SpriteNode();
     private:
