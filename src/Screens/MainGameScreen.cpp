@@ -452,12 +452,12 @@ void MainGameScreen::handleCollision(float dt)
                         }
 
                     } 
-                }
-                else
-                {                   
-                    warrior->damage(weapon->getTotalDamage());
-                    // To prevent multiple damage set attack to blocked attacks
-                    weapon->addHitID(warriorID);
+                    else
+                    {                   
+                        warrior->damage(weapon->getTotalDamage());
+                        // To prevent multiple damage set attack to blocked attacks
+                        weapon->addHitID(warriorID);
+                    }
                 }
             }
         }
