@@ -125,7 +125,7 @@ void MainGameScreen::buildScene()
             WorldObjectTypes::WARRIOR |
             WorldObjectTypes::RUNNER);
     //enemy1->setActualTarget(m_playerWarrior);
-    enemy1->setIsAiActive(true);
+    enemy1->setIsAiActive(false);
     m_possibleTargetWarriors.push_back(enemy1.get());
     m_sceneGraph.attachChild(std::move(enemy1));
 }
@@ -458,6 +458,12 @@ void MainGameScreen::handleCollision(float dt)
                         // To prevent multiple damage set attack to blocked attacks
                         weapon->addHitID(warriorID);
                     }
+                }
+                else
+                {
+                    warrior->damage(weapon->getTotalDamage());
+                    // To prevent multiple damage set attack to blocked attacks
+                    weapon->addHitID(warriorID);
                 }
             }
         }

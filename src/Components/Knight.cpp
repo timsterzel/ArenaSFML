@@ -3,6 +3,7 @@
 #include "Components/Item.hpp"
 #include "Collision/CollisionRect.hpp"
 #include "Collision/CollisionHandler.hpp"
+#include "Calc.hpp"
 #include <iostream>
 
 Knight::Knight(RenderLayers layer, const int health, Textures textureId, 
@@ -17,6 +18,10 @@ Knight::Knight(RenderLayers layer, const int health, Textures textureId,
 , m_closeAttackDamageMul{ 1.f }
 , m_strongAttackStanima{ 30.f }
 , m_strongAttackDamageMul{ 3.f }
+, m_isStrongAttackRunning{ false }
+, m_strongAttackVelocity{ 160.f }
+, m_totalStrongAttackTime{ 0.3f }
+, m_curStrongAttackTime{ 0.f }
 {
     // Animation
     std::vector<AnimationStepRotation>  swordRoationStepsCloseAtt;
@@ -108,21 +113,40 @@ void Knight::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) cons
 
 void Knight::updateCurrent(float dt)
 {
-    Warrior::updateCurrent(dt);
-    if (m_weapon)
+    if(m_isStrongAttackRunning) 
     {
-        if (m_animCloseAttack.isRunning())
+        std::cout << "Strong Attack update, time: " << 
+            std::to_string(m_curStrongAttackTime) <<
+            " Rotation: " << getRotation() <<  
+             "\n";
+        m_curStrongAttackTime += dt;
+        //m_currentDirection = m_strongAttackDir;
+        moveInDirection(m_strongAttackDir, m_strongAttackVelocity * dt);
+        if (m_curStrongAttackTime > m_totalStrongAttackTime)
         {
-            m_animCloseAttack.update(dt);
+            stopStrongAttack();
         }
-        else if (m_animStrongAttack.isRunning())
+    }
+    else
+    {
+        Warrior::updateCurrent(dt);
+        if (m_weapon)
         {
-            m_animStrongAttack.update(dt);
+            if (m_animCloseAttack.isRunning())
+            {
+                m_animCloseAttack.update(dt);
+            }
+            else if (m_animStrongAttack.isRunning())
+            {
+                m_animStrongAttack.update(dt);
+            }
+            else
+            {
+                m_weapon->setIsCollisionCheckOn(false);
+            }
         }
-        else
-        {
-            m_weapon->setIsCollisionCheckOn(false);
-        }
+
+
     }
 }
 
@@ -208,13 +232,24 @@ void Knight::startStrongAttack()
             !isBlocking() &&
             m_currentStamina >= m_strongAttackStanima)
     {
+        m_isStrongAttackRunning = true;
+        m_curStrongAttackTime = 0.f;
+        // The attack direction is the direction where the knight looking at
+        m_strongAttackDir = Calc::degAngleToDirectionVector(getRotation());
         m_weapon->setRotation(0.f);
-        m_animStrongAttack.start();
+        //m_animStrongAttack.start();
         m_weapon->setIsCollisionCheckOn(true);
         m_weapon->setDamageMultiplicator(m_strongAttackDamageMul);
         m_weapon->startNewAttack();
         removeStanima(m_strongAttackStanima);
+        startBlocking();
     }
+}
+
+void Knight::stopStrongAttack()
+{
+    m_isStrongAttackRunning = false;
+    stopBlocking();
 }
 
 void Knight::startBlocking()
@@ -230,9 +265,8 @@ void Knight::startBlocking()
 
 void Knight::stopBlocking()
 {
-    m_isBlocking = false;
-    if (m_weapon)
     {
+        m_isBlocking = false;
         m_shield->setRotation(0.f);
         m_shield->setPosition(m_shieldEquipPos);
     }

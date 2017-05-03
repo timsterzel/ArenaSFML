@@ -19,7 +19,17 @@ class Knight : public Warrior
         float m_closeAttackDamageMul;
         float m_strongAttackStanima;
         float m_strongAttackDamageMul;
-
+    
+        // Strong Attack
+        bool m_isStrongAttackRunning;
+        float m_strongAttackVelocity;
+        // Total time of the strong attack
+        float m_totalStrongAttackTime;
+        // The time in seconds, while the current Storng attack is running
+        float m_curStrongAttackTime;
+        // The direction of the strong atack
+        sf::Vector2f m_strongAttackDir;
+             
 
     public:
         Knight(RenderLayers layer, const int health, Textures textureId, 
@@ -33,6 +43,7 @@ class Knight : public Warrior
         
         void startCloseAttack();
         void startStrongAttack();
+        void stopStrongAttack();
         void startBlocking();
         void stopBlocking();
 

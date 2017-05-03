@@ -9,7 +9,7 @@ float Calc::radToDeg(float rad)
     return rad * ( 180.f / PI);
 }
 
-float Calc::DegToRad(float deg)
+float Calc::degToRad(float deg)
 {
     return deg * (PI / 180.f);
 }
@@ -57,4 +57,13 @@ sf::Vector2f Calc::rotatePointAround(const sf::Vector2f Point, const sf::Vector2
 float Calc::clamp(const float Value, const float MinValue, const float MaxValue)
 {
     return std::max(MinValue, std::min(MaxValue, Value));
+}
+
+
+sf::Vector2f Calc::degAngleToDirectionVector(float angle)
+{
+    float angleRad{ degToRad(angle) };
+    float x{ std::cos(angleRad) };
+    float y{ std::sin(angleRad) };
+    return { x, y };
 }

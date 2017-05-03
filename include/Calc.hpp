@@ -9,7 +9,7 @@ class Calc
     public:
 
         static float radToDeg(float rad);
-        static float DegToRad(float deg);
+        static float degToRad(float deg);
 
         template<typename T, typename U>
         static float getVec2Scalar(const T vec1, const U vec2);
@@ -34,7 +34,8 @@ class Calc
 
         static sf::Vector2f rotatePointAround(const sf::Vector2f Point, const sf::Vector2f TargetPoint, const float AngleDegree);
         static float clamp(const float Value, const float MinValue, const float MaxValue);
-
+        // Convert a degree angle into a direction vector
+        static sf::Vector2f degAngleToDirectionVector(float angle);
 
 };
 
