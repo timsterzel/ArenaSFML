@@ -15,7 +15,18 @@ class Runner : public Warrior
         float m_closeAttackDamageMul;
         //float m_strongAttackStanima;
         //float m_strongAttackDamageMul;
-
+        
+        // Round attack
+        bool m_isRoundAttacking;
+        float m_roundAttackStanima;
+        float m_roundAttackDamageMul;
+        float m_roundAttackTotalTime;
+        float m_curRoundAttackTime;
+        // The angle in degrees per second
+        float m_roundAttackAngleVel;
+        // The Runners rotation by starting attack
+        float m_startRotationRoundAttack;
+        
         // Dodge move
         bool m_isDodging;
         float m_dodgeStanima;
@@ -51,6 +62,8 @@ class Runner : public Warrior
         void makeInTransparent();
 
         void startCloseAttack();
+        void startRoundAttack();
+        void stopRoundAttack();
         void startDodging();
         void stopDodging();
 };

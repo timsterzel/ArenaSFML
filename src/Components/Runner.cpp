@@ -14,8 +14,17 @@ Runner::Runner(RenderLayers layer, const int health, Textures textureId,
         possibleTargetsInWord)
 , m_animCloseAttack( nullptr, false )
 //, m_animStrongAttack( nullptr, false )
+// Close Attack
 , m_closeAttackStanima{ 10.f }
 , m_closeAttackDamageMul{ 1.f }
+// Round Attack
+, m_isRoundAttacking{ false }
+, m_roundAttackStanima{ 60.f }
+, m_roundAttackDamageMul{ 1.5f }
+, m_roundAttackTotalTime{ 0.6f }
+, m_curRoundAttackTime{ 0.f }
+, m_roundAttackAngleVel{ 900.f }
+, m_startRotationRoundAttack{ 0.f }
 //, m_strongAttackStanima{ 30.f }
 //, m_strongAttackDamageMul{ 3.f }
 , m_isDodging{ false }
@@ -82,6 +91,16 @@ void Runner::updateCurrent(float dt)
             stopDodging();
         }
     }
+    else if(m_isRoundAttacking) 
+    {
+        std::cout << "Round O.o \n";
+        m_curRoundAttackTime += dt;
+        setRotation(m_roundAttackAngleVel * m_curRoundAttackTime);
+        if (m_curRoundAttackTime > m_roundAttackTotalTime)
+        {
+            stopRoundAttack();
+        }
+    }
     else
     {
         Warrior::updateCurrent(dt);
@@ -116,6 +135,10 @@ void Runner::onCommandCurrent(const Command &command, float dt)
                 break;
             case CommandTypes::ATTACK2:
                 startDodging();
+                //startStrongAttack();
+                break;
+            case CommandTypes::ATTACK3:
+                startRoundAttack();
                 //startStrongAttack();
                 break;
             /*
@@ -203,9 +226,25 @@ void Runner::startCloseAttack()
     }
 }
 
+void Runner::startRoundAttack()
+{
+    if (!m_isDodging && m_currentStamina >= m_roundAttackStanima)
+    {
+        m_isRoundAttacking = true;
+        m_curRoundAttackTime = 0.f;
+        m_startRotationRoundAttack = getRotation();
+        removeStanima(m_roundAttackStanima);
+    }
+}
+
+void Runner::stopRoundAttack()
+{
+    m_isRoundAttacking = false;
+}
+
 void Runner::startDodging()
 {
-    if (m_currentStamina >= m_dodgeStanima)
+    if (!m_isRoundAttacking && m_currentStamina >= m_dodgeStanima)
     {
         makeTransparent();
         setIsCollisionCheckOn(false);

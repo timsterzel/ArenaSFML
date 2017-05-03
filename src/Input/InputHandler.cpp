@@ -78,13 +78,17 @@ void InputHandler::handleEvents(std::queue<sf::Event> &eventQueue,
                 // LControl + Left Button pressed
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl))
                 {
-                    inputQueue.push({ InputTypes::LCONTROL_LEFT_CLIK });
+                    inputQueue.push({ InputTypes::LCONTROL_LEFT_CLICK });
                 }
                 // Only left button mouse pressed
                 else
                 {
                     inputQueue.push({ InputTypes::LEFT_CLICK });
                 }
+            }
+            else if (event.mouseButton.button == sf::Mouse::Right)
+            {
+                inputQueue.push({ InputTypes::RIGHT_CLICK });
             }
         }
 
