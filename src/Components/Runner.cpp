@@ -19,11 +19,11 @@ Runner::Runner(RenderLayers layer, const int health, Textures textureId,
 , m_closeAttackDamageMul{ 1.f }
 // Round Attack
 , m_isRoundAttacking{ false }
-, m_roundAttackStanima{ 60.f }
+, m_roundAttackStanima{ 40.f }
 , m_roundAttackDamageMul{ 1.5f }
-, m_roundAttackTotalTime{ 0.6f }
-, m_curRoundAttackTime{ 0.f }
-, m_roundAttackAngleVel{ 900.f }
+, m_roundAttackCurRot{ 0.f }
+, m_roundAttackTotalRot{ 360.f }
+, m_roundAttackAngleVel{ 720.f }
 , m_startRotationRoundAttack{ 0.f }
 //, m_strongAttackStanima{ 30.f }
 //, m_strongAttackDamageMul{ 3.f }
@@ -93,10 +93,9 @@ void Runner::updateCurrent(float dt)
     }
     else if(m_isRoundAttacking) 
     {
-        std::cout << "Round O.o \n";
-        m_curRoundAttackTime += dt;
-        setRotation(m_roundAttackAngleVel * m_curRoundAttackTime);
-        if (m_curRoundAttackTime > m_roundAttackTotalTime)
+        m_roundAttackCurRot += m_roundAttackAngleVel * dt;
+        setRotation(m_startRotationRoundAttack + m_roundAttackCurRot);
+        if (m_roundAttackCurRot >= m_roundAttackTotalRot)
         {
             stopRoundAttack();
         }
@@ -228,11 +227,16 @@ void Runner::startCloseAttack()
 
 void Runner::startRoundAttack()
 {
-    if (!m_isDodging && m_currentStamina >= m_roundAttackStanima)
+    if (!m_isDodging && !m_isRoundAttacking && 
+            m_currentStamina >= m_roundAttackStanima && m_weapon)
     {
         m_isRoundAttacking = true;
-        m_curRoundAttackTime = 0.f;
+        m_roundAttackCurRot = 0.f;
         m_startRotationRoundAttack = getRotation();
+        m_weapon->setRotation(270.f);
+        m_weapon->setIsCollisionCheckOn(true);
+        m_weapon->setDamageMultiplicator(m_roundAttackDamageMul);
+        m_weapon->startNewAttack();
         removeStanima(m_roundAttackStanima);
     }
 }
@@ -240,6 +244,8 @@ void Runner::startRoundAttack()
 void Runner::stopRoundAttack()
 {
     m_isRoundAttacking = false;
+    m_weapon->setRotation(0.f);
+    m_weapon->setIsCollisionCheckOn(false);
 }
 
 void Runner::startDodging()

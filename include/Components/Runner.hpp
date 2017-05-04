@@ -20,8 +20,10 @@ class Runner : public Warrior
         bool m_isRoundAttacking;
         float m_roundAttackStanima;
         float m_roundAttackDamageMul;
-        float m_roundAttackTotalTime;
-        float m_curRoundAttackTime;
+        // The current rotation in degrees
+        float m_roundAttackCurRot;
+        // The total rotation in degrees
+        float m_roundAttackTotalRot;
         // The angle in degrees per second
         float m_roundAttackAngleVel;
         // The Runners rotation by starting attack
