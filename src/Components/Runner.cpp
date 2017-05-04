@@ -129,16 +129,14 @@ void Runner::onCommandCurrent(const Command &command, float dt)
         m_currentDirection.y = 0.f;
         switch (command.getCommandType())
         {
-            case CommandTypes::ATTACK1:
+            case CommandTypes::ACTION1:
                 startCloseAttack();
                 break;
-            case CommandTypes::ATTACK2:
+            case CommandTypes::ACTION2:
                 startDodging();
-                //startStrongAttack();
                 break;
-            case CommandTypes::ATTACK3:
+            case CommandTypes::ACTION3:
                 startRoundAttack();
-                //startStrongAttack();
                 break;
             /*
             case CommandTypes::START_BLOCKING:

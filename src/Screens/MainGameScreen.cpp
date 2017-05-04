@@ -90,12 +90,12 @@ void MainGameScreen::buildScene()
     m_sceneGraph.attachChild(std::move(background));
 
     // Warrior
-    //std::unique_ptr<Knight> warrior{ std::make_unique<Knight>
-    //    (RenderLayers::MAIN, 100.f, Textures::KNIGHT, *m_context.textureHolder, 
-    //     *m_context.spriteSheetMapHolder, m_possibleTargetWarriors) };
-    std::unique_ptr<Runner> warrior{ std::make_unique<Runner>
-        (RenderLayers::MAIN, 100.f, Textures::RUNNER, *m_context.textureHolder, 
+    std::unique_ptr<Knight> warrior{ std::make_unique<Knight>
+        (RenderLayers::MAIN, 100.f, Textures::KNIGHT, *m_context.textureHolder, 
          *m_context.spriteSheetMapHolder, m_possibleTargetWarriors) };
+    //std::unique_ptr<Runner> warrior{ std::make_unique<Runner>
+    //    (RenderLayers::MAIN, 100.f, Textures::RUNNER, *m_context.textureHolder, 
+    //     *m_context.spriteSheetMapHolder, m_possibleTargetWarriors) };
     m_playerWarrior = warrior.get();
     std::unique_ptr<CollisionShape> collisionShapeWarrior{ 
         std::make_unique<CollisionCircle>(12.f) };
@@ -200,15 +200,15 @@ bool MainGameScreen::handleInput(Input &input, float dt)
 
         case InputTypes::LEFT_CLICK :
             m_commandQueue.push(
-                    { CommandTypes::ATTACK1, WorldObjectTypes::PLAYER });
+                    { CommandTypes::ACTION1, WorldObjectTypes::PLAYER });
             break;
         case InputTypes::LCONTROL_LEFT_CLICK :
             m_commandQueue.push(
-                    { CommandTypes::ATTACK2, WorldObjectTypes::PLAYER });
+                    { CommandTypes::ACTION2, WorldObjectTypes::PLAYER });
             break;
         case InputTypes::RIGHT_CLICK :
             m_commandQueue.push(
-                    { CommandTypes::ATTACK3, WorldObjectTypes::PLAYER });
+                    { CommandTypes::ACTION3, WorldObjectTypes::PLAYER });
             
         case InputTypes::RIGHT_CLICK_START :
             m_commandQueue.push(

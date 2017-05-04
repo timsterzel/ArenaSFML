@@ -48,7 +48,7 @@ void Wizard::onCommandCurrent(const Command &command, float dt)
         m_currentDirection.y = 0.f;
         switch (command.getCommandType())
         {
-            case CommandTypes::ATTACK1:
+            case CommandTypes::ACTION1:
                 if (!m_animCloseAttack.isRunning())
                 {
                     m_animCloseAttack.start();

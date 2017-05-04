@@ -49,10 +49,14 @@ Warrior::Warrior(RenderLayers layer, const float health, Textures textureId, con
                 spriteSheetMapHolder.getRectData(textureId, "right_shoe"), true) };
     rightShoe->setPosition(8.f, 5.f);
 
+    sf::IntRect upperBodyRect{ 
+        spriteSheetMapHolder.getRectData(textureId, "upper_body") };
     std::unique_ptr<SpriteNode> upperBody =
         { std::make_unique<SpriteNode>(RenderLayers::UPPER_BODY, 
                 textureHolder.get(textureId), 
-                spriteSheetMapHolder.getRectData(textureId, "upper_body"), true) };
+                upperBodyRect, true) };
+    setWidth(upperBodyRect.width);
+    setHeight(upperBodyRect.height);
 
     // Start body animation
     setBodyParts(leftShoe.get(), rightShoe.get(), upperBody.get());

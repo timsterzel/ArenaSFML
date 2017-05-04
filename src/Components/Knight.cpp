@@ -80,6 +80,7 @@ Knight::Knight(RenderLayers layer, const int health, Textures textureId,
     //setWeapon(sword.get());
     // Shield pos
     m_shieldEquipPos = sf::Vector2f{ 0.f, -getHeight() / 2.f + 3.f };
+    std::cout << "Height: " << getHeight() << std::endl;
     //shield->equip(m_shieldEquipPos);
     shield->setPosition(m_shieldEquipPos);
     m_shield = shield.get();
@@ -161,10 +162,10 @@ void Knight::onCommandCurrent(const Command &command, float dt)
         m_currentDirection.y = 0.f;
         switch (command.getCommandType())
         {
-            case CommandTypes::ATTACK1:
+            case CommandTypes::ACTION1:
                 startCloseAttack();
                 break;
-            case CommandTypes::ATTACK2:
+            case CommandTypes::ACTION2:
                 startStrongAttack();
                 break;
             case CommandTypes::START_BLOCKING:

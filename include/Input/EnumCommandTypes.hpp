@@ -13,9 +13,9 @@ enum class CommandTypes
     MOVE_UP_RIGHT,
     MOVE_DOWN_LEFT,
     MOVE_DOWN_RIGHT,
-    ATTACK1,
-    ATTACK2,
-    ATTACK3,
+    ACTION1,
+    ACTION2,
+    ACTION3,
     START_BLOCKING,
     STOP_BLOCKING,
 };
