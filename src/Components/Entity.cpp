@@ -15,7 +15,7 @@ Entity::Entity(RenderLayers layer)
 
 Entity::~Entity()
 {
-    std::cout << "Destructor Entity" << std::endl;
+
 }
 
 void Entity::setVelocity(float velocity)

@@ -17,7 +17,7 @@ SpriteNode::SpriteNode(RenderLayers layer, const sf::Texture &texture, const sf:
 
 SpriteNode::~SpriteNode()
 {
-    std::cout << "Destructor SpriteNode" << std::endl;
+
 }
 
 void SpriteNode::init(bool centerOrigin)
@@ -44,7 +44,16 @@ sf::Sprite& SpriteNode::getSprite()
 
 void SpriteNode::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const
 {
+    /*
+    sf::Shader shader;
+    if (!shader.loadFromFile("assets/shaders/grayscale.frag", sf::Shader::Fragment))
+    {
+        std::cout << "Error by loading Shader \n";
+    }
+    states.shader = &shader;
+    */
     target.draw(m_sprite, states);
+    //states.shader = nullptr;
 }
 
 
