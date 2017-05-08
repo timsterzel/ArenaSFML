@@ -65,7 +65,15 @@ void InputHandler::handleEvents(std::queue<sf::Event> &eventQueue,
             {
                 inputQueue.push({ InputTypes::D4 });
             }
+            else if (event.key.code == sf::Keyboard::F5)
+            {
+                inputQueue.push({ InputTypes::CONSOLE });
+            }
             else if (event.key.code == sf::Keyboard::Escape)
+            {
+                inputQueue.push({ InputTypes::PAUSE });
+            }
+            else if (event.key.code == sf::Keyboard::F5)
             {
                 inputQueue.push({ InputTypes::PAUSE });
             }

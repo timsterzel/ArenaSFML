@@ -21,8 +21,10 @@ class MainGameScreen : public Screen
     private:
         bool m_isGamePaused;
         bool m_showCollisionInfo;
-        
+
         gsf::GUIEnvironment m_guiEnvironment;
+        // The console widget is for debugging
+        gsf::ConsoleWidget *m_consoleWidget;
         gsf::ProgressWidget *m_healthBarWarr1;
         gsf::ProgressWidget *m_healthBarWarr2;
         gsf::ProgressWidget *m_stanimaBarWarr1;

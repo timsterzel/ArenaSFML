@@ -57,6 +57,8 @@ class Screen : private sf::NonCopyable
         virtual ~Screen();
 
         virtual void buildScene();
+        
+        Context getContext();
 
         // return false when no lower screen should handle the input
         virtual bool handleInput(Input &input, float dt);

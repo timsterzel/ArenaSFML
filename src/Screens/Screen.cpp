@@ -42,6 +42,11 @@ void Screen::buildScene()
     // Do nothing by default
 }
 
+Screen::Context Screen::getContext()
+{
+    return m_context;
+}
+
 bool Screen::handleInput(Input &input, float dt)
 {
     return true;

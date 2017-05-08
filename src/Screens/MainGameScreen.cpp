@@ -44,6 +44,17 @@ void MainGameScreen::buildScene()
     healthWar1->setBottomPosition(m_context.window->getView().getSize().y - 10.f);
     m_guiEnvironment.addWidget(std::move(healthWar1));
     
+    sf::Vector2f windowViewSize{ getContext().window->getView().getSize() };
+    gsf::ConsoleWidget::Ptr consoleWidget{ gsf::ConsoleWidget::create(
+            windowViewSize.x - 80.f,
+            windowViewSize.y / 4,
+            getContext().fontHolder->get(Fonts::DEFAULT)) };
+    consoleWidget->setOrientation(gsf::Orientation::CenterHorizontal);
+    consoleWidget->setTopPosition(0.f);
+    consoleWidget->setIsVisible(false);
+    m_consoleWidget = consoleWidget.get();
+    m_guiEnvironment.addWidget(std::move(consoleWidget));
+
     gsf::ProgressWidget::Ptr healthWar2{ gsf::ProgressWidget::create(100.f, 20.f) };
     m_healthBarWarr2 = healthWar2.get();
     healthWar2->setProgressColor(sf::Color::Red);
@@ -68,7 +79,6 @@ void MainGameScreen::buildScene()
     stanimaWar2->setBottomPosition(m_context.window->getView().getSize().y 
             - 10.f - m_healthBarWarr2->getLocalBounds().height - 10.f);
     m_guiEnvironment.addWidget(std::move(stanimaWar2));
-    
     // Play music
     m_context.music->play(Musics::GAMETHEME01);
 
@@ -242,7 +252,10 @@ bool MainGameScreen::handleInput(Input &input, float dt)
             m_sceneGraph.changeCollisionShapeDraw(m_showCollisionInfo);
             break;
         case InputTypes::D4 :
-
+            break;
+            
+        case InputTypes::CONSOLE :
+            m_consoleWidget->setIsVisible(!m_consoleWidget->isVisible());
             break;
         // Tmp (Arrow Keys)
         case InputTypes::UP_A :

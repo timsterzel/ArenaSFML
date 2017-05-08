@@ -29,6 +29,8 @@ enum class InputTypes
     RIGHT_CLICK_STILL,
     RIGHT_CLICK_STOPED,
     PAUSE,
+    CONSOLE,
+    
     // Debug
     D1,
     D2,

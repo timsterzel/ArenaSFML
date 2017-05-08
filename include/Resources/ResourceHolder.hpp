@@ -23,7 +23,6 @@ class ResourceHolder
         Resource& get(Identifier id) const;
         //const Resource& get(Identifier id) const;
 
-
 };
 
 #include "Resources/ResourceHolder.inl"

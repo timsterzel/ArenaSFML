@@ -6,10 +6,8 @@
 
 int main()
 {
-	bool soundEnabled{ false };
-    
+	bool soundEnabled{ false };    
     Game game(false, true, soundEnabled);
     game.run();
-
     return 0;
 }
