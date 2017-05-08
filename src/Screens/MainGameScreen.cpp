@@ -44,14 +44,17 @@ void MainGameScreen::buildScene()
     healthWar1->setBottomPosition(m_context.window->getView().getSize().y - 10.f);
     m_guiEnvironment.addWidget(std::move(healthWar1));
     
+    // Create Console widget
     sf::Vector2f windowViewSize{ getContext().window->getView().getSize() };
     gsf::ConsoleWidget::Ptr consoleWidget{ gsf::ConsoleWidget::create(
-            windowViewSize.x - 80.f,
-            windowViewSize.y / 4,
             getContext().fontHolder->get(Fonts::DEFAULT)) };
-    consoleWidget->setOrientation(gsf::Orientation::CenterHorizontal);
+    consoleWidget->setWidth(windowViewSize.x - 
+            2 * consoleWidget->getOutlineThickness());
+    consoleWidget->setHeight(windowViewSize.y / 4);
     consoleWidget->setTopPosition(0.f);
+    consoleWidget->setLeftPosition(0.f);
     consoleWidget->setIsVisible(false);
+    consoleWidget->setBackgroundColor(sf::Color(255, 255, 255, 128));
     m_consoleWidget = consoleWidget.get();
     m_guiEnvironment.addWidget(std::move(consoleWidget));
 
