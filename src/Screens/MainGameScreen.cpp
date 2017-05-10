@@ -9,6 +9,7 @@
 #include "Components/Knight.hpp"
 #include "Components/Runner.hpp"
 #include "Calc.hpp"
+#include "Helpers.hpp"
 #include <memory>
 #include "Game.hpp"
 #include <cmath>
@@ -56,6 +57,12 @@ void MainGameScreen::buildScene()
     consoleWidget->setIsVisible(false);
     consoleWidget->setBackgroundColor(sf::Color(255, 255, 255, 128));
     m_consoleWidget = consoleWidget.get();
+    m_consoleWidget->setOnCommandEnteredListener(
+            [this](gsf::Widget *widget, sf::String command)
+            {
+                this->handleConsoleCommands(widget, command);
+            });
+    
     m_guiEnvironment.addWidget(std::move(consoleWidget));
 
     gsf::ProgressWidget::Ptr healthWar2{ gsf::ProgressWidget::create(100.f, 20.f) };
@@ -114,7 +121,7 @@ void MainGameScreen::buildScene()
         std::make_unique<CollisionCircle>(12.f) };
     m_playerWarrior->setCollisionShape(std::move(collisionShapeWarrior));
     m_playerWarrior->setPosition(800 / 2.f, 480 / 2.f);
-    m_playerWarrior->setVelocity(60.f);
+    //m_playerWarrior->setVelocity(60.f);
     m_playerWarrior->setType(
             WorldObjectTypes::PLAYER | 
             WorldObjectTypes::WARRIOR | 
@@ -136,7 +143,7 @@ void MainGameScreen::buildScene()
     enemy1->setCollisionShape(std::move(collisionShapeEnemy));
     //wizard->setPosition(800 / 2.f + 100.f, 480 / 2.f);
     enemy1->setPosition(800 / 2.f - 160.f, 480 / 2.f - 100.f);
-    enemy1->setVelocity(60.f);
+    //enemy1->setVelocity(60.f);
     enemy1->setType(WorldObjectTypes::ENEMY | 
             WorldObjectTypes::WARRIOR |
             WorldObjectTypes::RUNNER);
@@ -145,6 +152,65 @@ void MainGameScreen::buildScene()
     m_possibleTargetWarriors.push_back(enemy1.get());
     m_sceneGraph.attachChild(std::move(enemy1));
 }
+
+void MainGameScreen::handleConsoleCommands(gsf::Widget* widget, sf::String command)
+{
+    std::string commandUpper{ Helpers::toUpper(command) };
+    std::vector<std::string> commands{ Helpers::splitString(commandUpper, ' ') };
+    for (const std::string &str : commands)
+    {
+        std::cout << "Command: " << str << "\n";
+    }
+    std::size_t comCnt{ commands.size() };
+    // No commands so nothing to do
+    if (comCnt < 1)
+    {
+        return;
+    }
+    std::string mainCom{ commands[0] };
+    // Spawm something
+    if (mainCom == "SPAWN")
+    {
+        // Nothing to spawn specified
+        if (comCnt < 2)
+        {
+            return;
+        }
+        std::unique_ptr<Warrior> spawnWar{ nullptr };
+        std::string spawnObjCom{ commands[1] };
+        WorldObjectTypes type;
+        if (spawnObjCom == "KNIGHT")
+        {
+            spawnWar = std::make_unique<Knight>
+                (RenderLayers::MAIN, 100.f, Textures::KNIGHT, *m_context.textureHolder, 
+                *m_context.spriteSheetMapHolder, m_possibleTargetWarriors);
+            type = WorldObjectTypes::KNIGHT;
+        }
+        else if (spawnObjCom == "RUNNER")
+        {
+            spawnWar = std::make_unique<Runner>
+                (RenderLayers::MAIN, 100.f, Textures::RUNNER, *m_context.textureHolder, 
+                *m_context.spriteSheetMapHolder, m_possibleTargetWarriors);
+            type = WorldObjectTypes::RUNNER;
+        }
+        // If spawnWar is null there was no valid warrior specified, so nothing to do
+        if (!spawnWar)
+        {
+            return;
+        }
+        std::unique_ptr<CollisionShape> collisionShapeEnemy{ 
+            std::make_unique<CollisionCircle>(12.f) };
+        spawnWar->setCollisionShape(std::move(collisionShapeEnemy));
+        spawnWar->setPosition(800.f / 2, 400.f / 2.f);
+        //spawnWar->setVelocity(60.f);
+        spawnWar->setType(WorldObjectTypes::ENEMY | 
+            WorldObjectTypes::WARRIOR |
+            type);
+        spawnWar->setIsAiActive(true);
+        m_possibleTargetWarriors.push_back(spawnWar.get());
+        m_sceneGraph.attachChild(std::move(spawnWar));
+    }
+};
 
 void MainGameScreen::safeSceneNodeTrasform()
 {

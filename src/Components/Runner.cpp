@@ -33,6 +33,7 @@ Runner::Runner(RenderLayers layer, const int health, Textures textureId,
 , m_totalDodgeTime{ 0.2 }
 , m_curDodgeTime{ 0.f }
 {
+    setVelocity(80.f);
     // Animation
     std::vector<AnimationStepRotation>  swordRoationStepsCloseAtt;
     swordRoationStepsCloseAtt.push_back({ 0.f, -60.f,  0.3f });
