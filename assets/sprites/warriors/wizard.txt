@@ -1,3 +1,4 @@
 left_shoe = 23 0 9 6
 right_shoe = 23 7 9 6
+stick = 0 26 21 4
 upper_body = 0 0 22 25
