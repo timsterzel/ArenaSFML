@@ -15,6 +15,14 @@ http://opengameart.org/users/rothens
 A link to the licence:
 http://creativecommons.org/licenses/by-sa/3.0/legalcode
 
+The following asset is under CC0 and bases on assets of KerteX_:
+fireball.png
+This asset is modified. You can find the unmodified asset on the following url:
+https://opengameart.org/content/fireflame
+A link to the licence:
+https://creativecommons.org/publicdomain/zero/1.0/
+
+
 
 
 

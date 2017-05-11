@@ -1,0 +1,6 @@
+fireball_1 = 0 0 22 31
+fireball_2 = 23 0 22 31
+fireball_3 = 0 32 22 31
+fireball_4 = 23 32 22 31
+fireball_5 = 46 0 22 31
+fireball_6 = 69 0 22 31

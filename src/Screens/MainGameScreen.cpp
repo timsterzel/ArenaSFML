@@ -8,6 +8,7 @@
 #include "Components/Weapon.hpp"
 #include "Components/Knight.hpp"
 #include "Components/Runner.hpp"
+#include "Components/Wizard.hpp"
 #include "Calc.hpp"
 #include <memory>
 #include "Game.hpp"
@@ -103,9 +104,14 @@ void MainGameScreen::buildScene()
     m_sceneGraph.attachChild(std::move(background));
 
     // Warrior
-    std::unique_ptr<Knight> warrior{ std::make_unique<Knight>
-        (RenderLayers::MAIN, 100.f, Textures::KNIGHT, *m_context.textureHolder, 
+    std::unique_ptr<Wizard> warrior{ std::make_unique<Wizard>
+        (RenderLayers::MAIN, 100.f, Textures::WIZARD, *m_context.textureHolder, 
          *m_context.spriteSheetMapHolder, m_possibleTargetWarriors) };
+    
+    //std::unique_ptr<Knight> warrior{ std::make_unique<Knight>
+    //    (RenderLayers::MAIN, 100.f, Textures::KNIGHT, *m_context.textureHolder, 
+    //     *m_context.spriteSheetMapHolder, m_possibleTargetWarriors) };
+    
     //std::unique_ptr<Runner> warrior{ std::make_unique<Runner>
     //    (RenderLayers::MAIN, 100.f, Textures::RUNNER, *m_context.textureHolder, 
     //     *m_context.spriteSheetMapHolder, m_possibleTargetWarriors) };
