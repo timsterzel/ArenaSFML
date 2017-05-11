@@ -36,6 +36,7 @@ Wizard::Wizard(RenderLayers layer, const int health, Textures textureId,
 , m_curDodgeTime{ 0.f }
 */
 {
+    setVelocity(70.f);
     // Animation
     std::vector<AnimationStepMovement>  stickMovementStepsFireball;
     stickMovementStepsFireball.push_back({ -2.f, { 1, 0 },  0.1f });
