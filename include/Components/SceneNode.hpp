@@ -53,6 +53,7 @@ class SceneNode : public sf::Transformable, /*public sf::Drawable,*/ public sf::
         Ptr detachChild(const SceneNode& node);
         
         SceneNode* getParent() const;
+        SceneNode* getRootSceneNode();
         void setCollisionShape(std::unique_ptr<CollisionShape> collisionShape);
         // dt is the delta time
         void update(float dt);

@@ -53,7 +53,7 @@ SceneNode::SceneNode(RenderLayers layer, WorldObjectTypes type)
 
 SceneNode::~SceneNode()
 {
-    std::cout << "Destructor SceneNode" << std::endl;
+
 }
 
 void SceneNode::attachChild(Ptr child)
@@ -77,6 +77,15 @@ SceneNode::Ptr SceneNode::detachChild(const SceneNode& node)
 SceneNode* SceneNode::getParent() const
 {
     return m_parent;
+}
+
+SceneNode* SceneNode::getRootSceneNode()
+{
+    if (m_parent == nullptr)
+    {
+        return this;
+    }
+    return m_parent->getRootSceneNode();
 }
 
 void SceneNode::setCollisionShape(std::unique_ptr<CollisionShape> collisionShape)

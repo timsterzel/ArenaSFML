@@ -192,8 +192,9 @@ void Wizard::startFireballAttack()
             m_currentStamina >= m_fireballAttackStanima)
     {
         m_animFireballAttack.start();
-        removeStanima(m_fireballAttackStanima);
+        SceneNode* rootNode{ getRootSceneNode() };
 
+        removeStanima(m_fireballAttackStanima);
     }
     /*
     if (m_weapon && !m_animCloseAttack.isRunning() && 
