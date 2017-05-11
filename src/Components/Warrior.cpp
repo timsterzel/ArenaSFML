@@ -9,6 +9,8 @@ Warrior::Warrior(RenderLayers layer, const float health, Textures textureId, con
     const SpriteSheetMapHolder &spriteSheetMapHolder, std::vector<Warrior*> &possibleTargetsInWord)
 : Entity(layer)
 , m_ID{ Helpers::createUniqueID(30) }
+, m_textureHolder{ textureHolder }
+, m_spriteSheetMapHolder{ spriteSheetMapHolder }
 , m_maxHealth{ health }
 , m_currentHealth{ health }
 , m_maxStamina{ 100.f }

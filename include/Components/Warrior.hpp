@@ -17,7 +17,10 @@ class Warrior : public Entity
     protected:
         // A random generated id (should be unique)
         std::string m_ID;
-
+        
+        const ResourceHolder<sf::Texture, Textures> &m_textureHolder;
+        const SpriteSheetMapHolder &m_spriteSheetMapHolder;
+        
         float m_maxHealth;
         float m_currentHealth;
 

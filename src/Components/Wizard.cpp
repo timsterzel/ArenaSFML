@@ -77,6 +77,7 @@ void Wizard::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) cons
 
 void Wizard::updateCurrent(float dt)
 {
+    Warrior::updateCurrent(dt);
     if (m_animFireballAttack.isRunning())
     {
         m_animFireballAttack.update(dt);
@@ -193,7 +194,10 @@ void Wizard::startFireballAttack()
     {
         m_animFireballAttack.start();
         SceneNode* rootNode{ getRootSceneNode() };
-
+        // To do: create fireball (class have to be created for animated sprites and
+        // objects which automatic update themselve and move/rotate) and add the 
+        // fireball to the rootNode
+        
         removeStanima(m_fireballAttackStanima);
     }
     /*
