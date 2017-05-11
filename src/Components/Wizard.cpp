@@ -12,10 +12,12 @@ Wizard::Wizard(RenderLayers layer, const int health, Textures textureId,
         std::vector<Warrior*> &possibleTargetsInWord)
 : Warrior(layer, health, textureId, textureHolder, spriteSheetMapHolder, 
         possibleTargetsInWord)
-, m_animCloseAttack( nullptr, false )
+
+, m_animFireballAttack( nullptr, false )
 //, m_animStrongAttack( nullptr, false )
 // Close Attack
-, m_closeAttackStanima{ 10.f }
+, m_fireballAttackStanima{ 10.f }
+/*
 , m_closeAttackDamageMul{ 1.f }
 // Round Attack
 , m_isRoundAttacking{ false }
@@ -32,12 +34,18 @@ Wizard::Wizard(RenderLayers layer, const int health, Textures textureId,
 , m_dodgeVelocity{ 300.f }
 , m_totalDodgeTime{ 0.2 }
 , m_curDodgeTime{ 0.f }
+*/
 {
     // Animation
+    std::vector<AnimationStepMovement>  stickMovementStepsFireball;
+    stickMovementStepsFireball.push_back({ -2.f, { 1, 0 },  0.1f });
+    stickMovementStepsFireball.push_back({ 2.f, { 1, 0 },  0.1f });
+    m_animFireballAttack.setMovementSteps(stickMovementStepsFireball);
+    /*
     std::vector<AnimationStepRotation>  swordRoationStepsCloseAtt;
     swordRoationStepsCloseAtt.push_back({ 0.f, -60.f,  0.3f });
-    m_animCloseAttack.setRotationSteps(swordRoationStepsCloseAtt);
-
+    m_animFireballAttack.setRotationSteps(swordRoationStepsCloseAtt);
+    */
     std::unique_ptr<Weapon> stick(new Weapon(RenderLayers::WEAPON, 10.f, 
                 textureHolder.get(textureId), 
                 spriteSheetMapHolder.getRectData(textureId, "stick")));
@@ -69,6 +77,11 @@ void Wizard::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) cons
 
 void Wizard::updateCurrent(float dt)
 {
+    if (m_animFireballAttack.isRunning())
+    {
+        m_animFireballAttack.update(dt);
+    }
+    /*
     if(m_isDodging) 
     {
         m_curDodgeTime += dt;
@@ -102,6 +115,7 @@ void Wizard::updateCurrent(float dt)
             }
         }
     }
+    */
 }
 
 void Wizard::onCommandCurrent(const Command &command, float dt)
@@ -117,13 +131,13 @@ void Wizard::onCommandCurrent(const Command &command, float dt)
         switch (command.getCommandType())
         {
             case CommandTypes::ACTION1:
-                startCloseAttack();
+                startFireballAttack();
                 break;
             case CommandTypes::ACTION2:
-                startDodging();
+                //startDodging();
                 break;
             case CommandTypes::ACTION3:
-                startRoundAttack();
+                //startRoundAttack();
                 break;
             /*
             case CommandTypes::START_BLOCKING:
@@ -147,6 +161,7 @@ void Wizard::onCommandCurrent(const Command &command, float dt)
 
 void Wizard::updateAI(float dt)
 {
+    /*
     m_isMoving = false;
     Warrior::updateAI(dt);
     if (!m_actualTarget)
@@ -168,31 +183,47 @@ void Wizard::updateAI(float dt)
         m_isMoving = true;
         moveInActualDirection(m_currentVelocity * dt);
     }
+    */
 }
 
-void Wizard::makeTransparent()
+void Wizard::startFireballAttack()
 {
-    m_leftShoe->getSprite().setColor(sf::Color(255, 255, 255, 128));
-    m_rightShoe->getSprite().setColor(sf::Color(255, 255, 255, 128));
-    m_upperBody->getSprite().setColor(sf::Color(255, 255, 255, 128));
-    if (m_weapon)
+    if (m_weapon && !m_animFireballAttack.isRunning() &&  
+            m_currentStamina >= m_fireballAttackStanima)
     {
-        m_weapon->getSprite().setColor(sf::Color(255, 255, 255, 128));
+        m_animFireballAttack.start();
+        removeStanima(m_fireballAttackStanima);
+
+    }
+    /*
+    if (m_weapon && !m_animCloseAttack.isRunning() && 
+            m_currentStamina >= m_closeAttackStanima)
+    {
+        m_animCloseAttack.start();
+        m_weapon->setIsCollisionCheckOn(true);
+        m_weapon->setDamageMultiplicator(m_closeAttackDamageMul);
+        m_weapon->startNewAttack();
+        removeStanima(m_closeAttackStanima);
+    }
+    */
+}
+/*
+void Wizard::startCloseAttack()
+{
+    if (m_weapon != nullptr)
+    {
+        std::cout << "Weapon is not null\n";
+    }
+    if (m_weapon && !m_animCloseAttack.isRunning() && 
+            m_currentStamina >= m_closeAttackStanima)
+    {
+        m_animCloseAttack.start();
+        m_weapon->setIsCollisionCheckOn(true);
+        m_weapon->setDamageMultiplicator(m_closeAttackDamageMul);
+        m_weapon->startNewAttack();
+        removeStanima(m_closeAttackStanima);
     }
 }
-        
-void Wizard::makeInTransparent()
-{
-    m_leftShoe->getSprite().setColor(sf::Color::White);
-    m_rightShoe->getSprite().setColor(sf::Color::White);
-    m_upperBody->getSprite().setColor(sf::Color::White);
-    if (m_weapon)
-    {
-        m_weapon->getSprite().setColor(sf::Color::White);
-    }
-
-}
-
 void Wizard::startCloseAttack()
 {
     if (m_weapon != nullptr)
@@ -253,9 +284,8 @@ void Wizard::stopDodging()
     setIsCollisionCheckOn(true);
     makeInTransparent();
 }
-
+*/
 void Wizard::weaponAdded()
 {
-    m_animCloseAttack.setParent(m_weapon);
-    //m_animStrongAttack.setParent(m_weapon);
+    m_animFireballAttack.setParent(m_weapon);
 }

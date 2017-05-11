@@ -7,15 +7,13 @@
 class Wizard : public Warrior
 {
     private:
-        Animation m_animCloseAttack;
+        Animation m_animFireballAttack;
         //Animation m_animStrongAttack;
         
-        // Close Attack
-        float m_closeAttackStanima;
-        float m_closeAttackDamageMul;
-        //float m_strongAttackStanima;
-        //float m_strongAttackDamageMul;
+        // Fireball Attack
+        float m_fireballAttackStanima;
         
+        /*
         // Round attack
         bool m_isRoundAttacking;
         float m_roundAttackStanima;
@@ -39,7 +37,7 @@ class Wizard : public Warrior
         float m_curDodgeTime;
         // The direction of the dodging
         sf::Vector2f m_dodgeDir;
-
+        */
     public:
         Wizard(RenderLayers layer, const int health, Textures textureId, 
                 const ResourceHolder<sf::Texture, Textures> &textureHolder,
@@ -58,16 +56,14 @@ class Wizard : public Warrior
         virtual void updateAI(float dt);
         virtual void onCommandCurrent(const Command &command, float dt);
         
-        // Make the all sprites transparent
-        void makeTransparent();
-        // Make the all sprites intransparent
-        void makeInTransparent();
-
+        void startFireballAttack();
+        /*
         void startCloseAttack();
         void startRoundAttack();
         void stopRoundAttack();
         void startDodging();
         void stopDodging();
+        */
 };
 
 #endif // WIZARD_HPP
