@@ -3,6 +3,9 @@
 #include <iostream>
 #include <set>
 #include <cmath>
+#include <utility>
+#include <algorithm>
+#include <sstream>
 
 std::string Helpers::getRandomAlphaNumString(int length)
 {
@@ -38,4 +41,34 @@ std::string Helpers::createUniqueID(int length)
     } while(createdIDs.find(id) != createdIDs.end() && rounds < std::pow(26, length));
     createdIDs.insert(id);
     return id;
+}
+
+std::string Helpers::toUpper(std::string str)
+{
+    std::transform(str.begin(), str.end(), str.begin(), ::toupper);
+    return str;
+}
+
+
+std::vector<std::string> Helpers::splitString(const std::string &str, 
+                char delimiter)
+{
+    std::vector<std::string> splittedStr;
+    std::stringstream ss(str);
+    std::string tmp;
+    while(getline(ss, tmp, delimiter))
+    {
+        splittedStr.push_back(tmp);
+    }
+    return splittedStr;
+}
+
+bool Helpers::stringToBool(const std::string &str)
+{
+    std::string strUpper{ toUpper(str) };
+    if (strUpper == "TRUE" || strUpper =="1")
+    {
+        return true;
+    }
+    return false;
 }

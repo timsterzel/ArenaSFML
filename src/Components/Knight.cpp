@@ -24,6 +24,7 @@ Knight::Knight(RenderLayers layer, const int health, Textures textureId,
 , m_totalStrongAttackTime{ 0.3f }
 , m_curStrongAttackTime{ 0.f }
 {
+    setVelocity(60.f);
     // Animation
     std::vector<AnimationStepRotation>  swordRoationStepsCloseAtt;
     swordRoationStepsCloseAtt.push_back({ 0.f, -60.f,  0.3f });

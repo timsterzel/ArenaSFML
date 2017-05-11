@@ -61,6 +61,8 @@ class MainGameScreen : public Screen
         void resolveEntityCollisions(SceneNode *sceneNodeFirst, SceneNode *sceneNodeSecond, CollisionInfo &collisionInfo);
         // Check if the player is still in game
         bool isStillPlayerIsInGame();
+        void handleConsoleCommands(gsf::Widget* widget, sf::String command);
+
 };
 
 #endif // MAINGAMESCREEN_HPP
