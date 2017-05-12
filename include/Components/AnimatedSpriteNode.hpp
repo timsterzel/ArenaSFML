@@ -13,7 +13,7 @@ class AnimatedSpriteNode : public SpriteNode
         float m_totalTime;
         float m_timePerFrame;
         float m_currentFrameTime;
-        int m_currentFrame;
+        std::size_t m_currentFrame;
         bool m_repeat;
     public:
         AnimatedSpriteNode(RenderLayers layer, const sf::Texture &texture, 
