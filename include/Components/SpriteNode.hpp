@@ -5,7 +5,7 @@
 
 class SpriteNode : public SceneNode
 {
-    private:
+    protected:
         sf::Sprite m_sprite;
     public:
         SpriteNode(RenderLayers layer, const sf::Texture &texture, bool centerOrigin);
