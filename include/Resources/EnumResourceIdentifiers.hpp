@@ -7,6 +7,7 @@ enum class Textures
     KNIGHT,
     RUNNER,
     WIZARD,
+    FIREBALL,
 };
 
 enum class Fonts

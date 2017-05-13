@@ -88,6 +88,11 @@ void Game::loadTextures()
     m_spriteSheetMapHolder.load(
             Textures::WIZARD, "assets/sprites/warriors/wizard.txt");
     
+    m_textureHolder.load(
+            Textures::FIREBALL, "assets/sprites/attacks/fireball.png");
+    m_spriteSheetMapHolder.load(
+            Textures::FIREBALL, "assets/sprites/attacks/fireball.txt");
+    
     m_textureHolder.load(Textures::CHESS_WHITE, "assets/sprites/chess_white.png");
 }
 

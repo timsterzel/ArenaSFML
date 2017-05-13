@@ -16,8 +16,8 @@ class SpriteSheetMapHolder
 
         //std::map<std::string, sf::IntRect> get(const Textures &id) const;
 
-        sf::IntRect getRectData(Textures &id, const std::string &identefier) const;
-        sf::IntRect getRectData(Textures &id, const std::string &identefier);
+        sf::IntRect getRectData(Textures id, const std::string &identefier) const;
+        sf::IntRect getRectData(Textures id, const std::string &identefier);
 
     private:
         //void loadRectData(const std::string &fileName);

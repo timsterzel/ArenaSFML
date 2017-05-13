@@ -152,8 +152,11 @@ void SceneNode::updateChildren(float dt)
 
 void SceneNode::onCommand(const Command &command, float dt)
 {
+    std::cout << "Before onCommandCurrent\n";
     onCommandCurrent(command, dt);
+    std::cout << "After onCommandCurrent\n";
     onCommandChildren(command, dt);
+    std::cout << "After onCommandChildren\n";
 }
 
 void SceneNode::onCommandCurrent(const Command &command, float dt)
@@ -163,10 +166,19 @@ void SceneNode::onCommandCurrent(const Command &command, float dt)
 
 void SceneNode::onCommandChildren(const Command &command, float dt)
 {
-    for (const Ptr &child : m_children)
+    for (int i = 0; i != m_children.size(); i++)
     {
+        SceneNode *child{ m_children[i].get() };
         child->onCommand(command, dt);
     }
+    /*
+    for (const Ptr &child : m_children)
+    {
+        std::cout << "BeforeOnCommand in OnCommandChildren \n";
+        child->onCommand(command, dt);
+        std::cout << "AfterOnCommand in OnCommandChildren \n";
+    }
+    */
 }
 
 sf::Transform SceneNode::getWorldTransform() const

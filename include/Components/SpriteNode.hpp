@@ -1,25 +1,47 @@
-#ifndef SPRITENODE_HPP
-#define SPRITENODE_HPP
+#ifndef SPRITE_NODE_HPP
+#define SPRITE_NODE_HPP
 #include <SFML/Graphics.hpp>
-#include "Components/SceneNode.hpp"
+#include <vector>
+#include "Components/Entity.hpp"
 
-class SpriteNode : public SceneNode
+
+class SpriteNode : public Entity
 {
-    protected:
+    private:
         sf::Sprite m_sprite;
+
+
+        std::vector<sf::IntRect> m_frameRects;
+        // Total time of the complete animation in seconds
+        float m_totalTime;
+        float m_timePerFrame;
+        float m_currentFrameTime;
+        std::size_t m_currentFrame;
+        bool m_repeat;
     public:
-        SpriteNode(RenderLayers layer, const sf::Texture &texture, bool centerOrigin);
-        SpriteNode(RenderLayers layer, const sf::Texture &texture, const sf::IntRect &rect, bool centerOrigin);
-        
-        sf::Sprite& getSprite();
+
+        SpriteNode(RenderLayers layer, const sf::Texture &texture, 
+                bool centerOrigin);
+        SpriteNode(RenderLayers layer, const sf::Texture &texture, 
+                const sf::IntRect &rect, bool centerOrigin);
+
+        SpriteNode(RenderLayers layer, const sf::Texture &texture, 
+                bool centerOrigin, bool repeat = true);
+        SpriteNode(RenderLayers layer, const sf::Texture &texture, 
+                const std::vector<sf::IntRect> frameRects, bool centerOrigin,
+                float totalTime, bool repeat = true);
 
         virtual ~SpriteNode();
+        
+        
+        sf::Sprite& getSprite();
+        void setTotalTime(float time);
+        
+        virtual void updateCurrent(float dt);
     private:
-        virtual void drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const;
-
-        void init(bool centerOrigin);
-        void init(bool centerOrigin, const sf::IntRect &rect);
+        virtual void drawCurrent(sf::RenderTarget &target, 
+                sf::RenderStates states) const;
 
 };
 
-#endif // SPRITENODE_HPP
+#endif // !SPRITE_NODE_HPP

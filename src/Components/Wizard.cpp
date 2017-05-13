@@ -195,10 +195,30 @@ void Wizard::startFireballAttack()
     {
         m_animFireballAttack.start();
         SceneNode* rootNode{ getRootSceneNode() };
-        // To do: create fireball (class have to be created for animated sprites and
-        // objects which automatic update themselve and move/rotate) and add the 
-        // fireball to the rootNode
-        
+
+        std::vector<sf::IntRect> frameRects;
+        frameRects.push_back(
+            m_spriteSheetMapHolder.getRectData(Textures::FIREBALL, "fireball_1"));
+        frameRects.push_back(
+            m_spriteSheetMapHolder.getRectData(Textures::FIREBALL, "fireball_2"));
+        frameRects.push_back(
+            m_spriteSheetMapHolder.getRectData(Textures::FIREBALL, "fireball_3"));
+        frameRects.push_back(
+            m_spriteSheetMapHolder.getRectData(Textures::FIREBALL, "fireball_4"));
+        frameRects.push_back(
+            m_spriteSheetMapHolder.getRectData(Textures::FIREBALL, "fireball_5"));
+        frameRects.push_back(
+            m_spriteSheetMapHolder.getRectData(Textures::FIREBALL, "fireball_6"));
+        std::unique_ptr<SpriteNode> fireball{ 
+            std::make_unique<SpriteNode>(RenderLayers::WEAPON, 
+                    m_textureHolder.get(Textures::FIREBALL), 
+                    frameRects, 
+                    true,
+                    0.5f) };
+        //fireball->setVelocity(6.f);
+        fireball->setPosition(getWorldPosition());
+        fireball->setRotation(getRotation() - 90.f);
+        rootNode->attachChild(std::move(fireball));
         removeStanima(m_fireballAttackStanima);
     }
     /*

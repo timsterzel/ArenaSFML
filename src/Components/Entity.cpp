@@ -98,6 +98,7 @@ sf::Vector2f Entity::getWorldCenterPosition() const
 
 void Entity::updateCurrent(float dt)
 {
+    moveInActualDirection(dt);
     /*
     m_currentVelocity.x = 0.f;
     m_currentVelocity.y = 0.f;
@@ -114,5 +115,3 @@ void Entity::onCommandCurrent(const Command &command, float dt)
 {
 
 }
-
-

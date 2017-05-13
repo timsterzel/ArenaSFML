@@ -29,14 +29,14 @@ std::map<std::string, sf::IntRect> SpriteSheetMapHolder::get(const Textures &id)
 }
 */
 
-sf::IntRect SpriteSheetMapHolder::getRectData(Textures &id, const std::string &identefier) const
+sf::IntRect SpriteSheetMapHolder::getRectData(Textures id, const std::string &identefier) const
 {
     assert(m_resourceMap.find(id) != m_resourceMap.end());
     assert(m_resourceMap.at(id).find(identefier) != m_resourceMap.at(id).end());
     return m_resourceMap.at(id).at(identefier);
 }
 
-sf::IntRect SpriteSheetMapHolder::getRectData(Textures &id, const std::string &identefier)
+sf::IntRect SpriteSheetMapHolder::getRectData(Textures id, const std::string &identefier)
 {
     assert(m_resourceMap.find(id) != m_resourceMap.end());
     assert(m_resourceMap.at(id).find(identefier) != m_resourceMap.at(id).end());

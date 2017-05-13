@@ -265,10 +265,6 @@ void Warrior::updateCurrent(float dt)
             m_animationRightShoe.update(dt);
         }
     }
-
-    //std::cout << "WorldPos: " << getWorldPosition().x << "|" << getWorldPosition().y
-    //<< "WeaponWorldPos: " << getWorldWeaponPos().x << "|" << getWorldWeaponPos().y << std::endl;
-
 }
 
 Warrior* Warrior::determineActualTarget() const

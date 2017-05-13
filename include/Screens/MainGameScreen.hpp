@@ -30,7 +30,7 @@ class MainGameScreen : public Screen
         gsf::ProgressWidget *m_stanimaBarWarr2;
         // Warriors which are in the game
         std::vector<Warrior*> m_possibleTargetWarriors;
-
+        
         QueueHelper<Command> m_commandQueue;
 
         sf::FloatRect m_worldBounds;

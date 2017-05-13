@@ -138,7 +138,7 @@ void MainGameScreen::buildScene()
     //m_playerWarrior->attachChild(std::move(swordPlayer));
     m_possibleTargetWarriors.push_back(warrior.get());
     m_sceneGraph.attachChild(std::move(warrior));
-        
+
     // Enemy
     std::unique_ptr<Warrior> enemy1{ std::make_unique<Runner>
         (RenderLayers::MAIN, 100.f, Textures::RUNNER, *m_context.textureHolder, 
