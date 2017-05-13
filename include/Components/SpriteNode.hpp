@@ -37,8 +37,8 @@ class SpriteNode : public Entity
         sf::Sprite& getSprite();
         void setTotalTime(float time);
         
+    protected:
         virtual void updateCurrent(float dt);
-    private:
         virtual void drawCurrent(sf::RenderTarget &target, 
                 sf::RenderStates states) const;
 

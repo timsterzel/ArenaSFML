@@ -215,11 +215,13 @@ void Wizard::startFireballAttack()
                     frameRects, 
                     true,
                     0.5f) };
-        //fireball->setVelocity(6.f);
+        fireball->setVelocity(200.f);
         fireball->setPosition(getWorldPosition());
         fireball->setRotation(getRotation() - 90.f);
+        fireball->setCurrentDirection(
+                Calc::degAngleToDirectionVector(getRotation()));
         rootNode->attachChild(std::move(fireball));
-        removeStanima(m_fireballAttackStanima);
+        //removeStanima(m_fireballAttackStanima);
     }
     /*
     if (m_weapon && !m_animCloseAttack.isRunning() && 

@@ -90,6 +90,7 @@ void SpriteNode::setTotalTime(float time)
 
 void SpriteNode::updateCurrent(float dt)
 {
+    Entity::updateCurrent(dt);
     if (m_frameRects.size() <= 0)
     {
         return;

@@ -38,7 +38,7 @@ class Entity : public SceneNode
         // We have to override this method, because the entity can have a width an height
         //virtual sf::Vector2f getWorldCenterPosition() const;
 
-    private:
+   protected:
         virtual void updateCurrent(float dt);
         virtual void onCommandCurrent(const Command &command, float dt);
 };
