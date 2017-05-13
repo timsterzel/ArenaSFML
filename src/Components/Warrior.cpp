@@ -23,7 +23,7 @@ Warrior::Warrior(RenderLayers layer, const float health, Textures textureId, con
 , m_rightShoe{ nullptr }
 , m_weapon{ nullptr }
 , m_upperBody{ nullptr }
-, m_weaponPos(0.f, 10.f)
+, m_weaponPos(-10.f, 0.f)
 , m_animationLeftShoe{  nullptr ,true }
 , m_animationRightShoe{  nullptr ,true }
 , m_closeCombatArea{ nullptr }
@@ -43,13 +43,13 @@ Warrior::Warrior(RenderLayers layer, const float health, Textures textureId, con
         { std::make_unique<SpriteNode>(RenderLayers::SHOES, 
                 textureHolder.get(textureId), 
                 spriteSheetMapHolder.getRectData(textureId, "left_shoe"), true) };
-    leftShoe->setPosition(8.f, -5.f);
-
+    //leftShoe->setPosition(8.f, -5.f);
+    leftShoe->setPosition(-5.f, 8.f);
     std::unique_ptr<SpriteNode> rightShoe =
         { std::make_unique<SpriteNode>(RenderLayers::WEAPON, 
                 textureHolder.get(textureId), 
                 spriteSheetMapHolder.getRectData(textureId, "right_shoe"), true) };
-    rightShoe->setPosition(8.f, 5.f);
+    rightShoe->setPosition(5.f, 8.f);
 
     sf::IntRect upperBodyRect{ 
         spriteSheetMapHolder.getRectData(textureId, "upper_body") };
@@ -123,14 +123,14 @@ void Warrior::setBodyParts(SpriteNode *leftShoe, SpriteNode *rightShoe, SpriteNo
     m_animationLeftShoe.setParent(m_leftShoe);
     m_animationRightShoe.setParent(m_rightShoe);
     std::vector<AnimationStepMovement>  leftShoeMovementSteps;
-    leftShoeMovementSteps.push_back({ 2.f, sf::Vector2f(1.f, 0.f) , 0.3f });
-    leftShoeMovementSteps.push_back({ 2.f, sf::Vector2f(-1.f, 0.f) , 0.3f });
+    leftShoeMovementSteps.push_back({ 2.f, sf::Vector2f(0.f, 1.f) , 0.3f });
+    leftShoeMovementSteps.push_back({ 2.f, sf::Vector2f(0.f, -1.f) , 0.3f });
     m_animationLeftShoe.setMovementSteps(leftShoeMovementSteps);
     m_animationLeftShoe.start();
 
     std::vector<AnimationStepMovement>  rightShoeMovementSteps;
-    rightShoeMovementSteps.push_back({ 2.f, sf::Vector2f(1.f, 0.f) , 0.3f });
-    rightShoeMovementSteps.push_back({ 2.f, sf::Vector2f(-1.f, 0.f) , 0.3f });
+    rightShoeMovementSteps.push_back({ 2.f, sf::Vector2f(0.f, 1.f) , 0.3f });
+    rightShoeMovementSteps.push_back({ 2.f, sf::Vector2f(0.f, -1.f) , 0.3f });
     m_animationRightShoe.setMovementSteps(rightShoeMovementSteps);
     m_animationRightShoe.setStartTime(0.3f);
     m_animationRightShoe.start();
@@ -409,7 +409,7 @@ void Warrior::lookAt(const sf::Vector2f LookPos)
     const sf::Vector2f TranslatedLookPos = LookPos - getWorldPosition();
     const float Angle = { Calc::radToDeg(Calc::getVec2Angle<sf::Vector2f, sf::Vector2f>(UnitVecX, TranslatedLookPos)) };
     const float AngleSigned = TranslatedLookPos.y < 0.f ? -Angle : Angle;
-    setRotation(AngleSigned);
+    setRotation(AngleSigned - 90.f);
 }
 
 void Warrior::weaponAdded()

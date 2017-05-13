@@ -1,5 +1,5 @@
-left_shoe = 0 13 9 6
-right_shoe = 0 20 9 6
-shield = 0 7 22 5
-sword = 0 0 30 6
-upper_body = 31 0 20 30
+left_shoe = 38 0 6 9
+right_shoe = 23 21 6 9
+shield = 0 21 22 5
+sword = 31 0 6 30
+upper_body = 0 0 30 20

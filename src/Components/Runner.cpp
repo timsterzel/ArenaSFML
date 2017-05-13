@@ -52,7 +52,8 @@ Runner::Runner(RenderLayers layer, const int health, Textures textureId,
     sword->setType(WorldObjectTypes::WEAPON);
     sword->setPosition(0.f, 0.f);
     //swordPlayer->setRotationPoint(0.f, swordPlayer->getSpriteHeight() / 2.f);
-    sword->setOrigin(-10.f, 0.f);
+    //sword->setOrigin(-10.f, 0.f);
+    sword->setOrigin(0.f, -10.f);
     std::unique_ptr<CollisionShape> collisionShapeSword(new CollisionRect(
                 { sword->getSpriteWidth(), sword->getSpriteHeight() }));
     sword->setCollisionShape(std::move(collisionShapeSword));
@@ -256,7 +257,7 @@ void Runner::startDodging()
         m_isDodging = true;
         m_curDodgeTime = 0.f;
         // The dodge direction is the direction where the runner looking at
-        m_dodgeDir = Calc::degAngleToDirectionVector(getRotation());
+        m_dodgeDir = Calc::degAngleToDirectionVector(getRotation() + 90.f);
         removeStanima(m_dodgeStanima);
     }
 }

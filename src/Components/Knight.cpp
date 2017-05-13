@@ -57,9 +57,10 @@ Knight::Knight(RenderLayers layer, const int health, Textures textureId,
                 textureHolder.get(textureId), 
                 spriteSheetMapHolder.getRectData(textureId, "sword")));
     sword->setType(WorldObjectTypes::WEAPON);
-    sword->setPosition(0.f, 0.f);
+    //sword->setPosition(0.f, 0.f);
     //swordPlayer->setRotationPoint(0.f, swordPlayer->getSpriteHeight() / 2.f);
-    sword->setOrigin(-10.f, 0.f);
+    //sword->setOrigin(-10.f, 0.f);
+    sword->setOrigin(0.f, -10.f);
     std::unique_ptr<CollisionShape> collisionShapeSword(new CollisionRect(
                 { sword->getSpriteWidth(), sword->getSpriteHeight() }));
     sword->setCollisionShape(std::move(collisionShapeSword));
@@ -72,16 +73,17 @@ Knight::Knight(RenderLayers layer, const int health, Textures textureId,
                 spriteSheetMapHolder.getRectData(textureId, "shield")));
     shield->setType(WorldObjectTypes::SHIELD);
     //shield->setPosition(0.f, 0.f);
-    shield->setOrigin(0.f, shield->getSpriteHeight() / 2.f);
-    //shield->setEquipPoint(0.f, shield->getSpriteHeight() / 2.f);
+    //shield->setOrigin(shield->getSpriteWidth() / 2.f, 0.f);
+    shield->setRotation(90.f);
     std::unique_ptr<CollisionShape> collisionShapeShield(
             new CollisionRect({ shield->getSpriteWidth(), 
                 shield->getSpriteHeight() }));
     shield->setCollisionShape(std::move(collisionShapeShield));
     //setWeapon(sword.get());
     // Shield pos
-    m_shieldEquipPos = sf::Vector2f{ 0.f, -getHeight() / 2.f + 3.f };
-    std::cout << "Height: " << getHeight() << std::endl;
+    //m_shieldEquipPos = sf::Vector2f{ 0.f, -getHeight() / 2.f + 3.f };
+    m_shieldEquipPos = sf::Vector2f{ getWidth() / 2.f - 3.f, 0.f };
+    //m_shieldEquipPos = sf::Vector2f{ 0.f, 0.f};
     //shield->equip(m_shieldEquipPos);
     shield->setPosition(m_shieldEquipPos);
     m_shield = shield.get();
@@ -236,7 +238,7 @@ void Knight::startStrongAttack()
         m_isStrongAttackRunning = true;
         m_curStrongAttackTime = 0.f;
         // The attack direction is the direction where the knight looking at
-        m_strongAttackDir = Calc::degAngleToDirectionVector(getRotation());
+        m_strongAttackDir = Calc::degAngleToDirectionVector(getRotation() + 90.f);
         m_weapon->setRotation(0.f);
         //m_animStrongAttack.start();
         m_weapon->setIsCollisionCheckOn(true);
@@ -259,8 +261,10 @@ void Knight::startBlocking()
     if (m_shield && !m_isBlocking)
     {
         m_isBlocking = true;
-        m_shield->setRotation(270.f);
-        m_shield->setPosition(10.f, 0.f);
+        //m_shield->setRotation(270.f);
+        //m_shield->setPosition(10.f, 0.f);
+        m_shield->setRotation(0.f);
+        m_shield->setPosition(0.f, 10.f);
     }
 }
 
@@ -268,7 +272,9 @@ void Knight::stopBlocking()
 {
     {
         m_isBlocking = false;
-        m_shield->setRotation(0.f);
+        //m_shield->setRotation(0.f);
+        //m_shield->setPosition(m_shieldEquipPos);
+        m_shield->setRotation(90.f);
         m_shield->setPosition(m_shieldEquipPos);
     }
 }

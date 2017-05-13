@@ -39,8 +39,8 @@ Wizard::Wizard(RenderLayers layer, const int health, Textures textureId,
     setVelocity(70.f);
     // Animation
     std::vector<AnimationStepMovement>  stickMovementStepsFireball;
-    stickMovementStepsFireball.push_back({ -2.f, { 1, 0 },  0.1f });
-    stickMovementStepsFireball.push_back({ 2.f, { 1, 0 },  0.1f });
+    stickMovementStepsFireball.push_back({ -2.f, { 0, 1 },  0.1f });
+    stickMovementStepsFireball.push_back({ 2.f, { 0, 1 },  0.1f });
     m_animFireballAttack.setMovementSteps(stickMovementStepsFireball);
     /*
     std::vector<AnimationStepRotation>  swordRoationStepsCloseAtt;
@@ -217,9 +217,9 @@ void Wizard::startFireballAttack()
                     0.5f) };
         fireball->setVelocity(200.f);
         fireball->setPosition(getWorldPosition());
-        fireball->setRotation(getRotation() - 90.f);
+        fireball->setRotation(getRotation());
         fireball->setCurrentDirection(
-                Calc::degAngleToDirectionVector(getRotation()));
+                Calc::degAngleToDirectionVector(fireball->getRotation() + 90.f));
         rootNode->attachChild(std::move(fireball));
         //removeStanima(m_fireballAttackStanima);
     }
