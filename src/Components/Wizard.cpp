@@ -52,7 +52,7 @@ Wizard::Wizard(RenderLayers layer, const int health, Textures textureId,
                 spriteSheetMapHolder.getRectData(textureId, "stick")));
     stick->setType(WorldObjectTypes::WEAPON);
     stick->setPosition(0.f, 0.f);
-    stick->setOrigin(-10.f, 0.f);
+    stick->setOrigin(0.f, -10.f);
     std::unique_ptr<CollisionShape> collisionShapeSword(new CollisionRect(
                 { stick->getSpriteWidth(), stick->getSpriteHeight() }));
     stick->setCollisionShape(std::move(collisionShapeSword));
