@@ -209,23 +209,23 @@ void Wizard::startFireballAttack()
             m_spriteSheetMapHolder.getRectData(Textures::FIREBALL, "fireball_5"));
         frameRects.push_back(
             m_spriteSheetMapHolder.getRectData(Textures::FIREBALL, "fireball_6"));
-        std::unique_ptr<Item> fireball{ 
-            std::make_unique<Item>(RenderLayers::WEAPON,
-                    
+        std::unique_ptr<Weapon> fireball{ 
+            std::make_unique<Weapon>(RenderLayers::WEAPON,
+                    10.f,
                     m_textureHolder.get(Textures::FIREBALL), 
                     frameRects, 
                     true,
                     0.5f) };
         
+        // Add id of wizard to "HitID", so the weapon asume that the wizard was
+        // already attacked, so the wizard is not damaged by colliding with fireball
+        fireball->addHitID(getID());
         fireball->setDebugName("Fireball");
         fireball->setVelocity(200.f);
         fireball->setPosition(getWorldPosition());
         fireball->setRotationDefault(getRotation());
         fireball->setCurrentDirection(
                 Calc::degAngleToDirectionVector(fireball->getRotation() + 90.f));
-        // To do:
-        // When Collision shape is set and WorldObjectTypes is WEAPON, there is a
-        // segmention fault.
         fireball->setType(WorldObjectTypes::WEAPON);
         std::unique_ptr<CollisionShape> collisionShape{
             std::make_unique<CollisionRect>(

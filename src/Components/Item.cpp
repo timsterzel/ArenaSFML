@@ -9,7 +9,6 @@ Item::Item(RenderLayers layer, Textures textureId,
 //, m_sprite{ textureHolder.get(textureId) }
 , m_rotationPoint{ 0.f, 0.f }
 {
-    std::cout << "Consturoe ITEM 1\n";
     /*
     sf::FloatRect bounds = m_sprite.getLocalBounds();
     m_sprite.setOrigin(bounds.width / 2.f, bounds.height / 2.f);
@@ -25,7 +24,6 @@ Item::Item(RenderLayers layer, const sf::Texture &texture, const sf::IntRect &re
 //, m_sprite{ texture, rect }
 , m_rotationPoint{ 0.f, 0.f }
 {
-    std::cout << "Consturoe ITEM 2\n";
     /*   
     sf::FloatRect bounds = m_sprite.getLocalBounds();
     m_sprite.setOrigin(bounds.width / 2.f, bounds.height / 2.f);
@@ -40,7 +38,7 @@ Item::Item(RenderLayers layer, const sf::Texture &texture,
 : SpriteNode(layer, texture, frameRects, centerOrigin, totalTime, repeat)
 , m_rotationPoint{ 0.f, 0.f }
 {
-    std::cout << "Consturoe ITEM 3\n";
+
 }
 
 Item::~Item()
