@@ -56,6 +56,16 @@ SceneNode::~SceneNode()
 
 }
 
+void SceneNode::setDebugName(const std::string &debugName)
+{
+    m_debugName = debugName;
+}
+
+const std::string& SceneNode::getDebugName() const
+{
+    return m_debugName;
+}
+
 void SceneNode::attachChild(Ptr child)
 {
     child->m_parent = this;
@@ -152,11 +162,8 @@ void SceneNode::updateChildren(float dt)
 
 void SceneNode::onCommand(const Command &command, float dt)
 {
-    std::cout << "Before onCommandCurrent\n";
     onCommandCurrent(command, dt);
-    std::cout << "After onCommandCurrent\n";
     onCommandChildren(command, dt);
-    std::cout << "After onCommandChildren\n";
 }
 
 void SceneNode::onCommandCurrent(const Command &command, float dt)

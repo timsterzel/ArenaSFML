@@ -9,6 +9,7 @@ Item::Item(RenderLayers layer, Textures textureId,
 //, m_sprite{ textureHolder.get(textureId) }
 , m_rotationPoint{ 0.f, 0.f }
 {
+    std::cout << "Consturoe ITEM 1\n";
     /*
     sf::FloatRect bounds = m_sprite.getLocalBounds();
     m_sprite.setOrigin(bounds.width / 2.f, bounds.height / 2.f);
@@ -24,6 +25,7 @@ Item::Item(RenderLayers layer, const sf::Texture &texture, const sf::IntRect &re
 //, m_sprite{ texture, rect }
 , m_rotationPoint{ 0.f, 0.f }
 {
+    std::cout << "Consturoe ITEM 2\n";
     /*   
     sf::FloatRect bounds = m_sprite.getLocalBounds();
     m_sprite.setOrigin(bounds.width / 2.f, bounds.height / 2.f);
@@ -35,10 +37,10 @@ Item::Item(RenderLayers layer, const sf::Texture &texture, const sf::IntRect &re
 Item::Item(RenderLayers layer, const sf::Texture &texture, 
     const std::vector<sf::IntRect> frameRects, bool centerOrigin, 
     float totalTime, bool repeat)
-: SpriteNode(layer, texture, frameRects, true, totalTime, repeat)
+: SpriteNode(layer, texture, frameRects, centerOrigin, totalTime, repeat)
 , m_rotationPoint{ 0.f, 0.f }
 {
-
+    std::cout << "Consturoe ITEM 3\n";
 }
 
 Item::~Item()
@@ -83,6 +85,11 @@ void Item::setRotationPoint(float x, float y)
 sf::Vector2f Item::getRotationPoint() const
 {
     return m_rotationPoint;
+}
+
+void Item::setRotationDefault(float rotation)
+{
+    Transformable::setRotation(rotation);
 }
 
 void Item::setRotation(float angle)

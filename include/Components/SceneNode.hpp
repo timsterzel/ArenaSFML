@@ -23,6 +23,8 @@ class SceneNode : public sf::Transformable, /*public sf::Drawable,*/ public sf::
 
     private:
         //bool m_isRoot;
+        std::string m_debugName;
+        
         RenderLayers m_layer;
         std::vector<Ptr> m_children;
         SceneNode *m_parent;
@@ -48,6 +50,9 @@ class SceneNode : public sf::Transformable, /*public sf::Drawable,*/ public sf::
         SceneNode(RenderLayers layer);
         SceneNode(RenderLayers layer, WorldObjectTypes type);
         virtual ~SceneNode();
+        
+        void setDebugName(const std::string &debugName);
+        const std::string& getDebugName() const;
 
         void attachChild(Ptr child);
         Ptr detachChild(const SceneNode& node);

@@ -20,6 +20,16 @@ Weapon::Weapon(RenderLayers layer, const float damage, const sf::Texture &textur
 {
 
 }
+        
+Weapon::Weapon(RenderLayers layer, const float damage, const sf::Texture &texture, 
+    const std::vector<sf::IntRect> frameRects, bool centerOrigin, 
+    float totalTime, bool repeat)
+: Item(layer, texture, frameRects, centerOrigin, totalTime, repeat)
+, m_damage{ damage }
+, m_damageMultiplicator{ 1.f }
+{
+    
+}
 
 Weapon::~Weapon()
 {

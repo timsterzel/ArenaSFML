@@ -209,18 +209,29 @@ void Wizard::startFireballAttack()
             m_spriteSheetMapHolder.getRectData(Textures::FIREBALL, "fireball_5"));
         frameRects.push_back(
             m_spriteSheetMapHolder.getRectData(Textures::FIREBALL, "fireball_6"));
-        std::unique_ptr<SpriteNode> fireball{ 
-            std::make_unique<SpriteNode>(RenderLayers::WEAPON, 
+        std::unique_ptr<Item> fireball{ 
+            std::make_unique<Item>(RenderLayers::WEAPON,
+                    
                     m_textureHolder.get(Textures::FIREBALL), 
                     frameRects, 
                     true,
                     0.5f) };
+        
+        fireball->setDebugName("Fireball");
         fireball->setVelocity(200.f);
         fireball->setPosition(getWorldPosition());
-        fireball->setRotation(getRotation());
+        fireball->setRotationDefault(getRotation());
         fireball->setCurrentDirection(
                 Calc::degAngleToDirectionVector(fireball->getRotation() + 90.f));
+        // To do:
+        // When Collision shape is set and WorldObjectTypes is WEAPON, there is a
+        // segmention fault.
         fireball->setType(WorldObjectTypes::WEAPON);
+        std::unique_ptr<CollisionShape> collisionShape{
+            std::make_unique<CollisionRect>(
+                    sf::Vector2f(fireball->getWidth(), fireball->getHeight()))};
+        fireball->setCollisionShape(std::move(collisionShape));
+        fireball->setIsCollisionCheckOn(true);
         rootNode->attachChild(std::move(fireball));
         //removeStanima(m_fireballAttackStanima);
     }

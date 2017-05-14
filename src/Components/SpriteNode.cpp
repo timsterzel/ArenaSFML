@@ -63,6 +63,7 @@ SpriteNode::SpriteNode(RenderLayers layer,
 , m_currentFrame{ 0 }
 , m_repeat{ repeat }
 {
+    std::cout << "SpriteNode constrctor 4\n";
     setTotalTime(totalTime);
     if (m_frameRects.size() > 0)
     {

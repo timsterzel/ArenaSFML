@@ -33,7 +33,10 @@ class Item : public SpriteNode
         void setRotationPoint(sf::Vector2f point);
         void setRotationPoint(float x, float y);
         sf::Vector2f getRotationPoint() const;
-
+        
+        // To Do: find better solution
+        // Call the default sfmls setRotation method
+        void setRotationDefault(float rotation);
         virtual void setRotation(float angle);
         //void rotateAround(sf::Vector2f pos, float degrees);
         void rotate(float angle);

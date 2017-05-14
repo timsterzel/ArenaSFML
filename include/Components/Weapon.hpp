@@ -26,6 +26,9 @@ class Weapon : public Item
                 const ResourceHolder<sf::Texture, Textures> &textureHolder);
         Weapon(RenderLayers layer, const float damage, const sf::Texture &texture, 
                 const sf::IntRect &rect);
+        Weapon(RenderLayers layer, const float damage, const sf::Texture &texture, 
+                const std::vector<sf::IntRect> frameRects, bool centerOrigin, 
+                float totalTime, bool repeat = true);
         virtual ~Weapon();
         
         float getTotalDamage() const;
