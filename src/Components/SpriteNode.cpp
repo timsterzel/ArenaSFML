@@ -9,11 +9,13 @@ SpriteNode::SpriteNode(RenderLayers layer, const sf::Texture &texture, bool cent
 , m_currentFrame{ 0 }
 , m_repeat{ false }
 {
+    sf::FloatRect bounds = m_sprite.getLocalBounds();
     if (centerOrigin)
     {
-        sf::FloatRect bounds = m_sprite.getLocalBounds();
         m_sprite.setOrigin(bounds.width / 2.f, bounds.height / 2.f);
     }
+    setWidth(bounds.width);
+    setHeight(bounds.height);
 }
 
 SpriteNode::SpriteNode(RenderLayers layer, const sf::Texture &texture, const sf::IntRect &rect, bool centerOrigin)
@@ -24,10 +26,13 @@ SpriteNode::SpriteNode(RenderLayers layer, const sf::Texture &texture, const sf:
 , m_currentFrame{ 0 }
 , m_repeat{ false }
 {
+    sf::FloatRect bounds = m_sprite.getLocalBounds();
     if (centerOrigin)
     {
         m_sprite.setOrigin(rect.width / 2.f, rect.height / 2.f);
     }
+    setWidth(bounds.width);
+    setHeight(bounds.height);
 }
 
 SpriteNode::SpriteNode(RenderLayers layer, 
@@ -40,7 +45,9 @@ SpriteNode::SpriteNode(RenderLayers layer,
 , m_currentFrame{ 0 }
 , m_repeat{ repeat }
 {
-
+    sf::FloatRect bounds = m_sprite.getLocalBounds();
+    setWidth(bounds.width);
+    setHeight(bounds.height);
 }
 
 SpriteNode::SpriteNode(RenderLayers layer, 
@@ -66,6 +73,9 @@ SpriteNode::SpriteNode(RenderLayers layer,
             m_sprite.setOrigin(frameRect.width / 2.f, frameRect.height / 2.f);
         }
     }
+    sf::FloatRect bounds = m_sprite.getLocalBounds();
+    setWidth(bounds.width);
+    setHeight(bounds.height);
 }
 
 SpriteNode::~SpriteNode()
@@ -76,6 +86,16 @@ SpriteNode::~SpriteNode()
 sf::Sprite& SpriteNode::getSprite()
 {
     return m_sprite;
+}
+
+float SpriteNode::getSpriteWidth() const
+{
+    return m_sprite.getLocalBounds().width;
+}
+
+float SpriteNode::getSpriteHeight() const
+{
+    return m_sprite.getLocalBounds().height;
 }
 
 void SpriteNode::setTotalTime(float time)

@@ -34,6 +34,9 @@ class SpriteNode : public Entity
         virtual ~SpriteNode();
         
         
+        float getSpriteWidth() const;
+        float getSpriteHeight() const;
+        
         sf::Sprite& getSprite();
         void setTotalTime(float time);
         

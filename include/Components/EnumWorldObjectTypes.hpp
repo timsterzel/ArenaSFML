@@ -13,7 +13,7 @@ enum WorldObjectTypes
     RUNNER = 1 << 7,
     WIZARD = 1 << 8,
     // TMP
-    PLAYER_TWO = 1 << 9
+    PLAYER_TWO = 1 << 10
 };
 
 #endif // ENUMWORLDOBJECTTYPE

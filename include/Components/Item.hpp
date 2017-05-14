@@ -1,16 +1,16 @@
 #ifndef ITEM_HPP
 #define ITEM_HPP
 #include <SFML/Graphics.hpp>
-#include "Components/Entity.hpp"
+#include "Components/SpriteNode.hpp"
 #include "Resources/EnumResourceIdentifiers.hpp"
 #include "Resources/ResourceHolder.hpp"
 
-class Item : public Entity
+class Item : public SpriteNode
 {
     protected:
 
     private:
-        sf::Sprite m_sprite;
+        //sf::Sprite m_sprite;
         //bool m_isAttacking;
         // The point of which it should be rotated
         sf::Vector2f m_rotationPoint;
@@ -20,12 +20,15 @@ class Item : public Entity
                 const ResourceHolder<sf::Texture, Textures> &textureHolder);
         Item(RenderLayers layer, const sf::Texture &texture, 
                 const sf::IntRect &rect);
+        Item(RenderLayers layer, const sf::Texture &texture, 
+                const std::vector<sf::IntRect> frameRects, bool centerOrigin, 
+                float totalTime, bool repeat = true);
         virtual ~Item();
         
-        sf::Sprite& getSprite();
+        //sf::Sprite& getSprite();
 
-        float getSpriteWidth() const;
-        float getSpriteHeight() const;
+        //float getSpriteWidth() const;
+        //float getSpriteHeight() const;
 
         void setRotationPoint(sf::Vector2f point);
         void setRotationPoint(float x, float y);
@@ -35,11 +38,9 @@ class Item : public Entity
         //void rotateAround(sf::Vector2f pos, float degrees);
         void rotate(float angle);
 
-        virtual void drawCurrent(sf::RenderTarget &target, 
-                sf::RenderStates states) const;
+        //virtual void drawCurrent(sf::RenderTarget &target, 
+        //        sf::RenderStates states) const;
 
-    private:
-        virtual void updateCurrent(float dt);
 };
 
 #endif // ITEM_HPP

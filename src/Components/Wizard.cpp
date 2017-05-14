@@ -220,6 +220,7 @@ void Wizard::startFireballAttack()
         fireball->setRotation(getRotation());
         fireball->setCurrentDirection(
                 Calc::degAngleToDirectionVector(fireball->getRotation() + 90.f));
+        fireball->setType(WorldObjectTypes::WEAPON);
         rootNode->attachChild(std::move(fireball));
         //removeStanima(m_fireballAttackStanima);
     }

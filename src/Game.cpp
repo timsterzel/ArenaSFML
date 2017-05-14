@@ -54,8 +54,10 @@ Game::~Game()
 
 void Game::adjustShownWorldToWindowSize(unsigned int windowWidth, unsigned int windowHeight)
 {
-    float scaleWidth = static_cast<float>(m_referenceWorldWidth) / static_cast<float>(windowWidth);
-    float scaleHeight = static_cast<float>(m_referenceWorldHeight) / static_cast<float>(windowHeight);
+    float scaleWidth = 
+        static_cast<float>(m_referenceWorldWidth) / static_cast<float>(windowWidth);
+    float scaleHeight = 
+        static_cast<float>(m_referenceWorldHeight) / static_cast<float>(windowHeight);
     // We have to choose one scale so the shown area from game is approximately the same (depending on the aspect ratio), but without distort
     // the drawn world.
     float scale = std::min(scaleWidth, scaleHeight);
