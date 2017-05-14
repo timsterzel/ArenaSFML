@@ -166,7 +166,7 @@ void SceneNode::onCommandCurrent(const Command &command, float dt)
 
 void SceneNode::onCommandChildren(const Command &command, float dt)
 {
-    for (int i = 0; i != m_children.size(); i++)
+    for (std::size_t i = 0; i != m_children.size(); i++)
     {
         SceneNode *child{ m_children[i].get() };
         child->onCommand(command, dt);
