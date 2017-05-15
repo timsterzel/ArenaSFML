@@ -67,6 +67,10 @@ class Wizard : public Warrior
         void startFireballAttack();
         void startHealing();
         void stopHealing();
+        // Apply color to all sprites of wizard
+        void applyColor(sf::Color color);
+        // Restore the default color of the sprites
+        void removeColorEffects();
         /*
         void startCloseAttack();
         void startRoundAttack();

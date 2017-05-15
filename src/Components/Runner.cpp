@@ -205,7 +205,6 @@ void Runner::makeInTransparent()
     {
         m_weapon->getSprite().setColor(sf::Color::White);
     }
-
 }
 
 void Runner::startCloseAttack()

@@ -278,13 +278,36 @@ void Wizard::startFireballAttack()
 void Wizard::startHealing()
 {
     m_isHealing = true;
+    applyColor(sf::Color::Red);
 }
 
 void Wizard::stopHealing()
 {
     m_isHealing = false;
+    removeColorEffects();
 }
 
+void Wizard::applyColor(sf::Color color)
+{
+    m_leftShoe->getSprite().setColor(color);
+    m_rightShoe->getSprite().setColor(color);
+    m_upperBody->getSprite().setColor(color);
+    if (m_weapon)
+    {
+        m_weapon->getSprite().setColor(color);
+    }
+}
+        
+void Wizard::removeColorEffects()
+{
+    m_leftShoe->getSprite().setColor(sf::Color::White);
+    m_rightShoe->getSprite().setColor(sf::Color::White);
+    m_upperBody->getSprite().setColor(sf::Color::White);
+    if (m_weapon)
+    {
+        m_weapon->getSprite().setColor(sf::Color::White);
+    }
+}
 /*
 void Wizard::startCloseAttack()
 {
