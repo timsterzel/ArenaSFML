@@ -73,8 +73,6 @@ void Game::loadFonts()
 
 void Game::loadTextures()
 {
-    //sf::Rect<int> rect;
-    //m_textureHolder.load<sf::Rect<int>>(Textures::KNIGHT, "assets/sprites/knight.png", rect);
     m_textureHolder.load(
             Textures::KNIGHT, "assets/sprites/warriors/knight.png");
     m_spriteSheetMapHolder.load(
@@ -94,8 +92,6 @@ void Game::loadTextures()
             Textures::FIREBALL, "assets/sprites/attacks/fireball.png");
     m_spriteSheetMapHolder.load(
             Textures::FIREBALL, "assets/sprites/attacks/fireball.txt");
-    
-    m_textureHolder.load(Textures::CHESS_WHITE, "assets/sprites/chess_white.png");
 }
 
 void Game::loadShaders()
