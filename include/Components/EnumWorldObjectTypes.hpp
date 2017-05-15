@@ -12,6 +12,7 @@ enum WorldObjectTypes
     KNIGHT = 1 << 6,
     RUNNER = 1 << 7,
     WIZARD = 1 << 8,
+    PROJECTILE = 1 << 9,
     // TMP
     PLAYER_TWO = 1 << 10
 };

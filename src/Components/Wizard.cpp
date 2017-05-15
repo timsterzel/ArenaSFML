@@ -226,7 +226,7 @@ void Wizard::startFireballAttack()
         fireball->setRotationDefault(getRotation());
         fireball->setCurrentDirection(
                 Calc::degAngleToDirectionVector(fireball->getRotation() + 90.f));
-        fireball->setType(WorldObjectTypes::WEAPON);
+        fireball->setType(WorldObjectTypes::WEAPON | WorldObjectTypes::PROJECTILE);
         std::unique_ptr<CollisionShape> collisionShape{
             std::make_unique<CollisionRect>(
                     sf::Vector2f(fireball->getWidth(), fireball->getHeight()))};

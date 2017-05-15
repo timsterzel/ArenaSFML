@@ -519,8 +519,13 @@ void MainGameScreen::handleCollision(float dt)
                     !weapon->wasIDAlreadyAttacked(warriorID))
             {
                 warrior->handleDamage(weapon);
+                // If the weapon was a projectile it should get destroyed after
+                // colliding with warrior
+                if (weapon->getType() & WorldObjectTypes::PROJECTILE)
+                {
+                    weapon->setStatus(WorldObjectStatus::DESTORYED);
+                }
             }
-            
         }
         /*
         else if (matchesCategories(sceneNodes, 
