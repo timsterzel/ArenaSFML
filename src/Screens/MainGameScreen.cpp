@@ -26,7 +26,7 @@ MainGameScreen::MainGameScreen(ScreenStack *screenStack, Context &context)
 , m_stanimaBarWarr2{ nullptr }
 , m_background{ sf::Vector2f{ 10000.f, 10000.f} }
 , m_currentBgColorStep{ 0 }
-, m_totalBgStepTime{ 1.f }
+, m_totalBgStepTime{ 5.f }
 , m_currentBgStepTime{ 0.f }
 , m_worldBounds{ 0.f, 0.f, 6000.f, 6000.f }
 , m_playerWarrior{ nullptr }

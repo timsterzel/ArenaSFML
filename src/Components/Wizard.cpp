@@ -4,6 +4,7 @@
 #include "Collision/CollisionRect.hpp"
 #include "Collision/CollisionHandler.hpp"
 #include "Calc.hpp"
+#include "Helpers.hpp"
 #include <iostream>
 
 Wizard::Wizard(RenderLayers layer, const int health, Textures textureId, 
@@ -21,6 +22,9 @@ Wizard::Wizard(RenderLayers layer, const int health, Textures textureId,
 , m_isHealing{ false }
 , m_healRestoreRate{ 10.f }
 , m_healStanimaRate{ 40.f }
+, m_currentHealColorStep{ 0 }
+, m_totalHealColorStepTime{ 0.3f }
+, m_currentHealColorStepTime{ 0.f }
 /*
 , m_closeAttackDamageMul{ 1.f }
 // Round Attack
@@ -115,43 +119,40 @@ void Wizard::updateCurrent(float dt)
         }        
         removeStanima(removeStanimaVal);
         heal(healVal);
+        updateHealColor(dt);
+        if (getCurrentStanima() <= 0.f)
+        {
+            stopHealing();
+        }
     }
+}
 
-    /*
-    if(m_isDodging) 
+void Wizard::updateHealColor(float dt)
+{
+    m_currentHealColorStepTime += dt;
+	float colPos{ m_currentHealColorStepTime / m_totalHealColorStepTime  };
+    if (m_currentHealColorStepTime > m_totalHealColorStepTime)
     {
-        m_curDodgeTime += dt;
-        moveInDirection(m_dodgeDir, m_dodgeVelocity * dt);
-        if (m_curDodgeTime > m_totalDodgeTime)
-        {
-            stopDodging();
-        }
+        m_currentHealColorStepTime = 0.f;
+        m_currentHealColorStep++;
+        colPos = 0.f;
+		if (m_currentHealColorStep > 1)
+		{
+			m_currentHealColorStep = 0;
+		}
     }
-    else if(m_isRoundAttacking) 
+    sf::Color curCol;
+    if (m_currentHealColorStep == 0)
     {
-        m_roundAttackCurRot += m_roundAttackAngleVel * dt;
-        setRotation(m_startRotationRoundAttack + m_roundAttackCurRot);
-        if (m_roundAttackCurRot >= m_roundAttackTotalRot)
-        {
-            stopRoundAttack();
-        }
+	    curCol = Helpers::lerbRGBColor(
+            sf::Color::White, sf::Color::Red, colPos);
     }
     else
     {
-        Warrior::updateCurrent(dt);
-        if (m_weapon)
-        {
-            if (m_animCloseAttack.isRunning())
-            {
-                m_animCloseAttack.update(dt);
-            }
-            else
-            {
-                m_weapon->setIsCollisionCheckOn(false);
-            }
-        }
+	    curCol = Helpers::lerbRGBColor(
+            sf::Color::Red, sf::Color::White, colPos);
     }
-    */
+    applyColor(curCol);
 }
 
 void Wizard::onCommandCurrent(const Command &command, float dt)
@@ -278,7 +279,8 @@ void Wizard::startFireballAttack()
 void Wizard::startHealing()
 {
     m_isHealing = true;
-    applyColor(sf::Color::Red);
+    m_currentHealColorStepTime = 0.f;
+    m_currentHealColorStep = 0;
 }
 
 void Wizard::stopHealing()

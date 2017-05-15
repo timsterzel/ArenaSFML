@@ -21,6 +21,12 @@ class Wizard : public Warrior
         float m_healRestoreRate;
         // How much stanima per second get removed by healing
         float m_healStanimaRate;
+        float m_currentHealColorStep;
+        // The time it takes to inteprole from one color to the next
+        float m_totalHealColorStepTime;
+        float m_currentHealColorStepTime;
+  
+        
         /*
         // Round attack
         bool m_isRoundAttacking;
@@ -63,7 +69,9 @@ class Wizard : public Warrior
         virtual void updateCurrent(float dt);
         virtual void updateAI(float dt);
         virtual void onCommandCurrent(const Command &command, float dt);
-        
+        // Update the color of the warrior
+        void updateHealColor(float dt);
+
         void startFireballAttack();
         void startHealing();
         void stopHealing();
