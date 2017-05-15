@@ -17,6 +17,7 @@ Wizard::Wizard(RenderLayers layer, const int health, Textures textureId,
 //, m_animStrongAttack( nullptr, false )
 // Close Attack
 , m_fireballAttackStanima{ 10.f }
+, m_fireballDamage{ 15.f }
 /*
 , m_closeAttackDamageMul{ 1.f }
 // Round Attack
@@ -64,6 +65,19 @@ Wizard::Wizard(RenderLayers layer, const int health, Textures textureId,
     m_closeCombatArea->setParent(this);
     m_closeCombatArea->setPosition(9.f, 0.f);
     m_closeCombatArea->setDraw(true);
+    // Load frame rects of fireball
+    m_fireballFrameRects.push_back(
+        m_spriteSheetMapHolder.getRectData(Textures::FIREBALL, "fireball_1"));
+    m_fireballFrameRects.push_back(
+        m_spriteSheetMapHolder.getRectData(Textures::FIREBALL, "fireball_2"));
+    m_fireballFrameRects.push_back(
+        m_spriteSheetMapHolder.getRectData(Textures::FIREBALL, "fireball_3"));
+    m_fireballFrameRects.push_back(
+        m_spriteSheetMapHolder.getRectData(Textures::FIREBALL, "fireball_4"));
+    m_fireballFrameRects.push_back(
+        m_spriteSheetMapHolder.getRectData(Textures::FIREBALL, "fireball_5"));
+    m_fireballFrameRects.push_back(
+        m_spriteSheetMapHolder.getRectData(Textures::FIREBALL, "fireball_6"));
 }
 
 Wizard::~Wizard()
@@ -196,24 +210,11 @@ void Wizard::startFireballAttack()
         m_animFireballAttack.start();
         SceneNode* rootNode{ getRootSceneNode() };
 
-        std::vector<sf::IntRect> frameRects;
-        frameRects.push_back(
-            m_spriteSheetMapHolder.getRectData(Textures::FIREBALL, "fireball_1"));
-        frameRects.push_back(
-            m_spriteSheetMapHolder.getRectData(Textures::FIREBALL, "fireball_2"));
-        frameRects.push_back(
-            m_spriteSheetMapHolder.getRectData(Textures::FIREBALL, "fireball_3"));
-        frameRects.push_back(
-            m_spriteSheetMapHolder.getRectData(Textures::FIREBALL, "fireball_4"));
-        frameRects.push_back(
-            m_spriteSheetMapHolder.getRectData(Textures::FIREBALL, "fireball_5"));
-        frameRects.push_back(
-            m_spriteSheetMapHolder.getRectData(Textures::FIREBALL, "fireball_6"));
         std::unique_ptr<Weapon> fireball{ 
             std::make_unique<Weapon>(RenderLayers::WEAPON,
-                    10.f,
+                    m_fireballDamage,
                     m_textureHolder.get(Textures::FIREBALL), 
-                    frameRects, 
+                    m_fireballFrameRects, 
                     true,
                     0.5f) };
         
@@ -233,7 +234,7 @@ void Wizard::startFireballAttack()
         fireball->setCollisionShape(std::move(collisionShape));
         fireball->setIsCollisionCheckOn(true);
         rootNode->attachChild(std::move(fireball));
-        //removeStanima(m_fireballAttackStanima);
+        removeStanima(m_fireballAttackStanima);
     }
     /*
     if (m_weapon && !m_animCloseAttack.isRunning() && 

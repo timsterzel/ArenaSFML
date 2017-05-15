@@ -12,7 +12,9 @@ class Wizard : public Warrior
         
         // Fireball Attack
         float m_fireballAttackStanima;
-        
+        // Store the int rects of the firebatt texture
+        std::vector<sf::IntRect> m_fireballFrameRects;
+        float m_fireballDamage;
         /*
         // Round attack
         bool m_isRoundAttacking;
