@@ -705,6 +705,4 @@ void MainGameScreen::render()
         m_context.window->draw(m_renderManager);
         m_context.window->draw(m_guiEnvironment);
     }
-
-    //m_context.window->draw(circleShape, &m_shader);
 }
