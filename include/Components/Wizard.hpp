@@ -15,6 +15,12 @@ class Wizard : public Warrior
         // Store the int rects of the firebatt texture
         std::vector<sf::IntRect> m_fireballFrameRects;
         float m_fireballDamage;
+        
+        bool m_isHealing;
+        // How much health is resored per second
+        float m_healRestoreRate;
+        // How much stanima per second get removed by healing
+        float m_healStanimaRate;
         /*
         // Round attack
         bool m_isRoundAttacking;
@@ -59,6 +65,8 @@ class Wizard : public Warrior
         virtual void onCommandCurrent(const Command &command, float dt);
         
         void startFireballAttack();
+        void startHealing();
+        void stopHealing();
         /*
         void startCloseAttack();
         void startRoundAttack();

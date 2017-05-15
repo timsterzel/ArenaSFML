@@ -216,6 +216,44 @@ void MainGameScreen::handleConsoleCommands(gsf::Widget* widget, sf::String comma
         m_possibleTargetWarriors.push_back(spawnWar.get());
         m_sceneGraph.attachChild(std::move(spawnWar));
     }
+    else if (mainCom == "HEAL")
+    {
+        if (comCnt > 1)
+        {
+            try 
+            {
+                float val{ std::stof(commands[1]) };
+                if (m_playerWarrior)
+                {
+                    m_playerWarrior->heal(val);
+                }
+            } 
+            catch (...)
+            {
+                m_consoleWidget->addTextToDisplay(
+                        "No valid value as second parameter");
+            }
+        }
+    }
+    else if (mainCom == "DAMAGE")
+    {
+        if (comCnt > 1)
+        {
+            try 
+            {
+                float val{ std::stof(commands[1]) };
+                if (m_playerWarrior)
+                {
+                    m_playerWarrior->damage(val);
+                }
+            } 
+            catch (...)
+            {
+                m_consoleWidget->addTextToDisplay(
+                        "No valid value as second parameter");
+            }
+        }
+    }
 };
 
 void MainGameScreen::safeSceneNodeTrasform()

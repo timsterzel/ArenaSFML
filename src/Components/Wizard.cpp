@@ -18,6 +18,9 @@ Wizard::Wizard(RenderLayers layer, const int health, Textures textureId,
 // Close Attack
 , m_fireballAttackStanima{ 10.f }
 , m_fireballDamage{ 15.f }
+, m_isHealing{ false }
+, m_healRestoreRate{ 10.f }
+, m_healStanimaRate{ 40.f }
 /*
 , m_closeAttackDamageMul{ 1.f }
 // Round Attack
@@ -97,6 +100,23 @@ void Wizard::updateCurrent(float dt)
     {
         m_animFireballAttack.update(dt);
     }
+    if (m_isHealing)
+    {
+        float healVal{ m_healRestoreRate * dt };
+        float removeStanimaVal{ m_healStanimaRate * dt };
+        float currentStanima{ getCurrentStanima() };
+        float newStanima{ currentStanima - removeStanimaVal };
+        // If warrior has not enough stanima, only restore as much health as 
+        // stanima is there
+        if (newStanima < 0.f)
+        {
+            healVal = currentStanima / m_healRestoreRate;
+            removeStanimaVal = currentStanima;
+        }        
+        removeStanima(removeStanimaVal);
+        heal(healVal);
+    }
+
     /*
     if(m_isDodging) 
     {
@@ -150,10 +170,16 @@ void Wizard::onCommandCurrent(const Command &command, float dt)
                 startFireballAttack();
                 break;
             case CommandTypes::ACTION2:
-                //startDodging();
                 break;
             case CommandTypes::ACTION3:
                 //startRoundAttack();
+                break;
+            // Not really blocking, but the same key
+            case CommandTypes::START_BLOCKING:
+                startHealing();
+                break;
+            case CommandTypes::STOP_BLOCKING:
+                stopHealing();
                 break;
             /*
             case CommandTypes::START_BLOCKING:
@@ -248,6 +274,17 @@ void Wizard::startFireballAttack()
     }
     */
 }
+
+void Wizard::startHealing()
+{
+    m_isHealing = true;
+}
+
+void Wizard::stopHealing()
+{
+    m_isHealing = false;
+}
+
 /*
 void Wizard::startCloseAttack()
 {
