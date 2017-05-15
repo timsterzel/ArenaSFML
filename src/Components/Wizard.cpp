@@ -231,7 +231,7 @@ void Wizard::updateAI(float dt)
 void Wizard::startFireballAttack()
 {
     if (m_weapon && !m_animFireballAttack.isRunning() &&  
-            m_currentStamina >= m_fireballAttackStanima)
+            m_currentStamina >= m_fireballAttackStanima && !m_isHealing)
     {
         m_animFireballAttack.start();
         SceneNode* rootNode{ getRootSceneNode() };
