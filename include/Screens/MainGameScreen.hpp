@@ -28,9 +28,21 @@ class MainGameScreen : public Screen
         gsf::ProgressWidget *m_healthBarWarr2;
         gsf::ProgressWidget *m_stanimaBarWarr1;
         gsf::ProgressWidget *m_stanimaBarWarr2;
+        
+        // Color changing background
+        sf::RectangleShape m_background;
+        // The steps. Here is stored which color interpoles to which color in each
+        // step
+        std::vector<std::array<sf::Color, 2>> m_bgColorSteps;
+        std::size_t m_currentBgColorStep;
+        // The time it takes to inteprole from one color to the next
+        float m_totalBgStepTime;
+        float m_currentBgStepTime;
+
+
         // Warriors which are in the game
         std::vector<Warrior*> m_possibleTargetWarriors;
-        
+           
         QueueHelper<Command> m_commandQueue;
 
         sf::FloatRect m_worldBounds;
@@ -51,11 +63,13 @@ class MainGameScreen : public Screen
         //void controlWorldEntities();
         void handleCommands(float dt);
         virtual bool update(float dt);
-
+    
         void handleCollision(float dt);
 
         virtual void render();
     private:
+        void updateBackground(float dt);
+
         SceneNode* getSceneNodeOfType(SceneNode::Pair sceneNodePair, WorldObjectTypes type);
         bool matchesCategories(SceneNode::Pair &colliders, unsigned int type1, unsigned int type2);
         void resolveEntityCollisions(SceneNode *sceneNodeFirst, SceneNode *sceneNodeSecond, CollisionInfo &collisionInfo);

@@ -72,3 +72,14 @@ bool Helpers::stringToBool(const std::string &str)
     }
     return false;
 }
+
+
+sf::Color Helpers::lerbRGBColor(sf::Color a, sf::Color b, float t)
+{
+	return sf::Color(
+		(int) (a.r + (b.r - a.r) * t),
+		(int) (a.g + (b.g - a.g) * t),
+		(int) (a.b + (b.b - a.b) * t),
+		(int) (a.a + (b.a - a.a) * t)
+	);
+}

@@ -24,6 +24,10 @@ MainGameScreen::MainGameScreen(ScreenStack *screenStack, Context &context)
 , m_healthBarWarr2{ nullptr }
 , m_stanimaBarWarr1{ nullptr }
 , m_stanimaBarWarr2{ nullptr }
+, m_background{ sf::Vector2f{ 10000.f, 10000.f} }
+, m_currentBgColorStep{ 0 }
+, m_totalBgStepTime{ 1.f }
+, m_currentBgStepTime{ 0.f }
 , m_worldBounds{ 0.f, 0.f, 6000.f, 6000.f }
 , m_playerWarrior{ nullptr }
 {
@@ -92,7 +96,7 @@ void MainGameScreen::buildScene()
     m_guiEnvironment.addWidget(std::move(stanimaWar2));
     // Play music
     m_context.music->play(Musics::GAMETHEME01);
-
+    
     /*
     for (std::size_t i = { 0 }; i < Layers::COUNT; i++)
     {
@@ -102,13 +106,37 @@ void MainGameScreen::buildScene()
         m_sceneGraph.attachChild(std::move(layer));
     }
     */
+    
 
+    // Background
+    m_background.setOrigin(m_background.getSize().x / 2.f, 
+            m_background.getSize().y / 2.f);
+	// The colors
+	std::vector<sf::Color> colors {
+		sf::Color(170, 255, 1, 255), // Green
+		sf::Color(255, 170, 1, 255), // Orange
+		sf::Color(255, 0, 170, 255), // Red
+		sf::Color(170, 0, 255, 255), // Violet
+		//sf::Color(0, 170, 255, 255)  // Blue
+		sf::Color(12, 39, 146, 255)  // Blue
+	};
+	// The colors from which to which is interpoled
+	m_bgColorSteps = {
+		{ colors[0] , colors[1] }, // Green -> Orange
+		{ colors[1] , colors[2] }, // Orange -> Red
+		{ colors[2] , colors[3] }, // Red -> Violet
+		{ colors[3] , colors[4] }, // Violet -> Blue
+		{ colors[4] , colors[0] }, // Blue -> Green
+	};
+    
+    /*
     sf::Texture &texture = m_context.textureHolder->get(Textures::CHESS_WHITE);
     sf::IntRect textureRect(m_worldBounds);
     texture.setRepeated(true);
     std::unique_ptr<SpriteNode> background{ std::make_unique<SpriteNode>
         (RenderLayers::BACKGROUND, texture, textureRect, false) };
     m_sceneGraph.attachChild(std::move(background));
+    */
 
     // Warrior
     std::unique_ptr<Wizard> warrior{ std::make_unique<Wizard>
@@ -454,6 +482,7 @@ bool MainGameScreen::update(float dt)
         return;
     }
     */
+    updateBackground(dt);
 
     safeSceneNodeTrasform();
     handleCommands(dt);
@@ -492,6 +521,27 @@ bool MainGameScreen::update(float dt)
                 m_possibleTargetWarriors[1]->getCurrentStanima());
     }
     return false;
+}
+
+void MainGameScreen::updateBackground(float dt)
+{
+    m_currentBgStepTime += dt;    
+	float colPos{ m_currentBgStepTime / m_totalBgStepTime  };
+	// Go next step when current step is completed
+    if (m_currentBgStepTime > m_totalBgStepTime) 
+	{
+		colPos = 0.f;
+		m_currentBgStepTime = 0.f;
+		m_currentBgColorStep++;
+		if (m_currentBgColorStep > m_bgColorSteps.size() - 1)
+		{
+			m_currentBgColorStep = 0;
+		}
+	}
+	sf::Color curCol = Helpers::lerbRGBColor(
+            m_bgColorSteps[m_currentBgColorStep][0], 
+            m_bgColorSteps[m_currentBgColorStep][1], colPos);
+    m_background.setFillColor(curCol);
 }
 
 bool MainGameScreen::isStillPlayerIsInGame()
@@ -642,6 +692,8 @@ void MainGameScreen::render()
 {
     if (m_isGamePaused && sf::Shader::isAvailable())
     {
+        m_context.window->draw(m_background,
+                &m_context.shaderHolder->get(Shaders::GRAYSCALE));
         m_context.window->draw(m_renderManager, 
                 &m_context.shaderHolder->get(Shaders::GRAYSCALE));
         m_context.window->draw(m_guiEnvironment, 
@@ -649,6 +701,7 @@ void MainGameScreen::render()
     }
     else
     {
+        m_context.window->draw(m_background);
         m_context.window->draw(m_renderManager);
         m_context.window->draw(m_guiEnvironment);
     }

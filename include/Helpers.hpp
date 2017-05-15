@@ -16,6 +16,10 @@ namespace Helpers
     // Retruns true if the string is "true"( Upper and Lower cases are ignored)
     // or "1". Else the function return false
     bool stringToBool(const std::string &str);
+
+    // Give the color between the two given colors for the given position t 
+    // (value between [0, 1])
+    sf::Color lerbRGBColor(sf::Color a, sf::Color b, float t);
 };
 
 
