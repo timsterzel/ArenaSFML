@@ -20,6 +20,7 @@ MainGameScreen::MainGameScreen(ScreenStack *screenStack, Context &context)
 , m_isGamePaused{ false }
 , m_showCollisionInfo{ false }
 , m_window{ *context.window }
+, m_isRenderTextureAvailable{ false }
 , m_gameView{ context.gameView }
 , m_guiView{ context.guiView }
 , m_guiEnvironment{ *context.window }
@@ -47,7 +48,12 @@ void MainGameScreen::buildScene()
     if(!m_renderTexture.create(m_window.getSize().x, 
                 m_window.getSize().y))
     {
-        std::cout << "Error by creating renderTexture \n";
+        std::cout << "Error by creating RenderTexture \n";
+        m_isRenderTextureAvailable = false;
+    }
+    else
+    {
+        m_isRenderTextureAvailable = true;
     }
 
     // healt bar
@@ -688,7 +694,7 @@ bool MainGameScreen::matchesCategories(SceneNode::Pair &colliders, unsigned int 
 
 void MainGameScreen::render()
 {
-    if (m_isGamePaused && sf::Shader::isAvailable())
+    if (m_isGamePaused && sf::Shader::isAvailable() && m_isRenderTextureAvailable)
     {
         // Draw first to a RenderTexture and then draw the RenderTexture whith the
         // black and white shader, so the shader is applied to shapes, too.
@@ -727,6 +733,11 @@ void MainGameScreen::windowSizeChanged()
                 m_window.getSize().y))
     {
         std::cout << "Error by creating RenderTexture \n";
+        m_isRenderTextureAvailable = false;
+    }
+    else
+    {
+        m_isRenderTextureAvailable = true;
     }
 }
 

@@ -27,6 +27,8 @@ class MainGameScreen : public Screen
         // effects textures right, so when we want to use shaders, we first draw all
         // to the render texture and then draw the emerging tetxure with the shader
         sf::RenderTexture m_renderTexture;
+        // Store if the creation of the renderTexture was successfully
+        bool m_isRenderTextureAvailable;
         sf::View &m_gameView;
         sf::View &m_guiView;
         gsf::GUIEnvironment m_guiEnvironment;
