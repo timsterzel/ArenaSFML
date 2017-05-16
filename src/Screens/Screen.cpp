@@ -18,11 +18,18 @@ Screen::Screen(ScreenStack *screenStack, Context &context)
 
 }
 
-Screen::Context::Context(bool isInDebugMode, sf::RenderWindow *window, ResourceHolder<sf::Font, Fonts> *fontHolder,
-    ResourceHolder<sf::Texture, Textures> *textureHolder, ResourceHolder<sf::Shader, Shaders> *shaderHolder,
-    SpriteSheetMapHolder *spriteSheetMapHolder, MusicPlayer *music)
+Screen::Context::Context(
+        bool isInDebugMode, 
+        sf::RenderWindow *window, 
+        ResourceHolder<sf::Font, Fonts> *fontHolder,
+    ResourceHolder<sf::Texture, Textures> *textureHolder, 
+    ResourceHolder<sf::Shader, Shaders> *shaderHolder,
+    SpriteSheetMapHolder *spriteSheetMapHolder, 
+    MusicPlayer *music)
 : isInDebugMode{ isInDebugMode }
 , window{ window }
+, gameView{ window->getView() }
+, guiView{ window->getView() }
 , fontHolder{ fontHolder }
 , textureHolder{ textureHolder }
 , shaderHolder{ shaderHolder }
@@ -45,6 +52,11 @@ void Screen::buildScene()
 Screen::Context Screen::getContext()
 {
     return m_context;
+}
+
+void Screen::windowSizeChanged()
+{
+    // Do nothing by default
 }
 
 bool Screen::handleInput(Input &input, float dt)

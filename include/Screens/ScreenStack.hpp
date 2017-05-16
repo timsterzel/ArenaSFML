@@ -53,7 +53,9 @@ class ScreenStack : private sf::NonCopyable
         void clearScreens();
 
         bool isEmpty() const;
-
+        
+        // Called when the window size changed
+        void windowSizeChanged();
     private:
         Screen::Ptr createScreen(ScreenID screenID);
         // With this method we can change the stack safety.

@@ -37,7 +37,7 @@ class Game
         unsigned int m_referenceWorldHeight;
         
         sf::RenderWindow m_window;
-        sf::View m_view;
+        //sf::View m_view;
         MusicPlayer m_music;
         sf::Text m_txtStatFPS;
         Screen::Context m_context;

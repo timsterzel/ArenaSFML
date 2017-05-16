@@ -21,6 +21,9 @@ class MainGameScreen : public Screen
     private:
         bool m_isGamePaused;
         bool m_showCollisionInfo;
+        
+        sf::View &m_gameView;
+        sf::View &m_guiView;
         gsf::GUIEnvironment m_guiEnvironment;
         // The console widget is for debugging
         gsf::ConsoleWidget *m_consoleWidget;
@@ -67,6 +70,8 @@ class MainGameScreen : public Screen
         void handleCollision(float dt);
 
         virtual void render();
+    
+        virtual void windowSizeChanged();
     private:
         void updateBackground(float dt);
 
@@ -76,7 +81,9 @@ class MainGameScreen : public Screen
         // Check if the player is still in game
         bool isStillPlayerIsInGame();
         void handleConsoleCommands(gsf::Widget* widget, sf::String command);
-
+        // Calculate the pos and the size of window size depending paramters of
+        // gui environment
+        void calcGuiSizeAndPos();
 };
 
 #endif // MAINGAMESCREEN_HPP

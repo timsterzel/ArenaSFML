@@ -120,3 +120,11 @@ ScreenStack::PendingChange::PendingChange(Action action, ScreenID screenID)
 {
 
 }
+
+void ScreenStack::windowSizeChanged()
+{
+    for (std::unique_ptr<Screen> &screen : m_stack)
+    {
+        screen->windowSizeChanged();
+    }
+}

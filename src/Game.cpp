@@ -32,6 +32,8 @@ Game::Game(const bool showStats, const bool isInDebug, const bool isMusicOn)
     //std::unique_ptr<Screen> actualScreen = { std::make_unique<MainGameScreen>(isInDebug, this, &m_window, m_fontHolder, m_textureHolder, m_spriteSheetMapHolder) };
     //m_actualScreen = std::move(actualScreen);
     m_window.setFramerateLimit(60);
+    m_context.guiView = m_window.getView();
+    m_context.gameView = m_window.getView();
     adjustShownWorldToWindowSize(m_window.getSize().x, m_window.getSize().y);
     loadFonts();
     loadTextures();
@@ -54,6 +56,7 @@ Game::~Game()
 
 void Game::adjustShownWorldToWindowSize(unsigned int windowWidth, unsigned int windowHeight)
 {
+    // gameView zooms
     float scaleWidth = 
         static_cast<float>(m_referenceWorldWidth) / static_cast<float>(windowWidth);
     float scaleHeight = 
@@ -62,8 +65,12 @@ void Game::adjustShownWorldToWindowSize(unsigned int windowWidth, unsigned int w
     // the drawn world.
     float scale = std::min(scaleWidth, scaleHeight);
     sf::FloatRect visibleArea(0, 0, windowWidth * scale, windowHeight * scale);
-    sf::View view(visibleArea);
-    m_window.setView(view);
+    sf::View gameView(visibleArea);
+    m_context.gameView = gameView;
+    m_window.setView(m_context.gameView);
+    // gui view (No zoom, only the size of the window)
+    sf::View guiView(sf::FloatRect(0, 0, windowWidth, windowHeight));
+    m_context.guiView = guiView;
 }
 
 void Game::loadFonts()
@@ -145,7 +152,9 @@ void Game::handleInput()
         switch (input.getInputType())
         {
             case InputTypes::WINDOW_RESIZED :
-                adjustShownWorldToWindowSize(m_window.getSize().x, m_window.getSize().y);
+                adjustShownWorldToWindowSize(
+                        m_window.getSize().x, m_window.getSize().y);
+                m_screenStack.windowSizeChanged();
                 break;
             case InputTypes::LOST_FOCUS :
                 m_isPaused = true;

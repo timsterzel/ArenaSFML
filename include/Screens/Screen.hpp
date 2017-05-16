@@ -27,17 +27,23 @@ class Screen : private sf::NonCopyable
         {
             bool isInDebugMode;
             sf::RenderWindow *window;
+            sf::View gameView;
+            sf::View guiView;
             ResourceHolder<sf::Font, Fonts> *fontHolder;
             ResourceHolder<sf::Texture, Textures> *textureHolder;
             ResourceHolder<sf::Shader, Shaders> *shaderHolder;
             SpriteSheetMapHolder *spriteSheetMapHolder;
             MusicPlayer *music;
 
-            Context(bool isInDebugMode, sf::RenderWindow *window, 
+            Context(bool isInDebugMode, 
+                    sf::RenderWindow *window, 
                     ResourceHolder<sf::Font, Fonts> *fontHolder,
                     ResourceHolder<sf::Texture, Textures> *textureHolder, 
                     ResourceHolder<sf::Shader, Shaders> *shaderHolder,
-                    SpriteSheetMapHolder *spriteSheetMapHolder, MusicPlayer *music);
+                    SpriteSheetMapHolder *spriteSheetMapHolder, 
+                    MusicPlayer *music);
+
+            Context();
         };
 
     protected:
@@ -59,7 +65,9 @@ class Screen : private sf::NonCopyable
         virtual void buildScene();
         
         Context getContext();
-
+        
+        
+        virtual void windowSizeChanged();
         // return false when no lower screen should handle the input
         virtual bool handleInput(Input &input, float dt);
         virtual bool handleEvent(sf::Event &event, float dt);

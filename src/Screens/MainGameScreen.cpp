@@ -19,6 +19,8 @@ MainGameScreen::MainGameScreen(ScreenStack *screenStack, Context &context)
 : Screen(screenStack, context)
 , m_isGamePaused{ false }
 , m_showCollisionInfo{ false }
+, m_gameView{ context.gameView }
+, m_guiView{ context.guiView }
 , m_guiEnvironment{ *context.window }
 , m_healthBarWarr1{ nullptr }
 , m_healthBarWarr2{ nullptr }
@@ -43,22 +45,30 @@ void MainGameScreen::buildScene()
 {
     // healt bar
     gsf::ProgressWidget::Ptr healthWar1{ gsf::ProgressWidget::create(100.f, 20.f) };
-    //gsf::ProgressWidget* pgrWdPtr{ pgrWd.get() };
     m_healthBarWarr1 = healthWar1.get();
     healthWar1->setProgressColor(sf::Color::Red);
-    healthWar1->setLeftPosition(10.f);
-    healthWar1->setBottomPosition(m_context.window->getView().getSize().y - 10.f);
     m_guiEnvironment.addWidget(std::move(healthWar1));
+
+    gsf::ProgressWidget::Ptr healthWar2{ gsf::ProgressWidget::create(100.f, 20.f) };
+    m_healthBarWarr2 = healthWar2.get();
+    healthWar2->setProgressColor(sf::Color::Red);
+    m_guiEnvironment.addWidget(std::move(healthWar2));
+    
+    // Stanima bar
+    gsf::ProgressWidget::Ptr stanimaWar1{ gsf::ProgressWidget::create(100.f, 20.f) };
+    m_stanimaBarWarr1 = stanimaWar1.get();
+    stanimaWar1->setProgressColor(sf::Color::Blue);
+    m_guiEnvironment.addWidget(std::move(stanimaWar1));
+    
+    gsf::ProgressWidget::Ptr stanimaWar2{ 
+        gsf::ProgressWidget::create(100.f, 20.f) };
+    m_stanimaBarWarr2 = stanimaWar2.get();
+    stanimaWar2->setProgressColor(sf::Color::Blue);
+    m_guiEnvironment.addWidget(std::move(stanimaWar2));
     
     // Create Console widget
-    sf::Vector2f windowViewSize{ getContext().window->getView().getSize() };
     gsf::ConsoleWidget::Ptr consoleWidget{ gsf::ConsoleWidget::create(
             getContext().fontHolder->get(Fonts::DEFAULT)) };
-    consoleWidget->setWidth(windowViewSize.x - 
-            2 * consoleWidget->getOutlineThickness());
-    consoleWidget->setHeight(windowViewSize.y / 4);
-    consoleWidget->setTopPosition(0.f);
-    consoleWidget->setLeftPosition(0.f);
     consoleWidget->setIsVisible(false);
     consoleWidget->setBackgroundColor(sf::Color(255, 255, 255, 128));
     m_consoleWidget = consoleWidget.get();
@@ -69,31 +79,8 @@ void MainGameScreen::buildScene()
             });
     
     m_guiEnvironment.addWidget(std::move(consoleWidget));
-
-    gsf::ProgressWidget::Ptr healthWar2{ gsf::ProgressWidget::create(100.f, 20.f) };
-    m_healthBarWarr2 = healthWar2.get();
-    healthWar2->setProgressColor(sf::Color::Red);
-    healthWar2->setRightPosition(m_context.window->getView().getSize().x - 10.f);
-    healthWar2->setBottomPosition(m_context.window->getView().getSize().y - 10.f);
-    m_guiEnvironment.addWidget(std::move(healthWar2));
-    
-    // Stanima bar
-    gsf::ProgressWidget::Ptr stanimaWar1{ gsf::ProgressWidget::create(100.f, 20.f) };
-    m_stanimaBarWarr1 = stanimaWar1.get();
-    stanimaWar1->setProgressColor(sf::Color::Blue);
-    stanimaWar1->setLeftPosition(10.f);
-    stanimaWar1->setBottomPosition(m_context.window->getView().getSize().y 
-            - 10.f - m_healthBarWarr1->getLocalBounds().height - 10.f);
-    m_guiEnvironment.addWidget(std::move(stanimaWar1));
-    
-    gsf::ProgressWidget::Ptr stanimaWar2{ 
-        gsf::ProgressWidget::create(100.f, 20.f) };
-    m_stanimaBarWarr2 = stanimaWar2.get();
-    stanimaWar2->setProgressColor(sf::Color::Blue);
-    stanimaWar2->setRightPosition(m_context.window->getView().getSize().x - 10.f);
-    stanimaWar2->setBottomPosition(m_context.window->getView().getSize().y 
-            - 10.f - m_healthBarWarr2->getLocalBounds().height - 10.f);
-    m_guiEnvironment.addWidget(std::move(stanimaWar2));
+    // Calculate the pos and size of the gui widget depending of the views
+    calcGuiSizeAndPos();
     // Play music
     m_context.music->play(Musics::GAMETHEME01);
     
@@ -447,7 +434,9 @@ bool MainGameScreen::handleInput(Input &input, float dt)
 
 bool MainGameScreen::handleEvent(sf::Event &event, float dt)
 {
+    m_context.window->setView(m_guiView);
     return !m_guiEnvironment.handleEvent(event);
+    m_context.window->setView(m_gameView);
 }
 /*
 void World::controlWorldEntities()
@@ -504,7 +493,9 @@ bool MainGameScreen::update(float dt)
 
     handleCollision(dt);
     
+    m_context.window->setView(m_guiView);
     m_guiEnvironment.update(dt);
+    m_context.window->setView(m_gameView);
     if (m_playerWarrior)
     {
         m_healthBarWarr1->setProgress(m_playerWarrior->getCurrentHealth());
@@ -690,19 +681,53 @@ bool MainGameScreen::matchesCategories(SceneNode::Pair &colliders, unsigned int 
 
 void MainGameScreen::render()
 {
+    sf::RenderWindow *window{ m_context.window };
     if (m_isGamePaused && sf::Shader::isAvailable())
     {
-        m_context.window->draw(m_background,
+        window->draw(m_background,
                 &m_context.shaderHolder->get(Shaders::GRAYSCALE));
-        m_context.window->draw(m_renderManager, 
+        window->draw(m_renderManager, 
                 &m_context.shaderHolder->get(Shaders::GRAYSCALE));
-        m_context.window->draw(m_guiEnvironment, 
+        
+        window->setView(m_guiView);
+        window->draw(m_guiEnvironment, 
                 &m_context.shaderHolder->get(Shaders::GRAYSCALE));
     }
     else
     {
-        m_context.window->draw(m_background);
-        m_context.window->draw(m_renderManager);
-        m_context.window->draw(m_guiEnvironment);
+        window->draw(m_background);
+        window->draw(m_renderManager);
+        
+        window->setView(m_guiView);
+        window->draw(m_guiEnvironment);
     }
+    window->setView(m_gameView);
+}
+
+void MainGameScreen::windowSizeChanged()
+{
+    calcGuiSizeAndPos();
+}
+
+void MainGameScreen::calcGuiSizeAndPos()
+{
+    // Health Bars
+    m_healthBarWarr1->setBottomPosition(m_guiView.getSize().y - 10.f);
+    m_healthBarWarr1->setLeftPosition(10.f);
+    m_healthBarWarr2->setRightPosition(m_guiView.getSize().x - 10.f);
+    m_healthBarWarr2->setBottomPosition(m_guiView.getSize().y - 10.f);
+    // Stanima Bars
+    m_stanimaBarWarr1->setLeftPosition(10.f);
+    m_stanimaBarWarr1->setBottomPosition(m_guiView.getSize().y 
+            - 10.f - m_healthBarWarr1->getLocalBounds().height - 10.f);
+    m_stanimaBarWarr2->setRightPosition(m_guiView.getSize().x - 10.f);
+    m_stanimaBarWarr2->setBottomPosition(m_guiView.getSize().y 
+            - 10.f - m_healthBarWarr2->getLocalBounds().height - 10.f);
+    // Console
+    sf::Vector2f windowViewSize{ m_guiView.getSize() };
+    m_consoleWidget->setWidth(windowViewSize.x - 
+            2 * m_consoleWidget->getOutlineThickness());
+    m_consoleWidget->setHeight(windowViewSize.y / 4);
+    m_consoleWidget->setTopPosition(0.f);
+    m_consoleWidget->setLeftPosition(0.f);
 }
