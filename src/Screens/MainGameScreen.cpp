@@ -19,6 +19,7 @@ MainGameScreen::MainGameScreen(ScreenStack *screenStack, Context &context)
 : Screen(screenStack, context)
 , m_isGamePaused{ false }
 , m_showCollisionInfo{ false }
+, m_window{ *context.window }
 , m_gameView{ context.gameView }
 , m_guiView{ context.guiView }
 , m_guiEnvironment{ *context.window }
@@ -43,6 +44,12 @@ MainGameScreen::~MainGameScreen()
 
 void MainGameScreen::buildScene()
 {
+    if(!m_renderTexture.create(m_window.getSize().x, 
+                m_window.getSize().y))
+    {
+        std::cout << "Error by creating renderTexture \n";
+    }
+
     // healt bar
     gsf::ProgressWidget::Ptr healthWar1{ gsf::ProgressWidget::create(100.f, 20.f) };
     m_healthBarWarr1 = healthWar1.get();
@@ -434,9 +441,9 @@ bool MainGameScreen::handleInput(Input &input, float dt)
 
 bool MainGameScreen::handleEvent(sf::Event &event, float dt)
 {
-    m_context.window->setView(m_guiView);
+    m_window.setView(m_guiView);
     return !m_guiEnvironment.handleEvent(event);
-    m_context.window->setView(m_gameView);
+    m_window.setView(m_gameView);
 }
 /*
 void World::controlWorldEntities()
@@ -493,9 +500,9 @@ bool MainGameScreen::update(float dt)
 
     handleCollision(dt);
     
-    m_context.window->setView(m_guiView);
+    m_window.setView(m_guiView);
     m_guiEnvironment.update(dt);
-    m_context.window->setView(m_gameView);
+    m_window.setView(m_gameView);
     if (m_playerWarrior)
     {
         m_healthBarWarr1->setProgress(m_playerWarrior->getCurrentHealth());
@@ -681,34 +688,46 @@ bool MainGameScreen::matchesCategories(SceneNode::Pair &colliders, unsigned int 
 
 void MainGameScreen::render()
 {
-    sf::RenderWindow *window{ m_context.window };
     if (m_isGamePaused && sf::Shader::isAvailable())
     {
-        window->setView(m_gameView);
-        window->draw(m_background,
-                &m_context.shaderHolder->get(Shaders::GRAYSCALE));
-        window->draw(m_renderManager, 
-                &m_context.shaderHolder->get(Shaders::GRAYSCALE));
+        // Draw first to a RenderTexture and then draw the RenderTexture whith the
+        // black and white shader, so the shader is applied to shapes, too.
+        m_renderTexture.clear();
+        m_renderTexture.setView(m_gameView);
+        m_renderTexture.draw(m_background);
+        m_renderTexture.draw(m_renderManager);
         
-        window->setView(m_guiView);
-        window->draw(m_guiEnvironment, 
-                &m_context.shaderHolder->get(Shaders::GRAYSCALE));
+        m_renderTexture.setView(m_guiView);
+        m_renderTexture.draw(m_guiEnvironment);
+        m_renderTexture.setView(m_gameView);
+        
+        m_renderTexture.display();
+        const sf::Texture &texture{ m_renderTexture.getTexture() };
+        sf::Sprite sprite(texture);
+        m_window.setView(m_guiView);
+        m_window.draw(sprite, &m_context.shaderHolder->get(Shaders::GRAYSCALE));
     }
     else
     {
-        window->setView(m_gameView);
-        window->draw(m_background);
-        window->draw(m_renderManager);
+        m_window.setView(m_gameView);
+        m_window.draw(m_background);
+        m_window.draw(m_renderManager);
         
-        window->setView(m_guiView);
-        window->draw(m_guiEnvironment);
+        m_window.setView(m_guiView);
+        m_window.draw(m_guiEnvironment);
     }
-    window->setView(m_gameView);
+    m_window.setView(m_gameView);
 }
 
 void MainGameScreen::windowSizeChanged()
 {
     calcGuiSizeAndPos();
+    // Adjust size of RenderTexture
+    if (!m_renderTexture.create(m_window.getSize().x, 
+                m_window.getSize().y))
+    {
+        std::cout << "Error by creating RenderTexture \n";
+    }
 }
 
 void MainGameScreen::calcGuiSizeAndPos()

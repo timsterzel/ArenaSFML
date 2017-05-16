@@ -22,6 +22,11 @@ class MainGameScreen : public Screen
         bool m_isGamePaused;
         bool m_showCollisionInfo;
         
+        sf::RenderWindow &m_window;
+        // Used to apply the shader right on all drawn things. Some shaders only
+        // effects textures right, so when we want to use shaders, we first draw all
+        // to the render texture and then draw the emerging tetxure with the shader
+        sf::RenderTexture m_renderTexture;
         sf::View &m_gameView;
         sf::View &m_guiView;
         gsf::GUIEnvironment m_guiEnvironment;
