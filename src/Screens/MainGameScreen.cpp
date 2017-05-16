@@ -684,6 +684,7 @@ void MainGameScreen::render()
     sf::RenderWindow *window{ m_context.window };
     if (m_isGamePaused && sf::Shader::isAvailable())
     {
+        window->setView(m_gameView);
         window->draw(m_background,
                 &m_context.shaderHolder->get(Shaders::GRAYSCALE));
         window->draw(m_renderManager, 
@@ -695,6 +696,7 @@ void MainGameScreen::render()
     }
     else
     {
+        window->setView(m_gameView);
         window->draw(m_background);
         window->draw(m_renderManager);
         
