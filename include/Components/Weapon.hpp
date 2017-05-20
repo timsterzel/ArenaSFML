@@ -2,7 +2,6 @@
 #define WEAPON_HPP
 #include <SFML/Graphics.hpp>
 #include "Components/Item.hpp"
-#include "Resources/EnumResourceIdentifiers.hpp"
 #include "Resources/ResourceHolder.hpp"
 #include "set"
 

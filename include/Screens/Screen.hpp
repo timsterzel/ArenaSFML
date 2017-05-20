@@ -8,7 +8,6 @@
 #include "Components/SceneNode.hpp"
 #include "Render/RenderManager.hpp"
 #include "Resources/ResourceHolder.hpp"
-#include "Resources/EnumResourceIdentifiers.hpp"
 #include "Resources/SpriteSheetMapHolder.hpp"
 #include "Input/QueueHelper.hpp"
 #include "Input/Input.hpp"

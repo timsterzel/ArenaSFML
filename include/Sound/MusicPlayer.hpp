@@ -4,7 +4,6 @@
 #include <SFML/Audio.hpp>
 #include <map>
 #include <string>
-#include "Resources/EnumResourceIdentifiers.hpp"
 
 class MusicPlayer : private sf::NonCopyable
 {

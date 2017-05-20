@@ -5,7 +5,6 @@
 #include "Collision/CollisionCircle.hpp"
 #include "Components/Entity.hpp"
 #include "Components/SpriteNode.hpp"
-#include "Resources/EnumResourceIdentifiers.hpp"
 #include "Resources/ResourceHolder.hpp"
 #include "Resources/SpriteSheetMapHolder.hpp"
 

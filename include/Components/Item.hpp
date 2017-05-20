@@ -2,7 +2,6 @@
 #define ITEM_HPP
 #include <SFML/Graphics.hpp>
 #include "Components/SpriteNode.hpp"
-#include "Resources/EnumResourceIdentifiers.hpp"
 #include "Resources/ResourceHolder.hpp"
 
 class Item : public SpriteNode

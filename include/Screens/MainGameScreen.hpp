@@ -9,7 +9,6 @@
 #include "Input/Command.hpp"
 #include "Render/RenderManager.hpp"
 #include "Resources/ResourceHolder.hpp"
-#include "Resources/EnumResourceIdentifiers.hpp"
 #include "Resources/SpriteSheetMapHolder.hpp"
 #include "Screens/Screen.hpp"
 #include <map>

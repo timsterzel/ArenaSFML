@@ -12,7 +12,6 @@
 #include "Input/EnumInputTypes.hpp"
 #include "Render/RenderManager.hpp"
 #include "Resources/ResourceHolder.hpp"
-#include "Resources/EnumResourceIdentifiers.hpp"
 #include "Resources/SpriteSheetMapHolder.hpp"
 #include "Screens/ScreenStack.hpp"
 #include "Sound/MusicPlayer.hpp"
