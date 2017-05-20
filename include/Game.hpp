@@ -53,9 +53,9 @@ class Game
         float m_fps;
         CLOCK::time_point m_timePoint1;
         // Assets
-        ResourceHolder<sf::Font, Fonts> m_fontHolder;
-        ResourceHolder<sf::Texture, Textures> m_textureHolder;
-        ResourceHolder<sf::Shader, Shaders> m_shaderHolder;
+        ResourceHolder<sf::Font> m_fontHolder;
+        ResourceHolder<sf::Texture> m_textureHolder;
+        ResourceHolder<sf::Shader> m_shaderHolder;
         SpriteSheetMapHolder m_spriteSheetMapHolder;
 
         // The game class handle all inputs which get later translated to commands

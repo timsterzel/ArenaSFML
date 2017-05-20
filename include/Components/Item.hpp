@@ -16,8 +16,8 @@ class Item : public SpriteNode
         sf::Vector2f m_rotationPoint;
 
     public:
-        Item(RenderLayers layer, Textures textureId, 
-                const ResourceHolder<sf::Texture, Textures> &textureHolder);
+        Item(RenderLayers layer, const std::string &textureId, 
+                const ResourceHolder<sf::Texture> &textureHolder);
         Item(RenderLayers layer, const sf::Texture &texture, 
                 const sf::IntRect &rect);
         Item(RenderLayers layer, const sf::Texture &texture, 

@@ -29,17 +29,17 @@ class Screen : private sf::NonCopyable
             sf::RenderWindow *window;
             sf::View gameView;
             sf::View guiView;
-            ResourceHolder<sf::Font, Fonts> *fontHolder;
-            ResourceHolder<sf::Texture, Textures> *textureHolder;
-            ResourceHolder<sf::Shader, Shaders> *shaderHolder;
+            ResourceHolder<sf::Font> *fontHolder;
+            ResourceHolder<sf::Texture> *textureHolder;
+            ResourceHolder<sf::Shader> *shaderHolder;
             SpriteSheetMapHolder *spriteSheetMapHolder;
             MusicPlayer *music;
 
             Context(bool isInDebugMode, 
                     sf::RenderWindow *window, 
-                    ResourceHolder<sf::Font, Fonts> *fontHolder,
-                    ResourceHolder<sf::Texture, Textures> *textureHolder, 
-                    ResourceHolder<sf::Shader, Shaders> *shaderHolder,
+                    ResourceHolder<sf::Font> *fontHolder,
+                    ResourceHolder<sf::Texture> *textureHolder, 
+                    ResourceHolder<sf::Shader> *shaderHolder,
                     SpriteSheetMapHolder *spriteSheetMapHolder, 
                     MusicPlayer *music);
 

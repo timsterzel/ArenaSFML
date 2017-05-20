@@ -1,6 +1,6 @@
 #ifndef RESOURCEIDENTIFIERS_HPP
 #define RESOURCEIDENTIFIERS_HPP
-
+/*
 enum class Textures
 {
     CHESS_WHITE,
@@ -24,7 +24,6 @@ enum class Musics
 enum class Shaders
 {
     GRAYSCALE,
-
 };
-
+*/
 #endif // RESOURCEIDENTIFIERS_HPP

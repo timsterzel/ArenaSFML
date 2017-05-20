@@ -1,5 +1,5 @@
-template <typename Resource, typename Identifier>
-void ResourceHolder<Resource, Identifier>::load(Identifier id, const std::string &fileName)
+template <typename Resource>
+void ResourceHolder<Resource>::load(const std::string &id, const std::string &fileName)
 {
     std::unique_ptr<Resource> resource = { std::make_unique<Resource>() };
     if (!resource->loadFromFile(fileName))
@@ -12,9 +12,9 @@ void ResourceHolder<Resource, Identifier>::load(Identifier id, const std::string
     assert(inserted.second);
 }
 
-template <typename Resource, typename Identifier>
+template <typename Resource>
 template <typename Parameter>
-void ResourceHolder<Resource, Identifier>::load(Identifier id, const std::string &fileName, const Parameter &secondParam)
+void ResourceHolder<Resource>::load(const std::string &id, const std::string &fileName, const Parameter &secondParam)
 {
     std::unique_ptr<Resource> resource = { std::make_unique<Resource>() };
     if (!resource->loadFromFile(fileName, secondParam))
@@ -27,8 +27,8 @@ void ResourceHolder<Resource, Identifier>::load(Identifier id, const std::string
     assert(inserted.second);
 }
 
-template <typename Resource, typename Identifier>
-Resource& ResourceHolder<Resource, Identifier>::get(Identifier id)
+template <typename Resource>
+Resource& ResourceHolder<Resource>::get(const std::string &id)
 {
     auto found = m_resourceMap.find(id);
     // Stop programm in debug mode, when trying to get a resource which is not loaded
@@ -36,8 +36,8 @@ Resource& ResourceHolder<Resource, Identifier>::get(Identifier id)
     return *found->second;
 }
 
-template <typename Resource, typename Identifier>
-Resource& ResourceHolder<Resource, Identifier>::get(Identifier id) const
+template <typename Resource>
+Resource& ResourceHolder<Resource>::get(const std::string &id) const
 {
     auto found = m_resourceMap.find(id);
     // Stop programm in debug mode, when trying to get a resource which is not loaded

@@ -5,7 +5,7 @@
 #include <iostream>
 #include <vector>
 
-Warrior::Warrior(RenderLayers layer, const float health, Textures textureId, const ResourceHolder<sf::Texture, Textures> &textureHolder,
+Warrior::Warrior(RenderLayers layer, const float health, const std::string &textureId, const ResourceHolder<sf::Texture> &textureHolder,
     const SpriteSheetMapHolder &spriteSheetMapHolder, std::vector<Warrior*> &possibleTargetsInWord)
 : Entity(layer)
 , m_ID{ Helpers::createUniqueID(30) }

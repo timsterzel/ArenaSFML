@@ -75,30 +75,31 @@ void Game::adjustShownWorldToWindowSize(unsigned int windowWidth, unsigned int w
 
 void Game::loadFonts()
 {
-    m_fontHolder.load(Fonts::DEFAULT, "assets/fonts/UbuntuMono-R.ttf");
+    //m_fontHolder.load(Fonts::DEFAULT, "assets/fonts/UbuntuMono-R.ttf");
+    m_fontHolder.load("default", "assets/fonts/UbuntuMono-R.ttf");
 }
 
 void Game::loadTextures()
 {
     m_textureHolder.load(
-            Textures::KNIGHT, "assets/sprites/warriors/knight.png");
+            "knight", "assets/sprites/warriors/knight.png");
     m_spriteSheetMapHolder.load(
-            Textures::KNIGHT, "assets/sprites/warriors/knight.txt");
+            "knight", "assets/sprites/warriors/knight.txt");
     
     m_textureHolder.load(
-            Textures::RUNNER, "assets/sprites/warriors/runner.png");
+            "runner", "assets/sprites/warriors/runner.png");
     m_spriteSheetMapHolder.load(
-            Textures::RUNNER, "assets/sprites/warriors/runner.txt");
+            "runner", "assets/sprites/warriors/runner.txt");
 
     m_textureHolder.load(
-            Textures::WIZARD, "assets/sprites/warriors/wizard.png");
+            "wizard", "assets/sprites/warriors/wizard.png");
     m_spriteSheetMapHolder.load(
-            Textures::WIZARD, "assets/sprites/warriors/wizard.txt");
+            "wizard", "assets/sprites/warriors/wizard.txt");
     
     m_textureHolder.load(
-            Textures::FIREBALL, "assets/sprites/attacks/fireball.png");
+            "fireball", "assets/sprites/attacks/fireball.png");
     m_spriteSheetMapHolder.load(
-            Textures::FIREBALL, "assets/sprites/attacks/fireball.txt");
+            "fireball", "assets/sprites/attacks/fireball.txt");
 }
 
 void Game::loadShaders()
@@ -109,12 +110,12 @@ void Game::loadShaders()
         std::cout << "Shaders not supported" << std::endl;
         return;
     }
-    m_shaderHolder.load<sf::Shader::Type>(Shaders::GRAYSCALE, "assets/shaders/grayscale.frag", sf::Shader::Fragment);
+    m_shaderHolder.load<sf::Shader::Type>("grayscale", "assets/shaders/grayscale.frag", sf::Shader::Fragment);
 }
 
 void Game::buildScene()
 {
-    m_txtStatFPS.setFont(m_fontHolder.get(Fonts::DEFAULT));
+    m_txtStatFPS.setFont(m_fontHolder.get("default"));
 	m_txtStatFPS.setCharacterSize(12);
 	m_txtStatFPS.setFillColor(sf::Color::White);
 }

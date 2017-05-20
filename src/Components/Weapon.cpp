@@ -4,7 +4,9 @@
 #include <cmath>
 #include <Helpers.hpp>
 
-Weapon::Weapon(RenderLayers layer, const float damage, Textures textureId, const ResourceHolder<sf::Texture, Textures> &textureHolder)
+Weapon::Weapon(RenderLayers layer, const float damage, 
+        const std::string &textureId, 
+        const ResourceHolder<sf::Texture> &textureHolder)
 : Item(layer, textureId, textureHolder)
 , m_damage{ damage }
 , m_damageMultiplicator{ 1.f }

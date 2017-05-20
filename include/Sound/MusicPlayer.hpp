@@ -10,13 +10,14 @@ class MusicPlayer : private sf::NonCopyable
 {
     private:
         sf::Music m_music;
-        std::map<Musics, std::string> m_fileNames;
+        // Identifer, filename
+        std::map<std::string, std::string> m_fileNames;
         float m_volume;
 
     public:
         MusicPlayer();
 
-        void play(Musics id);
+        void play(const std::string &id);
         void stop();
 
         void setPaused(bool paused);

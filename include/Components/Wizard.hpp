@@ -53,8 +53,8 @@ class Wizard : public Warrior
         sf::Vector2f m_dodgeDir;
         */
     public:
-        Wizard(RenderLayers layer, const int health, Textures textureId, 
-                const ResourceHolder<sf::Texture, Textures> &textureHolder,
+        Wizard(RenderLayers layer, const int health, const std::string &textureId, 
+                const ResourceHolder<sf::Texture> &textureHolder,
                 const SpriteSheetMapHolder &spriteSheetMapHolder, 
                 std::vector<Warrior*> &possibleTargetsInWord);
 

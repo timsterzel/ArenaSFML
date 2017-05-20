@@ -5,10 +5,10 @@ MusicPlayer::MusicPlayer()
 , m_fileNames{ }
 , m_volume{ 100.f }
 {
-    m_fileNames[Musics::GAMETHEME01] =  "assets/sounds/themes/Juhani_Junkala_-_Epic_Boss_Battle.ogg";
+    m_fileNames["gametheme01"] =  "assets/sounds/themes/Juhani_Junkala_-_Epic_Boss_Battle.ogg";
 }
 
-void MusicPlayer::play(Musics id)
+void MusicPlayer::play(const std::string &id)
 {
     std::string fileName = m_fileNames[id];
 

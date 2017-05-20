@@ -22,8 +22,8 @@ class Weapon : public Item
         std::set<std::string> m_hitIDs;
 
     public:
-        Weapon(RenderLayers layer, const float damage, Textures textureId, 
-                const ResourceHolder<sf::Texture, Textures> &textureHolder);
+        Weapon(RenderLayers layer, const float damage, const std::string &textureId, 
+                const ResourceHolder<sf::Texture> &textureHolder);
         Weapon(RenderLayers layer, const float damage, const sf::Texture &texture, 
                 const sf::IntRect &rect);
         Weapon(RenderLayers layer, const float damage, const sf::Texture &texture, 

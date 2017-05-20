@@ -3,8 +3,8 @@
 #include <iostream>
 #include <cmath>
 
-Item::Item(RenderLayers layer, Textures textureId, 
-        const ResourceHolder<sf::Texture, Textures> &textureHolder)
+Item::Item(RenderLayers layer, const std::string &textureId, 
+        const ResourceHolder<sf::Texture> &textureHolder)
 : SpriteNode(layer, textureHolder.get(textureId), true, false)
 //, m_sprite{ textureHolder.get(textureId) }
 , m_rotationPoint{ 0.f, 0.f }

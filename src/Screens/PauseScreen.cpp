@@ -15,7 +15,7 @@ void PauseScreen::buildScene()
 {
     std::cout << "PauseScreen::buildScene" << std::endl;
 
-    m_txtPaused.setFont(m_context.fontHolder->get(Fonts::DEFAULT));
+    m_txtPaused.setFont(m_context.fontHolder->get("default"));
 	m_txtPaused.setCharacterSize(12);
 	m_txtPaused.setFillColor(sf::Color::White);
     m_txtPaused.setString("--PAUSED--");

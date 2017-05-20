@@ -9,15 +9,15 @@
 class SpriteSheetMapHolder
 {
     private:
-        std::map<Textures, std::map<std::string, sf::IntRect> > m_resourceMap;
+        std::map<std::string, std::map<std::string, sf::IntRect> > m_resourceMap;
 
     public:
-        void load(Textures id, const std::string &fileName);
+        void load(const std::string &id, const std::string &fileName);
 
         //std::map<std::string, sf::IntRect> get(const Textures &id) const;
 
-        sf::IntRect getRectData(Textures id, const std::string &identefier) const;
-        sf::IntRect getRectData(Textures id, const std::string &identefier);
+        sf::IntRect getRectData(const std::string &id, const std::string &identefier) const;
+        sf::IntRect getRectData(const std::string &id, const std::string &identefier);
 
     private:
         //void loadRectData(const std::string &fileName);

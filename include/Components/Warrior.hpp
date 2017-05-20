@@ -18,7 +18,7 @@ class Warrior : public Entity
         // A random generated id (should be unique)
         std::string m_ID;
         
-        const ResourceHolder<sf::Texture, Textures> &m_textureHolder;
+        const ResourceHolder<sf::Texture> &m_textureHolder;
         const SpriteSheetMapHolder &m_spriteSheetMapHolder;
         
         float m_maxHealth;
@@ -60,8 +60,7 @@ class Warrior : public Entity
 
 
     public:
-        Warrior(RenderLayers layer, const float health, Textures textureId, 
-                const ResourceHolder<sf::Texture, Textures> &textureHolder,
+        Warrior(RenderLayers layer, const float health, const std::string &textureId,                const ResourceHolder<sf::Texture> &textureHolder,
                 const SpriteSheetMapHolder &spriteSheetMapHolder, 
                 std::vector<Warrior*> &possibleTargetsInWord);
         virtual ~Warrior();

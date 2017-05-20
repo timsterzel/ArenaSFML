@@ -81,7 +81,7 @@ void MainGameScreen::buildScene()
     
     // Create Console widget
     gsf::ConsoleWidget::Ptr consoleWidget{ gsf::ConsoleWidget::create(
-            getContext().fontHolder->get(Fonts::DEFAULT)) };
+            getContext().fontHolder->get("default")) };
     consoleWidget->setIsVisible(false);
     consoleWidget->setBackgroundColor(sf::Color(255, 255, 255, 128));
     m_consoleWidget = consoleWidget.get();
@@ -95,7 +95,7 @@ void MainGameScreen::buildScene()
     // Calculate the pos and size of the gui widget depending of the views
     calcGuiSizeAndPos();
     // Play music
-    m_context.music->play(Musics::GAMETHEME01);
+    m_context.music->play("gametheme01");
     
     /*
     for (std::size_t i = { 0 }; i < Layers::COUNT; i++)
@@ -140,7 +140,7 @@ void MainGameScreen::buildScene()
 
     // Warrior
     std::unique_ptr<Wizard> warrior{ std::make_unique<Wizard>
-        (RenderLayers::MAIN, 100.f, Textures::WIZARD, *m_context.textureHolder, 
+        (RenderLayers::MAIN, 100.f, "wizard", *m_context.textureHolder, 
          *m_context.spriteSheetMapHolder, m_possibleTargetWarriors) };
     
     //std::unique_ptr<Knight> warrior{ std::make_unique<Knight>
@@ -169,7 +169,7 @@ void MainGameScreen::buildScene()
 
     // Enemy
     std::unique_ptr<Warrior> enemy1{ std::make_unique<Runner>
-        (RenderLayers::MAIN, 100.f, Textures::RUNNER, *m_context.textureHolder, 
+        (RenderLayers::MAIN, 100.f, "runner", *m_context.textureHolder, 
          *m_context.spriteSheetMapHolder, m_possibleTargetWarriors) };
     //SceneNode *wizardEnemyTmp = wizard.get();
     std::unique_ptr<CollisionShape> collisionShapeEnemy{ 
@@ -216,14 +216,14 @@ void MainGameScreen::handleConsoleCommands(gsf::Widget* widget, sf::String comma
         if (spawnObjCom == "KNIGHT")
         {
             spawnWar = std::make_unique<Knight>
-                (RenderLayers::MAIN, 100.f, Textures::KNIGHT, *m_context.textureHolder, 
+                (RenderLayers::MAIN, 100.f, "knight", *m_context.textureHolder, 
                 *m_context.spriteSheetMapHolder, m_possibleTargetWarriors);
             type = WorldObjectTypes::KNIGHT;
         }
         else if (spawnObjCom == "RUNNER")
         {
             spawnWar = std::make_unique<Runner>
-                (RenderLayers::MAIN, 100.f, Textures::RUNNER, *m_context.textureHolder, 
+                (RenderLayers::MAIN, 100.f, "runner", *m_context.textureHolder, 
                 *m_context.spriteSheetMapHolder, m_possibleTargetWarriors);
             type = WorldObjectTypes::RUNNER;
         }
@@ -711,7 +711,7 @@ void MainGameScreen::render()
         const sf::Texture &texture{ m_renderTexture.getTexture() };
         sf::Sprite sprite(texture);
         m_window.setView(m_guiView);
-        m_window.draw(sprite, &m_context.shaderHolder->get(Shaders::GRAYSCALE));
+        m_window.draw(sprite, &m_context.shaderHolder->get("grayscale"));
     }
     else
     {

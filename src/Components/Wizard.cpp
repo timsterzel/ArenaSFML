@@ -7,8 +7,8 @@
 #include "Helpers.hpp"
 #include <iostream>
 
-Wizard::Wizard(RenderLayers layer, const int health, Textures textureId, 
-        const ResourceHolder<sf::Texture, Textures> &textureHolder,
+Wizard::Wizard(RenderLayers layer, const int health, const std::string &textureId, 
+        const ResourceHolder<sf::Texture> &textureHolder,
         const SpriteSheetMapHolder &spriteSheetMapHolder, 
         std::vector<Warrior*> &possibleTargetsInWord)
 : Warrior(layer, health, textureId, textureHolder, spriteSheetMapHolder, 
@@ -74,17 +74,17 @@ Wizard::Wizard(RenderLayers layer, const int health, Textures textureId,
     m_closeCombatArea->setDraw(true);
     // Load frame rects of fireball
     m_fireballFrameRects.push_back(
-        m_spriteSheetMapHolder.getRectData(Textures::FIREBALL, "fireball_1"));
+        m_spriteSheetMapHolder.getRectData("fireball", "fireball_1"));
     m_fireballFrameRects.push_back(
-        m_spriteSheetMapHolder.getRectData(Textures::FIREBALL, "fireball_2"));
+        m_spriteSheetMapHolder.getRectData("fireball", "fireball_2"));
     m_fireballFrameRects.push_back(
-        m_spriteSheetMapHolder.getRectData(Textures::FIREBALL, "fireball_3"));
+        m_spriteSheetMapHolder.getRectData("fireball", "fireball_3"));
     m_fireballFrameRects.push_back(
-        m_spriteSheetMapHolder.getRectData(Textures::FIREBALL, "fireball_4"));
+        m_spriteSheetMapHolder.getRectData("fireball", "fireball_4"));
     m_fireballFrameRects.push_back(
-        m_spriteSheetMapHolder.getRectData(Textures::FIREBALL, "fireball_5"));
+        m_spriteSheetMapHolder.getRectData("fireball", "fireball_5"));
     m_fireballFrameRects.push_back(
-        m_spriteSheetMapHolder.getRectData(Textures::FIREBALL, "fireball_6"));
+        m_spriteSheetMapHolder.getRectData("fireball", "fireball_6"));
 }
 
 Wizard::~Wizard()
@@ -240,7 +240,7 @@ void Wizard::startFireballAttack()
         std::unique_ptr<Weapon> fireball{ 
             std::make_unique<Weapon>(RenderLayers::WEAPON,
                     m_fireballDamage,
-                    m_textureHolder.get(Textures::FIREBALL), 
+                    m_textureHolder.get("fireball"), 
                     m_fireballFrameRects, 
                     true,
                     0.5f) };

@@ -1,6 +1,6 @@
 #include "Resources/TileSetHolder.hpp"
 #include <cassert>
-
+/*
 void TileSetHolder::load(const std::string &id, const std::string &fileName)
 {
     tinyxml2::XMLDocument document;
@@ -27,4 +27,4 @@ sf::IntRect TileSetHolder::getRectData(const std::string &id)
     assert(m_rectMap.find(id) != m_rectMap.end());
     return m_rectMap.at(id);
 }
-
+*/

@@ -19,11 +19,11 @@ Screen::Screen(ScreenStack *screenStack, Context &context)
 }
 
 Screen::Context::Context(
-        bool isInDebugMode, 
-        sf::RenderWindow *window, 
-        ResourceHolder<sf::Font, Fonts> *fontHolder,
-    ResourceHolder<sf::Texture, Textures> *textureHolder, 
-    ResourceHolder<sf::Shader, Shaders> *shaderHolder,
+    bool isInDebugMode, 
+    sf::RenderWindow *window, 
+    ResourceHolder<sf::Font> *fontHolder,
+    ResourceHolder<sf::Texture> *textureHolder, 
+    ResourceHolder<sf::Shader> *shaderHolder,
     SpriteSheetMapHolder *spriteSheetMapHolder, 
     MusicPlayer *music)
 : isInDebugMode{ isInDebugMode }

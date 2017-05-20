@@ -6,8 +6,8 @@
 #include "Calc.hpp"
 #include <iostream>
 
-Runner::Runner(RenderLayers layer, const int health, Textures textureId, 
-        const ResourceHolder<sf::Texture, Textures> &textureHolder,
+Runner::Runner(RenderLayers layer, const int health, const std::string &textureId, 
+        const ResourceHolder<sf::Texture> &textureHolder,
         const SpriteSheetMapHolder &spriteSheetMapHolder, 
         std::vector<Warrior*> &possibleTargetsInWord)
 : Warrior(layer, health, textureId, textureHolder, spriteSheetMapHolder, 
