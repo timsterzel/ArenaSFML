@@ -9,16 +9,17 @@
 
 class TileSetHolder
 {
-    /*
+    
     private:
-        std::map<std::string, > m_rectMap;
+        std::map<std::string, std::unique_ptr<TileSet>> m_tileSets;
 
     public:
-        void load(const std::string &id, const std::string &fileName);
+        void load(const std::string &fileName);
+        
+        bool isTileSetExisting(const std::string &id) const;
 
-        sf::IntRect getRectData(const std::string &id) const;
-        sf::IntRect getRectData(const std::string &id);
-    */
+        TileSet& getTileSet(const std::string &id) const;
+        TileSet& getTileSet(const std::string &id);
 };
 
 

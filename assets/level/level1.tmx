@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="2017.05.09" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="32" tileheight="32" nextobjectid="17">
- <tileset firstgid="1" source="level1.tsx"/>
+ <properties>
+  <property name="tmx_identifier" value="tileset1"/>
+ </properties>
+ <tileset firstgid="1" source="tileset1.tsx"/>
  <layer name="main_map" width="20" height="20">
   <data>
    <tile gid="1"/>

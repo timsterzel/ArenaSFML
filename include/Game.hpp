@@ -13,8 +13,11 @@
 #include "Render/RenderManager.hpp"
 #include "Resources/ResourceHolder.hpp"
 #include "Resources/SpriteSheetMapHolder.hpp"
+#include "Resources/TileSetHolder.hpp"
+#include "Resources/LevelHolder.hpp"
 #include "Screens/ScreenStack.hpp"
 #include "Sound/MusicPlayer.hpp"
+#include "libs/GUI-SFML/libs/tinyxml2.h"
 
 typedef std::chrono::high_resolution_clock CLOCK;
 
@@ -56,6 +59,8 @@ class Game
         ResourceHolder<sf::Texture> m_textureHolder;
         ResourceHolder<sf::Shader> m_shaderHolder;
         SpriteSheetMapHolder m_spriteSheetMapHolder;
+        TileSetHolder m_tileSetHolder;
+        LevelHolder m_levelHolder;
 
         // The game class handle all inputs which get later translated to commands
         QueueHelper<Input> m_inputQueue;
@@ -71,7 +76,9 @@ class Game
         void loadFonts();
         void loadTextures();
         void loadShaders();
+        void loadLevels();
         void buildScene();
+        
         void determineDeltaTime();
         void handleInput();
         void update();

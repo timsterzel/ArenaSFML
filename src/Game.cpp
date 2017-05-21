@@ -38,6 +38,7 @@ Game::Game(const bool showStats, const bool isInDebug, const bool isMusicOn)
     loadFonts();
     loadTextures();
     loadShaders();
+    loadLevels();
     buildScene();
     // Register all screens
     m_screenStack.registerScreen<MainGameScreen>(ScreenID::GAME);
@@ -111,6 +112,33 @@ void Game::loadShaders()
         return;
     }
     m_shaderHolder.load<sf::Shader::Type>("grayscale", "assets/shaders/grayscale.frag", sf::Shader::Fragment);
+}
+
+void Game::loadLevels()
+{
+    m_tileSetHolder.load("assets/level/tileset1.tsx");
+    m_levelHolder.load("assets/level/level1.tmx", m_tileSetHolder);
+    /*
+    m_textureHolder.load(
+            "knight", "assets/sprites/warriors/knight.png");
+    m_spriteSheetMapHolder.load(
+            "knight", "assets/sprites/warriors/knight.txt");
+    
+    m_textureHolder.load(
+            "runner", "assets/sprites/warriors/runner.png");
+    m_spriteSheetMapHolder.load(
+            "runner", "assets/sprites/warriors/runner.txt");
+
+    m_textureHolder.load(
+            "wizard", "assets/sprites/warriors/wizard.png");
+    m_spriteSheetMapHolder.load(
+            "wizard", "assets/sprites/warriors/wizard.txt");
+    
+    m_textureHolder.load(
+            "fireball", "assets/sprites/attacks/fireball.png");
+    m_spriteSheetMapHolder.load(
+            "fireball", "assets/sprites/attacks/fireball.txt");
+    */
 }
 
 void Game::buildScene()

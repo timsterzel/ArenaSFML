@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset name="scifi" tilewidth="32" tileheight="32" tilecount="6" columns="3">
- <image source="../sprites/tiles/level.png" width="96" height="64"/>
+<tileset name="tileset1" tilewidth="32" tileheight="32" tilecount="6" columns="3">
+ <properties>
+  <property name="texture_id" value="level"/>
+ </properties>
+ <image source="level.png" width="96" height="64"/>
  <tile id="0" type="wall">
   <properties>
    <property name="collision" type="bool" value="true"/>
