@@ -192,6 +192,7 @@ void MainGameScreen::buildScene()
 
 void MainGameScreen::buildLevel()
 {
+    // Load the tiles
     for (const Level::TileData &tile : m_level.tiles)
     {
         //*m_context.textureHolder
@@ -206,6 +207,22 @@ void MainGameScreen::buildLevel()
                 sprite->getSpriteWidth() / 2.f, sprite->getSpriteHeight() /2.f);
         sprite->setPosition(tile.position);
         m_sceneGraph.attachChild(std::move(sprite));
+    }
+    // Load spawn points
+    if (m_level.spawnPoint1)
+    {
+        std::cout << "SpawnPoint1 x: " << m_level.spawnPoint1->position.x
+            << " y: " << m_level.spawnPoint1->position.y << std::endl;
+        m_playerWarrior->setPosition(m_level.spawnPoint1->position);
+    }
+    if (m_level.spawnPoint2)
+    {
+        if (m_possibleTargetWarriors.size() > 1)
+        {
+            std::cout << "Larger \n";
+            m_possibleTargetWarriors[1]->setPosition(
+                    m_level.spawnPoint2->position);
+        }
     }
 }
 
