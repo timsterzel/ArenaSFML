@@ -15,11 +15,13 @@
 #include "Game.hpp"
 #include <cmath>
 
-MainGameScreen::MainGameScreen(ScreenStack *screenStack, Context &context)
+MainGameScreen::MainGameScreen(ScreenStack *screenStack, Context &context, 
+        const Level &level)
 : Screen(screenStack, context)
 , m_isGamePaused{ false }
 , m_showCollisionInfo{ false }
 , m_window{ *context.window }
+, m_level{ level }
 , m_isRenderTextureAvailable{ false }
 , m_gameView{ context.gameView }
 , m_guiView{ context.guiView }
@@ -55,7 +57,6 @@ void MainGameScreen::buildScene()
     {
         m_isRenderTextureAvailable = true;
     }
-
     // healt bar
     gsf::ProgressWidget::Ptr healthWar1{ gsf::ProgressWidget::create(100.f, 20.f) };
     m_healthBarWarr1 = healthWar1.get();
@@ -185,6 +186,16 @@ void MainGameScreen::buildScene()
     enemy1->setIsAiActive(false);
     m_possibleTargetWarriors.push_back(enemy1.get());
     m_sceneGraph.attachChild(std::move(enemy1));
+    
+    buildLevel();
+}
+
+void MainGameScreen::buildLevel()
+{
+    for (std::size_t i{ 0 }; i != m_level.tiles.size(); i++)
+    {
+
+    }
 }
 
 void MainGameScreen::handleConsoleCommands(gsf::Widget* widget, sf::String command)

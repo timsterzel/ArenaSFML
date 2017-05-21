@@ -25,6 +25,7 @@ Screen::Context::Context(
     ResourceHolder<sf::Texture> *textureHolder, 
     ResourceHolder<sf::Shader> *shaderHolder,
     SpriteSheetMapHolder *spriteSheetMapHolder, 
+    LevelHolder *levelHolder,
     MusicPlayer *music)
 : isInDebugMode{ isInDebugMode }
 , window{ window }
@@ -34,6 +35,7 @@ Screen::Context::Context(
 , textureHolder{ textureHolder }
 , shaderHolder{ shaderHolder }
 , spriteSheetMapHolder{ spriteSheetMapHolder }
+, levelHolder{ levelHolder }
 , music{ music }
 {
 

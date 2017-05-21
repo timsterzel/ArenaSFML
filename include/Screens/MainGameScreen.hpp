@@ -7,6 +7,7 @@
 #include "Input/QueueHelper.hpp"
 #include "Input/Input.hpp"
 #include "Input/Command.hpp"
+#include "Level/Level.hpp"
 #include "Render/RenderManager.hpp"
 #include "Resources/ResourceHolder.hpp"
 #include "Resources/SpriteSheetMapHolder.hpp"
@@ -22,6 +23,7 @@ class MainGameScreen : public Screen
         bool m_showCollisionInfo;
         
         sf::RenderWindow &m_window;
+        const Level &m_level;
         // Used to apply the shader right on all drawn things. Some shaders only
         // effects textures right, so when we want to use shaders, we first draw all
         // to the render texture and then draw the emerging tetxure with the shader
@@ -60,10 +62,11 @@ class MainGameScreen : public Screen
         long colCnt = 0;
 
     public:
-        MainGameScreen(ScreenStack *screenStack, Context &context);
+        MainGameScreen(ScreenStack *screenStack, Context &context, 
+                const Level &level);
 
         virtual ~MainGameScreen();
-
+        
         virtual void buildScene();
         // Safe the actual position, rotation and scale of the SceneNode
         void safeSceneNodeTrasform();
@@ -79,6 +82,8 @@ class MainGameScreen : public Screen
     
         virtual void windowSizeChanged();
     private:
+        void buildLevel();
+
         void updateBackground(float dt);
 
         SceneNode* getSceneNodeOfType(SceneNode::Pair sceneNodePair, WorldObjectTypes type);

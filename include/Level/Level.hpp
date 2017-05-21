@@ -20,22 +20,17 @@ struct Level
         {
             int number;
             sf::Vector2f position;
-            std::string name;
             
             SpawnPoint();
-            SpawnPoint(int number, sf::Vector2f position, const std::string &name);
+            SpawnPoint(int number, sf::Vector2f position);
         };
 
         std::string name;
-        sf::Texture preview;
-        TileSet &tileSet;
         std::vector<TileData> tiles;
         std::unique_ptr<SpawnPoint> spawnPoint1;
         std::unique_ptr<SpawnPoint> spawnPoint2;
-        std::unique_ptr<SpawnPoint> spawnPoint3;
-        std::unique_ptr<SpawnPoint> spawnPoint4;
         
-        Level(sf::Texture &preview, TileSet &tileSet);
+        Level();
 };
 
 #endif // LEVEL_HPP

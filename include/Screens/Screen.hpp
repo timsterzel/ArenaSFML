@@ -9,6 +9,7 @@
 #include "Render/RenderManager.hpp"
 #include "Resources/ResourceHolder.hpp"
 #include "Resources/SpriteSheetMapHolder.hpp"
+#include "Resources/LevelHolder.hpp"
 #include "Input/QueueHelper.hpp"
 #include "Input/Input.hpp"
 #include "Input/Command.hpp"
@@ -32,6 +33,7 @@ class Screen : private sf::NonCopyable
             ResourceHolder<sf::Texture> *textureHolder;
             ResourceHolder<sf::Shader> *shaderHolder;
             SpriteSheetMapHolder *spriteSheetMapHolder;
+            LevelHolder *levelHolder;
             MusicPlayer *music;
 
             Context(bool isInDebugMode, 
@@ -40,6 +42,7 @@ class Screen : private sf::NonCopyable
                     ResourceHolder<sf::Texture> *textureHolder, 
                     ResourceHolder<sf::Shader> *shaderHolder,
                     SpriteSheetMapHolder *spriteSheetMapHolder, 
+                    LevelHolder *levelHolder,
                     MusicPlayer *music);
 
             Context();

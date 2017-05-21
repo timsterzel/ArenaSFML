@@ -2,6 +2,7 @@
 #include "Screens/Screen.hpp"
 #include "Screens/MainGameScreen.hpp"
 #include "Screens/PauseScreen.hpp"
+#include "Level/Level.hpp"
 #include <iostream>
 #include <memory>
 #include <cmath>
@@ -15,7 +16,7 @@ Game::Game(const bool showStats, const bool isInDebug, const bool isMusicOn)
 , m_referenceWorldHeight{ 480 }
 , m_window{ sf::VideoMode{ m_screenHeight, m_screenWidth} , "ArenaSFML" }
 , m_music{ }
-, m_context{ isInDebug, &m_window, &m_fontHolder, &m_textureHolder, &m_shaderHolder, &m_spriteSheetMapHolder, &m_music }
+, m_context{ isInDebug, &m_window, &m_fontHolder, &m_textureHolder, &m_shaderHolder, &m_spriteSheetMapHolder, &m_levelHolder, &m_music }
 , m_isRunning{ true }
 , m_isPaused{ false }
 , m_renderManager{ &m_sceneGraph }
@@ -41,7 +42,8 @@ Game::Game(const bool showStats, const bool isInDebug, const bool isMusicOn)
     loadLevels();
     buildScene();
     // Register all screens
-    m_screenStack.registerScreen<MainGameScreen>(ScreenID::GAME);
+    const Level &level = *(m_context.levelHolder->getLevels()[0].get());
+    m_screenStack.registerScreen<MainGameScreen, Level>(ScreenID::GAME, level);
     m_screenStack.registerScreen<PauseScreen>(ScreenID::PAUSE);
     // Show Game screen
     m_screenStack.pushScreen(ScreenID::GAME);
@@ -101,6 +103,11 @@ void Game::loadTextures()
             "fireball", "assets/sprites/attacks/fireball.png");
     m_spriteSheetMapHolder.load(
             "fireball", "assets/sprites/attacks/fireball.txt");
+    
+    m_textureHolder.load(
+            "level", "assets/sprites/tiles/level.png");
+    m_spriteSheetMapHolder.load(
+            "level", "assets/sprites/tiles/level.txt");
 }
 
 void Game::loadShaders()
@@ -116,29 +123,7 @@ void Game::loadShaders()
 
 void Game::loadLevels()
 {
-    m_tileSetHolder.load("assets/level/tileset1.tsx");
-    m_levelHolder.load("assets/level/level1.tmx", m_tileSetHolder);
-    /*
-    m_textureHolder.load(
-            "knight", "assets/sprites/warriors/knight.png");
-    m_spriteSheetMapHolder.load(
-            "knight", "assets/sprites/warriors/knight.txt");
-    
-    m_textureHolder.load(
-            "runner", "assets/sprites/warriors/runner.png");
-    m_spriteSheetMapHolder.load(
-            "runner", "assets/sprites/warriors/runner.txt");
-
-    m_textureHolder.load(
-            "wizard", "assets/sprites/warriors/wizard.png");
-    m_spriteSheetMapHolder.load(
-            "wizard", "assets/sprites/warriors/wizard.txt");
-    
-    m_textureHolder.load(
-            "fireball", "assets/sprites/attacks/fireball.png");
-    m_spriteSheetMapHolder.load(
-            "fireball", "assets/sprites/attacks/fireball.txt");
-    */
+    m_levelHolder.load("assets/level/level1.lvl");
 }
 
 void Game::buildScene()

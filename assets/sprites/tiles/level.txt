@@ -1,0 +1,6 @@
+BlockRed = 0 0 32 32
+BlockBlue = 32 0 32 32
+Ground1 = 64 0 32 32
+DoorRed = 0 32 32 32
+DoorBlue = 32 32 32 32
+Ground2 = 64 32 32 32

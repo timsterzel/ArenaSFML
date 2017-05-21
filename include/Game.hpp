@@ -13,7 +13,6 @@
 #include "Render/RenderManager.hpp"
 #include "Resources/ResourceHolder.hpp"
 #include "Resources/SpriteSheetMapHolder.hpp"
-#include "Resources/TileSetHolder.hpp"
 #include "Resources/LevelHolder.hpp"
 #include "Screens/ScreenStack.hpp"
 #include "Sound/MusicPlayer.hpp"
@@ -59,7 +58,6 @@ class Game
         ResourceHolder<sf::Texture> m_textureHolder;
         ResourceHolder<sf::Shader> m_shaderHolder;
         SpriteSheetMapHolder m_spriteSheetMapHolder;
-        TileSetHolder m_tileSetHolder;
         LevelHolder m_levelHolder;
 
         // The game class handle all inputs which get later translated to commands
