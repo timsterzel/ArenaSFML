@@ -192,9 +192,20 @@ void MainGameScreen::buildScene()
 
 void MainGameScreen::buildLevel()
 {
-    for (std::size_t i{ 0 }; i != m_level.tiles.size(); i++)
+    for (const Level::TileData &tile : m_level.tiles)
     {
-
+        //*m_context.textureHolder
+        sf::Texture &texture{ m_context.textureHolder->get("level") };
+        sf::IntRect textureRect{ m_context.spriteSheetMapHolder->getRectData(
+                "level", tile.id) };
+        std::cout << "TileId: " << tile.id << "\n";
+        std::unique_ptr<SpriteNode> sprite{ 
+            std::make_unique<SpriteNode>(
+                    RenderLayers::BACKGROUND, texture, textureRect, false) };
+        sprite->setOrigin(
+                sprite->getSpriteWidth() / 2.f, sprite->getSpriteHeight() /2.f);
+        sprite->setPosition(tile.position);
+        m_sceneGraph.attachChild(std::move(sprite));
     }
 }
 
