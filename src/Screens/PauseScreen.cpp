@@ -16,7 +16,7 @@ void PauseScreen::buildScene()
     std::cout << "PauseScreen::buildScene" << std::endl;
 
     m_txtPaused.setFont(m_context.fontHolder->get("default"));
-	m_txtPaused.setCharacterSize(12);
+	m_txtPaused.setCharacterSize(32);
 	m_txtPaused.setFillColor(sf::Color::White);
     m_txtPaused.setString("--PAUSED--");
     m_txtPaused.setOrigin(m_txtPaused.getLocalBounds().width / 2.f, m_txtPaused.getLocalBounds().height / 2.f);
@@ -47,6 +47,8 @@ bool PauseScreen::handleEvent(sf::Event &event, float dt)
 
 bool PauseScreen::update(float dt)
 {
+    sf::Vector2f viewSize{ m_context.guiView.getSize() };
+    m_txtPaused.setPosition(viewSize.x / 2.f, viewSize.y / 2.f);
     //m_sceneGraph.removeDestroyed();
     //m_sceneGraph.update(dt);
     return false;
@@ -54,8 +56,11 @@ bool PauseScreen::update(float dt)
 
 void PauseScreen::render()
 {
+    sf::View oldView{ m_context.window->getView() };
+    m_context.window->setView(m_context.guiView);
     //std::cout << "Render" << std::endl;
     //m_context.window->draw(m_renderManager);
     m_context.window->draw(m_txtPaused);
+    m_context.window->setView(oldView);
 }
 
