@@ -670,19 +670,16 @@ void MainGameScreen::handleCollision(float dt)
                 }
             }
         }
-        /*
         else if (matchesCategories(sceneNodes, 
-                    WorldObjectTypes::WEAPON, WorldObjectTypes::SHIELD))
+                    WorldObjectTypes::WARRIOR, WorldObjectTypes::LEVEL))
         {
-            std::cout << "Weapon Shield collision \n";
-            Weapon *weapon{ static_cast<Weapon*>
-                (getSceneNodeOfType(sceneNodes, WorldObjectTypes::WEAPON)) };
-            Item *shield{ static_cast<Item*>
-                (getSceneNodeOfType(sceneNodes, WorldObjectTypes::SHIELD)) };
-            Warrior *warr{ static_cast<Warrior*> (shield->getParent()) };
-            warr->setBlockedAttackID(weapon->getAttackID());
+            Warrior *warrior{ static_cast<Warrior*>
+                (getSceneNodeOfType(sceneNodes, WorldObjectTypes::WARRIOR)) };
+
+            float overlap{ collisionInfo.getLength() };
+            warrior->moveInDirection(collisionInfo.getResolveDirOfFirst(), 
+                    overlap);
         }
-        */
         if (m_showCollisionInfo)
         {
             //std::cout << "Collision: " << colCnt++ << std::endl;
