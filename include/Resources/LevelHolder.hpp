@@ -27,9 +27,11 @@ class LevelHolder
         bool loadSettings(const std::string &line, Settings *settings);
         bool loadTileAliases(const std::string &line, 
                 std::map<std::string, std::string> *tileAliases);
+        bool loadCollision(const std::string &line, 
+                std::map<std::string, bool> *collisionInfo);
         bool loadMap(const std::string &line, const Settings &settings, 
                 Level *level, const std::map<std::string, std::string> &tileAliases,
-                int currentRow);
+                const std::map<std::string, bool> &collisionInfo, int currentRow);
         bool loadObjects(const std::string &line, const Settings &settings, 
                 Level *level, int currentRow);
         

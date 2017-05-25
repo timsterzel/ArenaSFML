@@ -7,9 +7,11 @@ Level::TileData::TileData()
 
 }
 
-Level::TileData::TileData(const std::string &id, sf::Vector2f position)
+Level::TileData::TileData(const std::string &id, sf::Vector2f position, 
+        bool isCollisionOn)
 : id{ id }
 , position{ position }
+, isCollisionOn{ isCollisionOn }
 {
 
 }

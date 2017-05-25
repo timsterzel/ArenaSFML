@@ -3,7 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include <memory>
-#include "Level/TileSet.hpp"
+//#include "Level/TileSet.hpp"
 
 struct Level
 {
@@ -11,9 +11,11 @@ struct Level
         {
             std::string id;
             sf::Vector2f position;
+            bool isCollisionOn;
 
             TileData();
-            TileData(const std::string &id, sf::Vector2f position);
+            TileData(const std::string &id, sf::Vector2f position, 
+                    bool isCollisionOn);
         };
         
         struct SpawnPoint

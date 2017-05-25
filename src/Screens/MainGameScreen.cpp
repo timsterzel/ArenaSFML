@@ -206,6 +206,18 @@ void MainGameScreen::buildLevel()
         sprite->setOrigin(
                 sprite->getSpriteWidth() / 2.f, sprite->getSpriteHeight() /2.f);
         sprite->setPosition(tile.position);
+        if (tile.isCollisionOn)
+        {
+            sf::Vector2f size{ 
+                sprite->getSpriteWidth(), sprite->getSpriteHeight() };
+            std::unique_ptr<CollisionRect> collision{ 
+                std::make_unique<CollisionRect>(size) };
+            // Adjust pos so that the collision shape is in the center of the 
+            // centered object
+            collision->setPosition(size.x / 2.f, size.y / 2.f);
+            sprite->setCollisionShape(std::move(collision));
+        }
+        sprite->setType(WorldObjectTypes::LEVEL);
         m_sceneGraph.attachChild(std::move(sprite));
     }
     // Load spawn points

@@ -9,6 +9,13 @@ tileheight:32
 4:DoorRed
 5:DoorBlue
 6:Ground2
+[collision]
+1:true
+2:true
+3:false
+4:true
+5:true
+6:false
 [map]
 1111111111111
 1333333333331

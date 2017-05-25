@@ -3,19 +3,22 @@
 #include <fstream>
 #include <sstream>
 #include "Helpers.hpp"
+#include "DebugHelpers.hpp"
 
 void LevelHolder::load(const std::string &fileName)
 {
     std::ifstream file(fileName, std::ios_base::in);
     if (!file)
     {
-        std::cout << "Could not open file: " << fileName << std::endl;
+        std::cerr << "Could not open file: " << fileName << std::endl;
         return;
     }
     Settings settings;
     // First template type: the id which is used on the map
     // Second template type: the id which is used to identify the textures rect
     std::map<std::string, std::string> tileAliases;
+    // First: id which is used on the map. Second:is collison on or off(true/false)
+    std::map<std::string, bool> collisionInfo;
     std::unique_ptr<Level> level{ std::make_unique<Level>() };
     int currentMapRow{ 0 };
     int currentObjectRow{ 0 };
@@ -41,9 +44,14 @@ void LevelHolder::load(const std::string &fileName)
         {
             loadTileAliases(line, &tileAliases);
         }
+        else if(actualOption == "[collision]")
+        {
+            loadCollision(line, &collisionInfo);
+        }
         else if(actualOption == "[map]")
         {
-            loadMap(line, settings, level.get(), tileAliases, currentMapRow);
+            loadMap(line, settings, level.get(), tileAliases, collisionInfo, 
+                    currentMapRow);
             currentMapRow++;
         }
         else if(actualOption == "[objects]")
@@ -63,7 +71,7 @@ bool LevelHolder::loadSettings(const std::string &line, LevelHolder::Settings *s
         Helpers::splitString(line, ':') };
     if (setting.size() != 2)
     {
-        std::cout << "Line is no valid setting: \"" << line << "\"\n";
+        std::cerr << "Line is no valid setting: \"" << line << "\"\n";
         return false;
     }
     std::string identifier{ setting[0] };
@@ -90,16 +98,33 @@ bool LevelHolder::loadTileAliases(const std::string &line,
         Helpers::splitString(line, ':') };
     if (alias.size() != 2)
     {
-        std::cout << "Line is no valid alias: \"" << line << "\"\n";
+        std::cerr << "Line is no valid alias: \"" << line << "\"\n";
         return false;
     }
     tileAliases->insert(std::make_pair(alias[0], alias[1]));
     return true;
 }
 
+bool LevelHolder::loadCollision(const std::string &line, 
+    std::map<std::string, bool> *collisionInfo)
+{
+    std::vector<std::string> alias{ 
+        Helpers::splitString(line, ':') };
+    if (alias.size() != 2)
+    {
+        std::cerr << "Line is no valid collison info: \"" << line << "\"\n";
+        return false;
+    }
+    bool isCollisionOn{ alias[1] == "true" ? true : false };
+    std::string id{ alias[0] };
+    collisionInfo->insert(std::make_pair(id, isCollisionOn));
+    return true;
+}
+
 bool LevelHolder::loadMap(const std::string &line, 
     const LevelHolder::Settings &settings, Level *level, 
     const std::map<std::string, std::string> &tileAliases,
+    const std::map<std::string, bool> &collisionInfo,
     int currentRow)
 {
     for (size_t column{ 0 }; column != line.size(); column++)
@@ -113,15 +138,23 @@ bool LevelHolder::loadMap(const std::string &line,
         }
         if (tileAliases.find(tileIdStr) == tileAliases.end())
         {
-            std::cout << "Char is no valid alias: \"" << tileIdStr << "\"\n";
+            std::cerr << "Char is no valid alias: \"" << tileIdStr << "\"\n";
             return false;
         }
         std::string id{ tileAliases.at(tileIdStr) };
+        bool isCollisionOn{ false };
+        // If there are collision info for this tile, load it
+        auto colFound = collisionInfo.find(tileIdStr); 
+        if (colFound != collisionInfo.end())
+        {
+            std::cerr << "NOT the END\n";
+            isCollisionOn = colFound->second;
+        }
         int tileWidth{ settings.tileWidth };
         int tileHeight{ settings.tileHeight };
         sf::Vector2f pos = translateRowColumnToPosition(
                 column, currentRow, tileWidth, tileHeight);
-        Level::TileData tile{ id, pos };
+        Level::TileData tile{ id, pos , isCollisionOn };
         level->tiles.push_back(tile);
     }
     return true;
@@ -148,7 +181,7 @@ bool LevelHolder::loadObjects(const std::string &line,
         }
         else if (objIdStr != "0")
         {
-            std::cout << "Char is no valid object: \"" << objIdStr << "\"\n";
+            std::cerr << "Char is no valid object: \"" << objIdStr << "\"\n";
             return false;
         }
     }
