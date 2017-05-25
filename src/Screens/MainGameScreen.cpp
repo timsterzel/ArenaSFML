@@ -575,6 +575,11 @@ bool MainGameScreen::update(float dt)
         m_stanimaBarWarr2->setProgress(
                 m_possibleTargetWarriors[1]->getCurrentStanima());
     }
+    
+    if (m_playerWarrior)
+    {
+        m_gameView.setCenter(m_playerWarrior->getWorldPosition());
+    }
     return false;
 }
 

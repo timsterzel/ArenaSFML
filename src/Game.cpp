@@ -22,6 +22,10 @@ Game::Game(const bool showStats, const bool isInDebug, const bool isMusicOn)
 , m_renderManager{ &m_sceneGraph }
 , m_dt{ 0 }
 , m_fps{ 0 }
+, m_averageFpsTime{ 0.f }
+, m_fpsInSec{ 0.f }
+, m_fpsCnt{ 0 }
+, m_averageFpsPerSec{ 0 }
 , m_timePoint1{ CLOCK::now() }
 , m_inputHandler{ &m_window }
 , m_screenStack{ m_context }
@@ -152,7 +156,19 @@ void Game::determineDeltaTime()
     // Get deltaTime as float in seconds
     m_dt = std::chrono::duration_cast<std::chrono::duration<float,std::ratio<1>>> (timeSpan).count();
     m_fps = 1.f / m_dt;
-    m_txtStatFPS.setString("FPS: " + std::to_string(m_fps));
+
+    m_averageFpsTime += m_dt;
+    m_fpsInSec += m_fps;
+    m_fpsCnt++;
+    if (m_averageFpsTime >= 1.f)
+    {
+        m_averageFpsPerSec = m_fpsInSec / m_fpsCnt + 0.5f;
+        m_averageFpsTime = 0.f;
+        m_fpsInSec = 0.f;
+        m_fpsCnt = 0;
+    }
+    m_txtStatFPS.setString("FPS: " + std::to_string(m_averageFpsPerSec) + " (" 
+            + std::to_string(m_fps) + ")");
 }
 
 
@@ -241,19 +257,17 @@ void Game::update()
 void Game::render()
 {
     m_window.clear();
-    m_window.draw(m_renderManager);
     //m_world.render();
     //m_actualScreen->render();
     m_screenStack.render();
+    sf::View oldView{ m_window.getView() };
+    m_window.setView(m_context.guiView);
+    m_window.draw(m_renderManager);
     if (m_showStats)
     {
         m_window.draw(m_txtStatFPS);
     }
-    /*
-    TextWidget textTest("Test", m_fontHolder.get(Fonts::DEFAULT), 20, sf::Color::Red);
-    textTest.setPosition(30.f, 30.f);
-    m_window.draw(textTest);
-    */
+    m_window.setView(oldView);
     m_window.display();
 }
 

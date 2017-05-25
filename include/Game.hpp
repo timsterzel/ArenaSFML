@@ -38,7 +38,6 @@ class Game
         unsigned int m_referenceWorldHeight;
         
         sf::RenderWindow m_window;
-        //sf::View m_view;
         MusicPlayer m_music;
         sf::Text m_txtStatFPS;
         Screen::Context m_context;
@@ -52,6 +51,10 @@ class Game
         // Delta time
         float m_dt;
         float m_fps;
+        float m_averageFpsTime;
+        float m_fpsInSec;
+        int m_fpsCnt;
+        int m_averageFpsPerSec;
         CLOCK::time_point m_timePoint1;
         // Assets
         ResourceHolder<sf::Font> m_fontHolder;
