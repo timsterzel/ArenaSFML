@@ -5,6 +5,7 @@
 #include "Collision/CollisionHandler.hpp"
 #include "Calc.hpp"
 #include "Helpers.hpp"
+#include "DebugHelpers.hpp"
 #include <iostream>
 
 Wizard::Wizard(RenderLayers layer, const int health, const std::string &textureId, 
@@ -25,24 +26,6 @@ Wizard::Wizard(RenderLayers layer, const int health, const std::string &textureI
 , m_currentHealColorStep{ 0 }
 , m_totalHealColorStepTime{ 0.3f }
 , m_currentHealColorStepTime{ 0.f }
-/*
-, m_closeAttackDamageMul{ 1.f }
-// Round Attack
-, m_isRoundAttacking{ false }
-, m_roundAttackStanima{ 40.f }
-, m_roundAttackDamageMul{ 1.5f }
-, m_roundAttackCurRot{ 0.f }
-, m_roundAttackTotalRot{ 360.f }
-, m_roundAttackAngleVel{ 720.f }
-, m_startRotationRoundAttack{ 0.f }
-//, m_strongAttackStanima{ 30.f }
-//, m_strongAttackDamageMul{ 3.f }
-, m_isDodging{ false }
-, m_dodgeStanima{ 30.f }
-, m_dodgeVelocity{ 300.f }
-, m_totalDodgeTime{ 0.2 }
-, m_curDodgeTime{ 0.f }
-*/
 {
     setVelocity(70.f);
     // Animation
@@ -250,7 +233,15 @@ void Wizard::startFireballAttack()
         fireball->addHitID(getID());
         fireball->setDebugName("Fireball");
         fireball->setVelocity(200.f);
-        fireball->setPosition(getWorldPosition());
+        // We have to add a distance to the fireball in the direction the wizards
+        // look, because the fireball is higher then the wizard and the fireball
+        // should not stick out behind the warrior
+        sf::Vector2f lookDir{ 
+            Calc::degAngleToDirectionVector(getRotation() + 90.f) };
+        sf::Vector2f spawnDist{ lookDir.x * 10.f, lookDir.y * 10.f };
+        sf::Vector2f pos{ getWorldPosition() + spawnDist };
+        fireball->setPosition(pos);
+        
         fireball->setRotationDefault(getRotation());
         fireball->setCurrentDirection(
                 Calc::degAngleToDirectionVector(fireball->getRotation() + 90.f));
@@ -263,17 +254,6 @@ void Wizard::startFireballAttack()
         rootNode->attachChild(std::move(fireball));
         removeStanima(m_fireballAttackStanima);
     }
-    /*
-    if (m_weapon && !m_animCloseAttack.isRunning() && 
-            m_currentStamina >= m_closeAttackStanima)
-    {
-        m_animCloseAttack.start();
-        m_weapon->setIsCollisionCheckOn(true);
-        m_weapon->setDamageMultiplicator(m_closeAttackDamageMul);
-        m_weapon->startNewAttack();
-        removeStanima(m_closeAttackStanima);
-    }
-    */
 }
 
 void Wizard::startHealing()
@@ -310,84 +290,7 @@ void Wizard::removeColorEffects()
         m_weapon->getSprite().setColor(sf::Color::White);
     }
 }
-/*
-void Wizard::startCloseAttack()
-{
-    if (m_weapon != nullptr)
-    {
-        std::cout << "Weapon is not null\n";
-    }
-    if (m_weapon && !m_animCloseAttack.isRunning() && 
-            m_currentStamina >= m_closeAttackStanima)
-    {
-        m_animCloseAttack.start();
-        m_weapon->setIsCollisionCheckOn(true);
-        m_weapon->setDamageMultiplicator(m_closeAttackDamageMul);
-        m_weapon->startNewAttack();
-        removeStanima(m_closeAttackStanima);
-    }
-}
-void Wizard::startCloseAttack()
-{
-    if (m_weapon != nullptr)
-    {
-        std::cout << "Weapon is not null\n";
-    }
-    if (m_weapon && !m_animCloseAttack.isRunning() && 
-            m_currentStamina >= m_closeAttackStanima)
-    {
-        m_animCloseAttack.start();
-        m_weapon->setIsCollisionCheckOn(true);
-        m_weapon->setDamageMultiplicator(m_closeAttackDamageMul);
-        m_weapon->startNewAttack();
-        removeStanima(m_closeAttackStanima);
-    }
-}
 
-void Wizard::startRoundAttack()
-{
-    if (!m_isDodging && !m_isRoundAttacking && 
-            m_currentStamina >= m_roundAttackStanima && m_weapon)
-    {
-        m_isRoundAttacking = true;
-        m_roundAttackCurRot = 0.f;
-        m_startRotationRoundAttack = getRotation();
-        m_weapon->setRotation(270.f);
-        m_weapon->setIsCollisionCheckOn(true);
-        m_weapon->setDamageMultiplicator(m_roundAttackDamageMul);
-        m_weapon->startNewAttack();
-        removeStanima(m_roundAttackStanima);
-    }
-}
-
-void Wizard::stopRoundAttack()
-{
-    m_isRoundAttacking = false;
-    m_weapon->setRotation(0.f);
-    m_weapon->setIsCollisionCheckOn(false);
-}
-
-void Wizard::startDodging()
-{
-    if (!m_isRoundAttacking && m_currentStamina >= m_dodgeStanima)
-    {
-        makeTransparent();
-        setIsCollisionCheckOn(false);
-        m_isDodging = true;
-        m_curDodgeTime = 0.f;
-        // The dodge direction is the direction where the runner looking at
-        m_dodgeDir = Calc::degAngleToDirectionVector(getRotation());
-        removeStanima(m_dodgeStanima);
-    }
-}
-
-void Wizard::stopDodging()
-{
-    m_isDodging = false;
-    setIsCollisionCheckOn(true);
-    makeInTransparent();
-}
-*/
 void Wizard::weaponAdded()
 {
     m_animFireballAttack.setParent(m_weapon);

@@ -620,14 +620,6 @@ void MainGameScreen::resolveEntityCollisions(SceneNode *sceneNodeFirst,
     float overlap{ collisionInfo.getLength() };
     entityOne->moveInDirection(collisionInfo.getResolveDirOfFirst(), overlap / 2.f);
     entityTwo->moveInDirection(collisionInfo.getResolveDirOfSecond(), overlap / 2.f);
-    /*
-    std::cout << "Player Enemy Enemy" << std::endl;
-    std::cout << "OVERLAP: " << overlap << std::endl;
-    std::cout << "DirOne: X:" << collisionInfo.getResolveDirOfFirst().x << " Y: " << collisionInfo.getResolveDirOfFirst().y << std::endl;
-    std::cout << "DirTwo: X:" << collisionInfo.getResolveDirOfSecond().x <<  " Y: " << collisionInfo.getResolveDirOfSecond().y << std::endl;
-    std::cout << "PosOne: X:" << entityOne->getWorldPosition().x << " Y: " << entityOne->getWorldPosition().y << std::endl;
-    std::cout << "PosTwo: X:" << entityTwo->getWorldPosition().x <<  " Y: " << entityTwo->getWorldPosition().y << std::endl;
-    */
 }
 
 void MainGameScreen::handleCollision(float dt)
@@ -680,31 +672,19 @@ void MainGameScreen::handleCollision(float dt)
             warrior->moveInDirection(collisionInfo.getResolveDirOfFirst(), 
                     overlap);
         }
+        else if (matchesCategories(sceneNodes, 
+                    WorldObjectTypes::PROJECTILE, WorldObjectTypes::LEVEL))
+        {
+            Entity *entity{ static_cast<Entity*>
+                (getSceneNodeOfType(sceneNodes, WorldObjectTypes::PROJECTILE)) };
+            entity->setStatus(WorldObjectStatus::DESTORYED);
+        }
         if (m_showCollisionInfo)
         {
             //std::cout << "Collision: " << colCnt++ << std::endl;
         }
     }
 }
-/*
-bool World::matchesCategories(SceneNode::Pair &colliders, WorldObjectTypes worldObjectType1, WorldObjectTypes worldObjectType2)
-{
-    unsigned int category1 = static_cast<unsigned int>(colliders.first->getType());
-    unsigned int category2 = static_cast<unsigned int>(colliders.second->getType());
-    unsigned int type1 = static_cast<unsigned int>(worldObjectType1);
-    unsigned int type2 = static_cast<unsigned int>(worldObjectType2);
-    if (type1 & category1 && type2 & category2)
-    {
-        return true;
-    }
-    else if (type1 & category2 && type2 & category1)
-    {
-        std::swap(colliders.first, colliders.second);
-        return true;
-    }
-    return false;
-}
-*/
 
 SceneNode* MainGameScreen::getSceneNodeOfType(SceneNode::Pair sceneNodePair, WorldObjectTypes type)
 {

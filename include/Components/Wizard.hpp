@@ -25,33 +25,7 @@ class Wizard : public Warrior
         // The time it takes to inteprole from one color to the next
         float m_totalHealColorStepTime;
         float m_currentHealColorStepTime;
-  
         
-        /*
-        // Round attack
-        bool m_isRoundAttacking;
-        float m_roundAttackStanima;
-        float m_roundAttackDamageMul;
-        // The current rotation in degrees
-        float m_roundAttackCurRot;
-        // The total rotation in degrees
-        float m_roundAttackTotalRot;
-        // The angle in degrees per second
-        float m_roundAttackAngleVel;
-        // The Wizards rotation by starting attack
-        float m_startRotationRoundAttack;
-        
-        // Dodge move
-        bool m_isDodging;
-        float m_dodgeStanima;
-        float m_dodgeVelocity;
-        // Total time of dodging
-        float m_totalDodgeTime;
-        // The time in seconds, while the current dodging running
-        float m_curDodgeTime;
-        // The direction of the dodging
-        sf::Vector2f m_dodgeDir;
-        */
     public:
         Wizard(RenderLayers layer, const int health, const std::string &textureId, 
                 const ResourceHolder<sf::Texture> &textureHolder,
@@ -79,13 +53,6 @@ class Wizard : public Warrior
         void applyColor(sf::Color color);
         // Restore the default color of the sprites
         void removeColorEffects();
-        /*
-        void startCloseAttack();
-        void startRoundAttack();
-        void stopRoundAttack();
-        void startDodging();
-        void stopDodging();
-        */
 };
 
 #endif // WIZARD_HPP

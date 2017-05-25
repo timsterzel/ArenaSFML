@@ -8,5 +8,5 @@ std::string DebugHelpers::toString(bool value)
 
 std::string DebugHelpers::toString(sf::Vector2f value)
 {
-    return "(" + std::to_string(value.x) + "|" + std::to_string(value.y);
+    return "(" + std::to_string(value.x) + "|" + std::to_string(value.y) + ")";
 }
