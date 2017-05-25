@@ -278,7 +278,11 @@ CollisionInfo SceneNode::isColliding(SceneNode &node) const
 {
     // If there is no collision shape specified there can not be a collision and if the collision is not on by one of the two SceneNodesm there
     // can be no collision, too.
-    if (m_collisionShape == nullptr || node.getCollisionShape() == nullptr || !m_isCollisionCheckOn || !node.isCollisionCheckOn() || m_status == WorldObjectStatus::DESTORYED)
+    if (m_collisionShape == nullptr || 
+        node.getCollisionShape() == nullptr || 
+        !m_isCollisionCheckOn || 
+        !node.isCollisionCheckOn() || 
+        m_status == WorldObjectStatus::DESTORYED)
     {
         return CollisionInfo(false);
     }
