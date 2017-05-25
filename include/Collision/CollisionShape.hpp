@@ -11,9 +11,10 @@ class CollisionInfo;
 
 class CollisionShape : public sf::Transformable, public sf::Drawable
 {
+    public:
+        static bool drawCollisionShapes;
     protected:
         SceneNode *m_parent;
-        bool m_draw;
     public:
         CollisionShape();
 
@@ -25,9 +26,6 @@ class CollisionShape : public sf::Transformable, public sf::Drawable
         float getWorldRotation() const;
         void setParent(SceneNode *parent);
         SceneNode* getParent() const;
-
-        void setDraw(const bool draw);
-        bool getDraw() const;
 
         // http://stackoverflow.com/questions/22899363/advice-on-class-structure-in-a-collision-detection-system (The accepted answer)
         virtual CollisionInfo isColliding(CollisionShape &collider) = 0;

@@ -93,7 +93,6 @@ Knight::Knight(RenderLayers layer, const int health,const std::string &textureId
     m_closeCombatArea = std::move(closeCombatArea);
     m_closeCombatArea->setParent(this);
     m_closeCombatArea->setPosition(9.f, 0.f);
-    m_closeCombatArea->setDraw(true);
     /*
     std::vector<AnimationStepMovement>  swordMovementSteps;
     swordMovementSteps.push_back({ sf::Vector2f(0.f, 0.f), 100.f, sf::Vector2f(10.f, 0.f) , 1.5f });

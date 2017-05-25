@@ -1,8 +1,9 @@
 #include "Collision/CollisionShape.hpp"
 
+bool CollisionShape::drawCollisionShapes{ false };
+
 CollisionShape::CollisionShape()
 : m_parent{ nullptr }
-, m_draw{ false }
 {
 
 }
@@ -31,17 +32,6 @@ SceneNode* CollisionShape::getParent() const
 {
     return m_parent;
 }
-
-void CollisionShape::setDraw(const bool draw)
-{
-    m_draw = draw;
-}
-
-bool CollisionShape::getDraw() const
-{
-    return m_draw;
-}
-
 
 float CollisionShape::getWorldRotation() const
 {

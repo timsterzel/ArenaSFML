@@ -50,7 +50,7 @@ std::vector<sf::Vector2f> CollisionRect::getVertices() const
 
 void CollisionRect::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-    if (m_draw)
+    if (drawCollisionShapes)
     {
         sf::RectangleShape rect({ m_width, m_height });
         rect.setPosition(getPosition());

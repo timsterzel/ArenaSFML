@@ -14,7 +14,7 @@ float CollisionCircle::getRadius() const
 
 void CollisionCircle::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-    if (m_draw)
+    if (drawCollisionShapes)
     {
         sf::CircleShape circleShape{ m_radius };
         circleShape.setPosition(getPosition());

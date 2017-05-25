@@ -441,7 +441,8 @@ bool MainGameScreen::handleInput(Input &input, float dt)
             break;
         case InputTypes::D3 :
             m_showCollisionInfo = !m_showCollisionInfo;
-            m_sceneGraph.changeCollisionShapeDraw(m_showCollisionInfo);
+            CollisionShape::drawCollisionShapes = 
+                !CollisionShape::drawCollisionShapes;
             break;
         case InputTypes::D4 :
             break;

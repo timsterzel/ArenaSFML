@@ -54,7 +54,6 @@ Wizard::Wizard(RenderLayers layer, const int health, const std::string &textureI
     m_closeCombatArea = std::move(closeCombatArea);
     m_closeCombatArea->setParent(this);
     m_closeCombatArea->setPosition(9.f, 0.f);
-    m_closeCombatArea->setDraw(true);
     // Load frame rects of fireball
     m_fireballFrameRects.push_back(
         m_spriteSheetMapHolder.getRectData("fireball", "fireball_1"));
