@@ -219,6 +219,8 @@ void MainGameScreen::buildLevel()
             sprite->setCollisionShape(std::move(collision));
         }
         sprite->setType(WorldObjectTypes::LEVEL);
+        // Object is not moving, rotating etc, so its inactive
+        sprite->setIsActive(false);
         m_sceneGraph.attachChild(std::move(sprite));
     }
     // Load spawn points
@@ -530,13 +532,6 @@ void MainGameScreen::handleCommands(float dt)
 
 bool MainGameScreen::update(float dt)
 {
-     // Nothing to update when game is paused
-    /*
-    if (m_isGamePaused)
-    {
-        return;
-    }
-    */
     updateBackground(dt);
 
     safeSceneNodeTrasform();
@@ -556,7 +551,7 @@ bool MainGameScreen::update(float dt)
 
     m_sceneGraph.removeDestroyed();
     m_sceneGraph.update(dt);
-
+    
     handleCollision(dt);
     
     m_window.setView(m_guiView);

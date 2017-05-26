@@ -25,15 +25,23 @@ void CollisionRect::computeVertices()
     const sf::Vector2f Position = { getWorldPosition() };
     //std::cout << "Rotation: " << Rotation << std::endl;
     // Compute the rects vertices as AABB
-    const sf::Vector2f EdgeA = { Position.x - m_width / 2.f, Position.y - m_height / 2.f };
-    const sf::Vector2f EdgeB = { Position.x + m_width / 2.f, Position.y - m_height / 2.f };
-    const sf::Vector2f EdgeC = { Position.x + m_width / 2.f, Position.y + m_height / 2.f };
-    const sf::Vector2f EdgeD = { Position.x - m_width / 2.f, Position.y + m_height / 2.f };
+    const sf::Vector2f EdgeA = 
+        { Position.x - m_width / 2.f, Position.y - m_height / 2.f };
+    const sf::Vector2f EdgeB = 
+        { Position.x + m_width / 2.f, Position.y - m_height / 2.f };
+    const sf::Vector2f EdgeC = 
+        { Position.x + m_width / 2.f, Position.y + m_height / 2.f };
+    const sf::Vector2f EdgeD = 
+        { Position.x - m_width / 2.f, Position.y + m_height / 2.f };
     // Apply rects rotation to the vertices
-    const sf::Vector2f EdgeAR = { Calc::rotatePointAround(EdgeA, Position, -Rotation) };
-    const sf::Vector2f EdgeBR = { Calc::rotatePointAround(EdgeB, Position, -Rotation) };
-    const sf::Vector2f EdgeCR = { Calc::rotatePointAround(EdgeC, Position, -Rotation) };
-    const sf::Vector2f EdgeDR = { Calc::rotatePointAround(EdgeD, Position, -Rotation) };
+    const sf::Vector2f EdgeAR = 
+        { Calc::rotatePointAround(EdgeA, Position, -Rotation) };
+    const sf::Vector2f EdgeBR = 
+        { Calc::rotatePointAround(EdgeB, Position, -Rotation) };
+    const sf::Vector2f EdgeCR = 
+        { Calc::rotatePointAround(EdgeC, Position, -Rotation) };
+    const sf::Vector2f EdgeDR = 
+        { Calc::rotatePointAround(EdgeD, Position, -Rotation) };
     // Add the vertices to the container
     m_vertices.clear();
     // Add vertices clockwise
@@ -79,11 +87,14 @@ CollisionInfo CollisionRect::isColliding(CollisionRect &collider)
 sf::Vector2f CollisionRect::getFarthestPointInDirection(sf::Vector2f dir) const
 {
     int maxPos = 0;
-    float maxScalar = Calc::getVec2Scalar<sf::Vector2f, sf::Vector2f>(dir, m_vertices[0]);
-    // Determine which verices of the rect is the nearest ( have the highest dot product) to the given vector
+    float maxScalar = 
+        Calc::getVec2Scalar<sf::Vector2f, sf::Vector2f>(dir, m_vertices[0]);
+    // Determine which verices of the rect is the nearest 
+    // (have the highest dot product) to the given vector
     for (std::size_t i = 0; i != m_vertices.size(); i++)
     {
-        float scalar = { Calc::getVec2Scalar<sf::Vector2f, sf::Vector2f>(dir, m_vertices[i]) };
+        float scalar{ 
+            Calc::getVec2Scalar<sf::Vector2f, sf::Vector2f>(dir, m_vertices[i]) };
         if (scalar > maxScalar)
         {
             maxPos = i;

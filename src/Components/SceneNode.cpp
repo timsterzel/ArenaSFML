@@ -292,8 +292,9 @@ CollisionInfo SceneNode::isColliding(SceneNode &node) const
 {
     // When there are types whitelisted only check collision if there collide
     // whitelisted types
+    
     if (m_collisionWhiteList != 0 && 
-            (getCollisionWhiteList() & getType()) == 0)
+            (getCollisionWhiteList() & node.getType()) == 0)
     {
         return CollisionInfo(false);
     }
@@ -303,7 +304,6 @@ CollisionInfo SceneNode::isColliding(SceneNode &node) const
         //std::cout << "Not whiteListed \n";
         return CollisionInfo(false);
     }
-
     // If there is no collision shape specified there can not be a collision and if 
     // the collision is not on by one of the two SceneNodesm there can be no 
     // collision, too.
