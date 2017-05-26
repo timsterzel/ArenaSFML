@@ -104,6 +104,20 @@ void SceneNode::setCollisionShape(std::unique_ptr<CollisionShape> collisionShape
     m_collisionShape->setParent(this);
 }
 
+void SceneNode::setColisionWhiteListTypes(unsigned int types)
+{
+    m_collisionWhiteList = types;
+}
+void SceneNode::clearCollisionWhiteListTypes()
+{
+    m_collisionWhiteList = 0;
+}
+
+unsigned int SceneNode::getCollisionWhiteList() const
+{
+    return m_collisionWhiteList;
+}
+
 void SceneNode::draw(RenderLayers layer, sf::RenderTarget &target, sf::RenderStates states) const
 {
         states.transform *= getTransform();
@@ -276,8 +290,23 @@ bool SceneNode::isMarkedForRemoval() const
 
 CollisionInfo SceneNode::isColliding(SceneNode &node) const
 {
-    // If there is no collision shape specified there can not be a collision and if the collision is not on by one of the two SceneNodesm there
-    // can be no collision, too.
+    // When there are types whitelisted only check collision if there collide
+    // whitelisted types
+    if (m_collisionWhiteList != 0 && 
+            (getCollisionWhiteList() & getType()) == 0)
+    {
+        return CollisionInfo(false);
+    }
+    if (node.getCollisionWhiteList() != 0 && 
+            (node.getCollisionWhiteList() & getType()) == 0)
+    {
+        //std::cout << "Not whiteListed \n";
+        return CollisionInfo(false);
+    }
+
+    // If there is no collision shape specified there can not be a collision and if 
+    // the collision is not on by one of the two SceneNodesm there can be no 
+    // collision, too.
     if (m_collisionShape == nullptr || 
         node.getCollisionShape() == nullptr || 
         !m_isCollisionCheckOn || 
@@ -291,8 +320,8 @@ CollisionInfo SceneNode::isColliding(SceneNode &node) const
 
 void SceneNode::checkSceneCollision(SceneNode &sceneGraph, std::vector<CollisionInfo> &collisionData)
 {
-    // Store the collisionPairs, so we can later check if the same collision is already stored, so we only
-    // store the Collision information once.
+    // Store the collisionPairs, so we can later check if the same collision is 
+    // already stored, so we only store the Collision information once.
     std::set<Pair> collisionPairs;
     checkSceneCollision(sceneGraph, collisionPairs, collisionData);
 }
@@ -310,27 +339,35 @@ void SceneNode::checkSceneCollision(SceneNode &sceneGraph, std::set<Pair> &colli
 
 void SceneNode::checkNodeCollision(SceneNode &node, std::set<Pair> &collisionPairs, std::vector<CollisionInfo> &collisionData)
 {
-    // If the actual SceneNode is passive we dont have to check if it colliding with something.
+    // If the actual SceneNode is passive we dont have to check if it colliding with
+    // something.
     // If the other node is active it will check if it is colliding with this node.
     if (this != &node && m_isActive)
     {
 
-        // std::minmax return always the same pair independent of the order of the parameters, where the first is the smallest and the second the greater one
-        // (The smaller one have the lower address in this case). In std::set unique objects are stored as key and dont add a new key if there is already the same
-        // so with std::minmax we ensure that we only store a collison once (a collides with b and b collisdes with a,
-        // but we only need to check the collision between the two once). So when we store the SceneNodes between the collison was checked,
-        // we dont have to check the collision twice
+        // std::minmax return always the same pair independent of the order of the 
+        // parameters, where the first is the smallest and the second the greater one
+        // (The smaller one have the lower address in this case). In std::set unique
+        // objects are stored as key and dont add a new key if there is already 
+        // the same so with std::minmax we ensure that we only store a collison once
+        // (a collides with b and b collisdes with a, but we only need to check the 
+        // collision between the two once). So when we store the SceneNodes between 
+        // the collison was checked, we dont have to check the collision twice
         Pair sceneNodePair = std::minmax(this, &node);
         auto inserted = collisionPairs.insert(sceneNodePair);
-        // Only check for collision when we dont have already check collision between this pair of nodes.
-        // (When inserted is false, the pair was not inserted in the set container, so we have already checked the collision between them)
+        // Only check for collision when we dont have already check collision 
+        // between this pair of nodes. (When inserted is false, the pair was not 
+        // inserted in the set container, so we have already checked the collision 
+        // between them)
         if (inserted.second)
         {
             CollisionInfo collisionInfo = { isColliding(node) };
             if (collisionInfo.isCollision())
             {
-                // Add collision information and SceneNodes to collisionData vector only when the pair of SceneNodes were successfully added to collisionPairs set,
-                // so we can ensure that we add the collisio only once.
+                // Add collision information and SceneNodes to collisionData vector 
+                // only when the pair of SceneNodes were successfully added to 
+                // collisionPairs set, so we can ensure that we add the collision 
+                // only once.
                 collisionData.push_back(collisionInfo);
             }
         }

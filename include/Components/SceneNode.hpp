@@ -30,14 +30,20 @@ class SceneNode : public sf::Transformable, /*public sf::Drawable,*/ public sf::
         SceneNode *m_parent;
     protected:
         std::unique_ptr<CollisionShape> m_collisionShape;
+        // If there is a ObjectType whitelisted, only sceneNides withh this type can
+        // collide with this sceneNode.
+        unsigned int m_collisionWhiteList;
         unsigned int m_type;
         WorldObjectStatus m_status;
         // When a SceneNode is active it can move or rotate.
-        // If it is only passive, so it dont move, rotate etc things can possibly collide with it (If it have a collision shape),
-        // but a passive object can not do anything to collide with something. But Other SceneNodes can do things so they collides
-        // with it. When we know that a SceneNode is passive we dont have to check collision twice. We just have to check if the
-        // active SceneNode collides with the inActive SceneNode.
-        // In a nutshell: When the SceneNode change his position or rotate its active.
+        // If it is only passive, so it dont move, rotate etc things can possibly 
+        // collide with it (If it have a collision shape),
+        // but a passive object can not do anything to collide with something. 
+        // But Other SceneNodes can do things so they collides with it. 
+        // When we know that a SceneNode is passive we dont have to check collision 
+        // twice. We just have to check if the active SceneNode collides with the 
+        // inactive SceneNode.
+        // In a nutshell: When the SceneNode change his position or rotate its active
         bool m_isActive;
         // When its false,the collision check is ignored for this SceneNode
         bool m_isCollisionCheckOn;
@@ -60,6 +66,13 @@ class SceneNode : public sf::Transformable, /*public sf::Drawable,*/ public sf::
         SceneNode* getParent() const;
         SceneNode* getRootSceneNode();
         void setCollisionShape(std::unique_ptr<CollisionShape> collisionShape);
+        // If there is a ObjectType whitelisted, only sceneNides withh this type can
+        // collide with this sceneNode.
+        void setColisionWhiteListTypes(unsigned int types);
+        void clearCollisionWhiteListTypes();
+        unsigned int getCollisionWhiteList() const;
+        
+
         // dt is the delta time
         void update(float dt);
         void onCommand(const Command &command, float dt);

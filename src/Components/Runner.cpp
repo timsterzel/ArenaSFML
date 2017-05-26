@@ -169,7 +169,8 @@ void Runner::updateAI(float dt)
     }
 
     lookAt(m_actualTarget->getPosition());
-    CollisionInfo collisionInfo = m_closeCombatArea->isColliding(*m_actualTarget->getCollisionShape());
+    CollisionInfo collisionInfo = 
+        m_closeCombatArea->isColliding(*m_actualTarget->getCollisionShape());
     if (collisionInfo.isCollision())
     {
         startCloseAttack();
@@ -208,10 +209,6 @@ void Runner::makeInTransparent()
 
 void Runner::startCloseAttack()
 {
-    if (m_weapon != nullptr)
-    {
-        std::cout << "Weapon is not null\n";
-    }
     if (m_weapon && !m_animCloseAttack.isRunning() && 
             m_currentStamina >= m_closeAttackStanima)
     {
@@ -251,7 +248,9 @@ void Runner::startDodging()
     if (!m_isRoundAttacking && m_currentStamina >= m_dodgeStanima)
     {
         makeTransparent();
-        setIsCollisionCheckOn(false);
+        //setIsCollisionCheckOn(false);
+        // Only should collide with level objects
+        setColisionWhiteListTypes(WorldObjectTypes::LEVEL);
         m_isDodging = true;
         m_curDodgeTime = 0.f;
         // The dodge direction is the direction where the runner looking at
@@ -263,7 +262,7 @@ void Runner::startDodging()
 void Runner::stopDodging()
 {
     m_isDodging = false;
-    setIsCollisionCheckOn(true);
+    clearCollisionWhiteListTypes();
     makeInTransparent();
 }
 /*

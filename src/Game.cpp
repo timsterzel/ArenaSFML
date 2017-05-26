@@ -36,7 +36,7 @@ Game::Game(const bool showStats, const bool isInDebug, const bool isMusicOn)
     }
     //std::unique_ptr<Screen> actualScreen = { std::make_unique<MainGameScreen>(isInDebug, this, &m_window, m_fontHolder, m_textureHolder, m_spriteSheetMapHolder) };
     //m_actualScreen = std::move(actualScreen);
-    m_window.setFramerateLimit(60);
+    //m_window.setFramerateLimit(60);
     m_context.guiView = m_window.getView();
     m_context.gameView = m_window.getView();
     adjustShownWorldToWindowSize(m_window.getSize().x, m_window.getSize().y);
