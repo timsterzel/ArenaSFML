@@ -78,6 +78,7 @@ class Game
         void loadTextures();
         void loadShaders();
         void loadLevels();
+        void loadMusic();
         void buildScene();
         
         void determineDeltaTime();

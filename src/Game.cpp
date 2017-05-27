@@ -44,6 +44,7 @@ Game::Game(const bool showStats, const bool isInDebug, const bool isMusicOn)
     loadTextures();
     loadShaders();
     loadLevels();
+    loadMusic();
     buildScene();
     // Register all screens
     const Level &level = *(m_context.levelHolder->getLevels()[0].get());
@@ -128,6 +129,12 @@ void Game::loadShaders()
 void Game::loadLevels()
 {
     m_levelHolder.load("assets/level/level1.lvl");
+}
+
+void Game::loadMusic()
+{
+    m_music.add("gametheme01", 
+            "assets/sounds/themes/Juhani_Junkala_-_Epic_Boss_Battle.ogg");
 }
 
 void Game::buildScene()

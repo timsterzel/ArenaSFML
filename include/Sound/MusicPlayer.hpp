@@ -21,6 +21,8 @@ class MusicPlayer : private sf::NonCopyable
 
         void setPaused(bool paused);
         void setVolume(float volume);
+
+        void add(const std::string &id, const std::string &fileName);
 };
 
 #endif // MUSICPLAYER_HPP
