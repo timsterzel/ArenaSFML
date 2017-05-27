@@ -32,6 +32,15 @@ void MainMenuScreen::buildScene()
     });
 }
 
+
+void MainMenuScreen::windowSizeChanged()
+{
+    sf::View oldView{ m_context.window->getView() };
+    m_context.window->setView(m_context.guiView);
+    m_guiEnvironment.replaceWidgets();
+    m_context.window->setView(oldView);
+}
+
 bool MainMenuScreen::handleInput(Input &input, float dt)
 {
     switch (input.getInputType())

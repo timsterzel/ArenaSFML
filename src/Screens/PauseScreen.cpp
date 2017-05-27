@@ -19,8 +19,18 @@ void PauseScreen::buildScene()
     m_txtPaused.setString("--PAUSED--");
     m_txtPaused.setOrigin(m_txtPaused.getLocalBounds().width / 2.f, 
             m_txtPaused.getLocalBounds().height / 2.f);
-    m_txtPaused.setPosition(m_context.window->getView().getSize().x / 2.f, 
-            m_context.window->getView().getSize().y / 2.f);
+    m_txtPaused.setPosition(m_context.guiView.getSize().x / 2.f, 
+            m_context.guiView.getSize().y / 2.f);
+}
+
+void PauseScreen::windowSizeChanged()
+{
+    sf::View oldView{ m_context.window->getView() };
+    m_context.window->setView(m_context.guiView);
+    //m_guiEnvironment.replaceWidgets();
+    sf::Vector2f viewSize{ m_context.guiView.getSize() };
+    m_txtPaused.setPosition(viewSize.x / 2.f, viewSize.y / 2.f);
+    m_context.window->setView(oldView);
 }
 
 bool PauseScreen::handleInput(Input &input, float dt)
@@ -46,8 +56,6 @@ bool PauseScreen::handleEvent(sf::Event &event, float dt)
 
 bool PauseScreen::update(float dt)
 {
-    sf::Vector2f viewSize{ m_context.guiView.getSize() };
-    m_txtPaused.setPosition(viewSize.x / 2.f, viewSize.y / 2.f);
     //m_sceneGraph.removeDestroyed();
     //m_sceneGraph.update(dt);
     return false;

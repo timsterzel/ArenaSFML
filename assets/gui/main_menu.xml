@@ -13,7 +13,7 @@
 		id="vertWidget_vl1"
 		autoDetermineWidth="true"
 		autoDetermineHeight="true"
-		backgroundColor="red"
+		backgroundColor="transparent"
 		orientation="center" >
 
 		<TextButtonWidget
