@@ -147,7 +147,6 @@ bool LevelHolder::loadMap(const std::string &line,
         auto colFound = collisionInfo.find(tileIdStr); 
         if (colFound != collisionInfo.end())
         {
-            std::cerr << "NOT the END\n";
             isCollisionOn = colFound->second;
         }
         int tileWidth{ settings.tileWidth };

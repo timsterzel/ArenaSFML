@@ -68,8 +68,8 @@ void Game::adjustShownWorldToWindowSize(unsigned int windowWidth, unsigned int w
         static_cast<float>(m_referenceWorldWidth) / static_cast<float>(windowWidth);
     float scaleHeight = 
         static_cast<float>(m_referenceWorldHeight) / static_cast<float>(windowHeight);
-    // We have to choose one scale so the shown area from game is approximately the same (depending on the aspect ratio), but without distort
-    // the drawn world.
+    // We have to choose one scale so the shown area from game is approximately the 
+    // same (depending on the aspect ratio), but without distort the drawn world.
     float scale = std::min(scaleWidth, scaleHeight);
     sf::FloatRect visibleArea(0, 0, windowWidth * scale, windowHeight * scale);
     sf::View gameView(visibleArea);
@@ -119,7 +119,7 @@ void Game::loadShaders()
     // Dont load shaders, if there are not supportet
     if (!sf::Shader::isAvailable())
     {
-        std::cout << "Shaders not supported" << std::endl;
+        std::cerr << "Shaders not supported" << std::endl;
         return;
     }
     m_shaderHolder.load<sf::Shader::Type>("grayscale", "assets/shaders/grayscale.frag", sf::Shader::Fragment);
@@ -188,11 +188,9 @@ void Game::handleInput()
                 break;
             case InputTypes::LOST_FOCUS :
                 m_isPaused = true;
-                std::cout << "Lost Focus" << std::endl;
                 break;
             case InputTypes::GAINED_FOCUS :
                 m_isPaused = false;
-                std::cout << "Gained Focus" << std::endl;
                 break;
             default:
                 break;

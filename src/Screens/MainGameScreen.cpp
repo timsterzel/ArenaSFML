@@ -200,7 +200,6 @@ void MainGameScreen::buildLevel()
         sf::Texture &texture{ m_context.textureHolder->get("level") };
         sf::IntRect textureRect{ m_context.spriteSheetMapHolder->getRectData(
                 "level", tile.id) };
-        std::cout << "TileId: " << tile.id << "\n";
         std::unique_ptr<SpriteNode> sprite{ 
             std::make_unique<SpriteNode>(
                     RenderLayers::BACKGROUND, texture, textureRect, false) };
@@ -226,15 +225,12 @@ void MainGameScreen::buildLevel()
     // Load spawn points
     if (m_level.spawnPoint1)
     {
-        std::cout << "SpawnPoint1 x: " << m_level.spawnPoint1->position.x
-            << " y: " << m_level.spawnPoint1->position.y << std::endl;
         m_playerWarrior->setPosition(m_level.spawnPoint1->position);
     }
     if (m_level.spawnPoint2)
     {
         if (m_possibleTargetWarriors.size() > 1)
         {
-            std::cout << "Larger \n";
             m_possibleTargetWarriors[1]->setPosition(
                     m_level.spawnPoint2->position);
         }
@@ -245,10 +241,6 @@ void MainGameScreen::handleConsoleCommands(gsf::Widget* widget, sf::String comma
 {
     std::string commandUpper{ Helpers::toUpper(command) };
     std::vector<std::string> commands{ Helpers::splitString(commandUpper, ' ') };
-    for (const std::string &str : commands)
-    {
-        std::cout << "Command: " << str << "\n";
-    }
     std::size_t comCnt{ commands.size() };
     // No commands so nothing to do
     if (comCnt < 1)
@@ -708,8 +700,6 @@ bool MainGameScreen::matchesCategories(SceneNode::Pair &colliders, unsigned int 
     unsigned int category1 = colliders.first->getType();
     unsigned int category2 = colliders.second->getType();
 
-    //std::cout << "Cat1: " << category1 << " Cat2: " << category2 << " Type1: " 
-    //<< type1 << " Type2: " << type2 << std::endl;
     if (type1 & category1 && type2 & category2)
     {
         return true;
@@ -762,7 +752,7 @@ void MainGameScreen::windowSizeChanged()
     if (!m_renderTexture.create(m_window.getSize().x, 
                 m_window.getSize().y))
     {
-        std::cout << "Error by creating RenderTexture \n";
+        std::cerr << "Error by creating RenderTexture \n";
         m_isRenderTextureAvailable = false;
     }
     else
