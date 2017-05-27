@@ -6,7 +6,7 @@ MusicPlayer::MusicPlayer()
 , m_fileNames{ }
 , m_volume{ 100.f }
 {
-    //m_fileNames["gametheme01"] =  "assets/sounds/themes/Juhani_Junkala_-_Epic_Boss_Battle.ogg";
+
 }
 
 void MusicPlayer::play(const std::string &id)
@@ -45,7 +45,6 @@ void MusicPlayer::setVolume(float volume)
     m_volume = volume;
     m_music.setVolume(volume);
 }
-
 
 void MusicPlayer::add(const std::string &id, const std::string &fileName)
 {

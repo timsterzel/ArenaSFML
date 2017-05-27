@@ -26,7 +26,8 @@ Screen::Context::Context(
     ResourceHolder<sf::Shader> *shaderHolder,
     SpriteSheetMapHolder *spriteSheetMapHolder, 
     LevelHolder *levelHolder,
-    MusicPlayer *music)
+    MusicPlayer *music,
+    sf::RectangleShape *background)
 : isInDebugMode{ isInDebugMode }
 , window{ window }
 , gameView{ window->getView() }
@@ -37,6 +38,7 @@ Screen::Context::Context(
 , spriteSheetMapHolder{ spriteSheetMapHolder }
 , levelHolder{ levelHolder }
 , music{ music }
+, background{ background }
 {
 
 }

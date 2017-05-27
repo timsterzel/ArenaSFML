@@ -1,8 +1,10 @@
 #include "Game.hpp"
 #include "Screens/Screen.hpp"
 #include "Screens/MainGameScreen.hpp"
+#include "Screens/MainMenuScreen.hpp"
 #include "Screens/PauseScreen.hpp"
 #include "Level/Level.hpp"
+#include "Helpers.hpp"
 #include <iostream>
 #include <memory>
 #include <cmath>
@@ -14,9 +16,13 @@ Game::Game(const bool showStats, const bool isInDebug, const bool isMusicOn)
 , m_isInDebug{ isInDebug }
 , m_referenceWorldWidth{ 800 }
 , m_referenceWorldHeight{ 480 }
+, m_background{ sf::Vector2f{ 10000.f, 10000.f} }
+, m_currentBgColorStep{ 0 }
+, m_totalBgStepTime{ 5.f }
+, m_currentBgStepTime{ 0.f }
 , m_window{ sf::VideoMode{ m_screenHeight, m_screenWidth} , "ArenaSFML" }
 , m_music{ }
-, m_context{ isInDebug, &m_window, &m_fontHolder, &m_textureHolder, &m_shaderHolder, &m_spriteSheetMapHolder, &m_levelHolder, &m_music }
+, m_context{ isInDebug, &m_window, &m_fontHolder, &m_textureHolder, &m_shaderHolder, &m_spriteSheetMapHolder, &m_levelHolder, &m_music, &m_background }
 , m_isRunning{ true }
 , m_isPaused{ false }
 , m_renderManager{ &m_sceneGraph }
@@ -48,13 +54,12 @@ Game::Game(const bool showStats, const bool isInDebug, const bool isMusicOn)
     buildScene();
     // Register all screens
     const Level &level = *(m_context.levelHolder->getLevels()[0].get());
+    m_screenStack.registerScreen<MainMenuScreen>(ScreenID::MAINMENU);
     m_screenStack.registerScreen<MainGameScreen, Level>(ScreenID::GAME, level);
     m_screenStack.registerScreen<PauseScreen>(ScreenID::PAUSE);
     // Show Game screen
-    m_screenStack.pushScreen(ScreenID::GAME);
-    //m_world.buildScene();
-    //m_actualScreen->buildScene();
-
+    //m_screenStack.pushScreen(ScreenID::GAME);
+    m_screenStack.pushScreen(ScreenID::MAINMENU);
 }
 
 Game::~Game()
@@ -142,6 +147,28 @@ void Game::buildScene()
     m_txtStatFPS.setFont(m_fontHolder.get("default"));
 	m_txtStatFPS.setCharacterSize(12);
 	m_txtStatFPS.setFillColor(sf::Color::White);
+
+
+    // Background
+    m_background.setOrigin(m_background.getSize().x / 2.f, 
+            m_background.getSize().y / 2.f);
+	// The colors
+	std::vector<sf::Color> colors {
+		sf::Color(170, 255, 1, 255), // Green
+		sf::Color(255, 170, 1, 255), // Orange
+		sf::Color(255, 0, 170, 255), // Red
+		sf::Color(170, 0, 255, 255), // Violet
+		//sf::Color(0, 170, 255, 255)  // Blue
+		sf::Color(12, 39, 146, 255)  // Blue
+	};
+	// The colors from which to which is interpoled
+	m_bgColorSteps = {
+		{ colors[0] , colors[1] }, // Green -> Orange
+		{ colors[1] , colors[2] }, // Orange -> Red
+		{ colors[2] , colors[3] }, // Red -> Violet
+		{ colors[3] , colors[4] }, // Violet -> Blue
+		{ colors[4] , colors[0] }, // Blue -> Green
+	};
 }
 
 void Game::run()
@@ -243,6 +270,7 @@ void Game::handleInput()
 
 void Game::update()
 {
+    updateBackground(m_dt);
     if (!m_isPaused)
     {
         //m_actualScreen->update(m_dt);
@@ -257,6 +285,27 @@ void Game::update()
         m_sceneGraph.removeDestroyed();
         m_sceneGraph.update(m_dt);
     }
+}
+
+void Game::updateBackground(float dt)
+{
+    m_currentBgStepTime += dt;    
+	float colPos{ m_currentBgStepTime / m_totalBgStepTime  };
+	// Go next step when current step is completed
+    if (m_currentBgStepTime > m_totalBgStepTime) 
+	{
+		colPos = 0.f;
+		m_currentBgStepTime = 0.f;
+		m_currentBgColorStep++;
+		if (m_currentBgColorStep > m_bgColorSteps.size() - 1)
+		{
+			m_currentBgColorStep = 0;
+		}
+	}
+	sf::Color curCol = Helpers::lerbRGBColor(
+            m_bgColorSteps[m_currentBgColorStep][0], 
+            m_bgColorSteps[m_currentBgColorStep][1], colPos);
+    m_background.setFillColor(curCol);
 }
 
 void Game::render()

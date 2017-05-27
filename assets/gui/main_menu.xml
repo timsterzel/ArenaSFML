@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Scene>
+	<!-- Resources are loaded before creating and placing the widgets. You can use Resources with the id, which can be set with the id attribute -->
+	<Resources>
+		<Font
+			id="defaultFont"
+			src="assets/fonts/UbuntuMono-R.ttf"
+		/>
+	</Resources>
+    <Widgets>
+			<!-- ListBox, TextInput, TextButton -->
+	<VerticalLayoutWidget
+		id="vertWidget_vl1"
+		autoDetermineWidth="true"
+		autoDetermineHeight="true"
+		backgroundColor="red"
+		orientation="center" >
+
+		<TextButtonWidget
+				id="textButtonWidget_startGame"
+				width="300"
+				height="60"
+				orientation="centerHorizontal"
+				text="Start Game"
+				font="defaultFont" />
+
+	</VerticalLayoutWidget>
+
+
+	</Widgets>
+</Scene>

@@ -1,5 +1,4 @@
 #include <SFML/Graphics.hpp>
-//#include "libs/GUI-SFML/include/GUI-SFML.hpp"
 #include <iostream>
 #include "Game.hpp"
 #include "Helpers.hpp"

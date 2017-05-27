@@ -30,10 +30,6 @@ MainGameScreen::MainGameScreen(ScreenStack *screenStack, Context &context,
 , m_healthBarWarr2{ nullptr }
 , m_stanimaBarWarr1{ nullptr }
 , m_stanimaBarWarr2{ nullptr }
-, m_background{ sf::Vector2f{ 10000.f, 10000.f} }
-, m_currentBgColorStep{ 0 }
-, m_totalBgStepTime{ 5.f }
-, m_currentBgStepTime{ 0.f }
 , m_worldBounds{ 0.f, 0.f, 6000.f, 6000.f }
 , m_playerWarrior{ nullptr }
 {
@@ -109,26 +105,6 @@ void MainGameScreen::buildScene()
     */
     
 
-    // Background
-    m_background.setOrigin(m_background.getSize().x / 2.f, 
-            m_background.getSize().y / 2.f);
-	// The colors
-	std::vector<sf::Color> colors {
-		sf::Color(170, 255, 1, 255), // Green
-		sf::Color(255, 170, 1, 255), // Orange
-		sf::Color(255, 0, 170, 255), // Red
-		sf::Color(170, 0, 255, 255), // Violet
-		//sf::Color(0, 170, 255, 255)  // Blue
-		sf::Color(12, 39, 146, 255)  // Blue
-	};
-	// The colors from which to which is interpoled
-	m_bgColorSteps = {
-		{ colors[0] , colors[1] }, // Green -> Orange
-		{ colors[1] , colors[2] }, // Orange -> Red
-		{ colors[2] , colors[3] }, // Red -> Violet
-		{ colors[3] , colors[4] }, // Violet -> Blue
-		{ colors[4] , colors[0] }, // Blue -> Green
-	};
     
     /*
     sf::Texture &texture = m_context.textureHolder->get(Textures::CHESS_WHITE);
@@ -495,8 +471,9 @@ bool MainGameScreen::handleInput(Input &input, float dt)
 bool MainGameScreen::handleEvent(sf::Event &event, float dt)
 {
     m_window.setView(m_guiView);
-    return !m_guiEnvironment.handleEvent(event);
+    bool handled{ !m_guiEnvironment.handleEvent(event) };
     m_window.setView(m_gameView);
+    return handled;
 }
 /*
 void World::controlWorldEntities()
@@ -524,8 +501,6 @@ void MainGameScreen::handleCommands(float dt)
 
 bool MainGameScreen::update(float dt)
 {
-    updateBackground(dt);
-
     safeSceneNodeTrasform();
     handleCommands(dt);
     // Get iterator, pointing on the first element which should get erased
@@ -570,27 +545,6 @@ bool MainGameScreen::update(float dt)
         m_gameView.setCenter(m_playerWarrior->getWorldPosition());
     }
     return false;
-}
-
-void MainGameScreen::updateBackground(float dt)
-{
-    m_currentBgStepTime += dt;    
-	float colPos{ m_currentBgStepTime / m_totalBgStepTime  };
-	// Go next step when current step is completed
-    if (m_currentBgStepTime > m_totalBgStepTime) 
-	{
-		colPos = 0.f;
-		m_currentBgStepTime = 0.f;
-		m_currentBgColorStep++;
-		if (m_currentBgColorStep > m_bgColorSteps.size() - 1)
-		{
-			m_currentBgColorStep = 0;
-		}
-	}
-	sf::Color curCol = Helpers::lerbRGBColor(
-            m_bgColorSteps[m_currentBgColorStep][0], 
-            m_bgColorSteps[m_currentBgColorStep][1], colPos);
-    m_background.setFillColor(curCol);
 }
 
 bool MainGameScreen::isStillPlayerIsInGame()
@@ -720,7 +674,7 @@ void MainGameScreen::render()
         // black and white shader, so the shader is applied to shapes, too.
         m_renderTexture.clear();
         m_renderTexture.setView(m_gameView);
-        m_renderTexture.draw(m_background);
+        m_renderTexture.draw(*m_context.background);
         m_renderTexture.draw(m_renderManager);
         
         m_renderTexture.setView(m_guiView);
@@ -736,7 +690,7 @@ void MainGameScreen::render()
     else
     {
         m_window.setView(m_gameView);
-        m_window.draw(m_background);
+        m_window.draw(*m_context.background);
         m_window.draw(m_renderManager);
         
         m_window.setView(m_guiView);

@@ -35,6 +35,8 @@ class Screen : private sf::NonCopyable
             SpriteSheetMapHolder *spriteSheetMapHolder;
             LevelHolder *levelHolder;
             MusicPlayer *music;
+            // The color changing baclground
+            sf::RectangleShape *background;
 
             Context(bool isInDebugMode, 
                     sf::RenderWindow *window, 
@@ -43,7 +45,8 @@ class Screen : private sf::NonCopyable
                     ResourceHolder<sf::Shader> *shaderHolder,
                     SpriteSheetMapHolder *spriteSheetMapHolder, 
                     LevelHolder *levelHolder,
-                    MusicPlayer *music);
+                    MusicPlayer *music,
+                    sf::RectangleShape *background);
 
             Context();
         };

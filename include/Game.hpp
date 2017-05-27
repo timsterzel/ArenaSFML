@@ -37,6 +37,16 @@ class Game
         unsigned int m_referenceWorldWidth;
         unsigned int m_referenceWorldHeight;
         
+        // Color changing background
+        sf::RectangleShape m_background;
+        // The steps. Here is stored which color interpoles to which color in each
+        // step
+        std::vector<std::array<sf::Color, 2>> m_bgColorSteps;
+        std::size_t m_currentBgColorStep;
+        // The time it takes to inteprole from one color to the next
+        float m_totalBgStepTime;
+        float m_currentBgStepTime;
+        
         sf::RenderWindow m_window;
         MusicPlayer m_music;
         sf::Text m_txtStatFPS;
@@ -47,7 +57,7 @@ class Game
         
         SceneNode m_sceneGraph;
         RenderManager m_renderManager;
-        
+      
         // Delta time
         float m_dt;
         float m_fps;
@@ -56,6 +66,8 @@ class Game
         int m_fpsCnt;
         int m_averageFpsPerSec;
         CLOCK::time_point m_timePoint1;
+        
+        
         // Assets
         ResourceHolder<sf::Font> m_fontHolder;
         ResourceHolder<sf::Texture> m_textureHolder;
@@ -84,6 +96,7 @@ class Game
         void determineDeltaTime();
         void handleInput();
         void update();
+        void updateBackground(float dt);
         void render();
 
     public:
