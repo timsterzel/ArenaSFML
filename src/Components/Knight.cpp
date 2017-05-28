@@ -29,37 +29,19 @@ Knight::Knight(RenderLayers layer, const int health,const std::string &textureId
     std::vector<AnimationStepRotation>  swordRoationStepsCloseAtt;
     swordRoationStepsCloseAtt.push_back({ 0.f, -60.f,  0.3f });
     m_animCloseAttack.setRotationSteps(swordRoationStepsCloseAtt);
-    m_animCloseAttack.setOnAnimationStartedListener(
-            [] ()
-            {
-                std::cout << "AnimationStartedListener\n";
-            }
-    );
-    m_animCloseAttack.setOnAnimationCompletedListener(
-            [] () 
-            {
-                std::cout << "AnimationCompletedListener\n";
-            }
-    );
-    m_animCloseAttack.setOnAnimationStoppedListener(
-            [] () 
-            {
-                std::cout << "AnimationStoppedListener\n";
-            }
-    );
-    /*
-    std::vector<AnimationStepMovement>  swordMovementStepsStrongAtt;
-    swordMovementStepsStrongAtt.push_back({ -5.f, { 1, 0 },  0.3f });
-    swordMovementStepsStrongAtt.push_back({ 5.f, { 1, 0 },  0.3f });
-    m_animStrongAttack.setMovementSteps(swordMovementStepsStrongAtt);
-    */
+    m_animCloseAttack.setOnAnimationStoppedListener([this]()
+    {
+        stopCloseAttack();
+    });
+    m_animCloseAttack.setOnAnimationCompletedListener([this]()
+    {
+        stopCloseAttack();
+    });
+    
     std::unique_ptr<Weapon> sword(new Weapon(RenderLayers::WEAPON, m_WeaponDamage, 
                 textureHolder.get(textureId), 
                 spriteSheetMapHolder.getRectData(textureId, "sword")));
     sword->setType(WorldObjectTypes::WEAPON);
-    //sword->setPosition(0.f, 0.f);
-    //swordPlayer->setRotationPoint(0.f, swordPlayer->getSpriteHeight() / 2.f);
-    //sword->setOrigin(-10.f, 0.f);
     sword->setOrigin(0.f, -10.f);
     std::unique_ptr<CollisionShape> collisionShapeSword(new CollisionRect(
                 { sword->getSpriteWidth(), sword->getSpriteHeight() }));
@@ -72,19 +54,13 @@ Knight::Knight(RenderLayers layer, const int health,const std::string &textureId
                 textureHolder.get(textureId), 
                 spriteSheetMapHolder.getRectData(textureId, "shield")));
     shield->setType(WorldObjectTypes::SHIELD);
-    //shield->setPosition(0.f, 0.f);
-    //shield->setOrigin(shield->getSpriteWidth() / 2.f, 0.f);
     shield->setRotation(90.f);
     std::unique_ptr<CollisionShape> collisionShapeShield(
             new CollisionRect({ shield->getSpriteWidth(), 
                 shield->getSpriteHeight() }));
     shield->setCollisionShape(std::move(collisionShapeShield));
-    //setWeapon(sword.get());
     // Shield pos
-    //m_shieldEquipPos = sf::Vector2f{ 0.f, -getHeight() / 2.f + 3.f };
     m_shieldEquipPos = sf::Vector2f{ getWidth() / 2.f - 3.f, 0.f };
-    //m_shieldEquipPos = sf::Vector2f{ 0.f, 0.f};
-    //shield->equip(m_shieldEquipPos);
     shield->setPosition(m_shieldEquipPos);
     m_shield = shield.get();
     attachChild(std::move(shield));
@@ -93,11 +69,6 @@ Knight::Knight(RenderLayers layer, const int health,const std::string &textureId
     m_closeCombatArea = std::move(closeCombatArea);
     m_closeCombatArea->setParent(this);
     m_closeCombatArea->setPosition(9.f, 0.f);
-    /*
-    std::vector<AnimationStepMovement>  swordMovementSteps;
-    swordMovementSteps.push_back({ sf::Vector2f(0.f, 0.f), 100.f, sf::Vector2f(10.f, 0.f) , 1.5f });
-    m_animationSword.setMovementSteps(swordMovementSteps);
-    */
 }
 
 Knight::~Knight()
@@ -225,6 +196,14 @@ void Knight::startCloseAttack()
         m_weapon->setDamageMultiplicator(m_closeAttackDamageMul);
         m_weapon->startNewAttack();
         removeStanima(m_closeAttackStanima);
+    }
+}
+
+void Knight::stopCloseAttack()
+{
+    if (m_weapon)
+    {
+        m_weapon->setRotation(0.f);
     }
 }
 

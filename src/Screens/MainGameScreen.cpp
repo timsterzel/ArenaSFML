@@ -120,13 +120,13 @@ void MainGameScreen::buildScene()
     //    (RenderLayers::MAIN, 100.f, "wizard", *m_context.textureHolder, 
     //     *m_context.spriteSheetMapHolder, m_possibleTargetWarriors) };
     
-    //std::unique_ptr<Knight> warrior{ std::make_unique<Knight>
-    //    (RenderLayers::MAIN, 100.f, "knight", *m_context.textureHolder, 
-    //     *m_context.spriteSheetMapHolder, m_possibleTargetWarriors) };
-    
-    std::unique_ptr<Runner> warrior{ std::make_unique<Runner>
-        (RenderLayers::MAIN, 100.f, "runner", *m_context.textureHolder, 
+    std::unique_ptr<Knight> warrior{ std::make_unique<Knight>
+        (RenderLayers::MAIN, 100.f, "knight", *m_context.textureHolder, 
          *m_context.spriteSheetMapHolder, m_possibleTargetWarriors) };
+    
+    //std::unique_ptr<Runner> warrior{ std::make_unique<Runner>
+    //    (RenderLayers::MAIN, 100.f, "runner", *m_context.textureHolder, 
+    //     *m_context.spriteSheetMapHolder, m_possibleTargetWarriors) };
     
     m_playerWarrior = warrior.get();
     std::unique_ptr<CollisionShape> collisionShapeWarrior{ 

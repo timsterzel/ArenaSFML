@@ -45,6 +45,7 @@ class Knight : public Warrior
         Item *getShield() const;
         
         void startCloseAttack();
+        void stopCloseAttack();
         void startStrongAttack();
         void stopStrongAttack();
         void startBlocking();
