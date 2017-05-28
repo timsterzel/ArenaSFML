@@ -50,3 +50,4 @@ bin/
 GUI_SFML_DOC_TMP.txt
 del_ext.sh
 json.hpp
+assets/config.ini
