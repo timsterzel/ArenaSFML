@@ -4,6 +4,7 @@
 #include "Helpers.hpp"
 
 ConfigManager::ConfigManager(const std::string &fileName)
+: m_filenName{ fileName }
 {
     loadConfig(fileName);
 }
@@ -98,12 +99,49 @@ int ConfigManager::getInt(const std::string &key, int defaultVal) const
     return valNum;
 }
 
+void ConfigManager::set(const std::string &key, const std::string &value)
+{
+    m_configs[key] = value;
+}
+
+void ConfigManager::set(const std::string &key, bool value)
+{
+    std::string val{ value ? "true" : "false" };
+    set(key, val);
+}
+
+void ConfigManager::set(const std::string &key, int value)
+{
+    set(key, std::to_string(value));
+}
+
+bool ConfigManager::saveCurrentConfigToFile(const std::string &fileName) const
+{
+    std::ofstream file(fileName);
+    if (!file)
+    {
+        std::cerr << "Cannot open file: " << fileName << " to save config" 
+            << std::endl;
+        return false;
+    }
+    for (auto &pair : m_configs)
+    {
+        file << pair.first << "=" << pair.second << "\n";
+    }
+    file.close();
+    return true;
+}
+
+bool ConfigManager::saveCurrentConfigToFile() const
+{
+    return saveCurrentConfigToFile(m_filenName);
+}
 
 void ConfigManager::printConfig() const
 {
     for (auto &pair : m_configs)
     {
         std::cout << "Key: \"" << pair.first << "\" value: \"" << pair.second 
-            << std::endl;
+            << "\"" << std::endl;
     }
 }
