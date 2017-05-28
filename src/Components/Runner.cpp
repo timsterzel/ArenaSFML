@@ -38,7 +38,10 @@ Runner::Runner(RenderLayers layer, const int health, const std::string &textureI
     std::vector<AnimationStepRotation>  swordRoationStepsCloseAtt;
     swordRoationStepsCloseAtt.push_back({ 0.f, -60.f,  0.3f });
     m_animCloseAttack.setRotationSteps(swordRoationStepsCloseAtt);
-    
+    m_animCloseAttack.setOnAnimationStoppedListener([]()
+            {
+                std::cout << "Stopped\n";
+            });
     /*
     std::vector<AnimationStepMovement>  swordMovementStepsStrongAtt;
     swordMovementStepsStrongAtt.push_back({ -5.f, { 1, 0 },  0.3f });

@@ -64,6 +64,7 @@ class Runner : public Warrior
         void makeInTransparent();
 
         void startCloseAttack();
+        void stopCloseAttack();
         void startRoundAttack();
         void stopRoundAttack();
         void startDodging();

@@ -471,9 +471,9 @@ bool MainGameScreen::handleInput(Input &input, float dt)
 bool MainGameScreen::handleEvent(sf::Event &event, float dt)
 {
     m_window.setView(m_guiView);
-    bool handled{ !m_guiEnvironment.handleEvent(event) };
+    m_guiEnvironment.handleEvent(event);
     m_window.setView(m_gameView);
-    return handled;
+    return false;
 }
 /*
 void World::controlWorldEntities()

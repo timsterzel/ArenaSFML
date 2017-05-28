@@ -61,9 +61,9 @@ bool MainMenuScreen::handleEvent(sf::Event &event, float dt)
 {
     sf::View oldView{ m_context.window->getView() };
     m_context.window->setView(m_context.guiView);
-    bool handled{ !m_guiEnvironment.handleEvent(event) };
+    m_guiEnvironment.handleEvent(event);
     m_context.window->setView(oldView);
-    return handled;
+    return false;
 }
 
 bool MainMenuScreen::update(float dt)

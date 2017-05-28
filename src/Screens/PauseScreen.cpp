@@ -51,7 +51,7 @@ bool PauseScreen::handleInput(Input &input, float dt)
 
 bool PauseScreen::handleEvent(sf::Event &event, float dt)
 {
-    return true;
+    return false;
 }
 
 bool PauseScreen::update(float dt)
