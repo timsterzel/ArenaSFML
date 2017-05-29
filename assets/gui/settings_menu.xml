@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Scene>
+	<!-- Resources are loaded before creating and placing the widgets. You can use Resources with the id, which can be set with the id attribute -->
+	<Resources>
+		<Font
+			id="defaultFont"
+			src="assets/fonts/UbuntuMono-R.ttf"
+		/>
+	</Resources>
+    <Widgets>
+
+			<!-- Header -->
+			<TextWidget
+					orientation="centerHorizontal"
+					text="SETTINGS"
+					characterSize="60"
+					font="defaultFont" />
+
+			<VerticalLayoutWidget
+				autoDetermineWidth="true"
+				autoDetermineHeight="true"
+				backgroundColor="transparent"
+				orientation="center" >
+
+				<!-- Sound on/off -->
+				<HorizontalLayoutWidget
+      		autoDetermineHeight="true"
+					autoDetermineWidth="true"
+					backgroundColor="transparent" >
+
+      		<CheckBoxWidget
+        		id="checkBoxWidget_sound"
+          	width="20"
+          	height="20" />
+
+					<TextWidget
+          	id="textWidget_sound"
+          	text=" Sound on/off"
+          	font="defaultFont"
+						left="20"
+          	characterSize="20" />
+
+			</HorizontalLayoutWidget>
+
+		</VerticalLayoutWidget>
+
+		<!-- Buttons -->
+		<HorizontalLayoutWidget
+			autoDetermineHeight="true"
+			autoDetermineWidth="true"
+			orientation="right|bottom"
+			height="100"
+			backgroundColor="transparent" >
+
+			<TextButtonWidget
+				id="textButtonWidget_back"
+				width="160"
+				height="40"
+				text="Back"
+				orientation="centerVertical"
+				font="defaultFont" />
+
+			<Widget
+				width="10"
+				height="10"
+				backgroundColor="transparent"	/>
+
+			<TextButtonWidget
+				id="textButtonWidget_save"
+				width="160"
+				height="40"
+				text="Save"
+				orientation="centerVertical"
+				font="defaultFont" />
+
+			<Widget
+				width="20"
+				height="20"
+				backgroundColor="transparent"	/>
+
+		</HorizontalLayoutWidget>
+
+
+		<!-- Version -->
+		<HorizontalLayoutWidget
+			autoDetermineHeight="true"
+			autoDetermineWidth="true"
+			orientation="left|bottom"
+			backgroundColor="transparent" >
+			<Widget
+				width="5"
+				height="10"
+				backgroundColor="transparent"	/>
+
+			<TextWidget
+				id="textWidget_header"
+				text="Version 0.8"
+				characterSize="20"
+				font="defaultFont" />
+
+		</HorizontalLayoutWidget>
+
+	</Widgets>
+</Scene>

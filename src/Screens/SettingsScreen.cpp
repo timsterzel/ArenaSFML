@@ -1,45 +1,42 @@
-#include "Screens/MainMenuScreen.hpp"
+#include "Screens/SettingsScreen.hpp"
 #include "Screens/ScreenStack.hpp"
 
-MainMenuScreen::MainMenuScreen(ScreenStack *screenStack, Context &context)
+SettingsScreen::SettingsScreen(ScreenStack *screenStack, Context &context)
 : Screen(screenStack, context)
 , m_guiEnvironment{ *context.window }
 {
     buildScene();
 }
 
-MainMenuScreen::~MainMenuScreen()
-{
-
-}
-
-void MainMenuScreen::buildScene()
+void SettingsScreen::buildScene()
 {
     m_screenStack->pushScreen(ScreenID::GAME);
     sf::View oldView{ m_context.window->getView() };
     m_context.window->setView(m_context.guiView);
-    m_guiEnvironment.createScene("assets/gui/main_menu.xml");
+    m_guiEnvironment.createScene("assets/gui/settings_menu.xml");
     m_context.window->setView(oldView);
     
+    
     ScreenStack *screenStack{ m_screenStack };
-    gsf::TextButtonWidget* startGameBtn{ static_cast<gsf::TextButtonWidget*>(
-            m_guiEnvironment.getWidgetByID("textButtonWidget_startGame")) };
-    startGameBtn->setOnLeftClickListener(
+    gsf::TextButtonWidget* backBtn{ static_cast<gsf::TextButtonWidget*>(
+            m_guiEnvironment.getWidgetByID("textButtonWidget_back")) };
+    backBtn->setOnLeftClickListener(
             [screenStack](gsf::Widget *widget, sf::Vector2f pos)
     {
-        screenStack->pushScreen(ScreenID::GAME);
+        screenStack->popScreen();
+
     });
-    gsf::TextButtonWidget* settingsBtn{ static_cast<gsf::TextButtonWidget*>(
-            m_guiEnvironment.getWidgetByID("textButtonWidget_settings")) };
-    settingsBtn->setOnLeftClickListener(
+    gsf::TextButtonWidget* saveBtn{ static_cast<gsf::TextButtonWidget*>(
+            m_guiEnvironment.getWidgetByID("textButtonWidget_save")) };
+    saveBtn->setOnLeftClickListener(
             [screenStack](gsf::Widget *widget, sf::Vector2f pos)
     {
-        screenStack->pushScreen(ScreenID::SETTINGS);
+        screenStack->popScreen();
     });
 }
 
 
-void MainMenuScreen::windowSizeChanged()
+void SettingsScreen::windowSizeChanged()
 {
     sf::View oldView{ m_context.window->getView() };
     m_context.window->setView(m_context.guiView);
@@ -47,7 +44,7 @@ void MainMenuScreen::windowSizeChanged()
     m_context.window->setView(oldView);
 }
 
-bool MainMenuScreen::handleInput(Input &input, float dt)
+bool SettingsScreen::handleInput(Input &input, float dt)
 {
     switch (input.getInputType())
     {
@@ -63,7 +60,7 @@ bool MainMenuScreen::handleInput(Input &input, float dt)
     return false;
 }
 
-bool MainMenuScreen::handleEvent(sf::Event &event, float dt)
+bool SettingsScreen::handleEvent(sf::Event &event, float dt)
 {
     sf::View oldView{ m_context.window->getView() };
     m_context.window->setView(m_context.guiView);
@@ -72,7 +69,7 @@ bool MainMenuScreen::handleEvent(sf::Event &event, float dt)
     return false;
 }
 
-bool MainMenuScreen::update(float dt)
+bool SettingsScreen::update(float dt)
 {
     sf::View oldView{ m_context.window->getView() };
     m_context.window->setView(m_context.guiView);
@@ -81,7 +78,7 @@ bool MainMenuScreen::update(float dt)
     return false;
 }
 
-void MainMenuScreen::render()
+void SettingsScreen::render()
 {
     sf::View oldView{ m_context.window->getView() };
     m_context.window->setView(m_context.guiView);

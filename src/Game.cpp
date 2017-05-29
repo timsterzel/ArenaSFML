@@ -3,6 +3,7 @@
 #include "Screens/MainGameScreen.hpp"
 #include "Screens/MainMenuScreen.hpp"
 #include "Screens/PauseScreen.hpp"
+#include "Screens/SettingsScreen.hpp"
 #include "Level/Level.hpp"
 #include "Helpers.hpp"
 #include <iostream>
@@ -55,6 +56,7 @@ Game::Game(const bool showStats, const bool isInDebug, const bool isMusicOn)
     // Register all screens
     const Level &level = *(m_context.levelHolder->getLevels()[0].get());
     m_screenStack.registerScreen<MainMenuScreen>(ScreenID::MAINMENU);
+    m_screenStack.registerScreen<SettingsScreen>(ScreenID::SETTINGS);
     m_screenStack.registerScreen<MainGameScreen, Level>(ScreenID::GAME, level);
     m_screenStack.registerScreen<PauseScreen>(ScreenID::PAUSE);
     // Show Game screen

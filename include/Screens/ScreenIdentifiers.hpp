@@ -5,6 +5,7 @@ enum class ScreenID
 {
     NONE,
     MAINMENU,
+    SETTINGS,
     GAME,
     PAUSE,
 };

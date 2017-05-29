@@ -8,24 +8,34 @@
 		/>
 	</Resources>
     <Widgets>
-			<!-- ListBox, TextInput, TextButton -->
-	<VerticalLayoutWidget
-		id="vertWidget_vl1"
-		autoDetermineWidth="true"
-		autoDetermineHeight="true"
-		backgroundColor="transparent"
-		orientation="center" >
+			<VerticalLayoutWidget
+				id="vertWidget_vl1"
+				autoDetermineWidth="true"
+				autoDetermineHeight="true"
+				backgroundColor="transparent"
+				orientation="center" >
 
-		<TextButtonWidget
-				id="textButtonWidget_startGame"
-				width="300"
-				height="60"
-				orientation="centerHorizontal"
-				text="Start Game"
-				font="defaultFont" />
+				<TextButtonWidget
+					id="textButtonWidget_startGame"
+					width="300"
+					height="60"
+					orientation="centerHorizontal"
+					text="Start Game"
+					font="defaultFont" />
 
-	</VerticalLayoutWidget>
+				<Widget
+					width="300"
+					height="20"
+					backgroundColor="transparent"	/>
 
+				<TextButtonWidget
+					id="textButtonWidget_settings"
+					width="300"
+					height="60"
+					orientation="centerHorizontal"
+					text="Settings"
+					font="defaultFont" />
 
+			</VerticalLayoutWidget>
 	</Widgets>
 </Scene>
