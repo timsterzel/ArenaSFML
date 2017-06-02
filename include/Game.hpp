@@ -7,6 +7,7 @@
 #include "Components/Warrior.hpp"
 #include "Components/EnumWorldObjectTypes.hpp"
 #include "Components/SceneNode.hpp"
+#include "Config/ConfigManager.hpp"
 #include "Input/QueueHelper.hpp"
 #include "Input/InputHandler.hpp"
 #include "Input/EnumInputTypes.hpp"
@@ -27,6 +28,7 @@ class Game
 {
 
     private:
+        ConfigManager m_config;
         // Options
         unsigned int m_screenHeight;
         unsigned int m_screenWidth;
@@ -100,7 +102,7 @@ class Game
         void render();
 
     public:
-        Game(const bool showStats, const bool isInDebug, const bool isMusicOn);
+        Game();
         ~Game();
         void run();
 };

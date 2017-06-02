@@ -19,7 +19,7 @@ Screen::Screen(ScreenStack *screenStack, Context &context)
 }
 
 Screen::Context::Context(
-    bool isInDebugMode, 
+    ConfigManager *config,
     sf::RenderWindow *window, 
     ResourceHolder<sf::Font> *fontHolder,
     ResourceHolder<sf::Texture> *textureHolder, 
@@ -28,7 +28,7 @@ Screen::Context::Context(
     LevelHolder *levelHolder,
     MusicPlayer *music,
     sf::RectangleShape *background)
-: isInDebugMode{ isInDebugMode }
+: config{ config }
 , window{ window }
 , gameView{ window->getView() }
 , guiView{ window->getView() }

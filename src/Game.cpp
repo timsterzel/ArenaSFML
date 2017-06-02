@@ -10,11 +10,12 @@
 #include <memory>
 #include <cmath>
 
-Game::Game(const bool showStats, const bool isInDebug, const bool isMusicOn)
-: m_screenHeight{ 1024 }
+Game::Game()
+: m_config("assets/config.ini") 
+, m_screenHeight{ 1024 }
 , m_screenWidth{ 768 }
-, m_showStats{ showStats }
-, m_isInDebug{ isInDebug }
+, m_showStats{ m_config.getBool("show_stats", false) }
+, m_isInDebug{ m_config.getBool("debug_mode", false) }
 , m_referenceWorldWidth{ 800 }
 , m_referenceWorldHeight{ 480 }
 , m_background{ sf::Vector2f{ 10000.f, 10000.f} }
@@ -23,7 +24,8 @@ Game::Game(const bool showStats, const bool isInDebug, const bool isMusicOn)
 , m_currentBgStepTime{ 0.f }
 , m_window{ sf::VideoMode{ m_screenHeight, m_screenWidth} , "ArenaSFML" }
 , m_music{ }
-, m_context{ isInDebug, &m_window, &m_fontHolder, &m_textureHolder, &m_shaderHolder, &m_spriteSheetMapHolder, &m_levelHolder, &m_music, &m_background }
+, m_context{ &m_config, &m_window, &m_fontHolder, &m_textureHolder, &m_shaderHolder,
+    &m_spriteSheetMapHolder, &m_levelHolder, &m_music, &m_background }
 , m_isRunning{ true }
 , m_isPaused{ false }
 , m_renderManager{ &m_sceneGraph }
@@ -37,7 +39,7 @@ Game::Game(const bool showStats, const bool isInDebug, const bool isMusicOn)
 , m_inputHandler{ &m_window }
 , m_screenStack{ m_context }
 {
-    if (!isMusicOn)
+    if (!m_config.getBool("music_on", true))
     {
         m_music.setVolume(0.f);
     }

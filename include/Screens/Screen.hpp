@@ -6,6 +6,7 @@
 #include "Components/Warrior.hpp"
 #include "Components/EnumWorldObjectTypes.hpp"
 #include "Components/SceneNode.hpp"
+#include "Config/ConfigManager.hpp"
 #include "Render/RenderManager.hpp"
 #include "Resources/ResourceHolder.hpp"
 #include "Resources/SpriteSheetMapHolder.hpp"
@@ -25,7 +26,7 @@ class Screen : private sf::NonCopyable
 
         struct Context
         {
-            bool isInDebugMode;
+            ConfigManager *config;
             sf::RenderWindow *window;
             sf::View gameView;
             sf::View guiView;
@@ -38,7 +39,7 @@ class Screen : private sf::NonCopyable
             // The color changing baclground
             sf::RectangleShape *background;
 
-            Context(bool isInDebugMode, 
+            Context(ConfigManager *config,
                     sf::RenderWindow *window, 
                     ResourceHolder<sf::Font> *fontHolder,
                     ResourceHolder<sf::Texture> *textureHolder, 

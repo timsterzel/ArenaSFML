@@ -6,17 +6,15 @@
 
 int main()
 {
-    ConfigManager con("assets/config.ini");
-    
     /*
+    ConfigManager con("assets/config.ini");
     con.printConfig();
     con.set("debug_mode", false);
     con.printConfig();
     con.saveCurrentConfigToFile("assets/tmp.ini");
     */
 
-    bool soundEnabled{ false };    
-    Game game(false, true, soundEnabled);
+    Game game;
     game.run();
     return 0;
 }
