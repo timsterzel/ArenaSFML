@@ -12,8 +12,10 @@
 
 Game::Game()
 : m_config("assets/config.ini") 
-, m_screenHeight{ 1024 }
-, m_screenWidth{ 768 }
+, m_screenHeight{ static_cast<unsigned int>(
+        m_config.getInt("screen_width", 1024)) }
+, m_screenWidth{ static_cast<unsigned int>(
+        m_config.getInt("screen_height", 768)) }
 , m_showStats{ m_config.getBool("show_stats", false) }
 , m_isInDebug{ m_config.getBool("debug_mode", false) }
 , m_referenceWorldWidth{ 800 }
@@ -39,6 +41,12 @@ Game::Game()
 , m_inputHandler{ &m_window }
 , m_screenStack{ m_context }
 {
+    if (m_config.getBool("full_screen", false))
+    {
+        m_window.create(sf::VideoMode(m_screenHeight, m_screenWidth), 
+                "ArenaSFML", sf::Style::Fullscreen);
+    }
+
     if (!m_config.getBool("music_on", true))
     {
         m_music.setVolume(0.f);

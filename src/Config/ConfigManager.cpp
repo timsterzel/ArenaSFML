@@ -53,6 +53,7 @@ std::string ConfigManager::getString(const std::string &key,
 {
     if (!isKeyExisting(key))
     {
+        std::cerr << "Config with Key: \"" << key << "\" not existis\n";
         return defaultVal;
     }
     std::string val{ m_configs.at(key) };
@@ -63,6 +64,7 @@ bool ConfigManager::getBool(const std::string &key, bool defaultVal) const
 {
     if (!isKeyExisting(key))
     {
+        std::cerr << "Config with Key: \"" << key << "\" not existis\n";
         return defaultVal;
     }
     std::string val{ m_configs.at(key) };
@@ -83,13 +85,14 @@ int ConfigManager::getInt(const std::string &key, int defaultVal) const
 {
     if (!isKeyExisting(key))
     {
+        std::cerr << "Config with Key: \"" << key << "\" not existis\n";
         return defaultVal;
     }
     std::string val{ m_configs.at(key) };
     int valNum{ defaultVal }; 
     try
     {
-        std::stoi(val);        
+        valNum = std::stoi(val);        
     }
     catch(std::invalid_argument& e)
     {
