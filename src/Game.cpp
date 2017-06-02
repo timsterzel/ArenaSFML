@@ -41,10 +41,18 @@ Game::Game()
 , m_inputHandler{ &m_window }
 , m_screenStack{ m_context }
 {
-    if (m_config.getBool("full_screen", false))
+    if (m_config.getBool("fullscreen", false))
     {
         m_window.create(sf::VideoMode(m_screenHeight, m_screenWidth), 
                 "ArenaSFML", sf::Style::Fullscreen);
+    }
+    if (m_config.getBool("framerate_limit", true))
+    {
+        m_window.setFramerateLimit(60);
+    }
+    if (m_config.getBool("vertical_sync", false))
+    {
+        m_window.setVerticalSyncEnabled(true);
     }
 
     if (!m_config.getBool("music_on", true))
@@ -53,7 +61,6 @@ Game::Game()
     }
     //std::unique_ptr<Screen> actualScreen = { std::make_unique<MainGameScreen>(isInDebug, this, &m_window, m_fontHolder, m_textureHolder, m_spriteSheetMapHolder) };
     //m_actualScreen = std::move(actualScreen);
-    //m_window.setFramerateLimit(60);
     m_context.guiView = m_window.getView();
     m_context.gameView = m_window.getView();
     adjustShownWorldToWindowSize(m_window.getSize().x, m_window.getSize().y);

@@ -35,12 +35,107 @@
 
 					<TextWidget
           	id="textWidget_sound"
-          	text=" Sound on/off"
+          	text=" Sound"
           	font="defaultFont"
 						left="20"
           	characterSize="20" />
 
 			</HorizontalLayoutWidget>
+
+			<Widget
+				width="10"
+				height="10"
+				backgroundColor="transparent"	/>
+
+			<!-- Fullscreen on/off -->
+			<HorizontalLayoutWidget
+				autoDetermineHeight="true"
+				autoDetermineWidth="true"
+				backgroundColor="transparent" >
+
+				<CheckBoxWidget
+					id="checkBoxWidget_fullscreen"
+					width="20"
+					height="20" />
+
+				<TextWidget
+					id="textWidget_fullscreen"
+					text=" Fullscreen"
+					font="defaultFont"
+					left="20"
+					characterSize="20" />
+
+		</HorizontalLayoutWidget>
+
+		<Widget
+			width="10"
+			height="10"
+			backgroundColor="transparent"	/>
+
+			<!-- Framelimit on/off -->
+			<HorizontalLayoutWidget
+				autoDetermineHeight="true"
+				autoDetermineWidth="true"
+				backgroundColor="transparent" >
+
+				<CheckBoxWidget
+					id="checkBoxWidget_framelimit"
+					width="20"
+					height="20" />
+
+				<TextWidget
+					id="textWidget_famelimit"
+					text=" Limit FPS"
+					font="defaultFont"
+					left="20"
+					characterSize="20" />
+
+		</HorizontalLayoutWidget>
+
+		<Widget
+			width="10"
+			height="10"
+			backgroundColor="transparent"	/>
+
+			<!-- Vsync on/off -->
+			<HorizontalLayoutWidget
+				autoDetermineHeight="true"
+				autoDetermineWidth="true"
+				backgroundColor="transparent" >
+
+				<CheckBoxWidget
+					id="checkBoxWidget_vsync"
+					width="20"
+					height="20" />
+
+				<TextWidget
+					id="textWidget_vsync"
+					text=" Vsync"
+					font="defaultFont"
+					left="20"
+					characterSize="20" />
+
+		</HorizontalLayoutWidget>
+
+		<Widget
+			width="10"
+			height="10"
+			backgroundColor="transparent"	/>
+
+		<!-- Resolution -->
+		<TextWidget
+			id="textWidget_resolution"
+			text="Resolution"
+			font="defaultFont"
+			left="20"
+			characterSize="20" />
+
+		<ComboBoxWidget
+			id="comboBoxWidget_resolution"
+			font="defaultFont"
+      width="160"
+			height="20"
+			listData="640x480|800x600|1024x768|1280x1024|1366x768|1680x1050|1920x1080|2560x1440|4096x2160" />
 
 		</VerticalLayoutWidget>
 
