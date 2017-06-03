@@ -202,6 +202,7 @@ void InputHandler::handleRealTimeInput(QueueHelper<Input> &inputQueue)
 
     // ------------------------------------------------------------------
     // Joystick 1
+    // Looking
     sf::Vector2f curJoy1PosTmp;
     curJoy1PosTmp.x = sf::Joystick::getAxisPosition(0, sf::Joystick::U);
     curJoy1PosTmp.y = sf::Joystick::getAxisPosition(0, sf::Joystick::V);
@@ -209,12 +210,29 @@ void InputHandler::handleRealTimeInput(QueueHelper<Input> &inputQueue)
     sf::Vector2f curJoy1Pos{ getCursorPos(curJoy1PosTmp, tolerance) };
     if (std::abs(curJoy1Pos.x) > tolerance || std::abs(curJoy1Pos.y) > tolerance)
     {
-        inputQueue.push({ InputTypes::CURSOR_POS_JOY, 
+        inputQueue.push({ InputTypes::CURSOR_RIGHT_POS, 
                 InputDevice::JOYSTICK_1, curJoy1Pos });
 
         std::cout << "Joystick Cursor: " 
             << DebugHelpers::toString(curJoy1Pos) << std::endl;
     }
+    
+    // Movement
+    sf::Vector2f curJoy1LeftPosTmp;
+    curJoy1LeftPosTmp.x = sf::Joystick::getAxisPosition(0, sf::Joystick::X);
+    curJoy1LeftPosTmp.y = sf::Joystick::getAxisPosition(0, sf::Joystick::Y);
+    tolerance = 20.f;
+    sf::Vector2f curJoy1LeftPos{ getCursorPos(curJoy1LeftPosTmp, tolerance) };
+    if (std::abs(curJoy1LeftPos.x) > tolerance || 
+            std::abs(curJoy1LeftPos.y) > tolerance)
+    {
+        inputQueue.push({ InputTypes::CURSOR_LEFT_POS, 
+                InputDevice::JOYSTICK_1, curJoy1LeftPos });
+
+        std::cout << "Joystick Cursor: " 
+            << DebugHelpers::toString(curJoy1LeftPos) << std::endl;
+    }
+
 
     //inputQueue.push({ InputTypes::CURSOR_POS, CurrentMousePosWorld });
     

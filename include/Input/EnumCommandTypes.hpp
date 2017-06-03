@@ -5,6 +5,7 @@ enum class CommandTypes
 {
     LOOK_AT,
     ROTATE,
+    MOVE_IN_DIR,
     MOVE_LEFT,
     MOVE_RIGHT,
     MOVE_UP,

@@ -321,7 +321,7 @@ bool MainGameScreen::handleInput(Input &input, float dt)
             //        input.getValues() });
             break;
         }
-        case InputTypes::CURSOR_POS_JOY :
+        case InputTypes::CURSOR_RIGHT_POS :
         {
             if (m_playerWarrior)
             {
@@ -330,6 +330,16 @@ bool MainGameScreen::handleInput(Input &input, float dt)
 
                 m_commandQueue.push({ CommandTypes::LOOK_AT, 
                         WorldObjectTypes::PLAYER, lookAtPos });
+            }
+            break;
+        }
+        case InputTypes::CURSOR_LEFT_POS :
+        {
+            if (m_playerWarrior)
+            {
+                sf::Vector2f moveDir{ input.getValues()  };
+                m_commandQueue.push({ CommandTypes::MOVE_IN_DIR, 
+                        WorldObjectTypes::PLAYER, moveDir });
             }
             break;
         }

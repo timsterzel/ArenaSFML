@@ -314,6 +314,11 @@ void Warrior::onCommandCurrent(const Command &command, float dt)
                 break;
             case CommandTypes::ROTATE :
                 break;
+            case CommandTypes::MOVE_IN_DIR:
+                m_currentVelocity = m_velocity;
+                m_currentDirection = command.getValues();
+                m_isMoving = true;
+                break;
             case CommandTypes::MOVE_UP:
                 m_currentVelocity = m_velocity;
                 m_currentDirection.y = -m_velocity;
