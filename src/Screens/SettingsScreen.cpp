@@ -139,10 +139,10 @@ bool SettingsScreen::handleInput(Input &input, float dt)
 {
     switch (input.getInputType())
     {
-        case InputTypes::PAUSE :
+        case InputTypes::BACK :
         {
-            // Let the Game screen handle this input
-            return true;
+            m_screenStack->popScreen();
+            return false;
             break;
         }
         default:

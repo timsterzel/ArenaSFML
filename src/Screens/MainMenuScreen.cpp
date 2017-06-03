@@ -51,11 +51,10 @@ bool MainMenuScreen::handleInput(Input &input, float dt)
 {
     switch (input.getInputType())
     {
-        case InputTypes::PAUSE :
+        case InputTypes::BACK :
         {
-            // Let the Game screen handle this input
-            return true;
-            break;
+            m_context.window->close();
+            return false;
         }
         default:
             break;
