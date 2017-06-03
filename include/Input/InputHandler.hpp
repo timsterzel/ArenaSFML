@@ -10,7 +10,8 @@ class InputHandler
     private:
         sf::RenderWindow *m_window;
         sf::Vector2i m_lastMousePos;
-        // Used to check if the  right mouse click was pressed first time, is still pressed, or is stop pressed
+        // Used to check if the  right mouse click was pressed first time, 
+        // is still pressed, or is stop pressed
         char m_rightMouseClickState;
 
     public:

@@ -1,0 +1,11 @@
+#ifndef ENUMINPUTDEVICE_HPP
+#define ENUMINPUTDEVICE_HPP
+
+enum class InputDevice
+{
+    DEFAULT,
+    JOYSTICK_1,
+    JOYSTICK_2
+};
+
+#endif // !ENUMINPUTDEVICE_HPP

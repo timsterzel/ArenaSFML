@@ -99,6 +99,25 @@ void InputHandler::handleEvents(std::queue<sf::Event> &eventQueue,
                 inputQueue.push({ InputTypes::RIGHT_CLICK });
             }
         }
+        // JOYSTICK
+        else if (event.type == sf::Event::JoystickButtonPressed)
+        {
+            std::cout << "---Joystick---\n";
+            std::cout << "ID: " << event.joystickButton.joystickId << std::endl;
+            std::cout << "Button: " << event.joystickButton.button << std::endl;
+            std::cout << "---!Joystick---\n";
+        }
+        else if (event.type == sf::Event::JoystickMoved)
+        {
+            if (event.joystickMove.axis == sf::Joystick::PovY)
+            {
+                std::cout << "X axis moved!" << std::endl;
+                std::cout << "joystick id: " << event.joystickMove.joystickId 
+                    << std::endl;
+                std::cout << "new position: " << event.joystickMove.position 
+                    << std::endl;
+            }
+        }
 
     }
 }
@@ -106,40 +125,37 @@ void InputHandler::handleEvents(std::queue<sf::Event> &eventQueue,
 void InputHandler::handleRealTimeInput(QueueHelper<Input> &inputQueue)
 {
     // Get the current mouse pos at the window
-    const sf::Vector2i CurrentMousePosPixel = { sf::Mouse::getPosition(*m_window) };
+    const sf::Vector2i CurrentMousePosPixel{ 
+        sf::Mouse::getPosition(*m_window) };
     // Convert the current window mouse pos to the world coordinates
-    const sf::Vector2f CurrentMousePosWorld = { m_window->mapPixelToCoords(CurrentMousePosPixel) };
+    const sf::Vector2f CurrentMousePosWorld{ 
+        m_window->mapPixelToCoords(CurrentMousePosPixel) };
 
     inputQueue.push({ InputTypes::CURSOR_POS, CurrentMousePosWorld });
-    /*
-    if (CurrentMousePos != m_lastMousePos)
-    {
-        const sf::Vector2i WindowCenter(static_cast<int>(m_window->getSize().x / 2), static_cast<int>(m_window->getSize().y / 2));
-        const sf::Vector2i TranslatedMousePos = { CurrentMousePos - WindowCenter };
-        const sf::Vector2f TranslatedMousePosF(static_cast<sf::Vector2f>(TranslatedMousePos));
-        inputQueue.push({ InputTypes::TRANSLATED_CURSOR_POS, TranslatedMousePosF });
+    
 
-
-    }
-    */
-
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) 
+            && sf::Keyboard::isKeyPressed(sf::Keyboard::A))
     {
         inputQueue.push({ InputTypes::UP_LEFT });
     }
-    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::W) && sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::W) 
+            && sf::Keyboard::isKeyPressed(sf::Keyboard::D))
     {
         inputQueue.push({ InputTypes::UP_RIGHT });
     }
-    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::S) && sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::S) 
+            && sf::Keyboard::isKeyPressed(sf::Keyboard::A))
     {
         inputQueue.push({ InputTypes::DOWN_LEFT });
     }
-    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::S) && sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::S) 
+            && sf::Keyboard::isKeyPressed(sf::Keyboard::D))
     {
         inputQueue.push({ InputTypes::DOWN_RIGHT });
     }
-    // Dont handle W A S D separately, when there are pairs like W+A or W+D or S+A or S+D
+    // Dont handle W A S D separately, 
+    // when there are pairs like W+A or W+D or S+A or S+D
     else
     {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
@@ -181,6 +197,51 @@ void InputHandler::handleRealTimeInput(QueueHelper<Input> &inputQueue)
 
     m_lastMousePos.x = CurrentMousePosPixel.x;
     m_lastMousePos.y = CurrentMousePosPixel.y;
+
+
+    // Joystick 1
+    if (sf::Joystick::getAxisPosition(0, sf::Joystick::PovY) == -100 && 
+        sf::Joystick::getAxisPosition(0, sf::Joystick::PovX) == -100)
+    {
+        //inputQueue.push({ InputTypes::UP_LEFT, InputDevice::JOYSTICK_1 });
+        inputQueue.push({ InputTypes::UP_LEFT });
+    }
+    else if(sf::Joystick::getAxisPosition(0, sf::Joystick::PovY) == -100 && 
+            sf::Joystick::getAxisPosition(0, sf::Joystick::PovX) == 100)
+    {
+        inputQueue.push({ InputTypes::UP_RIGHT });
+    }
+    else if(sf::Joystick::getAxisPosition(0, sf::Joystick::PovY) == 100 && 
+            sf::Joystick::getAxisPosition(0, sf::Joystick::PovX) == -100)
+    {
+        inputQueue.push({ InputTypes::DOWN_LEFT });
+    }
+    else if(sf::Joystick::getAxisPosition(0, sf::Joystick::PovY) == 100 && 
+            sf::Joystick::getAxisPosition(0, sf::Joystick::PovX) == 100) 
+    {
+        inputQueue.push({ InputTypes::DOWN_RIGHT });
+    }
+    else
+    {
+        if (sf::Joystick::getAxisPosition(0, sf::Joystick::PovY) == -100)
+        {
+            inputQueue.push({ InputTypes::UP });
+        }
+        if (sf::Joystick::getAxisPosition(0, sf::Joystick::PovY) == 100)
+        {
+            inputQueue.push({ InputTypes::DOWN });
+        }
+        if (sf::Joystick::getAxisPosition(0, sf::Joystick::PovX) == -100)
+        {
+            inputQueue.push({ InputTypes::LEFT });
+        }
+        if (sf::Joystick::getAxisPosition(0, sf::Joystick::PovX) == 100)
+        {
+            inputQueue.push({ InputTypes::RIGHT });
+        }
+    }
+
+
 }
 
 void InputHandler::handleRealTimeRightClick(QueueHelper<Input> &inputQueue)

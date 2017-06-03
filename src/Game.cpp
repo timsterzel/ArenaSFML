@@ -54,6 +54,10 @@ Game::Game()
     {
         m_window.setVerticalSyncEnabled(true);
     }
+    if (!m_config.getBool("show_mouse", false))
+    {
+        m_window.setMouseCursorVisible(false);
+    }
 
     if (!m_config.getBool("music_on", true))
     {
