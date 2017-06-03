@@ -328,8 +328,8 @@ bool MainGameScreen::handleInput(Input &input, float dt)
                 sf::Vector2f lookAtPos{ m_playerWarrior->getWorldPosition() 
                     + input.getValues()  };
 
-                m_commandQueue.push({ CommandTypes::LOOK_AT, WorldObjectTypes::PLAYER, 
-                    lookAtPos });
+                m_commandQueue.push({ CommandTypes::LOOK_AT, 
+                        WorldObjectTypes::PLAYER, lookAtPos });
             }
             break;
         }

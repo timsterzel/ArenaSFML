@@ -205,26 +205,9 @@ void InputHandler::handleRealTimeInput(QueueHelper<Input> &inputQueue)
     sf::Vector2f curJoy1PosTmp;
     curJoy1PosTmp.x = sf::Joystick::getAxisPosition(0, sf::Joystick::U);
     curJoy1PosTmp.y = sf::Joystick::getAxisPosition(0, sf::Joystick::V);
-    sf::Vector2f curJoy1Pos;
-    // Use a tolerance by detecting joysrick movement
-    bool wasCur1Moved{ false };
-    float joy1Tolerance{ 20.f };
-    if (curJoy1PosTmp.x > joy1Tolerance || curJoy1PosTmp.x < -joy1Tolerance)
-    {
-        curJoy1Pos.x = curJoy1PosTmp.x;
-        // Add y koordinate, too. So small movements, under the tolerance are
-        // only ignored when there is a movement under the tolerance rate
-        // on both axis
-        curJoy1Pos.y = curJoy1PosTmp.y;
-        wasCur1Moved = true;
-    }
-    if (curJoy1PosTmp.y > joy1Tolerance || curJoy1PosTmp.y < -joy1Tolerance)
-    {
-        curJoy1Pos.y = curJoy1PosTmp.y;
-        curJoy1Pos.x = curJoy1PosTmp.x;
-        wasCur1Moved = true;
-    }
-    if (wasCur1Moved) 
+    float tolerance{ 20.f };
+    sf::Vector2f curJoy1Pos{ getCursorPos(curJoy1PosTmp, tolerance) };
+    if (std::abs(curJoy1Pos.x) > tolerance || std::abs(curJoy1Pos.y) > tolerance)
     {
         inputQueue.push({ InputTypes::CURSOR_POS_JOY, 
                 InputDevice::JOYSTICK_1, curJoy1Pos });
@@ -305,4 +288,26 @@ void InputHandler::handleRealTimeRightClick(QueueHelper<Input> &inputQueue)
     {
         m_rightMouseClickState = 0;
     }
+}
+
+
+sf::Vector2f InputHandler::getCursorPos(sf::Vector2f cursorPos, 
+        float tolerance) const
+{
+    sf::Vector2f cursorPosNew;
+    // Use a tolerance by detecting joystick movement
+    if (cursorPos.x > tolerance || cursorPos.x < -tolerance)
+    {
+        cursorPosNew.x = cursorPos.x;
+        // Add y koordinate, too. So small movements, under the tolerance are
+        // only ignored when there is a movement under the tolerance rate
+        // on both axis
+        cursorPosNew.y = cursorPos.y;
+    }
+    if (cursorPos.y > tolerance || cursorPos.y < -tolerance)
+    {
+        cursorPosNew.y = cursorPos.y;
+        cursorPosNew.x = cursorPos.x;
+    }
+    return cursorPos;
 }
