@@ -337,7 +337,7 @@ bool MainGameScreen::handleInput(Input &input, float dt)
         {
             if (m_playerWarrior)
             {
-                sf::Vector2f moveDir{ input.getValues()  };
+                sf::Vector2f moveDir{ input.getValues() };
                 m_commandQueue.push({ CommandTypes::MOVE_IN_DIR, 
                         WorldObjectTypes::PLAYER, moveDir });
             }

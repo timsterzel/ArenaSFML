@@ -265,6 +265,7 @@ void Warrior::updateCurrent(float dt)
             m_animationRightShoe.update(dt);
         }
     }
+    m_isMoving = false;
 }
 
 Warrior* Warrior::determineActualTarget() const
