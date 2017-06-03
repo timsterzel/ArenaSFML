@@ -8,7 +8,14 @@ class SettingsScreen : public Screen
 {
     private:
         gsf::GUIEnvironment m_guiEnvironment;
-
+        ConfigManager *m_config;
+        bool m_settingChanged;
+        gsf::CheckBoxWidget *m_checkBoxSound;
+        gsf::CheckBoxWidget *m_checkBoxFullscreen;
+        gsf::CheckBoxWidget *m_checkBoxFramelimit;
+        gsf::CheckBoxWidget *m_checkBoxVsync;
+        gsf::ComboBoxWidget *m_comboBoxResolution;
+    
     public:
         SettingsScreen(ScreenStack *screenStack, Context &context);
 
@@ -22,6 +29,9 @@ class SettingsScreen : public Screen
         virtual bool update(float dt);
 
         virtual void render();
+
+    private:
+        void loadSettings();
 };
 
 #endif // !SETTINGSSCREEN_HPP
