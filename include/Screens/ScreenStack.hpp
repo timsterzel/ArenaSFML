@@ -43,13 +43,18 @@ class ScreenStack : private sf::NonCopyable
         void registerScreen(ScreenID screenID);
         template <typename T, typename S>
         void registerScreen(ScreenID screenID, const S &second);
+        template <typename T, typename S, typename R>
+        void registerScreen(ScreenID screenID, const S &second, R third);
+        template <typename T, typename S, typename R, typename Q>
+        void registerScreen(ScreenID screenID, const S &second, R third, Q fourth);
+        
         virtual void handleInput(Input &input, float dt);
         virtual void handleEvent(sf::Event &event, float dt);
         //void controlWorldEntities();
         //void handleCommands(float dt);
         virtual void update(float dt);
         virtual void render();
-
+        
         void pushScreen(ScreenID screenID);
         void popScreen();
         void clearScreens();
@@ -64,7 +69,6 @@ class ScreenStack : private sf::NonCopyable
         // So eg. a screen is not removed immediately when pop is called.
         // It gets removed when this method is called.
         void applyPendingChanges();
-
 };
 
 #include "Screens/ScreenStack.inl"

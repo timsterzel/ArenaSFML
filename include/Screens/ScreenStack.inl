@@ -15,3 +15,23 @@ void ScreenStack::registerScreen(ScreenID screenID, const S &second)
         return std::make_unique<T>(this, m_context, second);
     };
 }
+
+template <typename T, typename S, typename R>
+void ScreenStack::registerScreen(ScreenID screenID, const S &second, 
+        R third)
+{
+    m_factories[screenID] = [this, &second, &third] ()
+    {
+        return std::make_unique<T>(this, m_context, second, third);
+    };
+}
+
+template <typename T, typename S, typename R, typename Q>
+void ScreenStack::registerScreen(ScreenID screenID, const S &second, 
+        R third, Q fourth)
+{
+    m_factories[screenID] = [this, &second, &third, &fourth] ()
+    {
+        return std::make_unique<T>(this, m_context, second, third, fourth);
+    };
+}

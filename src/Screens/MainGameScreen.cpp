@@ -16,12 +16,13 @@
 #include <cmath>
 
 MainGameScreen::MainGameScreen(ScreenStack *screenStack, Context &context, 
-        const Level &level)
+        const Level &level, const std::map<InputDevice, WorldObjectTypes> deviceMap)
 : Screen(screenStack, context)
 , m_isGamePaused{ false }
 , m_showCollisionInfo{ false }
 , m_window{ *context.window }
 , m_level{ level }
+, m_deviceMap{ deviceMap }
 , m_isRenderTextureAvailable{ false }
 , m_gameView{ context.gameView }
 , m_guiView{ context.guiView }
@@ -313,11 +314,19 @@ void MainGameScreen::safeSceneNodeTrasform()
 
 bool MainGameScreen::handleInput(Input &input, float dt)
 {
+    // Check from which player the command is
+    WorldObjectTypes inputPlayer{ WorldObjectTypes::NONE };
+    InputDevice inputDevice{ input.getInputDevice() };
+    if (m_deviceMap.find(inputDevice) != m_deviceMap.end())
+    {
+        inputPlayer = m_deviceMap.at(inputDevice);
+    }
+
     switch (input.getInputType())
     {
         case InputTypes::MOUSE_POS :
         {
-            m_commandQueue.push({ CommandTypes::LOOK_AT, WorldObjectTypes::PLAYER, 
+            m_commandQueue.push({ CommandTypes::LOOK_AT, inputPlayer, 
                     input.getValues() });
             break;
         }
@@ -329,7 +338,7 @@ bool MainGameScreen::handleInput(Input &input, float dt)
                     + input.getValues()  };
 
                 m_commandQueue.push({ CommandTypes::LOOK_AT, 
-                        WorldObjectTypes::PLAYER, lookAtPos });
+                        inputPlayer, lookAtPos });
             }
             break;
         }
@@ -339,60 +348,60 @@ bool MainGameScreen::handleInput(Input &input, float dt)
             {
                 sf::Vector2f moveDir{ input.getValues() };
                 m_commandQueue.push({ CommandTypes::MOVE_IN_DIR, 
-                        WorldObjectTypes::PLAYER, moveDir });
+                        inputPlayer, moveDir });
             }
             break;
         }
         case InputTypes::UP :
-            m_commandQueue.push({ CommandTypes::MOVE_UP, WorldObjectTypes::PLAYER });
+            m_commandQueue.push({ CommandTypes::MOVE_UP, inputPlayer });
             break;
         case InputTypes::DOWN :
             m_commandQueue.push(
-                    { CommandTypes::MOVE_DOWN, WorldObjectTypes::PLAYER });
+                    { CommandTypes::MOVE_DOWN, inputPlayer });
             break;
         case InputTypes::LEFT :
             m_commandQueue.push(
-                    { CommandTypes::MOVE_LEFT, WorldObjectTypes::PLAYER });
+                    { CommandTypes::MOVE_LEFT, inputPlayer });
             break;
         case InputTypes::RIGHT :
             m_commandQueue.push(
-                    { CommandTypes::MOVE_RIGHT, WorldObjectTypes::PLAYER });
+                    { CommandTypes::MOVE_RIGHT, inputPlayer });
             break;
         case InputTypes::UP_LEFT :
             m_commandQueue.push(
-                    { CommandTypes::MOVE_UP_LEFT, WorldObjectTypes::PLAYER });
+                    { CommandTypes::MOVE_UP_LEFT, inputPlayer });
             break;
         case InputTypes::UP_RIGHT :
             m_commandQueue.push(
-                    { CommandTypes::MOVE_UP_RIGHT, WorldObjectTypes::PLAYER });
+                    { CommandTypes::MOVE_UP_RIGHT, inputPlayer });
             break;
         case InputTypes::DOWN_LEFT :
             m_commandQueue.push(
-                    { CommandTypes::MOVE_DOWN_LEFT, WorldObjectTypes::PLAYER });
+                    { CommandTypes::MOVE_DOWN_LEFT, inputPlayer });
             break;
         case InputTypes::DOWN_RIGHT :
             m_commandQueue.push(
-                    { CommandTypes::MOVE_DOWN_RIGHT, WorldObjectTypes::PLAYER });
+                    { CommandTypes::MOVE_DOWN_RIGHT, inputPlayer });
             break;
         case InputTypes::ACTION_1 :
             m_commandQueue.push(
-                { CommandTypes::ACTION_1, WorldObjectTypes::PLAYER });
+                { CommandTypes::ACTION_1, inputPlayer });
             break;
         case InputTypes::SPECIAL_ACTION :
             m_commandQueue.push(
-                    { CommandTypes::SPECIAL_ACTION, WorldObjectTypes::PLAYER });
+                    { CommandTypes::SPECIAL_ACTION, inputPlayer });
             break;
         case InputTypes::ACTION_2 :
             m_commandQueue.push(
-                    { CommandTypes::ACTION_2, WorldObjectTypes::PLAYER });
+                    { CommandTypes::ACTION_2, inputPlayer });
             
         case InputTypes::ACTION_1_START :
             m_commandQueue.push(
-                    { CommandTypes::ACTION_START, WorldObjectTypes::PLAYER });
+                    { CommandTypes::ACTION_START, inputPlayer });
             break;
         case InputTypes::ACTION_1_STOPPED :
             m_commandQueue.push(
-                    { CommandTypes::ACTION_STOP, WorldObjectTypes::PLAYER });
+                    { CommandTypes::ACTION_STOP, inputPlayer });
             break;
         case InputTypes::PAUSE :
             m_isGamePaused = !m_isGamePaused;

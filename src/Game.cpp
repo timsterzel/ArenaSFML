@@ -75,11 +75,11 @@ Game::Game()
     loadMusic();
     buildScene();
     // Register all screens
-    const Level &level = *(m_context.levelHolder->getLevels()[0].get());
+    //const Level &level = *(m_context.levelHolder->getLevels()[0].get());
     m_screenStack.registerScreen<MainMenuScreen>(ScreenID::MAINMENU);
     m_screenStack.registerScreen<SettingsScreen>(ScreenID::SETTINGS);
-    m_screenStack.registerScreen<MainGameScreen, Level>(ScreenID::GAME, level);
-    m_screenStack.registerScreen<PauseScreen>(ScreenID::PAUSE);
+    //m_screenStack.registerScreen<MainGameScreen, Level>(ScreenID::GAME, level);
+    //m_screenStack.registerScreen<PauseScreen>(ScreenID::PAUSE);
     // Show Game screen
     //m_screenStack.pushScreen(ScreenID::GAME);
     m_screenStack.pushScreen(ScreenID::MAINMENU);

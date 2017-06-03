@@ -1,5 +1,7 @@
 #include "Screens/MainMenuScreen.hpp"
 #include "Screens/ScreenStack.hpp"
+#include "Screens/MainGameScreen.hpp"
+#include "Screens/PauseScreen.hpp"
 
 MainMenuScreen::MainMenuScreen(ScreenStack *screenStack, Context &context)
 : Screen(screenStack, context)
@@ -25,9 +27,20 @@ void MainMenuScreen::buildScene()
     gsf::TextButtonWidget* startGameBtn{ static_cast<gsf::TextButtonWidget*>(
             m_guiEnvironment.getWidgetByID("textButtonWidget_startGame")) };
     startGameBtn->setOnLeftClickListener(
-            [screenStack](gsf::Widget *widget, sf::Vector2f pos)
+            [this](gsf::Widget *widget, sf::Vector2f pos)
     {
-        screenStack->pushScreen(ScreenID::GAME);
+        const Level &level = *(m_context.levelHolder->getLevels()[0].get());
+        std::map<InputDevice, WorldObjectTypes> deviceMap;
+        deviceMap.insert({ InputDevice::JOYSTICK_1, WorldObjectTypes::PLAYER });
+        deviceMap.insert({ InputDevice::DEFAULT, 
+                WorldObjectTypes::PLAYER_TWO });
+        m_screenStack->registerScreen<MainGameScreen, Level, 
+            std::map<InputDevice, WorldObjectTypes>> 
+            (ScreenID::GAME, level, deviceMap);
+        
+        m_screenStack->registerScreen<PauseScreen>
+            (ScreenID::PAUSE);
+        m_screenStack->pushScreen(ScreenID::GAME);
     });
     gsf::TextButtonWidget* settingsBtn{ static_cast<gsf::TextButtonWidget*>(
             m_guiEnvironment.getWidgetByID("textButtonWidget_settings")) };

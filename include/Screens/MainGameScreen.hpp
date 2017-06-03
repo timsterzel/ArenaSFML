@@ -24,6 +24,9 @@ class MainGameScreen : public Screen
         
         sf::RenderWindow &m_window;
         const Level &m_level;
+        // Stored which control device controls which player
+        std::map<InputDevice, WorldObjectTypes> m_deviceMap;
+
         // Used to apply the shader right on all drawn things. Some shaders only
         // effects textures right, so when we want to use shaders, we first draw all
         // to the render texture and then draw the emerging tetxure with the shader
@@ -52,7 +55,8 @@ class MainGameScreen : public Screen
 
     public:
         MainGameScreen(ScreenStack *screenStack, Context &context, 
-                const Level &level);
+                const Level &level, const std::map<InputDevice, 
+                WorldObjectTypes> deviceMap);
 
         virtual ~MainGameScreen();
         
@@ -73,9 +77,12 @@ class MainGameScreen : public Screen
     private:
         void buildLevel();
 
-        SceneNode* getSceneNodeOfType(SceneNode::Pair sceneNodePair, WorldObjectTypes type);
-        bool matchesCategories(SceneNode::Pair &colliders, unsigned int type1, unsigned int type2);
-        void resolveEntityCollisions(SceneNode *sceneNodeFirst, SceneNode *sceneNodeSecond, CollisionInfo &collisionInfo);
+        SceneNode* getSceneNodeOfType(SceneNode::Pair sceneNodePair, 
+                WorldObjectTypes type);
+        bool matchesCategories(SceneNode::Pair &colliders, unsigned int type1, 
+                unsigned int type2);
+        void resolveEntityCollisions(SceneNode *sceneNodeFirst, 
+                SceneNode *sceneNodeSecond, CollisionInfo &collisionInfo);
         // Check if the player is still in game
         bool isStillPlayerIsInGame();
         void handleConsoleCommands(gsf::Widget* widget, sf::String command);

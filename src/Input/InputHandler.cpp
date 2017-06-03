@@ -182,8 +182,7 @@ void InputHandler::handleRealTimeInput(QueueHelper<Input> &inputQueue)
     m_lastMousePos.x = CurrentMousePosPixel.x;
     m_lastMousePos.y = CurrentMousePosPixel.y;
 
-    // ------------------------------------------------------------------
-    // Joystick 1
+    // -----------------------------JOYSTICK_1----------------------------------
     // Looking
     sf::Vector2f curJoy1PosTmp;
     curJoy1PosTmp.x = sf::Joystick::getAxisPosition(0, sf::Joystick::U);
@@ -221,41 +220,40 @@ void InputHandler::handleRealTimeInput(QueueHelper<Input> &inputQueue)
     if (sf::Joystick::getAxisPosition(0, sf::Joystick::PovY) == -100 && 
         sf::Joystick::getAxisPosition(0, sf::Joystick::PovX) == -100)
     {
-        //inputQueue.push({ InputTypes::UP_LEFT, InputDevice::JOYSTICK_1 });
-        inputQueue.push({ InputTypes::UP_LEFT });
+        inputQueue.push({ InputTypes::UP_LEFT, InputDevice::JOYSTICK_1 });
     }
     else if(sf::Joystick::getAxisPosition(0, sf::Joystick::PovY) == -100 && 
             sf::Joystick::getAxisPosition(0, sf::Joystick::PovX) == 100)
     {
-        inputQueue.push({ InputTypes::UP_RIGHT });
+        inputQueue.push({ InputTypes::UP_RIGHT, InputDevice::JOYSTICK_1 });
     }
     else if(sf::Joystick::getAxisPosition(0, sf::Joystick::PovY) == 100 && 
             sf::Joystick::getAxisPosition(0, sf::Joystick::PovX) == -100)
     {
-        inputQueue.push({ InputTypes::DOWN_LEFT });
+        inputQueue.push({ InputTypes::DOWN_LEFT, InputDevice::JOYSTICK_1 });
     }
     else if(sf::Joystick::getAxisPosition(0, sf::Joystick::PovY) == 100 && 
             sf::Joystick::getAxisPosition(0, sf::Joystick::PovX) == 100) 
     {
-        inputQueue.push({ InputTypes::DOWN_RIGHT });
+        inputQueue.push({ InputTypes::DOWN_RIGHT, InputDevice::JOYSTICK_1 });
     }
     else
     {
         if (sf::Joystick::getAxisPosition(0, sf::Joystick::PovY) == -100)
         {
-            inputQueue.push({ InputTypes::UP });
+            inputQueue.push({ InputTypes::UP, InputDevice::JOYSTICK_1 });
         }
         if (sf::Joystick::getAxisPosition(0, sf::Joystick::PovY) == 100)
         {
-            inputQueue.push({ InputTypes::DOWN });
+            inputQueue.push({ InputTypes::DOWN, InputDevice::JOYSTICK_1 });
         }
         if (sf::Joystick::getAxisPosition(0, sf::Joystick::PovX) == -100)
         {
-            inputQueue.push({ InputTypes::LEFT });
+            inputQueue.push({ InputTypes::LEFT, InputDevice::JOYSTICK_1 });
         }
         if (sf::Joystick::getAxisPosition(0, sf::Joystick::PovX) == 100)
         {
-            inputQueue.push({ InputTypes::RIGHT });
+            inputQueue.push({ InputTypes::RIGHT, InputDevice::JOYSTICK_1 });
         }
     }
 
