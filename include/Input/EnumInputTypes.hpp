@@ -13,6 +13,7 @@ enum class InputTypes
     LOST_FOCUS,
     GAINED_FOCUS,
     CURSOR_POS,
+    CURSOR_POS_JOY,
     TRANSLATED_CURSOR_POS,
     LEFT,
     RIGHT,

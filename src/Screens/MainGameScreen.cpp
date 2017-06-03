@@ -317,8 +317,20 @@ bool MainGameScreen::handleInput(Input &input, float dt)
     {
         case InputTypes::CURSOR_POS :
         {
-            m_commandQueue.push({ CommandTypes::LOOK_AT, WorldObjectTypes::PLAYER, 
-                    input.getValues() });
+            //m_commandQueue.push({ CommandTypes::LOOK_AT, WorldObjectTypes::PLAYER, 
+            //        input.getValues() });
+            break;
+        }
+        case InputTypes::CURSOR_POS_JOY :
+        {
+            if (m_playerWarrior)
+            {
+                sf::Vector2f lookAtPos{ m_playerWarrior->getWorldPosition() 
+                    + input.getValues()  };
+
+                m_commandQueue.push({ CommandTypes::LOOK_AT, WorldObjectTypes::PLAYER, 
+                    lookAtPos });
+            }
             break;
         }
         case InputTypes::TRANSLATED_CURSOR_POS :

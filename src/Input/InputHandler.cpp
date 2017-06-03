@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include <cmath>
 #include <iostream>
+#include "DebugHelpers.hpp"
 
 InputHandler::InputHandler(sf::RenderWindow *window)
 : m_window{ window }
@@ -199,8 +200,41 @@ void InputHandler::handleRealTimeInput(QueueHelper<Input> &inputQueue)
     m_lastMousePos.x = CurrentMousePosPixel.x;
     m_lastMousePos.y = CurrentMousePosPixel.y;
 
-
+    // ------------------------------------------------------------------
     // Joystick 1
+    sf::Vector2f curJoy1PosTmp;
+    curJoy1PosTmp.x = sf::Joystick::getAxisPosition(0, sf::Joystick::U);
+    curJoy1PosTmp.y = sf::Joystick::getAxisPosition(0, sf::Joystick::V);
+    sf::Vector2f curJoy1Pos;
+    // Use a tolerance by detecting joysrick movement
+    bool wasCur1Moved{ false };
+    float joy1Tolerance{ 20.f };
+    if (curJoy1PosTmp.x > joy1Tolerance || curJoy1PosTmp.x < -joy1Tolerance)
+    {
+        curJoy1Pos.x = curJoy1PosTmp.x;
+        // Add y koordinate, too. So small movements, under the tolerance are
+        // only ignored when there is a movement under the tolerance rate
+        // on both axis
+        curJoy1Pos.y = curJoy1PosTmp.y;
+        wasCur1Moved = true;
+    }
+    if (curJoy1PosTmp.y > joy1Tolerance || curJoy1PosTmp.y < -joy1Tolerance)
+    {
+        curJoy1Pos.y = curJoy1PosTmp.y;
+        curJoy1Pos.x = curJoy1PosTmp.x;
+        wasCur1Moved = true;
+    }
+    if (wasCur1Moved) 
+    {
+        inputQueue.push({ InputTypes::CURSOR_POS_JOY, 
+                InputDevice::JOYSTICK_1, curJoy1Pos });
+
+        std::cout << "Joystick Cursor: " 
+            << DebugHelpers::toString(curJoy1Pos) << std::endl;
+    }
+
+    //inputQueue.push({ InputTypes::CURSOR_POS, CurrentMousePosWorld });
+    
     if (sf::Joystick::getAxisPosition(0, sf::Joystick::PovY) == -100 && 
         sf::Joystick::getAxisPosition(0, sf::Joystick::PovX) == -100)
     {
