@@ -149,19 +149,19 @@ void Wizard::onCommandCurrent(const Command &command, float dt)
         m_currentDirection.y = 0.f;
         switch (command.getCommandType())
         {
-            case CommandTypes::ACTION1:
+            case CommandTypes::ACTION_1:
                 startFireballAttack();
                 break;
-            case CommandTypes::ACTION2:
-                break;
-            case CommandTypes::ACTION3:
+            case CommandTypes::ACTION_2:
                 //startRoundAttack();
                 break;
+            case CommandTypes::SPECIAL_ACTION:
+                break;
             // Not really blocking, but the same key
-            case CommandTypes::START_BLOCKING:
+            case CommandTypes::ACTION_START:
                 startHealing();
                 break;
-            case CommandTypes::STOP_BLOCKING:
+            case CommandTypes::ACTION_STOP:
                 stopHealing();
                 break;
             /*
@@ -176,10 +176,6 @@ void Wizard::onCommandCurrent(const Command &command, float dt)
                 break;
 
         }
-
-        // Move is the same as setPosition(getPosition() + offset) of the sf::Transformable class
-        //move(m_currentVelocity * dt);
-        //moveInDirection(m_currentDirection, m_currentVelocity * dt);
         moveInActualDirection(m_currentVelocity * dt);
     }
 }

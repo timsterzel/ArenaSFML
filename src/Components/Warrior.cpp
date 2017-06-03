@@ -220,30 +220,7 @@ void Warrior::addStanima(float stanima)
 
 void Warrior::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const
 {
-    /*
-    if (m_closeCombatArea)
-    {
-        target.draw(*m_closeCombatArea, states);
-    }
-    */
 
-    //target.draw(m_sprite, states);
-    // Only draw weapon when it is not nullptr
-    /*
-    if (m_weapon)
-    {
-        // Add weapons transform here, because we call drawCurrent directly
-        //states.transform *= m_weapon->getTransform();
-        //m_weapon->draw(target, states);
-
-
-        // Draw weapon pos (TMP)
-        sf::CircleShape circleShape{ 3.f };
-        circleShape.setFillColor(sf::Color::Green);
-        circleShape.setOrigin(3.f, 3.f);
-        circleShape.setPosition(getWorldWeaponPos());
-        target.draw(circleShape);
-    }*/
 }
 
 void Warrior::updateCurrent(float dt)

@@ -135,16 +135,16 @@ void Knight::onCommandCurrent(const Command &command, float dt)
         m_currentDirection.y = 0.f;
         switch (command.getCommandType())
         {
-            case CommandTypes::ACTION1:
+            case CommandTypes::ACTION_1:
                 startCloseAttack();
                 break;
-            case CommandTypes::ACTION2:
-                startStrongAttack();
-                break;
-            case CommandTypes::START_BLOCKING:
+            case CommandTypes::ACTION_START:
                 startBlocking();
                 break;
-            case CommandTypes::STOP_BLOCKING:
+            case CommandTypes::SPECIAL_ACTION:
+                startStrongAttack();
+                break;
+            case CommandTypes::ACTION_STOP:
                 stopBlocking();
                 break;
             default:

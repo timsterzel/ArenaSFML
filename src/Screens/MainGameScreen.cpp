@@ -315,10 +315,10 @@ bool MainGameScreen::handleInput(Input &input, float dt)
 {
     switch (input.getInputType())
     {
-        case InputTypes::CURSOR_POS :
+        case InputTypes::MOUSE_POS :
         {
-            //m_commandQueue.push({ CommandTypes::LOOK_AT, WorldObjectTypes::PLAYER, 
-            //        input.getValues() });
+            m_commandQueue.push({ CommandTypes::LOOK_AT, WorldObjectTypes::PLAYER, 
+                    input.getValues() });
             break;
         }
         case InputTypes::CURSOR_RIGHT_POS :
@@ -341,24 +341,6 @@ bool MainGameScreen::handleInput(Input &input, float dt)
                 m_commandQueue.push({ CommandTypes::MOVE_IN_DIR, 
                         WorldObjectTypes::PLAYER, moveDir });
             }
-            break;
-        }
-        case InputTypes::TRANSLATED_CURSOR_POS :
-        {
-            /*
-            const sf::Vector2f UnitVecX(1.0, 0.f);
-            // The angle which should be calculated have the coordinate systems 
-            // midpoint at the center of the window,
-            // so we have to use the translated mouse position so its relativ to 
-            // the center of the window
-            const sf::Vector2f TranslatedMousePos = { input.getValues() };
-            const float Angle{ Calc::radToDeg(
-                Calc::getVec2Angle<sf::Vector2f, sf::Vector2f>
-                    (UnitVecX, TranslatedMousePos)) };
-            const float AngleSigned = TranslatedMousePos.y < 0.f ? -Angle : Angle;
-            m_commandQueue.push({ CommandTypes::ROTATE, WorldObjectTypes::Player, 
-                { AngleSigned, 0.f } });
-            */
             break;
         }
         case InputTypes::UP :
@@ -392,26 +374,25 @@ bool MainGameScreen::handleInput(Input &input, float dt)
             m_commandQueue.push(
                     { CommandTypes::MOVE_DOWN_RIGHT, WorldObjectTypes::PLAYER });
             break;
-
-        case InputTypes::LEFT_CLICK :
+        case InputTypes::ACTION_1 :
             m_commandQueue.push(
-                    { CommandTypes::ACTION1, WorldObjectTypes::PLAYER });
+                { CommandTypes::ACTION_1, WorldObjectTypes::PLAYER });
             break;
-        case InputTypes::LCONTROL_LEFT_CLICK :
+        case InputTypes::SPECIAL_ACTION :
             m_commandQueue.push(
-                    { CommandTypes::ACTION2, WorldObjectTypes::PLAYER });
+                    { CommandTypes::SPECIAL_ACTION, WorldObjectTypes::PLAYER });
             break;
-        case InputTypes::RIGHT_CLICK :
+        case InputTypes::ACTION_2 :
             m_commandQueue.push(
-                    { CommandTypes::ACTION3, WorldObjectTypes::PLAYER });
+                    { CommandTypes::ACTION_2, WorldObjectTypes::PLAYER });
             
-        case InputTypes::RIGHT_CLICK_START :
+        case InputTypes::ACTION_1_START :
             m_commandQueue.push(
-                    { CommandTypes::START_BLOCKING, WorldObjectTypes::PLAYER });
+                    { CommandTypes::ACTION_START, WorldObjectTypes::PLAYER });
             break;
-        case InputTypes::RIGHT_CLICK_STOPED :
+        case InputTypes::ACTION_1_STOPPED :
             m_commandQueue.push(
-                    { CommandTypes::STOP_BLOCKING, WorldObjectTypes::PLAYER });
+                    { CommandTypes::ACTION_STOP, WorldObjectTypes::PLAYER });
             break;
         case InputTypes::PAUSE :
             m_isGamePaused = !m_isGamePaused;
@@ -444,6 +425,7 @@ bool MainGameScreen::handleInput(Input &input, float dt)
             m_consoleWidget->setIsVisible(!m_consoleWidget->isVisible());
             break;
         // Tmp (Arrow Keys)
+        /*
         case InputTypes::UP_A :
             m_commandQueue.push(
                     { CommandTypes::MOVE_UP, WorldObjectTypes::PLAYER_TWO });
@@ -460,6 +442,7 @@ bool MainGameScreen::handleInput(Input &input, float dt)
             m_commandQueue.push(
                     { CommandTypes::MOVE_RIGHT, WorldObjectTypes::PLAYER_TWO });
             break;
+        */
         default:
             break;
     }

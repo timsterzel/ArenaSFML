@@ -12,10 +12,9 @@ enum class InputTypes
     WINDOW_RESIZED,
     LOST_FOCUS,
     GAINED_FOCUS,
-    CURSOR_POS,
+    MOUSE_POS,
     CURSOR_RIGHT_POS,
     CURSOR_LEFT_POS,
-    TRANSLATED_CURSOR_POS,
     LEFT,
     RIGHT,
     UP,
@@ -24,12 +23,12 @@ enum class InputTypes
     UP_RIGHT,
     DOWN_LEFT,
     DOWN_RIGHT,
-    LEFT_CLICK,
-    LCONTROL_LEFT_CLICK,
-    RIGHT_CLICK,
-    RIGHT_CLICK_START,
-    RIGHT_CLICK_STILL,
-    RIGHT_CLICK_STOPED,
+    ACTION_1,
+    ACTION_2,
+    SPECIAL_ACTION,
+    ACTION_1_START,
+    ACTION_1_STILL,
+    ACTION_1_STOPPED,
     PAUSE,
     BACK,
     CONSOLE,
@@ -39,14 +38,6 @@ enum class InputTypes
     D2,
     D3,
     D4,
-
-
-
-    // TMP
-    LEFT_A,
-    RIGHT_A,
-    UP_A,
-    DOWN_A
 };
 
 #endif // ENUMINPUTTYPES_HPP

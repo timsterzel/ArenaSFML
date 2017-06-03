@@ -88,17 +88,17 @@ void InputHandler::handleEvents(std::queue<sf::Event> &eventQueue,
                 // LControl + Left Button pressed
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl))
                 {
-                    inputQueue.push({ InputTypes::LCONTROL_LEFT_CLICK });
+                    inputQueue.push({ InputTypes::SPECIAL_ACTION });
                 }
                 // Only left button mouse pressed
                 else
                 {
-                    inputQueue.push({ InputTypes::LEFT_CLICK });
+                    inputQueue.push({ InputTypes::ACTION_1 });
                 }
             }
             else if (event.mouseButton.button == sf::Mouse::Right)
             {
-                inputQueue.push({ InputTypes::RIGHT_CLICK });
+                inputQueue.push({ InputTypes::ACTION_2 });
             }
         }
         // JOYSTICK
@@ -133,7 +133,7 @@ void InputHandler::handleRealTimeInput(QueueHelper<Input> &inputQueue)
     const sf::Vector2f CurrentMousePosWorld{ 
         m_window->mapPixelToCoords(CurrentMousePosPixel) };
 
-    inputQueue.push({ InputTypes::CURSOR_POS, CurrentMousePosWorld });
+    inputQueue.push({ InputTypes::MOUSE_POS, CurrentMousePosWorld });
     
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) 
@@ -176,24 +176,6 @@ void InputHandler::handleRealTimeInput(QueueHelper<Input> &inputQueue)
         {
             inputQueue.push({ InputTypes::RIGHT });
         }
-    }
-
-
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-    {
-        inputQueue.push({ InputTypes::UP_A });
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-    {
-        inputQueue.push({ InputTypes::DOWN_A });
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-    {
-        inputQueue.push({ InputTypes::LEFT_A });
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-    {
-        inputQueue.push({ InputTypes::RIGHT_A });
     }
     handleRealTimeRightClick(inputQueue);
 
@@ -287,19 +269,19 @@ void InputHandler::handleRealTimeRightClick(QueueHelper<Input> &inputQueue)
     if (isPressed && m_rightMouseClickState == 0)
     {
         m_rightMouseClickState = 1;
-        inputQueue.push({ InputTypes::RIGHT_CLICK_START });
+        inputQueue.push({ InputTypes::ACTION_1_START });
     }
     // Left mouse key was pressed and is still pressed (still pressing)
     else if (isPressed && m_rightMouseClickState == 1)
     {
         m_rightMouseClickState = 2;
-        inputQueue.push({ InputTypes::RIGHT_CLICK_STILL });
+        inputQueue.push({ InputTypes::ACTION_1_STILL });
     }
     // Left mouse key was pressed and is not pressed anymore(stop pressing)
     else if (!isPressed && m_rightMouseClickState == 2)
     {
         m_rightMouseClickState = 3;
-        inputQueue.push({ InputTypes::RIGHT_CLICK_STOPED });
+        inputQueue.push({ InputTypes::ACTION_1_STOPPED });
     }
     // Left mouse key was not pressed and is not pressed at the moment
     else if (!isPressed && m_rightMouseClickState == 3)
