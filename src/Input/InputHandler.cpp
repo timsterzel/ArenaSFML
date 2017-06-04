@@ -8,6 +8,7 @@ InputHandler::InputHandler(sf::RenderWindow *window)
 : m_window{ window }
 , m_lastMousePos{ 0, 0 }
 , m_rightMouseClickState{ 0 }
+, m_rightShoulderBtnJoy1State{ 0 }
 {
 
 }
@@ -102,22 +103,37 @@ void InputHandler::handleEvents(std::queue<sf::Event> &eventQueue,
             }
         }
         // JOYSTICK
-        else if (event.type == sf::Event::JoystickButtonPressed)
+        else if (event.type == sf::Event::JoystickButtonPressed &&
+                event.joystickButton.joystickId == 0)
         {
+            if (event.joystickButton.button == 4)
+            {
+                inputQueue.push({ InputTypes::ACTION_1, InputDevice::JOYSTICK_1 });
+            }
+            else if (event.joystickButton.button == 5)
+            {
+                inputQueue.push({ InputTypes::ACTION_2, InputDevice::JOYSTICK_1 });
+            }
+            /*
             std::cout << "---Joystick---\n";
             std::cout << "ID: " << event.joystickButton.joystickId << std::endl;
             std::cout << "Button: " << event.joystickButton.button << std::endl;
             std::cout << "---!Joystick---\n";
+            */
         }
         else if (event.type == sf::Event::JoystickMoved)
         {
-            if (event.joystickMove.axis == sf::Joystick::PovY)
+            if (event.joystickMove.axis == sf::Joystick::R)
             {
+                inputQueue.push({ InputTypes::SPECIAL_ACTION, 
+                        InputDevice::JOYSTICK_1 });
+                /*
                 std::cout << "X axis moved!" << std::endl;
                 std::cout << "joystick id: " << event.joystickMove.joystickId 
                     << std::endl;
                 std::cout << "new position: " << event.joystickMove.position 
                     << std::endl;
+                */
             }
         }
 
@@ -256,11 +272,11 @@ void InputHandler::handleRealTimeInput(QueueHelper<Input> &inputQueue)
             inputQueue.push({ InputTypes::RIGHT, InputDevice::JOYSTICK_1 });
         }
     }
-
-
+    handleRealTimeRightShoulderBtnJoy1(inputQueue);
 }
 
-void InputHandler::handleRealTimeRightClick(QueueHelper<Input> &inputQueue)
+void InputHandler::handleRealTimeRightClick(
+        QueueHelper<Input> &inputQueue)
 {
     bool isPressed = { sf::Mouse::isButtonPressed(sf::Mouse::Right) };
     // Left mouse key was not pressed and is not pressed (start pressing)
@@ -288,6 +304,34 @@ void InputHandler::handleRealTimeRightClick(QueueHelper<Input> &inputQueue)
     }
 }
 
+void InputHandler::handleRealTimeRightShoulderBtnJoy1(
+        QueueHelper<Input> &inputQueue)
+{
+    bool isPressed = { sf::Joystick::isButtonPressed(0, 5) };
+    // Axis key was not pressed and is not pressed (start pressing)
+    if (isPressed && m_rightShoulderBtnJoy1State == 0)
+    {
+        m_rightShoulderBtnJoy1State = 1;
+        inputQueue.push({ InputTypes::ACTION_1_START, InputDevice::JOYSTICK_1 });
+    }
+    // Axis key was pressed and is still pressed (still pressing)
+    else if (isPressed && m_rightShoulderBtnJoy1State == 1)
+    {
+        m_rightShoulderBtnJoy1State = 2;
+        inputQueue.push({ InputTypes::ACTION_1_STILL, InputDevice::JOYSTICK_1 });
+    }
+    // Axis key was pressed and is not pressed anymore(stop pressing)
+    else if (!isPressed && m_rightShoulderBtnJoy1State == 2)
+    {
+        m_rightShoulderBtnJoy1State = 3;
+        inputQueue.push({ InputTypes::ACTION_1_STOPPED, InputDevice::JOYSTICK_1 });
+    }
+    // Axis key was not pressed and is not pressed at the moment
+    else if (!isPressed && m_rightShoulderBtnJoy1State == 3)
+    {
+        m_rightShoulderBtnJoy1State = 0;
+    }
+}
 
 sf::Vector2f InputHandler::getCursorPos(sf::Vector2f cursorPos, 
         float tolerance) const

@@ -13,6 +13,7 @@ class InputHandler
         // Used to check if the  right mouse click was pressed first time, 
         // is still pressed, or is stop pressed
         char m_rightMouseClickState;
+        char m_rightShoulderBtnJoy1State;
 
     public:
         InputHandler(sf::RenderWindow *window);
@@ -27,6 +28,7 @@ class InputHandler
                 QueueHelper<Input> &inputQueue);
         void handleRealTimeInput(QueueHelper<Input> &inputQueue);
         void handleRealTimeRightClick(QueueHelper<Input> &inputQueue);
+        void handleRealTimeRightShoulderBtnJoy1(QueueHelper<Input> &inputQueue);
         
         sf::Vector2f getCursorPos(sf::Vector2f cursorPos, float tolerance) const;
 
