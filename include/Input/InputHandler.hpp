@@ -10,10 +10,13 @@ class InputHandler
     private:
         sf::RenderWindow *m_window;
         sf::Vector2i m_lastMousePos;
-        // Used to check if the  right mouse click was pressed first time, 
-        // is still pressed, or is stop pressed
-        char m_rightMouseClickState;
-        char m_rightShoulderBtnJoy1State;
+        // Store if buttons are pressed, still pressed or released
+        // Map: <Button, state>
+        std::map<sf::Mouse::Button, char> m_mouseBtnStates;
+        // States of joystick btns
+        // First map: <joystickId, stateMap>
+        // Second map: <button, state>
+        std::map<unsigned int, std::map<unsigned int, char>> m_joybtnStates;
 
     public:
         InputHandler(sf::RenderWindow *window);
@@ -26,11 +29,22 @@ class InputHandler
     private:
         void handleEvents(std::queue<sf::Event> &eventQueue, 
                 QueueHelper<Input> &inputQueue);
+        void handleKeyboardEvents(sf::Event &event, 
+                QueueHelper<Input> &inputQueue);
+        void handleJoystickEvents(sf::Event &event, 
+                QueueHelper<Input> &inputQueue, unsigned int joystickId);
+
         void handleRealTimeInput(QueueHelper<Input> &inputQueue);
-        void handleRealTimeRightClick(QueueHelper<Input> &inputQueue);
-        void handleRealTimeRightShoulderBtnJoy1(QueueHelper<Input> &inputQueue);
+        void handleKeyboardRealTimeInput(QueueHelper<Input> &inputQueue);
+        void handleJoystickRealTimeInput(QueueHelper<Input> &inputQueue, 
+                unsigned int joystickId);
         
+        char getRealTimeMouseBtnState(sf::Mouse::Button button);
+        char getRealTimeJoyBtnState(unsigned int joystickId, unsigned int button);
+
         sf::Vector2f getCursorPos(sf::Vector2f cursorPos, float tolerance) const;
+        // Translates the joystickId to InptDevice
+        InputDevice getInputDevice(unsigned int joystickId) const;
 
 };
 
