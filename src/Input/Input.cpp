@@ -1,23 +1,8 @@
 #include "Input/Input.hpp"
 
-Input::Input(InputTypes inputType)
-: m_inputType{ inputType }
-, m_inputDevice{ InputDevice::DEFAULT }
-{
-
-}
-
 Input::Input(InputTypes inputType, InputDevice inputDevice)
 : m_inputType{ inputType }
 , m_inputDevice{ inputDevice }
-{
-
-}
-
-Input::Input(InputTypes inputType, sf::Vector2f values)
-: m_inputType{ inputType }
-, m_inputDevice{ InputDevice::DEFAULT }
-, m_values{ values }
 {
 
 }

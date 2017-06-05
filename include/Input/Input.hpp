@@ -16,9 +16,7 @@ class Input
         sf::Vector2f m_values;
 
     public:
-        Input(InputTypes inputType);
         Input(InputTypes inputType, InputDevice inputDevice);
-        Input(InputTypes inputType, sf::Vector2f values);
         Input(InputTypes inputType, InputDevice inputDevice, sf::Vector2f values);
 
         InputTypes getInputType() const;

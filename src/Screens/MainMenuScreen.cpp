@@ -31,12 +31,19 @@ void MainMenuScreen::buildScene()
     {
         const Level &level = *(m_context.levelHolder->getLevels()[0].get());
         std::map<InputDevice, WorldObjectTypes> deviceMap;
-        deviceMap.insert({ InputDevice::JOYSTICK_1, WorldObjectTypes::PLAYER });
-        deviceMap.insert({ InputDevice::DEFAULT, 
-                WorldObjectTypes::PLAYER_TWO });
-        m_screenStack->registerScreen<MainGameScreen, Level, 
-            std::map<InputDevice, WorldObjectTypes>> 
-            (ScreenID::GAME, level, deviceMap);
+        deviceMap.insert({ InputDevice::JOYSTICK_0, 
+                WorldObjectTypes::PLAYER_1 });
+        deviceMap.insert({ InputDevice::KEYBOARD_MOUSE, 
+                WorldObjectTypes::PLAYER_2 });
+        m_screenStack->registerScreen
+            <MainGameScreen, 
+            Level, 
+            std::map<InputDevice, WorldObjectTypes>,
+            MainGameScreen::GameMode> 
+                   (ScreenID::GAME, 
+                    level, 
+                    deviceMap, 
+                    MainGameScreen::GameMode::TWO_PLAYER);
         
         m_screenStack->registerScreen<PauseScreen>
             (ScreenID::PAUSE);

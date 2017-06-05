@@ -3,9 +3,9 @@
 
 enum class InputDevice
 {
-    DEFAULT,
-    JOYSTICK_1,
-    JOYSTICK_2
+    KEYBOARD_MOUSE,
+    JOYSTICK_0,
+    JOYSTICK_1
 };
 
 #endif // !ENUMINPUTDEVICE_HPP

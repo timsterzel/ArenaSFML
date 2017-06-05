@@ -30,7 +30,7 @@ template <typename T, typename S, typename R, typename Q>
 void ScreenStack::registerScreen(ScreenID screenID, const S &second, 
         R third, Q fourth)
 {
-    m_factories[screenID] = [this, &second, &third, &fourth] ()
+    m_factories[screenID] = [this, &second, &third, fourth] ()
     {
         return std::make_unique<T>(this, m_context, second, third, fourth);
     };

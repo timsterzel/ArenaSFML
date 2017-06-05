@@ -18,6 +18,13 @@
 
 class MainGameScreen : public Screen
 {
+    public:
+        enum class GameMode
+        {
+            ONE_PLAYER,
+            TWO_PLAYER
+        };
+
     private:
         bool m_isGamePaused;
         bool m_showCollisionInfo;
@@ -26,6 +33,7 @@ class MainGameScreen : public Screen
         const Level &m_level;
         // Stored which control device controls which player
         std::map<InputDevice, WorldObjectTypes> m_deviceMap;
+        GameMode m_gameMode;
 
         // Used to apply the shader right on all drawn things. Some shaders only
         // effects textures right, so when we want to use shaders, we first draw all
@@ -49,14 +57,16 @@ class MainGameScreen : public Screen
         QueueHelper<Command> m_commandQueue;
 
         sf::FloatRect m_worldBounds;
-        Warrior *m_playerWarrior;
+        Warrior *m_warriorPlayer1;
+        Warrior *m_warriorPlayer2;
+
         // TMP, Collision counter
         long colCnt = 0;
 
     public:
         MainGameScreen(ScreenStack *screenStack, Context &context, 
                 const Level &level, const std::map<InputDevice, 
-                WorldObjectTypes> deviceMap);
+                WorldObjectTypes> deviceMap, GameMode gameMode);
 
         virtual ~MainGameScreen();
         
@@ -83,8 +93,12 @@ class MainGameScreen : public Screen
                 unsigned int type2);
         void resolveEntityCollisions(SceneNode *sceneNodeFirst, 
                 SceneNode *sceneNodeSecond, CollisionInfo &collisionInfo);
+        
+        void updateCamera(float dt);
+        
         // Check if the player is still in game
-        bool isStillPlayerIsInGame();
+        bool isStillPlayer1InGame();
+        bool isStillPlayer2InGame();
         void handleConsoleCommands(gsf::Widget* widget, sf::String command);
         // Calculate the pos and the size of window size depending paramters of
         // gui environment

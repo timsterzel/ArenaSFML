@@ -3,7 +3,8 @@
 
 enum class CommandTypes
 {
-    LOOK_AT,
+    LOOK_AT_ABSOLUTE,
+    LOOK_AT_RELATIVE,
     ROTATE,
     MOVE_IN_DIR,
     MOVE_LEFT,

@@ -287,8 +287,11 @@ void Warrior::onCommandCurrent(const Command &command, float dt)
 
         switch (command.getCommandType())
         {
-            case CommandTypes::LOOK_AT :
+            case CommandTypes::LOOK_AT_ABSOLUTE :
                 lookAt(command.getValues());
+                break;
+            case CommandTypes::LOOK_AT_RELATIVE :
+                lookAt(getWorldPosition() + command.getValues());
                 break;
             case CommandTypes::ROTATE :
                 break;

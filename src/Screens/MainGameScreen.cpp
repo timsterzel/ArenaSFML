@@ -15,14 +15,18 @@
 #include "Game.hpp"
 #include <cmath>
 
-MainGameScreen::MainGameScreen(ScreenStack *screenStack, Context &context, 
-        const Level &level, const std::map<InputDevice, WorldObjectTypes> deviceMap)
+MainGameScreen::MainGameScreen(ScreenStack *screenStack, 
+        Context &context, 
+        const Level &level, 
+        const std::map<InputDevice, WorldObjectTypes> deviceMap,
+        MainGameScreen::GameMode gameMode)
 : Screen(screenStack, context)
 , m_isGamePaused{ false }
 , m_showCollisionInfo{ false }
 , m_window{ *context.window }
 , m_level{ level }
 , m_deviceMap{ deviceMap }
+, m_gameMode{ gameMode }
 , m_isRenderTextureAvailable{ false }
 , m_gameView{ context.gameView }
 , m_guiView{ context.guiView }
@@ -32,7 +36,7 @@ MainGameScreen::MainGameScreen(ScreenStack *screenStack, Context &context,
 , m_stanimaBarWarr1{ nullptr }
 , m_stanimaBarWarr2{ nullptr }
 , m_worldBounds{ 0.f, 0.f, 6000.f, 6000.f }
-, m_playerWarrior{ nullptr }
+, m_warriorPlayer1{ nullptr }
 {
     buildScene();
 }
@@ -129,42 +133,51 @@ void MainGameScreen::buildScene()
     //    (RenderLayers::MAIN, 100.f, "runner", *m_context.textureHolder, 
     //     *m_context.spriteSheetMapHolder, m_possibleTargetWarriors) };
     
-    m_playerWarrior = warrior.get();
+    m_warriorPlayer1 = warrior.get();
     std::unique_ptr<CollisionShape> collisionShapeWarrior{ 
         std::make_unique<CollisionCircle>(12.f) };
-    m_playerWarrior->setCollisionShape(std::move(collisionShapeWarrior));
-    m_playerWarrior->setPosition(800 / 2.f, 480 / 2.f);
-    //m_playerWarrior->setVelocity(60.f);
-    m_playerWarrior->setType(
-            WorldObjectTypes::PLAYER | 
+    m_warriorPlayer1->setCollisionShape(std::move(collisionShapeWarrior));
+    m_warriorPlayer1->setPosition(800 / 2.f, 480 / 2.f);
+    //m_warriorPlayer1->setVelocity(60.f);
+    m_warriorPlayer1->setType(
+            WorldObjectTypes::PLAYER_1 | 
             WorldObjectTypes::WARRIOR | 
             WorldObjectTypes::KNIGHT);
-    //m_playerWarrior->setWeapon(swordPlayer.get());
-    //m_playerWarrior->setBodyParts(playerLeftShoe.get(), playerRightShoe.get(), playerUpperBody.get());
+    //m_warriorPlayer1->setWeapon(swordPlayer.get());
+    //m_warriorPlayer1->setBodyParts(playerLeftShoe.get(), playerRightShoe.get(), playerUpperBody.get());
     // Add Parts to player
-    //m_playerWarrior->attachChild(std::move(swordPlayer));
+    //m_warriorPlayer1->attachChild(std::move(swordPlayer));
     m_possibleTargetWarriors.push_back(warrior.get());
     m_sceneGraph.attachChild(std::move(warrior));
 
-    // Enemy
-    std::unique_ptr<Warrior> enemy1{ std::make_unique<Runner>
+    // Player 2
+    std::unique_ptr<Warrior> player2{ std::make_unique<Runner>
         (RenderLayers::MAIN, 100.f, "runner", *m_context.textureHolder, 
          *m_context.spriteSheetMapHolder, m_possibleTargetWarriors) };
-    //SceneNode *wizardEnemyTmp = wizard.get();
-    std::unique_ptr<CollisionShape> collisionShapeEnemy{ 
+    std::unique_ptr<CollisionShape> collisionShapePlayer2{ 
         std::make_unique<CollisionCircle>(12.f) };
-    enemy1->setCollisionShape(std::move(collisionShapeEnemy));
-    //wizard->setPosition(800 / 2.f + 100.f, 480 / 2.f);
-    enemy1->setPosition(800 / 2.f - 160.f, 480 / 2.f - 100.f);
-    //enemy1->setVelocity(60.f);
-    enemy1->setType(WorldObjectTypes::ENEMY | 
+    player2->setCollisionShape(std::move(collisionShapePlayer2));
+    player2->setPosition(800 / 2.f - 160.f, 480 / 2.f - 100.f);
+    if (m_gameMode == GameMode::TWO_PLAYER)
+    {
+        std::cout << "GameMode Two\n";
+        player2->setType(WorldObjectTypes::PLAYER_2 | 
             WorldObjectTypes::WARRIOR |
             WorldObjectTypes::RUNNER);
-    //enemy1->setActualTarget(m_playerWarrior);
-    enemy1->setIsAiActive(false);
-    m_possibleTargetWarriors.push_back(enemy1.get());
-    m_sceneGraph.attachChild(std::move(enemy1));
-    
+        player2->setIsAiActive(false);
+        m_warriorPlayer2 = player2.get();    
+    }
+    else if (m_gameMode == GameMode::ONE_PLAYER)
+    {
+        std::cout << "GameMode ONE\n";
+        player2->setType(WorldObjectTypes::ENEMY | 
+            WorldObjectTypes::WARRIOR |
+            WorldObjectTypes::RUNNER);
+        player2->setIsAiActive(true);
+    }
+    m_possibleTargetWarriors.push_back(player2.get());
+    m_sceneGraph.attachChild(std::move(player2));
+
     buildLevel();
 }
 
@@ -200,17 +213,13 @@ void MainGameScreen::buildLevel()
         m_sceneGraph.attachChild(std::move(sprite));
     }
     // Load spawn points
-    if (m_level.spawnPoint1)
+    if (m_level.spawnPoint1 && m_warriorPlayer2)
     {
-        m_playerWarrior->setPosition(m_level.spawnPoint1->position);
+        m_warriorPlayer1->setPosition(m_level.spawnPoint1->position);
     }
-    if (m_level.spawnPoint2)
+    if (m_level.spawnPoint2 && m_warriorPlayer2)
     {
-        if (m_possibleTargetWarriors.size() > 1)
-        {
-            m_possibleTargetWarriors[1]->setPosition(
-                    m_level.spawnPoint2->position);
-        }
+        m_warriorPlayer2->setPosition(m_level.spawnPoint2->position);
     }
 }
 
@@ -274,9 +283,9 @@ void MainGameScreen::handleConsoleCommands(gsf::Widget* widget, sf::String comma
             try 
             {
                 float val{ std::stof(commands[1]) };
-                if (m_playerWarrior)
+                if (m_warriorPlayer1)
                 {
-                    m_playerWarrior->heal(val);
+                    m_warriorPlayer1->heal(val);
                 }
             } 
             catch (...)
@@ -293,9 +302,9 @@ void MainGameScreen::handleConsoleCommands(gsf::Widget* widget, sf::String comma
             try 
             {
                 float val{ std::stof(commands[1]) };
-                if (m_playerWarrior)
+                if (m_warriorPlayer1)
                 {
-                    m_playerWarrior->damage(val);
+                    m_warriorPlayer1->damage(val);
                 }
             } 
             catch (...)
@@ -326,30 +335,22 @@ bool MainGameScreen::handleInput(Input &input, float dt)
     {
         case InputTypes::MOUSE_POS :
         {
-            m_commandQueue.push({ CommandTypes::LOOK_AT, inputPlayer, 
+            m_commandQueue.push({ CommandTypes::LOOK_AT_ABSOLUTE, inputPlayer, 
                     input.getValues() });
             break;
         }
         case InputTypes::CURSOR_RIGHT_POS :
         {
-            if (m_playerWarrior)
-            {
-                sf::Vector2f lookAtPos{ m_playerWarrior->getWorldPosition() 
-                    + input.getValues()  };
-
-                m_commandQueue.push({ CommandTypes::LOOK_AT, 
-                        inputPlayer, lookAtPos });
-            }
+            sf::Vector2f lookAtPos{ input.getValues() };
+            m_commandQueue.push({ CommandTypes::LOOK_AT_RELATIVE, inputPlayer, 
+                    lookAtPos });
             break;
         }
         case InputTypes::CURSOR_LEFT_POS :
         {
-            if (m_playerWarrior)
-            {
-                sf::Vector2f moveDir{ input.getValues() };
-                m_commandQueue.push({ CommandTypes::MOVE_IN_DIR, 
-                        inputPlayer, moveDir });
-            }
+            sf::Vector2f moveDir{ input.getValues() };
+            m_commandQueue.push({ CommandTypes::MOVE_IN_DIR, 
+                inputPlayer, moveDir });
             break;
         }
         case InputTypes::UP :
@@ -493,7 +494,7 @@ bool MainGameScreen::handleEvent(sf::Event &event, float dt)
 void World::controlWorldEntities()
 {
     // Let Enemy look to player
-    m_commandQueue.push({ CommandTypes::LOOK_AT, WorldObjectTypes::ENEMY, m_playerWarrior->getPosition() });
+    m_commandQueue.push({ CommandTypes::LOOK_AT, WorldObjectTypes::ENEMY, m_warriorPlayer1->getPosition() });
 }
 */
 
@@ -525,9 +526,13 @@ bool MainGameScreen::update(float dt)
     m_possibleTargetWarriors.erase(destroyBegin, m_possibleTargetWarriors.end());
 
     // If player is not still in game we have to make the player pointer nullptr
-    if (!isStillPlayerIsInGame())
+    if (!isStillPlayer1InGame())
     {
-        m_playerWarrior = nullptr;
+        m_warriorPlayer1 = nullptr;
+    }
+    else if (!isStillPlayer2InGame())
+    {
+        m_warriorPlayer2 = nullptr;
     }
 
     m_sceneGraph.removeDestroyed();
@@ -538,35 +543,63 @@ bool MainGameScreen::update(float dt)
     m_window.setView(m_guiView);
     m_guiEnvironment.update(dt);
     m_window.setView(m_gameView);
-    if (m_playerWarrior)
+    if (m_warriorPlayer1)
     {
-        m_healthBarWarr1->setProgress(m_playerWarrior->getCurrentHealth());
-        m_stanimaBarWarr1->setProgress(m_playerWarrior->getCurrentStanima());
-        //m_healthBarWarr1->setProgress((m_playerWarrior->getMaxHealth() / 100) 
-        //        * m_playerWarrior->getCurrentHealth());
+        m_healthBarWarr1->setProgress(m_warriorPlayer1->getCurrentHealth());
+        m_stanimaBarWarr1->setProgress(m_warriorPlayer1->getCurrentStanima());
+        //m_healthBarWarr1->setProgress((m_warriorPlayer1->getMaxHealth() / 100) 
+        //        * m_warriorPlayer1->getCurrentHealth());
     }
-    // If the container contains more then one warrior there is a enemy
-    if (m_possibleTargetWarriors.size() > 1)
+    if (m_warriorPlayer2)
     {
-        m_healthBarWarr2->setProgress(
-                m_possibleTargetWarriors[1]->getCurrentHealth());
-        m_stanimaBarWarr2->setProgress(
-                m_possibleTargetWarriors[1]->getCurrentStanima());
+        m_healthBarWarr2->setProgress(m_warriorPlayer2->getCurrentHealth());
+        m_stanimaBarWarr2->setProgress(m_warriorPlayer2->getCurrentStanima());
     }
     
-    if (m_playerWarrior)
-    {
-        m_gameView.setCenter(m_playerWarrior->getWorldPosition());
-    }
+    updateCamera(dt);
+    
     return false;
 }
 
-bool MainGameScreen::isStillPlayerIsInGame()
+void MainGameScreen::updateCamera(float dt)
+{
+    if (m_warriorPlayer1)
+    {
+        m_gameView.setCenter(m_warriorPlayer1->getWorldPosition());
+    }
+}
+
+bool MainGameScreen::isStillPlayer1InGame()
 {
     // Check if player is still in container
     for (Warrior *warrior : m_possibleTargetWarriors)
     {
-        if (warrior->getType() & WorldObjectTypes::PLAYER)
+        /*
+        if (warrior->getType() & WorldObjectTypes::PLAYER_1)
+        {
+            return true;
+        }
+        */
+        if (warrior == m_warriorPlayer1)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool MainGameScreen::isStillPlayer2InGame()
+{
+    // Check if player is still in container
+    for (Warrior *warrior : m_possibleTargetWarriors)
+    {
+        /*
+        if (warrior->getType() & WorldObjectTypes::PLAYER_2)
+        {
+            return true;
+        }
+        */
+        if (warrior == m_warriorPlayer2) 
         {
             return true;
         }

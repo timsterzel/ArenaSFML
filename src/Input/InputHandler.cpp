@@ -38,8 +38,6 @@ void InputHandler::handleEvents(std::queue<sf::Event> &eventQueue,
             handleJoystickEvents(event, inputQueue, 1);
         }
         eventQueue.push(event);
-        
-
     }
 }
 
@@ -52,46 +50,47 @@ void InputHandler::handleKeyboardEvents(sf::Event &event,
     }
     else if (event.type == sf::Event::Resized)
     {
-        inputQueue.push({ InputTypes::WINDOW_RESIZED });
+        inputQueue.push({ InputTypes::WINDOW_RESIZED, 
+                InputDevice::KEYBOARD_MOUSE });
     }
     else if (event.type == sf::Event::LostFocus)
     {
-        inputQueue.push({ InputTypes::LOST_FOCUS });
+        inputQueue.push({ InputTypes::LOST_FOCUS, InputDevice::KEYBOARD_MOUSE });
     }
     else if (event.type == sf::Event::GainedFocus)
     {
-        inputQueue.push({ InputTypes::GAINED_FOCUS });
+        inputQueue.push({ InputTypes::GAINED_FOCUS, InputDevice::KEYBOARD_MOUSE });
     }
     else if (event.type == sf::Event::KeyPressed)
     {
         if (event.key.code == sf::Keyboard::F1)
         {
-            inputQueue.push({ InputTypes::D1 });
+            inputQueue.push({ InputTypes::D1, InputDevice::KEYBOARD_MOUSE });
         }
         else if (event.key.code == sf::Keyboard::F2)
         {
-            inputQueue.push({ InputTypes::D2 });
+            inputQueue.push({ InputTypes::D2, InputDevice::KEYBOARD_MOUSE });
         }
         else if (event.key.code == sf::Keyboard::F3)
         {
-            inputQueue.push({ InputTypes::D3 });
+            inputQueue.push({ InputTypes::D3, InputDevice::KEYBOARD_MOUSE });
         }
         else if (event.key.code == sf::Keyboard::F4)
         {
-            inputQueue.push({ InputTypes::D4 });
+            inputQueue.push({ InputTypes::D4, InputDevice::KEYBOARD_MOUSE });
         }
         else if (event.key.code == sf::Keyboard::F5)
         {
-            inputQueue.push({ InputTypes::CONSOLE });
+            inputQueue.push({ InputTypes::CONSOLE, InputDevice::KEYBOARD_MOUSE });
         }
         else if (event.key.code == sf::Keyboard::Escape)
         {
-            inputQueue.push({ InputTypes::PAUSE });
-            inputQueue.push({ InputTypes::BACK });
+            inputQueue.push({ InputTypes::PAUSE, InputDevice::KEYBOARD_MOUSE });
+            inputQueue.push({ InputTypes::BACK, InputDevice::KEYBOARD_MOUSE });
         }
         else if (event.key.code == sf::Keyboard::F5)
         {
-            inputQueue.push({ InputTypes::PAUSE });
+            inputQueue.push({ InputTypes::PAUSE, InputDevice::KEYBOARD_MOUSE });
         }
 
     }
@@ -102,17 +101,19 @@ void InputHandler::handleKeyboardEvents(sf::Event &event,
             // LControl + Left Button pressed
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl))
             {
-                inputQueue.push({ InputTypes::SPECIAL_ACTION });
+                inputQueue.push({ InputTypes::SPECIAL_ACTION, 
+                        InputDevice::KEYBOARD_MOUSE });
             }
             // Only left button mouse pressed
             else
             {
-                inputQueue.push({ InputTypes::ACTION_1 });
+                inputQueue.push({ InputTypes::ACTION_1, 
+                        InputDevice::KEYBOARD_MOUSE });
             }
         }
         else if (event.mouseButton.button == sf::Mouse::Right)
         {
-            inputQueue.push({ InputTypes::ACTION_2 });
+            inputQueue.push({ InputTypes::ACTION_2, InputDevice::KEYBOARD_MOUSE });
         }
     }
 }
@@ -132,6 +133,10 @@ void InputHandler::handleJoystickEvents(sf::Event &event,
         else if (event.joystickButton.button == 5)
         {
             inputQueue.push({ InputTypes::ACTION_2, inputDevice });
+        }
+        else if (event.joystickButton.button == 7)
+        {
+            inputQueue.push({ InputTypes::PAUSE, inputDevice });
         }
     }
     else if (event.type == sf::Event::JoystickMoved)
@@ -166,28 +171,29 @@ void InputHandler::handleKeyboardRealTimeInput(QueueHelper<Input> &inputQueue)
     const sf::Vector2f CurrentMousePosWorld{ 
         m_window->mapPixelToCoords(CurrentMousePosPixel) };
 
-    inputQueue.push({ InputTypes::MOUSE_POS, CurrentMousePosWorld });
+    inputQueue.push({ InputTypes::MOUSE_POS, InputDevice::KEYBOARD_MOUSE, 
+            CurrentMousePosWorld });
     
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) 
             && sf::Keyboard::isKeyPressed(sf::Keyboard::A))
     {
-        inputQueue.push({ InputTypes::UP_LEFT });
+        inputQueue.push({ InputTypes::UP_LEFT, InputDevice::KEYBOARD_MOUSE });
     }
     else if(sf::Keyboard::isKeyPressed(sf::Keyboard::W) 
             && sf::Keyboard::isKeyPressed(sf::Keyboard::D))
     {
-        inputQueue.push({ InputTypes::UP_RIGHT });
+        inputQueue.push({ InputTypes::UP_RIGHT, InputDevice::KEYBOARD_MOUSE });
     }
     else if(sf::Keyboard::isKeyPressed(sf::Keyboard::S) 
             && sf::Keyboard::isKeyPressed(sf::Keyboard::A))
     {
-        inputQueue.push({ InputTypes::DOWN_LEFT });
+        inputQueue.push({ InputTypes::DOWN_LEFT, InputDevice::KEYBOARD_MOUSE });
     }
     else if(sf::Keyboard::isKeyPressed(sf::Keyboard::S) 
             && sf::Keyboard::isKeyPressed(sf::Keyboard::D))
     {
-        inputQueue.push({ InputTypes::DOWN_RIGHT });
+        inputQueue.push({ InputTypes::DOWN_RIGHT, InputDevice::KEYBOARD_MOUSE });
     }
     // Dont handle W A S D separately, 
     // when there are pairs like W+A or W+D or S+A or S+D
@@ -195,28 +201,31 @@ void InputHandler::handleKeyboardRealTimeInput(QueueHelper<Input> &inputQueue)
     {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
         {
-            inputQueue.push({ InputTypes::UP });
+            inputQueue.push({ InputTypes::UP, InputDevice::KEYBOARD_MOUSE });
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
         {
-            inputQueue.push({ InputTypes::DOWN });
+            inputQueue.push({ InputTypes::DOWN, InputDevice::KEYBOARD_MOUSE });
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
         {
-            inputQueue.push({ InputTypes::LEFT });
+            inputQueue.push({ InputTypes::LEFT, InputDevice::KEYBOARD_MOUSE });
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
         {
-            inputQueue.push({ InputTypes::RIGHT });
+            inputQueue.push({ InputTypes::RIGHT, InputDevice::KEYBOARD_MOUSE });
         }
     }
     switch (getRealTimeMouseBtnState(sf::Mouse::Button::Right))
     {
-        case 1: inputQueue.push({ InputTypes::ACTION_1_START }); 
+        case 1: inputQueue.push({ InputTypes::ACTION_1_START, 
+                        InputDevice::KEYBOARD_MOUSE }); 
                 break;
-        case 2: inputQueue.push({ InputTypes::ACTION_1_STILL }); 
+        case 2: inputQueue.push({ InputTypes::ACTION_1_STILL, 
+                        InputDevice::KEYBOARD_MOUSE }); 
                 break;
-        case 3: inputQueue.push({ InputTypes::ACTION_1_STOPPED }); 
+        case 3: inputQueue.push({ InputTypes::ACTION_1_STOPPED, 
+                        InputDevice::KEYBOARD_MOUSE }); 
                 break;
     }
 
@@ -250,7 +259,7 @@ void InputHandler::handleJoystickRealTimeInput(QueueHelper<Input> &inputQueue,
         std::abs(curLeftPos.y) > CursorTolerance)
     {
         inputQueue.push({ InputTypes::CURSOR_LEFT_POS, 
-                InputDevice::JOYSTICK_1, curLeftPos });
+                inputDevice, curLeftPos });
     }
     // Movement Digital axis
     if (sf::Joystick::getAxisPosition(joystickId, sf::Joystick::PovY) == -100 && 
@@ -314,21 +323,18 @@ char InputHandler::getRealTimeMouseBtnState(sf::Mouse::Button button)
     {
         newState = 1;
         m_mouseBtnStates[button] = newState;
-        //inputQueue.push({ InputTypes::ACTION_1_START });
     }
     // Left mouse key was pressed and is still pressed (still pressing)
     else if (isPressed && currentState == 1)
     {
         newState = 2;
         m_mouseBtnStates[button] = newState;
-        //inputQueue.push({ InputTypes::ACTION_1_STILL });
     }
     // Left mouse key was pressed and is not pressed anymore(stop pressing)
     else if (!isPressed && currentState == 2)
     {
         newState = 3;
         m_mouseBtnStates[button] = newState;
-        //inputQueue.push({ InputTypes::ACTION_1_STOPPED });
     }
     // Left mouse key was not pressed and is not pressed at the moment
     else if (!isPressed && currentState == 3)
@@ -350,14 +356,12 @@ char InputHandler::getRealTimeJoyBtnState(unsigned int joystickId,
     {
         newState = 1;
         m_joybtnStates[joystickId][button] = newState;
-        //inputQueue.push({ InputTypes::ACTION_1_START, inputDevice });
     }
     // Axis key was pressed and is still pressed (still pressing)
     else if (isPressed && currentState == 1)
     {
         newState = 2;
         m_joybtnStates[joystickId][button] = newState;
-        //inputQueue.push({ InputTypes::ACTION_1_STILL, inputDevice });
     }
     // Axis key was pressed and is not pressed anymore(stop pressing)
     else if (!isPressed && currentState == 2)
@@ -400,8 +404,8 @@ InputDevice InputHandler::getInputDevice(unsigned int joystickId) const
 {
     switch(joystickId)
     {
-        case 0: return InputDevice::JOYSTICK_1;
-        case 1: return InputDevice::JOYSTICK_2;
+        case 0: return InputDevice::JOYSTICK_0;
+        case 1: return InputDevice::JOYSTICK_1;
     }
     // This expression should be unreachable, because only joystick ids, which are
     // definded as InputDevice should be used
