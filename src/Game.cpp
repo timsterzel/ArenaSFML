@@ -171,7 +171,6 @@ void Game::buildScene()
 	m_txtStatFPS.setCharacterSize(12);
 	m_txtStatFPS.setFillColor(sf::Color::White);
 
-
     // Background
     m_background.setOrigin(m_background.getSize().x / 2.f, 
             m_background.getSize().y / 2.f);

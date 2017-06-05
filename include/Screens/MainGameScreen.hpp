@@ -50,6 +50,7 @@ class MainGameScreen : public Screen
         gsf::ProgressWidget *m_healthBarWarr2;
         gsf::ProgressWidget *m_stanimaBarWarr1;
         gsf::ProgressWidget *m_stanimaBarWarr2;
+        gsf::TextWidget *m_winnerText;
 
         // Warriors which are in the game
         std::vector<Warrior*> m_possibleTargetWarriors;
@@ -78,13 +79,14 @@ class MainGameScreen : public Screen
         //void controlWorldEntities();
         void handleCommands(float dt);
         virtual bool update(float dt);
-    
+
         void handleCollision(float dt);
 
         virtual void render();
     
         virtual void windowSizeChanged();
     private:
+        void buildGuiElements();
         void buildLevel();
 
         SceneNode* getSceneNodeOfType(SceneNode::Pair sceneNodePair, 
@@ -95,7 +97,8 @@ class MainGameScreen : public Screen
                 SceneNode *sceneNodeSecond, CollisionInfo &collisionInfo);
         
         void updateCamera(float dt);
-        
+        void handleWinner();
+
         // Check if the player is still in game
         bool isStillPlayer1InGame();
         bool isStillPlayer2InGame();

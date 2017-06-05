@@ -35,6 +35,7 @@ MainGameScreen::MainGameScreen(ScreenStack *screenStack,
 , m_healthBarWarr2{ nullptr }
 , m_stanimaBarWarr1{ nullptr }
 , m_stanimaBarWarr2{ nullptr }
+, m_winnerText{ nullptr }
 , m_worldBounds{ 0.f, 0.f, 6000.f, 6000.f }
 , m_warriorPlayer1{ nullptr }
 {
@@ -58,44 +59,7 @@ void MainGameScreen::buildScene()
     {
         m_isRenderTextureAvailable = true;
     }
-    // healt bar
-    gsf::ProgressWidget::Ptr healthWar1{ gsf::ProgressWidget::create(100.f, 20.f) };
-    m_healthBarWarr1 = healthWar1.get();
-    healthWar1->setProgressColor(sf::Color::Red);
-    m_guiEnvironment.addWidget(std::move(healthWar1));
-
-    gsf::ProgressWidget::Ptr healthWar2{ gsf::ProgressWidget::create(100.f, 20.f) };
-    m_healthBarWarr2 = healthWar2.get();
-    healthWar2->setProgressColor(sf::Color::Red);
-    m_guiEnvironment.addWidget(std::move(healthWar2));
-    
-    // Stanima bar
-    gsf::ProgressWidget::Ptr stanimaWar1{ gsf::ProgressWidget::create(100.f, 20.f) };
-    m_stanimaBarWarr1 = stanimaWar1.get();
-    stanimaWar1->setProgressColor(sf::Color::Blue);
-    m_guiEnvironment.addWidget(std::move(stanimaWar1));
-    
-    gsf::ProgressWidget::Ptr stanimaWar2{ 
-        gsf::ProgressWidget::create(100.f, 20.f) };
-    m_stanimaBarWarr2 = stanimaWar2.get();
-    stanimaWar2->setProgressColor(sf::Color::Blue);
-    m_guiEnvironment.addWidget(std::move(stanimaWar2));
-    
-    // Create Console widget
-    gsf::ConsoleWidget::Ptr consoleWidget{ gsf::ConsoleWidget::create(
-            getContext().fontHolder->get("default")) };
-    consoleWidget->setIsVisible(false);
-    consoleWidget->setBackgroundColor(sf::Color(255, 255, 255, 128));
-    m_consoleWidget = consoleWidget.get();
-    m_consoleWidget->setOnCommandEnteredListener(
-            [this](gsf::Widget *widget, sf::String command)
-            {
-                this->handleConsoleCommands(widget, command);
-            });
-    
-    m_guiEnvironment.addWidget(std::move(consoleWidget));
-    // Calculate the pos and size of the gui widget depending of the views
-    calcGuiSizeAndPos();
+    buildGuiElements();
     // Play music
     m_context.music->play("gametheme01");
     
@@ -179,6 +143,58 @@ void MainGameScreen::buildScene()
     m_sceneGraph.attachChild(std::move(player2));
 
     buildLevel();
+}
+
+void MainGameScreen::buildGuiElements()
+{
+    sf::Font &font{ getContext().fontHolder->get("default") };
+    // Winner Text
+    gsf::TextWidget::Ptr winnerText{ 
+        gsf::TextWidget::create("PLAYER WINS", font, 60) };
+    winnerText->setIsVisible(false);
+    winnerText->setTextColor(sf::Color::Transparent);
+    winnerText->setTextOutlineThickness(1.f);
+    winnerText->setOutlineTextColor(sf::Color::White);
+    m_winnerText = winnerText.get();
+    m_guiEnvironment.addWidget(std::move(winnerText));
+
+    // healt bar
+    gsf::ProgressWidget::Ptr healthWar1{ gsf::ProgressWidget::create(100.f, 20.f) };
+    m_healthBarWarr1 = healthWar1.get();
+    healthWar1->setProgressColor(sf::Color::Red);
+    m_guiEnvironment.addWidget(std::move(healthWar1));
+
+    gsf::ProgressWidget::Ptr healthWar2{ gsf::ProgressWidget::create(100.f, 20.f) };
+    m_healthBarWarr2 = healthWar2.get();
+    healthWar2->setProgressColor(sf::Color::Red);
+    m_guiEnvironment.addWidget(std::move(healthWar2));
+    
+    // Stanima bar
+    gsf::ProgressWidget::Ptr stanimaWar1{ gsf::ProgressWidget::create(100.f, 20.f) };
+    m_stanimaBarWarr1 = stanimaWar1.get();
+    stanimaWar1->setProgressColor(sf::Color::Blue);
+    m_guiEnvironment.addWidget(std::move(stanimaWar1));
+    
+    gsf::ProgressWidget::Ptr stanimaWar2{ 
+        gsf::ProgressWidget::create(100.f, 20.f) };
+    m_stanimaBarWarr2 = stanimaWar2.get();
+    stanimaWar2->setProgressColor(sf::Color::Blue);
+    m_guiEnvironment.addWidget(std::move(stanimaWar2));
+    
+    // Create Console widget
+    gsf::ConsoleWidget::Ptr consoleWidget{ gsf::ConsoleWidget::create(font) };
+    consoleWidget->setIsVisible(false);
+    consoleWidget->setBackgroundColor(sf::Color(255, 255, 255, 128));
+    m_consoleWidget = consoleWidget.get();
+    m_consoleWidget->setOnCommandEnteredListener(
+            [this](gsf::Widget *widget, sf::String command)
+            {
+                this->handleConsoleCommands(widget, command);
+            });
+    
+    m_guiEnvironment.addWidget(std::move(consoleWidget));
+    // Calculate the pos and size of the gui widget depending of the views
+    calcGuiSizeAndPos();
 }
 
 void MainGameScreen::buildLevel()
@@ -434,52 +450,9 @@ bool MainGameScreen::handleInput(Input &input, float dt)
         case InputTypes::CONSOLE :
             m_consoleWidget->setIsVisible(!m_consoleWidget->isVisible());
             break;
-        // Tmp (Arrow Keys)
-        /*
-        case InputTypes::UP_A :
-            m_commandQueue.push(
-                    { CommandTypes::MOVE_UP, WorldObjectTypes::PLAYER_TWO });
-            break;
-        case InputTypes::DOWN_A :
-            m_commandQueue.push(
-                    { CommandTypes::MOVE_DOWN, WorldObjectTypes::PLAYER_TWO });
-            break;
-        case InputTypes::LEFT_A :
-            m_commandQueue.push(
-                    { CommandTypes::MOVE_LEFT, WorldObjectTypes::PLAYER_TWO });
-            break;
-        case InputTypes::RIGHT_A :
-            m_commandQueue.push(
-                    { CommandTypes::MOVE_RIGHT, WorldObjectTypes::PLAYER_TWO });
-            break;
-        */
         default:
             break;
     }
-    /*
-    if ( != m_lastMousePos)
-    {
-        commandQueue.push(
-            { CommandTypes::ROTATE, WorldObjectTypes::Player, 
-                { AngleSigned, 0.f } });
-    }
-
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-    {
-        commandQueue.push({ CommandTypes::MOVE_UP, WorldObjectTypes::Player });
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-    {
-        commandQueue.push({ CommandTypes::MOVE_DOWN, WorldObjectTypes::Player });
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-    {
-        commandQueue.push({ CommandTypes::MOVE_LEFT, WorldObjectTypes::Player });
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-    {
-        commandQueue.push({ CommandTypes::MOVE_RIGHT, WorldObjectTypes::Player });
-    }*/
     return false;
 }
 
@@ -524,16 +497,7 @@ bool MainGameScreen::update(float dt)
             std::mem_fn(&Warrior::isMarkedForRemoval));
     // Remove the Warriors which are marked for removal
     m_possibleTargetWarriors.erase(destroyBegin, m_possibleTargetWarriors.end());
-
-    // If player is not still in game we have to make the player pointer nullptr
-    if (!isStillPlayer1InGame())
-    {
-        m_warriorPlayer1 = nullptr;
-    }
-    else if (!isStillPlayer2InGame())
-    {
-        m_warriorPlayer2 = nullptr;
-    }
+    handleWinner();
 
     m_sceneGraph.removeDestroyed();
     m_sceneGraph.update(dt);
@@ -547,8 +511,6 @@ bool MainGameScreen::update(float dt)
     {
         m_healthBarWarr1->setProgress(m_warriorPlayer1->getCurrentHealth());
         m_stanimaBarWarr1->setProgress(m_warriorPlayer1->getCurrentStanima());
-        //m_healthBarWarr1->setProgress((m_warriorPlayer1->getMaxHealth() / 100) 
-        //        * m_warriorPlayer1->getCurrentHealth());
     }
     if (m_warriorPlayer2)
     {
@@ -563,9 +525,57 @@ bool MainGameScreen::update(float dt)
 
 void MainGameScreen::updateCamera(float dt)
 {
-    if (m_warriorPlayer1)
+    if (m_gameMode == GameMode::ONE_PLAYER)
     {
         m_gameView.setCenter(m_warriorPlayer1->getWorldPosition());
+    }
+    else if (m_gameMode == GameMode::TWO_PLAYER)
+    {
+        // Place camera at the middle point between the two players
+        if (m_warriorPlayer1 && m_warriorPlayer2)
+        {
+            sf::Vector2f pos1{ m_warriorPlayer1->getWorldPosition() };
+            sf::Vector2f pos2{ m_warriorPlayer2->getWorldPosition() };
+            sf::Vector2f center{  pos1 + ((pos2 - pos1) / 2.f) };
+            m_gameView.setCenter(center);
+        }
+        // Place camera to the left warrior
+        else if (m_warriorPlayer1)
+        {
+            m_gameView.setCenter(m_warriorPlayer1->getWorldPosition());
+        }
+        else if (m_warriorPlayer2)
+        {
+            m_gameView.setCenter(m_warriorPlayer2->getWorldPosition());
+        }
+    }
+}
+
+void MainGameScreen::handleWinner()
+{
+    // If player is not still in game we have to make the player pointer nullptr
+    if (!isStillPlayer1InGame())
+    {
+        m_warriorPlayer1 = nullptr;
+    }
+    else if (!isStillPlayer2InGame())
+    {
+        m_warriorPlayer2 = nullptr;
+    }
+    // If the winner is already set, nothing to do
+    if (m_winnerText->isVisible())
+    {
+        return;
+    }
+    if (!m_warriorPlayer1)
+    {
+        m_winnerText->setText("PLAYER2 WINS");
+        m_winnerText->setIsVisible(true);
+    }
+    else if (!m_warriorPlayer2)
+    {
+        m_winnerText->setText("PLAYER1 WINS");
+        m_winnerText->setIsVisible(true);
     }
 }
 
@@ -783,4 +793,7 @@ void MainGameScreen::calcGuiSizeAndPos()
     m_consoleWidget->setHeight(windowViewSize.y / 4);
     m_consoleWidget->setTopPosition(0.f);
     m_consoleWidget->setLeftPosition(0.f);
+
+    // Winner Text
+    m_winnerText->setCenterPosition(m_guiView.getSize().x / 2.f, 80.f);
 }
