@@ -3,6 +3,7 @@
 
 enum class InputDevice
 {
+    NONE,
     KEYBOARD_MOUSE,
     JOYSTICK_0,
     JOYSTICK_1

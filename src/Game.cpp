@@ -78,6 +78,7 @@ Game::Game()
     //const Level &level = *(m_context.levelHolder->getLevels()[0].get());
     m_screenStack.registerScreen<MainMenuScreen>(ScreenID::MAINMENU);
     m_screenStack.registerScreen<SettingsScreen>(ScreenID::SETTINGS);
+
     //m_screenStack.registerScreen<MainGameScreen, Level>(ScreenID::GAME, level);
     //m_screenStack.registerScreen<PauseScreen>(ScreenID::PAUSE);
     // Show Game screen

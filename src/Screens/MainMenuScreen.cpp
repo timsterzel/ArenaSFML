@@ -23,10 +23,35 @@ void MainMenuScreen::buildScene()
     m_guiEnvironment.createScene("assets/gui/main_menu.xml");
     m_context.window->setView(oldView);
     
-    ScreenStack *screenStack{ m_screenStack };
-    gsf::TextButtonWidget* startGameBtn{ static_cast<gsf::TextButtonWidget*>(
-            m_guiEnvironment.getWidgetByID("textButtonWidget_startGame")) };
-    startGameBtn->setOnLeftClickListener(
+    // One Player
+    gsf::TextButtonWidget* onePlayerBtn{ static_cast<gsf::TextButtonWidget*>(
+            m_guiEnvironment.getWidgetByID("textButtonWidget_onePlayer")) };
+    onePlayerBtn->setOnLeftClickListener(
+            [this](gsf::Widget *widget, sf::Vector2f pos)
+    {
+        const Level &level = *(m_context.levelHolder->getLevels()[0].get());
+        std::map<InputDevice, WorldObjectTypes> deviceMap;
+        deviceMap.insert({ InputDevice::JOYSTICK_0, 
+                WorldObjectTypes::PLAYER_1 });
+        // Register MainGameScreen with paramaters
+        
+        m_screenStack->registerScreen
+            <MainGameScreen, 
+            Level, 
+            std::map<InputDevice, WorldObjectTypes>,
+            MainGameScreen::GameMode> 
+                   (ScreenID::GAME, 
+                    level, 
+                    deviceMap, 
+                    MainGameScreen::GameMode::ONE_PLAYER);
+        m_screenStack->registerScreen<PauseScreen>
+            (ScreenID::PAUSE);
+        m_screenStack->pushScreen(ScreenID::GAME);
+    });
+    // Two Player
+    gsf::TextButtonWidget* twoPlayerBtn{ static_cast<gsf::TextButtonWidget*>(
+            m_guiEnvironment.getWidgetByID("textButtonWidget_twoPlayer")) };
+    twoPlayerBtn->setOnLeftClickListener(
             [this](gsf::Widget *widget, sf::Vector2f pos)
     {
         const Level &level = *(m_context.levelHolder->getLevels()[0].get());
@@ -50,12 +75,13 @@ void MainMenuScreen::buildScene()
             (ScreenID::PAUSE);
         m_screenStack->pushScreen(ScreenID::GAME);
     });
+
     gsf::TextButtonWidget* settingsBtn{ static_cast<gsf::TextButtonWidget*>(
             m_guiEnvironment.getWidgetByID("textButtonWidget_settings")) };
     settingsBtn->setOnLeftClickListener(
-            [screenStack](gsf::Widget *widget, sf::Vector2f pos)
+            [this](gsf::Widget *widget, sf::Vector2f pos)
     {
-        screenStack->pushScreen(ScreenID::SETTINGS);
+        m_screenStack->pushScreen(ScreenID::SETTINGS);
     });
 
     gsf::TextButtonWidget* quitGameBtn{ static_cast<gsf::TextButtonWidget*>(

@@ -49,6 +49,7 @@ MainGameScreen::~MainGameScreen()
 
 void MainGameScreen::buildScene()
 {
+    std::cout << "MainGameScreen buildScene\n";
     if(!m_renderTexture.create(m_window.getSize().x, 
                 m_window.getSize().y))
     {
@@ -117,6 +118,7 @@ void MainGameScreen::buildScene()
             WorldObjectTypes::WARRIOR |
             WorldObjectTypes::RUNNER);
         player2->setIsAiActive(true);
+        m_warriorPlayer2 = player2.get();    
     }
     m_possibleTargetWarriors.push_back(player2.get());
     m_sceneGraph.attachChild(std::move(player2));
@@ -318,8 +320,6 @@ void MainGameScreen::safeSceneNodeTrasform()
 
 bool MainGameScreen::handleInput(Input &input, float dt)
 {
-    static long cnt;
-    std::cout << "Handle Input: " << cnt++ << "\n";
     // Check from which player the command is
     WorldObjectTypes inputPlayer{ WorldObjectTypes::NONE };
     InputDevice inputDevice{ input.getInputDevice() };
@@ -574,7 +574,8 @@ void MainGameScreen::resolveEntityCollisions(SceneNode *sceneNodeFirst,
 
 void MainGameScreen::handleCollision(float dt)
 {
-    // Here are the collision information stored, which we use later and the affected SceneNodes
+    // Here are the collision information stored, which we use later and 
+    // the affected SceneNodes
     std::vector<CollisionInfo> collisionData;
 
     m_sceneGraph.checkSceneCollision(m_sceneGraph, collisionData);
