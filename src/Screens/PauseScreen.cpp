@@ -1,7 +1,9 @@
 #include "Screens/PauseScreen.hpp"
+#include "Screens/ScreenStack.hpp"
 
 PauseScreen::PauseScreen(ScreenStack *screenStack, Context &context)
 : Screen(screenStack, context)
+, m_guiEnvironment{ *context.window }
 {
     buildScene();
 }
@@ -13,23 +15,37 @@ PauseScreen::~PauseScreen()
 
 void PauseScreen::buildScene()
 {
-    m_txtPaused.setFont(m_context.fontHolder->get("default"));
-	m_txtPaused.setCharacterSize(32);
-	m_txtPaused.setFillColor(sf::Color::White);
-    m_txtPaused.setString("--PAUSED--");
-    m_txtPaused.setOrigin(m_txtPaused.getLocalBounds().width / 2.f, 
-            m_txtPaused.getLocalBounds().height / 2.f);
-    m_txtPaused.setPosition(m_context.guiView.getSize().x / 2.f, 
-            m_context.guiView.getSize().y / 2.f);
+    sf::View oldView{ m_context.window->getView() };
+    m_context.window->setView(m_context.guiView);
+    m_guiEnvironment.createScene("assets/gui/pause_menu.xml");
+    m_context.window->setView(oldView);
+
+
+    gsf::TextButtonWidget* resumeBtn{ static_cast<gsf::TextButtonWidget*>(
+            m_guiEnvironment.getWidgetByID("textButtonWidget_resumeGame")) };
+    resumeBtn->setOnLeftClickListener(
+            [this](gsf::Widget *widget, sf::Vector2f pos)
+    {
+        std::cout << "Resume Game \n";
+        m_screenStack->popScreen();
+        return true;
+    });
+    gsf::TextButtonWidget* mainMenuBtn{ static_cast<gsf::TextButtonWidget*>(
+            m_guiEnvironment.getWidgetByID("textButtonWidget_mainMenu")) };
+    mainMenuBtn->setOnLeftClickListener(
+            [this](gsf::Widget *widget, sf::Vector2f pos)
+    {
+        // Close Pause screen and MainGameScreen
+        m_screenStack->popScreen();
+        m_screenStack->popScreen();
+    });
 }
 
 void PauseScreen::windowSizeChanged()
 {
     sf::View oldView{ m_context.window->getView() };
     m_context.window->setView(m_context.guiView);
-    //m_guiEnvironment.replaceWidgets();
-    sf::Vector2f viewSize{ m_context.guiView.getSize() };
-    m_txtPaused.setPosition(viewSize.x / 2.f, viewSize.y / 2.f);
+    m_guiEnvironment.replaceWidgets();
     m_context.window->setView(oldView);
 }
 
@@ -51,13 +67,19 @@ bool PauseScreen::handleInput(Input &input, float dt)
 
 bool PauseScreen::handleEvent(sf::Event &event, float dt)
 {
+    sf::View oldView{ m_context.window->getView() };
+    m_context.window->setView(m_context.guiView);
+    m_guiEnvironment.handleEvent(event);
+    m_context.window->setView(oldView);
     return false;
 }
 
 bool PauseScreen::update(float dt)
 {
-    //m_sceneGraph.removeDestroyed();
-    //m_sceneGraph.update(dt);
+    sf::View oldView{ m_context.window->getView() };
+    m_context.window->setView(m_context.guiView);
+    m_guiEnvironment.update(dt);
+    m_context.window->setView(oldView);
     return false;
 }
 
@@ -65,9 +87,7 @@ void PauseScreen::render()
 {
     sf::View oldView{ m_context.window->getView() };
     m_context.window->setView(m_context.guiView);
-    //std::cout << "Render" << std::endl;
-    //m_context.window->draw(m_renderManager);
-    m_context.window->draw(m_txtPaused);
+    m_context.window->draw(m_guiEnvironment);
     m_context.window->setView(oldView);
 }
 

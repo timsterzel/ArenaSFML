@@ -1,12 +1,13 @@
 #ifndef PAUSESCREEN_HPP
 #define PAUSESCREEN_HPP
+#include "libs/GUI-SFML/include/GUI-SFML.hpp"
 #include "Screens/Screen.hpp"
 #include <SFML/Graphics.hpp>
 
 class PauseScreen : public Screen
 {
     private:
-        sf::Text m_txtPaused;
+        gsf::GUIEnvironment m_guiEnvironment;
 
     public:
         PauseScreen(ScreenStack *screenStack, Context &context);

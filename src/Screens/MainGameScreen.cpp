@@ -39,12 +39,13 @@ MainGameScreen::MainGameScreen(ScreenStack *screenStack,
 , m_worldBounds{ 0.f, 0.f, 6000.f, 6000.f }
 , m_warriorPlayer1{ nullptr }
 {
+    std::cout << "MainGameScreen constructor\n";
     buildScene();
 }
 
 MainGameScreen::~MainGameScreen()
 {
-
+    std::cout << "MainGameScreen destructor\n";
 }
 
 void MainGameScreen::buildScene()
