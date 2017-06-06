@@ -26,7 +26,6 @@ class MainGameScreen : public Screen
         };
 
     private:
-        bool m_isGamePaused;
         bool m_showCollisionInfo;
         
         sf::RenderWindow &m_window;

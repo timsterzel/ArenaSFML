@@ -72,7 +72,6 @@ class Screen : private sf::NonCopyable
         
         Context getContext();
         
-        
         virtual void windowSizeChanged();
         // return false when no lower screen should handle the input
         virtual bool handleInput(Input &input, float dt);

@@ -21,7 +21,6 @@ MainGameScreen::MainGameScreen(ScreenStack *screenStack,
         const std::map<InputDevice, WorldObjectTypes> deviceMap,
         MainGameScreen::GameMode gameMode)
 : Screen(screenStack, context)
-, m_isGamePaused{ false }
 , m_showCollisionInfo{ false }
 , m_window{ *context.window }
 , m_level{ level }
@@ -64,27 +63,6 @@ void MainGameScreen::buildScene()
     // Play music
     m_context.music->play("gametheme01");
     
-    /*
-    for (std::size_t i = { 0 }; i < Layers::COUNT; i++)
-    {
-        // Use std::unique_ptr<SceneNode>
-        SceneNode::Ptr layer(new SceneNode());
-        m_sceneLayers[i] = layer.get();
-        m_sceneGraph.attachChild(std::move(layer));
-    }
-    */
-    
-
-    
-    /*
-    sf::Texture &texture = m_context.textureHolder->get(Textures::CHESS_WHITE);
-    sf::IntRect textureRect(m_worldBounds);
-    texture.setRepeated(true);
-    std::unique_ptr<SpriteNode> background{ std::make_unique<SpriteNode>
-        (RenderLayers::BACKGROUND, texture, textureRect, false) };
-    m_sceneGraph.attachChild(std::move(background));
-    */
-
     // Warrior
     //std::unique_ptr<Wizard> warrior{ std::make_unique<Wizard>
     //    (RenderLayers::MAIN, 100.f, "wizard", *m_context.textureHolder, 
@@ -340,6 +318,8 @@ void MainGameScreen::safeSceneNodeTrasform()
 
 bool MainGameScreen::handleInput(Input &input, float dt)
 {
+    static long cnt;
+    std::cout << "Handle Input: " << cnt++ << "\n";
     // Check from which player the command is
     WorldObjectTypes inputPlayer{ WorldObjectTypes::NONE };
     InputDevice inputDevice{ input.getInputDevice() };
@@ -422,16 +402,7 @@ bool MainGameScreen::handleInput(Input &input, float dt)
                     { CommandTypes::ACTION_STOP, inputPlayer });
             break;
         case InputTypes::PAUSE :
-            m_isGamePaused = !m_isGamePaused;
-            if (m_isGamePaused)
-            {
-                m_screenStack->pushScreen(ScreenID::PAUSE);
-            }
-            else
-            {
-                // Remove pause screen
-                m_screenStack->popScreen();
-            }
+            m_screenStack->pushScreen(ScreenID::PAUSE);
             break;
         // Debug
         case InputTypes::D1 :
@@ -464,24 +435,9 @@ bool MainGameScreen::handleEvent(sf::Event &event, float dt)
     m_window.setView(m_gameView);
     return false;
 }
-/*
-void World::controlWorldEntities()
-{
-    // Let Enemy look to player
-    m_commandQueue.push({ CommandTypes::LOOK_AT, WorldObjectTypes::ENEMY, m_warriorPlayer1->getPosition() });
-}
-*/
 
 void MainGameScreen::handleCommands(float dt)
 {
-    // Nothing to do when game is paused
-    /*
-    if (m_isGamePaused)
-    {
-        m_commandQueue.clear();
-        return;
-    }
-    */
     while(!m_commandQueue.isEmpty())
     {
         m_sceneGraph.onCommand(m_commandQueue.pop(), dt);
@@ -585,12 +541,6 @@ bool MainGameScreen::isStillPlayer1InGame()
     // Check if player is still in container
     for (Warrior *warrior : m_possibleTargetWarriors)
     {
-        /*
-        if (warrior->getType() & WorldObjectTypes::PLAYER_1)
-        {
-            return true;
-        }
-        */
         if (warrior == m_warriorPlayer1)
         {
             return true;
@@ -604,12 +554,6 @@ bool MainGameScreen::isStillPlayer2InGame()
     // Check if player is still in container
     for (Warrior *warrior : m_possibleTargetWarriors)
     {
-        /*
-        if (warrior->getType() & WorldObjectTypes::PLAYER_2)
-        {
-            return true;
-        }
-        */
         if (warrior == m_warriorPlayer2) 
         {
             return true;
@@ -726,7 +670,9 @@ bool MainGameScreen::matchesCategories(SceneNode::Pair &colliders, unsigned int 
 
 void MainGameScreen::render()
 {
-    if (m_isGamePaused && sf::Shader::isAvailable() && m_isRenderTextureAvailable)
+    // If the MainGameScreen is not in foreground it is paused
+    bool isGamePaused{ !m_screenStack->isInForeground(this) };
+    if (isGamePaused && sf::Shader::isAvailable() && m_isRenderTextureAvailable)
     {
         // Draw first to a RenderTexture and then draw the RenderTexture whith the
         // black and white shader, so the shader is applied to shapes, too.

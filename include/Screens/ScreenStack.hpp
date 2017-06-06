@@ -60,6 +60,9 @@ class ScreenStack : private sf::NonCopyable
         void clearScreens();
 
         bool isEmpty() const;
+        // Check if the given screen is in foreground
+        // (means the highest and last rendered)
+        bool isInForeground(Screen *screen) const;
         
         // Called when the window size changed
         void windowSizeChanged();

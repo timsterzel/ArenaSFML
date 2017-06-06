@@ -26,7 +26,7 @@ void PauseScreen::buildScene()
     resumeBtn->setOnLeftClickListener(
             [this](gsf::Widget *widget, sf::Vector2f pos)
     {
-        std::cout << "Resume Game \n";
+        // Close Pause Screen
         m_screenStack->popScreen();
         return true;
     });
@@ -55,8 +55,7 @@ bool PauseScreen::handleInput(Input &input, float dt)
     {
         case InputTypes::PAUSE :
         {
-            // Let the Game screen handle this input
-            return true;
+            m_screenStack->popScreen();
             break;
         }
         default:
@@ -90,4 +89,3 @@ void PauseScreen::render()
     m_context.window->draw(m_guiEnvironment);
     m_context.window->setView(oldView);
 }
-

@@ -86,6 +86,15 @@ bool ScreenStack::isEmpty() const
     return m_stack.empty();
 }
 
+bool ScreenStack::isInForeground(Screen *screen) const
+{
+    if (m_stack.size() < 1)
+    {
+        return false;
+    }
+    return m_stack[m_stack.size() - 1].get() == screen;
+}
+
 Screen::Ptr ScreenStack::createScreen(ScreenID screenID)
 {
     auto found = m_factories.find(screenID);
