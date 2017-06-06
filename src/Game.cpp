@@ -87,7 +87,7 @@ Game::Game()
 
 Game::~Game()
 {
-
+    std::cout << "Game Destructor\n";
 }
 
 void Game::adjustShownWorldToWindowSize(unsigned int windowWidth, unsigned int windowHeight)

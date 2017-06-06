@@ -36,6 +36,19 @@
 					text="Settings"
 					font="defaultFont" />
 
+					<Widget
+						width="300"
+						height="20"
+						backgroundColor="transparent"	/>
+
+					<TextButtonWidget
+						id="textButtonWidget_quitGame"
+						width="300"
+						height="60"
+						orientation="centerHorizontal"
+						text="Quit Game"
+						font="defaultFont" />
+
 			</VerticalLayoutWidget>
 	</Widgets>
 </Scene>

@@ -12,7 +12,7 @@ MainMenuScreen::MainMenuScreen(ScreenStack *screenStack, Context &context)
 
 MainMenuScreen::~MainMenuScreen()
 {
-
+    std::cout << "MainMenuScreen Destructor\n";
 }
 
 void MainMenuScreen::buildScene()
@@ -35,6 +35,7 @@ void MainMenuScreen::buildScene()
                 WorldObjectTypes::PLAYER_1 });
         deviceMap.insert({ InputDevice::KEYBOARD_MOUSE, 
                 WorldObjectTypes::PLAYER_2 });
+        // Register MainGameScreen with paramaters
         m_screenStack->registerScreen
             <MainGameScreen, 
             Level, 
@@ -55,6 +56,14 @@ void MainMenuScreen::buildScene()
             [screenStack](gsf::Widget *widget, sf::Vector2f pos)
     {
         screenStack->pushScreen(ScreenID::SETTINGS);
+    });
+
+    gsf::TextButtonWidget* quitGameBtn{ static_cast<gsf::TextButtonWidget*>(
+            m_guiEnvironment.getWidgetByID("textButtonWidget_quitGame")) };
+    quitGameBtn->setOnLeftClickListener(
+            [this](gsf::Widget *widget, sf::Vector2f pos)
+    {
+        getContext().window->close();
     });
 }
 
