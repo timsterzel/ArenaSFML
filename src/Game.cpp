@@ -80,7 +80,7 @@ Game::Game()
     m_screenStack.registerScreen<SettingsScreen>(ScreenID::SETTINGS);
 
     //m_screenStack.registerScreen<MainGameScreen, Level>(ScreenID::GAME, level);
-    //m_screenStack.registerScreen<PauseScreen>(ScreenID::PAUSE);
+    m_screenStack.registerScreen<PauseScreen>(ScreenID::PAUSE);
     // Show Game screen
     //m_screenStack.pushScreen(ScreenID::GAME);
     m_screenStack.pushScreen(ScreenID::MAINMENU);

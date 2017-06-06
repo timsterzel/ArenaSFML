@@ -106,6 +106,7 @@ void SettingsScreen::buildScene()
             m_config->saveCurrentConfigToFile();
         }
         m_screenStack->popScreen();
+        m_screenStack->pushScreen(ScreenID::MAINMENU);
     });
 }
 
@@ -142,6 +143,7 @@ bool SettingsScreen::handleInput(Input &input, float dt)
         case InputTypes::BACK :
         {
             m_screenStack->popScreen();
+            m_screenStack->pushScreen(ScreenID::MAINMENU);
             return false;
             break;
         }

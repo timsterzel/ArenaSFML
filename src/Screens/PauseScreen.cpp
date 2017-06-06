@@ -38,6 +38,7 @@ void PauseScreen::buildScene()
         // Close Pause screen and MainGameScreen
         m_screenStack->popScreen();
         m_screenStack->popScreen();
+        m_screenStack->pushScreen(ScreenID::MAINMENU);
     });
 }
 

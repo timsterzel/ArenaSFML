@@ -44,8 +44,9 @@ void MainMenuScreen::buildScene()
                     level, 
                     deviceMap, 
                     MainGameScreen::GameMode::ONE_PLAYER);
-        m_screenStack->registerScreen<PauseScreen>
-            (ScreenID::PAUSE);
+        //m_screenStack->registerScreen<PauseScreen>
+        //    (ScreenID::PAUSE);
+        m_screenStack->popScreen();
         m_screenStack->pushScreen(ScreenID::GAME);
     });
     // Two Player
@@ -71,8 +72,7 @@ void MainMenuScreen::buildScene()
                     deviceMap, 
                     MainGameScreen::GameMode::TWO_PLAYER);
         
-        m_screenStack->registerScreen<PauseScreen>
-            (ScreenID::PAUSE);
+        m_screenStack->popScreen();
         m_screenStack->pushScreen(ScreenID::GAME);
     });
 
@@ -81,6 +81,7 @@ void MainMenuScreen::buildScene()
     settingsBtn->setOnLeftClickListener(
             [this](gsf::Widget *widget, sf::Vector2f pos)
     {
+        m_screenStack->popScreen();
         m_screenStack->pushScreen(ScreenID::SETTINGS);
     });
 
