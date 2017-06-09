@@ -30,7 +30,7 @@ class SceneNode : public sf::Transformable, /*public sf::Drawable,*/ public sf::
         SceneNode *m_parent;
     protected:
         std::unique_ptr<CollisionShape> m_collisionShape;
-        // If there is a ObjectType whitelisted, only sceneNides withh this type can
+        // If there is a ObjectType whitelisted, only sceneNodes withh this type can
         // collide with this sceneNode.
         unsigned int m_collisionWhiteList;
         unsigned int m_type;

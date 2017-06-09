@@ -29,23 +29,6 @@ void MainMenuScreen::buildScene()
     onePlayerBtn->setOnLeftClickListener(
             [this](gsf::Widget *widget, sf::Vector2f pos)
     {
-        const Level &level = *(m_context.levelHolder->getLevels()[0].get());
-        std::map<InputDevice, WorldObjectTypes> deviceMap;
-        deviceMap.insert({ InputDevice::JOYSTICK_0, 
-                WorldObjectTypes::PLAYER_1 });
-        // Register MainGameScreen with paramaters
-        
-        m_screenStack->registerScreen
-            <MainGameScreen, 
-            Level, 
-            std::map<InputDevice, WorldObjectTypes>,
-            MainGameScreen::GameMode> 
-                   (ScreenID::GAME, 
-                    level, 
-                    deviceMap, 
-                    MainGameScreen::GameMode::ONE_PLAYER);
-        //m_screenStack->registerScreen<PauseScreen>
-        //    (ScreenID::PAUSE);
         m_screenStack->popScreen();
         m_screenStack->pushScreen(ScreenID::GAME);
     });
@@ -55,23 +38,6 @@ void MainMenuScreen::buildScene()
     twoPlayerBtn->setOnLeftClickListener(
             [this](gsf::Widget *widget, sf::Vector2f pos)
     {
-        const Level &level = *(m_context.levelHolder->getLevels()[0].get());
-        std::map<InputDevice, WorldObjectTypes> deviceMap;
-        deviceMap.insert({ InputDevice::JOYSTICK_0, 
-                WorldObjectTypes::PLAYER_1 });
-        deviceMap.insert({ InputDevice::KEYBOARD_MOUSE, 
-                WorldObjectTypes::PLAYER_2 });
-        // Register MainGameScreen with paramaters
-        m_screenStack->registerScreen
-            <MainGameScreen, 
-            Level, 
-            std::map<InputDevice, WorldObjectTypes>,
-            MainGameScreen::GameMode> 
-                   (ScreenID::GAME, 
-                    level, 
-                    deviceMap, 
-                    MainGameScreen::GameMode::TWO_PLAYER);
-        
         m_screenStack->popScreen();
         m_screenStack->pushScreen(ScreenID::GAME);
     });

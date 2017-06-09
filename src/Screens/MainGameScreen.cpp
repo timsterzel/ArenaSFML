@@ -42,6 +42,32 @@ MainGameScreen::MainGameScreen(ScreenStack *screenStack,
     buildScene();
 }
 
+MainGameScreen::MainGameScreen(ScreenStack *screenStack, 
+        Context &context)
+: Screen(screenStack, context)
+, m_showCollisionInfo{ false }
+, m_window{ *context.window }
+, m_level{ *(m_context.levelHolder->getLevels()[0].get()) }
+//, m_deviceMap{  }
+, m_gameMode{ MainGameScreen::GameMode::ONE_PLAYER }
+, m_isRenderTextureAvailable{ false }
+, m_gameView{ context.gameView }
+, m_guiView{ context.guiView }
+, m_guiEnvironment{ *context.window }
+, m_healthBarWarr1{ nullptr }
+, m_healthBarWarr2{ nullptr }
+, m_stanimaBarWarr1{ nullptr }
+, m_stanimaBarWarr2{ nullptr }
+, m_winnerText{ nullptr }
+, m_worldBounds{ 0.f, 0.f, 6000.f, 6000.f }
+, m_warriorPlayer1{ nullptr }
+{
+    m_deviceMap.insert({ InputDevice::KEYBOARD_MOUSE, 
+        WorldObjectTypes::PLAYER_1 });
+    std::cout << "MainGameScreen constructor\n";
+    buildScene();
+}
+
 MainGameScreen::~MainGameScreen()
 {
     std::cout << "MainGameScreen destructor\n";
@@ -210,7 +236,7 @@ void MainGameScreen::buildLevel()
         m_sceneGraph.attachChild(std::move(sprite));
     }
     // Load spawn points
-    if (m_level.spawnPoint1 && m_warriorPlayer2)
+    if (m_level.spawnPoint1 && m_warriorPlayer1)
     {
         m_warriorPlayer1->setPosition(m_level.spawnPoint1->position);
     }
@@ -403,6 +429,8 @@ bool MainGameScreen::handleInput(Input &input, float dt)
             break;
         case InputTypes::PAUSE :
             m_screenStack->pushScreen(ScreenID::PAUSE);
+            //m_screenStack->popScreen();
+            //m_screenStack->pushScreen(ScreenID::GAME);
             break;
         // Debug
         case InputTypes::D1 :

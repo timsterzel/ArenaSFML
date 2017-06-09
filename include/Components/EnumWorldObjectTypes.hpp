@@ -1,7 +1,7 @@
 #ifndef ENUMWORLDOBJECTTYPE_HPP
 #define ENUMWORLDOBJECTTYPE_HPP
 
-enum WorldObjectTypes
+enum WorldObjectTypes : unsigned int
 {
     NONE = 0,
     PLAYER_1 = 1 << 1,

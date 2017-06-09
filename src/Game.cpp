@@ -78,8 +78,25 @@ Game::Game()
     //const Level &level = *(m_context.levelHolder->getLevels()[0].get());
     m_screenStack.registerScreen<MainMenuScreen>(ScreenID::MAINMENU);
     m_screenStack.registerScreen<SettingsScreen>(ScreenID::SETTINGS);
+    //Level *level = (m_context.levelHolder->getLevels()[0].get());
+    //std::map<InputDevice, WorldObjectTypes> deviceMap;
+//deviceMap.insert({ InputDevice::KEYBOARD_MOUSE, 
+//        WorldObjectTypes::PLAYER_1 });
+
+    /*
+     m_screenStack.registerScreen
+        <MainGameScreen, Level, std::map<InputDevice, WorldObjectTypes>, 
+        MainGameScreen::GameMode > 
+                   (ScreenID::GAME, 
+                    *level, 
+                    deviceMap, 
+                    MainGameScreen::GameMode::ONE_PLAYER);
+    */
+
+
 
     //m_screenStack.registerScreen<MainGameScreen, Level>(ScreenID::GAME, level);
+    m_screenStack.registerScreen<MainGameScreen>(ScreenID::GAME);
     m_screenStack.registerScreen<PauseScreen>(ScreenID::PAUSE);
     // Show Game screen
     //m_screenStack.pushScreen(ScreenID::GAME);

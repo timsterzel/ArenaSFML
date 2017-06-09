@@ -38,7 +38,12 @@ class ScreenStack : private sf::NonCopyable
         explicit ScreenStack(Screen::Context &context);
 
         ~ScreenStack();
-
+        
+        /*
+        template <typename T, typename ... Types>
+        void registerScreen(ScreenID screenID, Types&... args);
+        */
+        
         template <typename T>
         void registerScreen(ScreenID screenID);
         template <typename T, typename S>
@@ -47,7 +52,7 @@ class ScreenStack : private sf::NonCopyable
         void registerScreen(ScreenID screenID, const S &second, R third);
         template <typename T, typename S, typename R, typename Q>
         void registerScreen(ScreenID screenID, const S &second, R third, Q fourth);
-        
+
         virtual void handleInput(Input &input, float dt);
         virtual void handleEvent(sf::Event &event, float dt);
         //void controlWorldEntities();

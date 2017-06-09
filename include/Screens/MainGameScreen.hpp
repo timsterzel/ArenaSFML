@@ -67,6 +67,7 @@ class MainGameScreen : public Screen
         MainGameScreen(ScreenStack *screenStack, Context &context, 
                 const Level &level, const std::map<InputDevice, 
                 WorldObjectTypes> deviceMap, GameMode gameMode);
+        MainGameScreen(ScreenStack *screenStack, Context &context);
 
         virtual ~MainGameScreen();
         

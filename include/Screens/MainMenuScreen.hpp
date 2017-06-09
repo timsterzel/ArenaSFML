@@ -8,7 +8,6 @@ class MainMenuScreen : public Screen
 {
     private:
         gsf::GUIEnvironment m_guiEnvironment;
-
     public:
         MainMenuScreen(ScreenStack *screenStack, Context &context);
 

@@ -7,6 +7,7 @@ SceneNode::SceneNode()
 : m_layer{ RenderLayers::NONE }
 , m_parent{ nullptr }
 , m_collisionShape{ nullptr }
+, m_collisionWhiteList{ WorldObjectTypes::NONE }
 , m_type{ WorldObjectTypes::NONE }
 , m_status{ WorldObjectStatus::ALIVE }
 , m_isActive{ true }
@@ -31,6 +32,7 @@ SceneNode::SceneNode(RenderLayers layer)
 : m_layer{ layer }
 , m_parent{ nullptr }
 , m_collisionShape{ nullptr }
+, m_collisionWhiteList{ WorldObjectTypes::NONE }
 , m_type{ WorldObjectTypes::NONE }
 , m_status{ WorldObjectStatus::ALIVE }
 , m_isActive{ true }
@@ -43,6 +45,7 @@ SceneNode::SceneNode(RenderLayers layer, WorldObjectTypes type)
 : m_layer{ layer }
 , m_parent{ nullptr }
 , m_collisionShape{ nullptr }
+, m_collisionWhiteList{ WorldObjectTypes::NONE }
 , m_type{ type }
 , m_status{ WorldObjectStatus::ALIVE }
 , m_isActive{ true }
@@ -292,8 +295,7 @@ CollisionInfo SceneNode::isColliding(SceneNode &node) const
 {
     // When there are types whitelisted only check collision if there collide
     // whitelisted types
-    
-    if (m_collisionWhiteList != 0 && 
+    if (getCollisionWhiteList() != 0 && 
             (getCollisionWhiteList() & node.getType()) == 0)
     {
         return CollisionInfo(false);
@@ -301,7 +303,6 @@ CollisionInfo SceneNode::isColliding(SceneNode &node) const
     if (node.getCollisionWhiteList() != 0 && 
             (node.getCollisionWhiteList() & getType()) == 0)
     {
-        //std::cout << "Not whiteListed \n";
         return CollisionInfo(false);
     }
     // If there is no collision shape specified there can not be a collision and if 

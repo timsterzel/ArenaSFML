@@ -70,14 +70,13 @@ void SettingsScreen::buildScene()
     });
 
 
-    ScreenStack *screenStack{ m_screenStack };
     gsf::TextButtonWidget* backBtn{ static_cast<gsf::TextButtonWidget*>(
             m_guiEnvironment.getWidgetByID("textButtonWidget_back")) };
     backBtn->setOnLeftClickListener(
-            [screenStack](gsf::Widget *widget, sf::Vector2f pos)
+            [this](gsf::Widget *widget, sf::Vector2f pos)
     {
-        screenStack->popScreen();
-
+        m_screenStack->popScreen();
+        m_screenStack->pushScreen(ScreenID::MAINMENU);
     });
     gsf::TextButtonWidget* saveBtn{ static_cast<gsf::TextButtonWidget*>(
             m_guiEnvironment.getWidgetByID("textButtonWidget_save")) };
