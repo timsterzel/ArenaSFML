@@ -14,7 +14,7 @@
 					orientation="centerHorizontal"
 					text="SETTINGS"
 					characterSize="60"
-					font="defaultFont" />			
+					font="defaultFont" />
 
 			<VerticalLayoutWidget
 				autoDetermineWidth="true"
@@ -136,6 +136,36 @@
       width="160"
 			height="20"
 			listData="640x480|800x600|1024x768|1280x1024|1366x768|1680x1050|1920x1080|2560x1440|4096x2160" />
+
+			<!-- Input Player 1 -->
+			<TextWidget
+				id="textWidget_inputPlayer1"
+				text="Input Player 1"
+				font="defaultFont"
+				left="20"
+				characterSize="20" />
+
+			<ComboBoxWidget
+				id="comboBoxWidget_inputPlayer1"
+				font="defaultFont"
+	      width="160"
+				height="20"
+				listData="Keyboard + Mouse|Controller 1|Controller 2" />
+
+				<!-- Input Player 2 -->
+				<TextWidget
+					id="textWidget_inputPlayer2"
+					text="Input Player 2"
+					font="defaultFont"
+					left="20"
+					characterSize="20" />
+
+				<ComboBoxWidget
+					id="comboBoxWidget_inputPlayer2"
+					font="defaultFont"
+		      width="160"
+					height="20"
+					listData="Keyboard + Mouse|Controller 1|Controller 2" />
 
 		</VerticalLayoutWidget>
 
