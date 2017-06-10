@@ -46,6 +46,7 @@ void MainMenuScreen::buildScene()
     twoPlayerBtn->setOnLeftClickListener(
             [this](gsf::Widget *widget, sf::Vector2f pos)
     {
+        /*
         std::map<InputDevice, WorldObjectTypes> deviceMap;
         deviceMap.insert({ InputDevice::KEYBOARD_MOUSE, 
                 WorldObjectTypes::PLAYER_1 });
@@ -58,6 +59,9 @@ void MainMenuScreen::buildScene()
             MainGameScreen::GameData>(ScreenID::GAME, gameData);
         m_screenStack->popScreen();
         m_screenStack->pushScreen(ScreenID::GAME);
+        */
+        m_screenStack->popScreen();
+        m_screenStack->pushScreen(ScreenID::TWOPLAYERSELECTION);
     });
 
     gsf::TextButtonWidget* settingsBtn{ static_cast<gsf::TextButtonWidget*>(
