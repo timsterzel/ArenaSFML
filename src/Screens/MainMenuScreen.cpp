@@ -52,7 +52,7 @@ void MainMenuScreen::buildScene()
         deviceMap.insert({ InputDevice::JOYSTICK_0, 
                 WorldObjectTypes::PLAYER_2 });
         MainGameScreen::GameData gameData(MainGameScreen::GameMode::TWO_PLAYER,
-                "level1", deviceMap, WorldObjectTypes::WIZARD,
+                "level1", deviceMap, WorldObjectTypes::KNIGHT,
                 WorldObjectTypes::RUNNER);
         m_screenStack->registerScreen<MainGameScreen, 
             MainGameScreen::GameData>(ScreenID::GAME, gameData);

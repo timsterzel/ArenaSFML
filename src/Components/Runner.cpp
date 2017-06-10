@@ -62,7 +62,7 @@ Runner::Runner(RenderLayers layer, const int health, const std::string &textureI
     m_closeCombatArea->setPosition(9.f, 0.f);
     // Collision shape
     std::unique_ptr<CollisionShape> collisionShape{ 
-        std::make_unique<CollisionCircle>(12.f) };
+        std::make_unique<CollisionCircle>(10.f) };
     setCollisionShape(std::move(collisionShape));
 }
 
