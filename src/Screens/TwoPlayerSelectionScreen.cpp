@@ -108,15 +108,9 @@ void TwoPlayerSelectionScreen::buildScene()
     startBtn->setOnLeftClickListener(
             [this](gsf::Widget *widget, sf::Vector2f pos)
     {
-        std::map<InputDevice, WorldObjectTypes> deviceMap;
-        deviceMap.insert({ InputDevice::KEYBOARD_MOUSE, 
-                WorldObjectTypes::PLAYER_1 });
-        deviceMap.insert({ InputDevice::JOYSTICK_0, 
-                WorldObjectTypes::PLAYER_2 });
         MainGameScreen::GameData gameData(
                 MainGameScreen::GameMode::TWO_PLAYER,
                 "level1", 
-                deviceMap, 
                 getPlayer1WarriorType(),
                 getPlayer2WarriorType());
         m_screenStack->registerScreen<MainGameScreen, 

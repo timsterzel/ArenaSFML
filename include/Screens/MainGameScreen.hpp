@@ -29,13 +29,10 @@ class MainGameScreen : public Screen
         {
             GameMode gameMode;
             std::string levelId;
-            // Stored which control device controls which player
-            std::map<InputDevice, WorldObjectTypes> deviceMap;
             WorldObjectTypes player1Warrior;
             WorldObjectTypes player2Warrior;
 
             GameData(GameMode gameMode, std::string levelId, 
-                    std::map<InputDevice, WorldObjectTypes> deviceMap, 
                     WorldObjectTypes player1Warrior, 
                     WorldObjectTypes player2Warrior);
         };
@@ -45,7 +42,9 @@ class MainGameScreen : public Screen
         
         sf::RenderWindow &m_window;
         GameData m_gameData;
-
+        // Stored which control device controls which player
+        std::map<InputDevice, WorldObjectTypes> m_deviceMap;
+        
         // Used to apply the shader right on all drawn things. Some shaders only
         // effects textures right, so when we want to use shaders, we first draw all
         // to the render texture and then draw the emerging tetxure with the shader
@@ -96,6 +95,8 @@ class MainGameScreen : public Screen
     
         virtual void windowSizeChanged();
     private:
+        void loadInputDeviceData();
+        InputDevice stringToInputDevice();
         // Create a warrior of the given type
         std::unique_ptr<Warrior> createWarrior(WorldObjectTypes warriorType);
         void buildGuiElements();

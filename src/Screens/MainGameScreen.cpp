@@ -15,13 +15,11 @@
 #include "Game.hpp"
 #include <cmath>
 
-MainGameScreen::GameData::GameData(GameMode gameMode, std::string levelId, 
-    std::map<InputDevice, WorldObjectTypes> deviceMap, 
+MainGameScreen::GameData::GameData(GameMode gameMode, std::string levelId,  
     WorldObjectTypes player1Warrior, 
     WorldObjectTypes player2Warrior)
 : gameMode{ gameMode }
-, levelId{ levelId }
-, deviceMap{ deviceMap } 
+, levelId{ levelId } 
 , player1Warrior{ player1Warrior }
 , player2Warrior{ player2Warrior }
 {
@@ -57,6 +55,7 @@ MainGameScreen::~MainGameScreen()
 
 void MainGameScreen::buildScene()
 {
+    loadInputDeviceData();
     if(!m_renderTexture.create(m_window.getSize().x, 
                 m_window.getSize().y))
     {
@@ -67,6 +66,7 @@ void MainGameScreen::buildScene()
     {
         m_isRenderTextureAvailable = true;
     }
+    loadInputDeviceData();
     buildGuiElements();
     // Play music
     m_context.music->play("gametheme01");
@@ -112,6 +112,30 @@ void MainGameScreen::buildScene()
     m_sceneGraph.attachChild(std::move(warriorPlayer2));
 
     buildLevel();
+}
+
+void MainGameScreen::loadInputDeviceData()
+{
+    std::map<std::string, InputDevice> inputDeviceStrMap{ 
+        { "none", InputDevice::NONE },
+        { "keyboard_mouse", InputDevice::KEYBOARD_MOUSE },
+        { "joystick_0", InputDevice::JOYSTICK_0 },
+        { "joystick_1", InputDevice::JOYSTICK_1 },
+    };
+    std::string inputDeviceP1Str{
+        getContext().config->getString("input_player1", "keyboard_mouse") };
+    std::string inputDeviceP2Str{
+        getContext().config->getString("input_player2", "keyboard_mouse") };
+
+    auto found1 = inputDeviceStrMap.find(inputDeviceP1Str);
+    assert(found1 != inputDeviceStrMap.end());
+    m_deviceMap.insert({ found1->second,
+                WorldObjectTypes::PLAYER_1 });
+
+    auto found2 = inputDeviceStrMap.find(inputDeviceP2Str);
+    assert(found2 != inputDeviceStrMap.end());
+    m_deviceMap.insert({ found2->second,
+                WorldObjectTypes::PLAYER_2 });
 }
 
 std::unique_ptr<Warrior> MainGameScreen::createWarrior(
@@ -334,9 +358,9 @@ bool MainGameScreen::handleInput(Input &input, float dt)
     // Check from which player the command is
     WorldObjectTypes inputPlayer{ WorldObjectTypes::NONE };
     InputDevice inputDevice{ input.getInputDevice() };
-    if (m_gameData.deviceMap.find(inputDevice) != m_gameData.deviceMap.end())
+    if (m_deviceMap.find(inputDevice) != m_deviceMap.end())
     {
-        inputPlayer = m_gameData.deviceMap.at(inputDevice);
+        inputPlayer = m_deviceMap.at(inputDevice);
     }
 
     switch (input.getInputType())

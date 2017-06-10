@@ -33,7 +33,7 @@ void MainMenuScreen::buildScene()
         deviceMap.insert({ InputDevice::KEYBOARD_MOUSE, 
                 WorldObjectTypes::PLAYER_1 });
         MainGameScreen::GameData gameData(MainGameScreen::GameMode::ONE_PLAYER,
-                "level1", deviceMap, WorldObjectTypes::WIZARD,
+                "level1", WorldObjectTypes::WIZARD,
                 WorldObjectTypes::RUNNER);
         m_screenStack->registerScreen<MainGameScreen, 
             MainGameScreen::GameData>(ScreenID::GAME, gameData);
