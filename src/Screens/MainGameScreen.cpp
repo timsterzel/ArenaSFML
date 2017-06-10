@@ -74,10 +74,13 @@ void MainGameScreen::buildScene()
     std::unique_ptr<Warrior> warriorPlayer1{ 
         createWarrior(m_gameData.player1Warrior) };
     m_warriorPlayer1 = warriorPlayer1.get();
+    m_warriorPlayer1->addType(WorldObjectTypes::PLAYER_1);
+    /*
     m_warriorPlayer1->setType(
             WorldObjectTypes::PLAYER_1 | 
             WorldObjectTypes::WARRIOR | 
             WorldObjectTypes::KNIGHT);
+    */
     m_possibleTargetWarriors.push_back(m_warriorPlayer1);
     m_sceneGraph.attachChild(std::move(warriorPlayer1));
 
@@ -86,16 +89,22 @@ void MainGameScreen::buildScene()
         createWarrior(m_gameData.player2Warrior) };
     if (m_gameData.gameMode == GameMode::TWO_PLAYER)
     {
+        warriorPlayer2->addType(WorldObjectTypes::PLAYER_2);
+        /*
         warriorPlayer2->setType(WorldObjectTypes::PLAYER_2 | 
             WorldObjectTypes::WARRIOR |
             WorldObjectTypes::RUNNER);
+        */
         warriorPlayer2->setIsAiActive(false);
     }
     else if (m_gameData.gameMode == GameMode::ONE_PLAYER)
     {
+        warriorPlayer2->addType(WorldObjectTypes::ENEMY);
+        /*
         warriorPlayer2->setType(WorldObjectTypes::ENEMY | 
             WorldObjectTypes::WARRIOR |
             WorldObjectTypes::RUNNER);
+        */
         warriorPlayer2->setIsAiActive(true);
     }
     m_warriorPlayer2 = warriorPlayer2.get();    
@@ -211,7 +220,7 @@ void MainGameScreen::buildLevel()
             collision->setPosition(size.x / 2.f, size.y / 2.f);
             sprite->setCollisionShape(std::move(collision));
         }
-        sprite->setType(WorldObjectTypes::LEVEL);
+        sprite->addType(WorldObjectTypes::LEVEL);
         // Object is not moving, rotating etc, so its inactive
         sprite->setIsActive(false);
         m_sceneGraph.attachChild(std::move(sprite));
@@ -268,14 +277,9 @@ void MainGameScreen::handleConsoleCommands(gsf::Widget* widget, sf::String comma
         {
             return;
         }
-        std::unique_ptr<CollisionShape> collisionShapeEnemy{ 
-            std::make_unique<CollisionCircle>(12.f) };
-        spawnWar->setCollisionShape(std::move(collisionShapeEnemy));
         spawnWar->setPosition(800.f / 2, 400.f / 2.f);
         //spawnWar->setVelocity(60.f);
-        spawnWar->setType(WorldObjectTypes::ENEMY | 
-            WorldObjectTypes::WARRIOR |
-            type);
+        spawnWar->addType(WorldObjectTypes::ENEMY | type);
         spawnWar->setIsAiActive(true);
         m_possibleTargetWarriors.push_back(spawnWar.get());
         m_sceneGraph.attachChild(std::move(spawnWar));

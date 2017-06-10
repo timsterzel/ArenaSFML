@@ -30,6 +30,7 @@ Runner::Runner(RenderLayers layer, const int health, const std::string &textureI
 , m_totalDodgeTime{ 0.2 }
 , m_curDodgeTime{ 0.f }
 {
+    addType(WorldObjectTypes::RUNNER);
     setVelocity(80.f);
     // Animation
     std::vector<AnimationStepRotation>  swordRoationStepsCloseAtt;
@@ -47,7 +48,6 @@ Runner::Runner(RenderLayers layer, const int health, const std::string &textureI
     std::unique_ptr<Weapon> sword(new Weapon(RenderLayers::WEAPON, 10.f, 
                 textureHolder.get(textureId), 
                 spriteSheetMapHolder.getRectData(textureId, "sword")));
-    sword->setType(WorldObjectTypes::WEAPON);
     sword->setPosition(0.f, 0.f);
     sword->setOrigin(0.f, -10.f);
     std::unique_ptr<CollisionShape> collisionShapeSword(new CollisionRect(

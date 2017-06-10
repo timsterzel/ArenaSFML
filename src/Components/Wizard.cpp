@@ -27,6 +27,7 @@ Wizard::Wizard(RenderLayers layer, const int health, const std::string &textureI
 , m_totalHealColorStepTime{ 0.3f }
 , m_currentHealColorStepTime{ 0.f }
 {
+    addType(WorldObjectTypes::WIZARD);
     setVelocity(70.f);
     // Animation
     std::vector<AnimationStepMovement>  stickMovementStepsFireball;
@@ -41,7 +42,6 @@ Wizard::Wizard(RenderLayers layer, const int health, const std::string &textureI
     std::unique_ptr<Weapon> stick(new Weapon(RenderLayers::WEAPON, 10.f, 
                 textureHolder.get(textureId), 
                 spriteSheetMapHolder.getRectData(textureId, "stick")));
-    stick->setType(WorldObjectTypes::WEAPON);
     stick->setPosition(0.f, 0.f);
     stick->setOrigin(0.f, -10.f);
     std::unique_ptr<CollisionShape> collisionShapeSword(new CollisionRect(
@@ -244,7 +244,7 @@ void Wizard::startFireballAttack()
         fireball->setRotationDefault(getRotation());
         fireball->setCurrentDirection(
                 Calc::degAngleToDirectionVector(fireball->getRotation() + 90.f));
-        fireball->setType(WorldObjectTypes::WEAPON | WorldObjectTypes::PROJECTILE);
+        fireball->addType(WorldObjectTypes::PROJECTILE);
         std::unique_ptr<CollisionShape> collisionShape{
             std::make_unique<CollisionRect>(
                     sf::Vector2f(fireball->getWidth(), fireball->getHeight()))};

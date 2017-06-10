@@ -31,6 +31,7 @@ Warrior::Warrior(RenderLayers layer, const float health, const std::string &text
 , m_possibleTargetsInWord{ possibleTargetsInWord }
 , m_actualTarget{ nullptr }
 {
+    addType(WorldObjectTypes::WARRIOR);
     //sf::FloatRect bounds = m_sprite.getLocalBounds();
     //m_sprite.setOrigin(bounds.width / 2.f, bounds.height / 2.f);
     //setWidth(bounds.width);

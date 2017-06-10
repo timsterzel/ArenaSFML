@@ -24,6 +24,7 @@ Knight::Knight(RenderLayers layer, const int health, const std::string &textureI
 , m_totalStrongAttackTime{ 0.3f }
 , m_curStrongAttackTime{ 0.f }
 {
+    addType(WorldObjectTypes::KNIGHT);
     setVelocity(60.f);
     // Animation
     std::vector<AnimationStepRotation>  swordRoationStepsCloseAtt;
@@ -41,7 +42,6 @@ Knight::Knight(RenderLayers layer, const int health, const std::string &textureI
     std::unique_ptr<Weapon> sword(new Weapon(RenderLayers::WEAPON, m_WeaponDamage, 
                 textureHolder.get(textureId), 
                 spriteSheetMapHolder.getRectData(textureId, "sword")));
-    sword->setType(WorldObjectTypes::WEAPON);
     sword->setOrigin(0.f, -10.f);
     std::unique_ptr<CollisionShape> collisionShapeSword(new CollisionRect(
                 { sword->getSpriteWidth(), sword->getSpriteHeight() }));
@@ -53,7 +53,7 @@ Knight::Knight(RenderLayers layer, const int health, const std::string &textureI
     std::unique_ptr<Item> shield(new Item(RenderLayers::WEAPON, 
                 textureHolder.get(textureId), 
                 spriteSheetMapHolder.getRectData(textureId, "shield")));
-    shield->setType(WorldObjectTypes::SHIELD);
+    shield->addType(WorldObjectTypes::SHIELD);
     shield->setRotation(90.f);
     std::unique_ptr<CollisionShape> collisionShapeShield(
             new CollisionRect({ shield->getSpriteWidth(), 
@@ -112,12 +112,6 @@ void Knight::updateCurrent(float dt)
             {
                 m_animCloseAttack.update(dt);
             }
-            /*
-            else if (m_animStrongAttack.isRunning())
-            {
-                m_animStrongAttack.update(dt);
-            }
-            */
             else
             {
                 m_weapon->setIsCollisionCheckOn(false);

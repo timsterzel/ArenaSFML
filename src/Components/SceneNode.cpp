@@ -237,9 +237,15 @@ unsigned int SceneNode::getType() const
     return m_type;
 }
 
+/*
 void SceneNode::setType(unsigned int type)
 {
     m_type = type;
+}
+*/
+void SceneNode::addType(unsigned int type)
+{
+    m_type = m_type | type;
 }
 
 WorldObjectStatus SceneNode::getStatus() const

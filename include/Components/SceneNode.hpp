@@ -84,7 +84,8 @@ class SceneNode : public sf::Transformable, /*public sf::Drawable,*/ public sf::
         float getWorldRotation() const;
 
         unsigned int getType() const;
-        void setType(unsigned int type);
+        //void setType(unsigned int type);
+        void addType(unsigned int type);
 
         WorldObjectStatus getStatus() const;
         void setStatus(WorldObjectStatus status);

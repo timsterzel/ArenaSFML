@@ -11,7 +11,7 @@ Weapon::Weapon(RenderLayers layer, const float damage,
 , m_damage{ damage }
 , m_damageMultiplicator{ 1.f }
 {
-
+    addType(WorldObjectTypes::WEAPON);
 }
 
 
@@ -20,7 +20,7 @@ Weapon::Weapon(RenderLayers layer, const float damage, const sf::Texture &textur
 , m_damage{ damage }
 , m_damageMultiplicator{ 1.f }
 {
-
+    addType(WorldObjectTypes::WEAPON);
 }
         
 Weapon::Weapon(RenderLayers layer, const float damage, const sf::Texture &texture, 
@@ -30,7 +30,7 @@ Weapon::Weapon(RenderLayers layer, const float damage, const sf::Texture &textur
 , m_damage{ damage }
 , m_damageMultiplicator{ 1.f }
 {
-    
+    addType(WorldObjectTypes::WEAPON);
 }
 
 Weapon::~Weapon()
