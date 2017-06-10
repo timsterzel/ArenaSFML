@@ -96,9 +96,11 @@ class MainGameScreen : public Screen
     
         virtual void windowSizeChanged();
     private:
+        // Create a warrior of the given type
+        std::unique_ptr<Warrior> createWarrior(WorldObjectTypes warriorType);
         void buildGuiElements();
         void buildLevel();
-
+        
         SceneNode* getSceneNodeOfType(SceneNode::Pair sceneNodePair, 
                 WorldObjectTypes type);
         bool matchesCategories(SceneNode::Pair &colliders, unsigned int type1, 

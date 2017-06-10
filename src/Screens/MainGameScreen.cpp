@@ -71,20 +71,9 @@ void MainGameScreen::buildScene()
     // Play music
     m_context.music->play("gametheme01");
     
-    // Warrior
-    //std::unique_ptr<Wizard> warrior{ std::make_unique<Wizard>
-    //    (RenderLayers::MAIN, 100.f, "wizard", *m_context.textureHolder, 
-    //     *m_context.spriteSheetMapHolder, m_possibleTargetWarriors) };
-    
-    std::unique_ptr<Knight> warrior{ std::make_unique<Knight>
-        (RenderLayers::MAIN, 100.f, "knight", *m_context.textureHolder, 
-         *m_context.spriteSheetMapHolder, m_possibleTargetWarriors) };
-    
-    //std::unique_ptr<Runner> warrior{ std::make_unique<Runner>
-    //    (RenderLayers::MAIN, 100.f, "runner", *m_context.textureHolder, 
-    //     *m_context.spriteSheetMapHolder, m_possibleTargetWarriors) };
-    
-    m_warriorPlayer1 = warrior.get();
+    std::unique_ptr<Warrior> warriorPlayer1{ 
+        createWarrior(m_gameData.player1Warrior) };
+    m_warriorPlayer1 = warriorPlayer1.get();
     std::unique_ptr<CollisionShape> collisionShapeWarrior{ 
         std::make_unique<CollisionCircle>(12.f) };
     m_warriorPlayer1->setCollisionShape(std::move(collisionShapeWarrior));
@@ -94,43 +83,62 @@ void MainGameScreen::buildScene()
             WorldObjectTypes::PLAYER_1 | 
             WorldObjectTypes::WARRIOR | 
             WorldObjectTypes::KNIGHT);
-    //m_warriorPlayer1->setWeapon(swordPlayer.get());
-    //m_warriorPlayer1->setBodyParts(playerLeftShoe.get(), playerRightShoe.get(), playerUpperBody.get());
-    // Add Parts to player
-    //m_warriorPlayer1->attachChild(std::move(swordPlayer));
-    m_possibleTargetWarriors.push_back(warrior.get());
-    m_sceneGraph.attachChild(std::move(warrior));
+    m_possibleTargetWarriors.push_back(m_warriorPlayer1);
+    m_sceneGraph.attachChild(std::move(warriorPlayer1));
 
     // Player 2
-    std::unique_ptr<Warrior> player2{ std::make_unique<Runner>
-        (RenderLayers::MAIN, 100.f, "runner", *m_context.textureHolder, 
-         *m_context.spriteSheetMapHolder, m_possibleTargetWarriors) };
+    std::unique_ptr<Warrior> warriorPlayer2{ 
+        createWarrior(m_gameData.player2Warrior) };
     std::unique_ptr<CollisionShape> collisionShapePlayer2{ 
         std::make_unique<CollisionCircle>(12.f) };
-    player2->setCollisionShape(std::move(collisionShapePlayer2));
-    player2->setPosition(800 / 2.f - 160.f, 480 / 2.f - 100.f);
+    warriorPlayer2->setCollisionShape(std::move(collisionShapePlayer2));
+    warriorPlayer2->setPosition(800 / 2.f - 160.f, 480 / 2.f - 100.f);
     if (m_gameData.gameMode == GameMode::TWO_PLAYER)
     {
-        std::cout << "GameMode Two\n";
-        player2->setType(WorldObjectTypes::PLAYER_2 | 
+        warriorPlayer2->setType(WorldObjectTypes::PLAYER_2 | 
             WorldObjectTypes::WARRIOR |
             WorldObjectTypes::RUNNER);
-        player2->setIsAiActive(false);
-        m_warriorPlayer2 = player2.get();    
+        warriorPlayer2->setIsAiActive(false);
     }
     else if (m_gameData.gameMode == GameMode::ONE_PLAYER)
     {
-        std::cout << "GameMode ONE\n";
-        player2->setType(WorldObjectTypes::ENEMY | 
+        warriorPlayer2->setType(WorldObjectTypes::ENEMY | 
             WorldObjectTypes::WARRIOR |
             WorldObjectTypes::RUNNER);
-        player2->setIsAiActive(true);
-        m_warriorPlayer2 = player2.get();    
+        warriorPlayer2->setIsAiActive(true);
     }
-    m_possibleTargetWarriors.push_back(player2.get());
-    m_sceneGraph.attachChild(std::move(player2));
+    m_warriorPlayer2 = warriorPlayer2.get();    
+    m_possibleTargetWarriors.push_back(m_warriorPlayer2);
+    m_sceneGraph.attachChild(std::move(warriorPlayer2));
 
     buildLevel();
+}
+
+std::unique_ptr<Warrior> MainGameScreen::createWarrior(
+        WorldObjectTypes warriorType) 
+{
+    std::unique_ptr<Warrior> warrior{ nullptr };
+    switch(warriorType)
+    {
+        case WorldObjectTypes::KNIGHT:
+            warrior = std::make_unique<Knight>
+                (RenderLayers::MAIN, 100.f, "knight", *m_context.textureHolder, 
+                *m_context.spriteSheetMapHolder, m_possibleTargetWarriors);
+            break;
+        case WorldObjectTypes::RUNNER:
+            warrior = std::make_unique<Runner>
+                (RenderLayers::MAIN, 100.f, "runner", *m_context.textureHolder, 
+                *m_context.spriteSheetMapHolder, m_possibleTargetWarriors);
+            break;
+        case WorldObjectTypes::WIZARD:
+            warrior = std::make_unique<Wizard>
+                (RenderLayers::MAIN, 100.f, "wizard", *m_context.textureHolder, 
+                *m_context.spriteSheetMapHolder, m_possibleTargetWarriors);
+            break;
+        default:
+            assert(false && "This block should be unreachable!");
+    }
+    return std::move(warrior);
 }
 
 void MainGameScreen::buildGuiElements()
