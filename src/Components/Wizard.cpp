@@ -67,6 +67,10 @@ Wizard::Wizard(RenderLayers layer, const int health, const std::string &textureI
         m_spriteSheetMapHolder.getRectData("fireball", "fireball_5"));
     m_fireballFrameRects.push_back(
         m_spriteSheetMapHolder.getRectData("fireball", "fireball_6"));
+    // Collision shape
+    std::unique_ptr<CollisionShape> collisionShape{ 
+        std::make_unique<CollisionCircle>(12.f) };
+    setCollisionShape(std::move(collisionShape));
 }
 
 Wizard::~Wizard()

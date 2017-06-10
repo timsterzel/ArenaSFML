@@ -6,7 +6,7 @@
 #include "Calc.hpp"
 #include <iostream>
 
-Knight::Knight(RenderLayers layer, const int health,const std::string &textureId, 
+Knight::Knight(RenderLayers layer, const int health, const std::string &textureId,
         const ResourceHolder<sf::Texture> &textureHolder,
         const SpriteSheetMapHolder &spriteSheetMapHolder, 
         std::vector<Warrior*> &possibleTargetsInWord)
@@ -69,6 +69,11 @@ Knight::Knight(RenderLayers layer, const int health,const std::string &textureId
     m_closeCombatArea = std::move(closeCombatArea);
     m_closeCombatArea->setParent(this);
     m_closeCombatArea->setPosition(9.f, 0.f);
+
+    // Collision shape
+    std::unique_ptr<CollisionShape> collisionShape{ 
+        std::make_unique<CollisionCircle>(12.f) };
+    setCollisionShape(std::move(collisionShape));
 }
 
 Knight::~Knight()

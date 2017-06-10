@@ -6,7 +6,7 @@
 #include "Calc.hpp"
 #include <iostream>
 
-Runner::Runner(RenderLayers layer, const int health, const std::string &textureId, 
+Runner::Runner(RenderLayers layer, const int health, const std::string &textureId,
         const ResourceHolder<sf::Texture> &textureHolder,
         const SpriteSheetMapHolder &spriteSheetMapHolder, 
         std::vector<Warrior*> &possibleTargetsInWord)
@@ -60,6 +60,10 @@ Runner::Runner(RenderLayers layer, const int health, const std::string &textureI
     m_closeCombatArea = std::move(closeCombatArea);
     m_closeCombatArea->setParent(this);
     m_closeCombatArea->setPosition(9.f, 0.f);
+    // Collision shape
+    std::unique_ptr<CollisionShape> collisionShape{ 
+        std::make_unique<CollisionCircle>(12.f) };
+    setCollisionShape(std::move(collisionShape));
 }
 
 Runner::~Runner()

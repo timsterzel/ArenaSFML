@@ -74,11 +74,10 @@ void MainGameScreen::buildScene()
     std::unique_ptr<Warrior> warriorPlayer1{ 
         createWarrior(m_gameData.player1Warrior) };
     m_warriorPlayer1 = warriorPlayer1.get();
-    std::unique_ptr<CollisionShape> collisionShapeWarrior{ 
-        std::make_unique<CollisionCircle>(12.f) };
-    m_warriorPlayer1->setCollisionShape(std::move(collisionShapeWarrior));
+    //std::unique_ptr<CollisionShape> collisionShapeWarrior{ 
+    //    std::make_unique<CollisionCircle>(12.f) };
+    //m_warriorPlayer1->setCollisionShape(std::move(collisionShapeWarrior));
     m_warriorPlayer1->setPosition(800 / 2.f, 480 / 2.f);
-    //m_warriorPlayer1->setVelocity(60.f);
     m_warriorPlayer1->setType(
             WorldObjectTypes::PLAYER_1 | 
             WorldObjectTypes::WARRIOR | 
@@ -89,9 +88,9 @@ void MainGameScreen::buildScene()
     // Player 2
     std::unique_ptr<Warrior> warriorPlayer2{ 
         createWarrior(m_gameData.player2Warrior) };
-    std::unique_ptr<CollisionShape> collisionShapePlayer2{ 
-        std::make_unique<CollisionCircle>(12.f) };
-    warriorPlayer2->setCollisionShape(std::move(collisionShapePlayer2));
+    //std::unique_ptr<CollisionShape> collisionShapePlayer2{ 
+    //     std::make_unique<CollisionCircle>(12.f) };
+    //warriorPlayer2->setCollisionShape(std::move(collisionShapePlayer2));
     warriorPlayer2->setPosition(800 / 2.f - 160.f, 480 / 2.f - 100.f);
     if (m_gameData.gameMode == GameMode::TWO_PLAYER)
     {
