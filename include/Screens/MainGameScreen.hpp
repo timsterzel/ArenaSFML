@@ -24,15 +24,27 @@ class MainGameScreen : public Screen
             ONE_PLAYER,
             TWO_PLAYER
         };
+        
+        struct GameData
+        {
+            GameMode gameMode;
+            std::string levelId;
+            // Stored which control device controls which player
+            std::map<InputDevice, WorldObjectTypes> deviceMap;
+            WorldObjectTypes player1Warrior;
+            WorldObjectTypes player2Warrior;
+
+            GameData(GameMode gameMode, std::string levelId, 
+                    std::map<InputDevice, WorldObjectTypes> deviceMap, 
+                    WorldObjectTypes player1Warrior, 
+                    WorldObjectTypes player2Warrior);
+        };
 
     private:
         bool m_showCollisionInfo;
         
         sf::RenderWindow &m_window;
-        const Level &m_level;
-        // Stored which control device controls which player
-        std::map<InputDevice, WorldObjectTypes> m_deviceMap;
-        GameMode m_gameMode;
+        GameData m_gameData;
 
         // Used to apply the shader right on all drawn things. Some shaders only
         // effects textures right, so when we want to use shaders, we first draw all
@@ -65,9 +77,7 @@ class MainGameScreen : public Screen
 
     public:
         MainGameScreen(ScreenStack *screenStack, Context &context, 
-                const Level &level, const std::map<InputDevice, 
-                WorldObjectTypes> deviceMap, GameMode gameMode);
-        MainGameScreen(ScreenStack *screenStack, Context &context);
+                GameData gameData);
 
         virtual ~MainGameScreen();
         

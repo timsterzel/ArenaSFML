@@ -47,11 +47,7 @@ class ScreenStack : private sf::NonCopyable
         template <typename T>
         void registerScreen(ScreenID screenID);
         template <typename T, typename S>
-        void registerScreen(ScreenID screenID, const S &second);
-        template <typename T, typename S, typename R>
-        void registerScreen(ScreenID screenID, const S &second, R third);
-        template <typename T, typename S, typename R, typename Q>
-        void registerScreen(ScreenID screenID, const S &second, R third, Q fourth);
+        void registerScreen(ScreenID screenID, const S second);
 
         virtual void handleInput(Input &input, float dt);
         virtual void handleEvent(sf::Event &event, float dt);

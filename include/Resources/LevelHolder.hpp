@@ -12,16 +12,20 @@ class LevelHolder
     private:
         struct Settings
         {
+            std::string id;
             std::string levelName;
             int tileWidth;
             int tileHeight;
         };
 
-        std::vector<std::unique_ptr<Level>> m_levels;
+        //std::vector<std::unique_ptr<Level>> m_levels;
+        std::map<std::string, std::unique_ptr<Level>> m_levels;
     public:
         void load(const std::string &fileName);
 
-        std::vector<std::unique_ptr<Level>>& getLevels();
+        //std::vector<std::unique_ptr<Level>>& getLevels();
+        std::map<std::string, std::unique_ptr<Level>>& getLevels();
+        Level& getLevel(const std::string &id) const;
 
     private:
         bool loadSettings(const std::string &line, Settings *settings);

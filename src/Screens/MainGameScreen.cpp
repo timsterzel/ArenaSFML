@@ -15,41 +15,25 @@
 #include "Game.hpp"
 #include <cmath>
 
-MainGameScreen::MainGameScreen(ScreenStack *screenStack, 
-        Context &context, 
-        const Level &level, 
-        const std::map<InputDevice, WorldObjectTypes> deviceMap,
-        MainGameScreen::GameMode gameMode)
-: Screen(screenStack, context)
-, m_showCollisionInfo{ false }
-, m_window{ *context.window }
-, m_level{ level }
-, m_deviceMap{ deviceMap }
-, m_gameMode{ gameMode }
-, m_isRenderTextureAvailable{ false }
-, m_gameView{ context.gameView }
-, m_guiView{ context.guiView }
-, m_guiEnvironment{ *context.window }
-, m_healthBarWarr1{ nullptr }
-, m_healthBarWarr2{ nullptr }
-, m_stanimaBarWarr1{ nullptr }
-, m_stanimaBarWarr2{ nullptr }
-, m_winnerText{ nullptr }
-, m_worldBounds{ 0.f, 0.f, 6000.f, 6000.f }
-, m_warriorPlayer1{ nullptr }
+MainGameScreen::GameData::GameData(GameMode gameMode, std::string levelId, 
+    std::map<InputDevice, WorldObjectTypes> deviceMap, 
+    WorldObjectTypes player1Warrior, 
+    WorldObjectTypes player2Warrior)
+: gameMode{ gameMode }
+, levelId{ levelId }
+, deviceMap{ deviceMap } 
+, player1Warrior{ player1Warrior }
+, player2Warrior{ player2Warrior }
 {
-    std::cout << "MainGameScreen constructor\n";
-    buildScene();
+
 }
 
-MainGameScreen::MainGameScreen(ScreenStack *screenStack, 
-        Context &context)
+MainGameScreen::MainGameScreen(ScreenStack *screenStack, Context &context, 
+    GameData gameData)
 : Screen(screenStack, context)
 , m_showCollisionInfo{ false }
 , m_window{ *context.window }
-, m_level{ *(m_context.levelHolder->getLevels()[0].get()) }
-//, m_deviceMap{  }
-, m_gameMode{ MainGameScreen::GameMode::ONE_PLAYER }
+, m_gameData{ gameData }
 , m_isRenderTextureAvailable{ false }
 , m_gameView{ context.gameView }
 , m_guiView{ context.guiView }
@@ -62,8 +46,6 @@ MainGameScreen::MainGameScreen(ScreenStack *screenStack,
 , m_worldBounds{ 0.f, 0.f, 6000.f, 6000.f }
 , m_warriorPlayer1{ nullptr }
 {
-    m_deviceMap.insert({ InputDevice::KEYBOARD_MOUSE, 
-        WorldObjectTypes::PLAYER_1 });
     std::cout << "MainGameScreen constructor\n";
     buildScene();
 }
@@ -75,7 +57,6 @@ MainGameScreen::~MainGameScreen()
 
 void MainGameScreen::buildScene()
 {
-    std::cout << "MainGameScreen buildScene\n";
     if(!m_renderTexture.create(m_window.getSize().x, 
                 m_window.getSize().y))
     {
@@ -128,7 +109,7 @@ void MainGameScreen::buildScene()
         std::make_unique<CollisionCircle>(12.f) };
     player2->setCollisionShape(std::move(collisionShapePlayer2));
     player2->setPosition(800 / 2.f - 160.f, 480 / 2.f - 100.f);
-    if (m_gameMode == GameMode::TWO_PLAYER)
+    if (m_gameData.gameMode == GameMode::TWO_PLAYER)
     {
         std::cout << "GameMode Two\n";
         player2->setType(WorldObjectTypes::PLAYER_2 | 
@@ -137,7 +118,7 @@ void MainGameScreen::buildScene()
         player2->setIsAiActive(false);
         m_warriorPlayer2 = player2.get();    
     }
-    else if (m_gameMode == GameMode::ONE_PLAYER)
+    else if (m_gameData.gameMode == GameMode::ONE_PLAYER)
     {
         std::cout << "GameMode ONE\n";
         player2->setType(WorldObjectTypes::ENEMY | 
@@ -206,8 +187,9 @@ void MainGameScreen::buildGuiElements()
 
 void MainGameScreen::buildLevel()
 {
+    Level &level{  getContext().levelHolder->getLevel(m_gameData.levelId) };
     // Load the tiles
-    for (const Level::TileData &tile : m_level.tiles)
+    for (const Level::TileData &tile : level.tiles)
     {
         //*m_context.textureHolder
         sf::Texture &texture{ m_context.textureHolder->get("level") };
@@ -236,13 +218,13 @@ void MainGameScreen::buildLevel()
         m_sceneGraph.attachChild(std::move(sprite));
     }
     // Load spawn points
-    if (m_level.spawnPoint1 && m_warriorPlayer1)
+    if (level.spawnPoint1 && m_warriorPlayer1)
     {
-        m_warriorPlayer1->setPosition(m_level.spawnPoint1->position);
+        m_warriorPlayer1->setPosition(level.spawnPoint1->position);
     }
-    if (m_level.spawnPoint2 && m_warriorPlayer2)
+    if (level.spawnPoint2 && m_warriorPlayer2)
     {
-        m_warriorPlayer2->setPosition(m_level.spawnPoint2->position);
+        m_warriorPlayer2->setPosition(level.spawnPoint2->position);
     }
 }
 
@@ -349,9 +331,9 @@ bool MainGameScreen::handleInput(Input &input, float dt)
     // Check from which player the command is
     WorldObjectTypes inputPlayer{ WorldObjectTypes::NONE };
     InputDevice inputDevice{ input.getInputDevice() };
-    if (m_deviceMap.find(inputDevice) != m_deviceMap.end())
+    if (m_gameData.deviceMap.find(inputDevice) != m_gameData.deviceMap.end())
     {
-        inputPlayer = m_deviceMap.at(inputDevice);
+        inputPlayer = m_gameData.deviceMap.at(inputDevice);
     }
 
     switch (input.getInputType())
@@ -429,8 +411,6 @@ bool MainGameScreen::handleInput(Input &input, float dt)
             break;
         case InputTypes::PAUSE :
             m_screenStack->pushScreen(ScreenID::PAUSE);
-            //m_screenStack->popScreen();
-            //m_screenStack->pushScreen(ScreenID::GAME);
             break;
         // Debug
         case InputTypes::D1 :
@@ -510,11 +490,11 @@ bool MainGameScreen::update(float dt)
 
 void MainGameScreen::updateCamera(float dt)
 {
-    if (m_gameMode == GameMode::ONE_PLAYER)
+    if (m_gameData.gameMode == GameMode::ONE_PLAYER)
     {
         m_gameView.setCenter(m_warriorPlayer1->getWorldPosition());
     }
-    else if (m_gameMode == GameMode::TWO_PLAYER)
+    else if (m_gameData.gameMode == GameMode::TWO_PLAYER)
     {
         // Place camera at the middle point between the two players
         if (m_warriorPlayer1 && m_warriorPlayer2)

@@ -62,7 +62,7 @@ void LevelHolder::load(const std::string &fileName)
     }
     file.close();
     level->name = settings.levelName;
-    m_levels.push_back(std::move(level));
+    m_levels.insert(std::make_pair(settings.id, std::move(level)));
 }
 
 bool LevelHolder::loadSettings(const std::string &line, LevelHolder::Settings *settings)
@@ -76,6 +76,10 @@ bool LevelHolder::loadSettings(const std::string &line, LevelHolder::Settings *s
     }
     std::string identifier{ setting[0] };
     std::string value{ setting[1] };
+    if (identifier == "id")
+    {
+        settings->id = value;
+    }
     if (identifier == "name")
     {
         settings->levelName = value;
@@ -187,9 +191,16 @@ bool LevelHolder::loadObjects(const std::string &line,
     return true;
 }
 
-std::vector<std::unique_ptr<Level>>& LevelHolder::getLevels()
+std::map<std::string, std::unique_ptr<Level>>& LevelHolder::getLevels()
 {
     return m_levels;
+}
+
+Level& LevelHolder::getLevel(const std::string &id) const
+{
+    auto found = m_levels.find(id);
+    assert(found != m_levels.end());
+    return *found->second;
 }
 
 sf::Vector2f LevelHolder::translateRowColumnToPosition(int column, int row,

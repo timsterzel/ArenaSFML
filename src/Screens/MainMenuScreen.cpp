@@ -29,6 +29,14 @@ void MainMenuScreen::buildScene()
     onePlayerBtn->setOnLeftClickListener(
             [this](gsf::Widget *widget, sf::Vector2f pos)
     {
+        std::map<InputDevice, WorldObjectTypes> deviceMap;
+        deviceMap.insert({ InputDevice::KEYBOARD_MOUSE, 
+                WorldObjectTypes::PLAYER_1 });
+        MainGameScreen::GameData gameData(MainGameScreen::GameMode::ONE_PLAYER,
+                "level1", deviceMap, WorldObjectTypes::WIZARD,
+                WorldObjectTypes::RUNNER);
+        m_screenStack->registerScreen<MainGameScreen, 
+            MainGameScreen::GameData>(ScreenID::GAME, gameData);
         m_screenStack->popScreen();
         m_screenStack->pushScreen(ScreenID::GAME);
     });
