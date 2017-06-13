@@ -15,7 +15,8 @@ class SettingsScreen : public Screen
         gsf::CheckBoxWidget *m_checkBoxFramelimit;
         gsf::CheckBoxWidget *m_checkBoxVsync;
         gsf::ComboBoxWidget *m_comboBoxResolution;
-    
+        gsf::ComboBoxWidget *m_comboBoxInputP1;
+        gsf::ComboBoxWidget *m_comboBoxInputP2;
     public:
         SettingsScreen(ScreenStack *screenStack, Context &context);
 
@@ -32,6 +33,8 @@ class SettingsScreen : public Screen
 
     private:
         void loadSettings();
+        void selectInputEntry(gsf::ComboBoxWidget *widget, const std::string &value);
+        std::string getInputEntry(gsf::ComboBoxWidget *widget) const;
 };
 
 #endif // !SETTINGSSCREEN_HPP

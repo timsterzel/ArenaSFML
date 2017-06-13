@@ -34,6 +34,10 @@ void SettingsScreen::buildScene()
         m_guiEnvironment.getWidgetByID("checkBoxWidget_vsync" ));
     m_comboBoxResolution = static_cast<gsf::ComboBoxWidget*>(
         m_guiEnvironment.getWidgetByID("comboBoxWidget_resolution" ));
+    m_comboBoxInputP1 = static_cast<gsf::ComboBoxWidget*>(
+        m_guiEnvironment.getWidgetByID("comboBoxWidget_inputPlayer1" ));
+    m_comboBoxInputP2 = static_cast<gsf::ComboBoxWidget*>(
+        m_guiEnvironment.getWidgetByID("comboBoxWidget_inputPlayer2" ));
 
     loadSettings();
     /*
@@ -64,6 +68,16 @@ void SettingsScreen::buildScene()
         m_settingChanged = true;
     });
     m_comboBoxResolution->setOnSelectionChangedListener(
+            [this](gsf::Widget *widget, int index)
+    {
+        m_settingChanged = true;     
+    });
+    m_comboBoxInputP1->setOnSelectionChangedListener(
+            [this](gsf::Widget *widget, int index)
+    {
+        m_settingChanged = true;     
+    });
+    m_comboBoxInputP2->setOnSelectionChangedListener(
             [this](gsf::Widget *widget, int index)
     {
         m_settingChanged = true;     
@@ -102,6 +116,8 @@ void SettingsScreen::buildScene()
                 m_config->set("screen_width", screenWidth);
                 m_config->set("screen_height", screenHeight);
             };
+            m_config->set("input_player1", getInputEntry(m_comboBoxInputP1));
+            m_config->set("input_player2", getInputEntry(m_comboBoxInputP2));
             m_config->saveCurrentConfigToFile();
         }
         m_screenStack->popScreen();
@@ -125,6 +141,42 @@ void SettingsScreen::loadSettings()
         m_comboBoxResolution->addElement(res);
         m_comboBoxResolution->selectElement(res);
     }
+    std::string inputP1{ m_config->getString("input_player1", "keyboard_mouse") };
+    std::string inputP2{ m_config->getString("input_player2", "joystick_0") };
+    selectInputEntry(m_comboBoxInputP1, inputP1);    
+    selectInputEntry(m_comboBoxInputP2, inputP2);    
+}
+
+void SettingsScreen::selectInputEntry(
+        gsf::ComboBoxWidget *widget, const std::string &value)
+{
+    int select{ 0 };
+    if (value == "keyboard_mouse")
+    {
+        select = 0;
+    }
+    else if (value == "joystick_0")
+    {
+        select = 1;
+    }
+    else if (value == "joystick_1")
+    {
+        select = 2;
+    }
+    widget->selectElement(select);
+}
+
+std::string SettingsScreen::getInputEntry(gsf::ComboBoxWidget *widget) const
+{
+    std::string input{ "keyboard_mouse" };
+    int currentSelection{ widget->currentIndex() };
+    switch(currentSelection)
+    {
+        case 0: input = "keyboard_mouse"; break;
+        case 1: input = "joystick_0"; break;
+        case 2: input = "joystick_1"; break;
+    }
+    return input;
 }
 
 void SettingsScreen::windowSizeChanged()

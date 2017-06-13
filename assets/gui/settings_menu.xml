@@ -204,9 +204,6 @@
 
 		</HorizontalLayoutWidget>
 
-
-
-
 		<!-- Version -->
 		<HorizontalLayoutWidget
 			autoDetermineHeight="true"
