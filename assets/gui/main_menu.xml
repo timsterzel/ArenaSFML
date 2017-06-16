@@ -6,15 +6,18 @@
 			id="defaultFont"
 			src="assets/fonts/cave-story/Cave-Story.ttf"
 		/>
-	
+
 	</Resources>
     <Widgets>
 
 			<!-- Header -->
 			<TextWidget
 					orientation="centerHorizontal"
-					text="ARENA"
+					text=" ARENA "
 					characterSize="180"
+					textColor="Transparent"
+					outlineTextColor="White"
+					textOutlineThickness="3"
 					font="defaultFont" />
 
 			<VerticalLayoutWidget
