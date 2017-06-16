@@ -4,14 +4,14 @@
 	<Resources>
 		<Font
 			id="defaultFont"
-			src="assets/fonts/UbuntuMono-R.ttf"
+			src="assets/fonts/cave-story/Cave-Story.ttf"
 		/>
 	</Resources>
     <Widgets>
 			<!-- Header -->
 			<TextWidget
 					orientation="centerHorizontal"
-					text="Start Game"
+					text="START GAME"
 					characterSize="60"
 					font="defaultFont" />
 			<!-- Main Content -->
@@ -30,11 +30,10 @@
 
 					<TextWidget
 						id="textWidget_player1"
-						text="Player 1"
+						text="PLAYER 1"
 						font="defaultFont"
 						characterSize="30" />
 
-					<!-- Keyboard -->
 					<HorizontalLayoutWidget
 	      		autoDetermineHeight="true"
 						autoDetermineWidth="true"
@@ -47,7 +46,7 @@
 
 						<TextWidget
 	          	id="textWidget_p1Knight"
-	          	text=" Knight"
+	          	text=" KNIGHT"
 	          	font="defaultFont"
 							left="20"
 	          	characterSize="20" />
@@ -59,7 +58,6 @@
 					height="10"
 					backgroundColor="transparent"	/>
 
-				<!-- Joystick 0 -->
 				<HorizontalLayoutWidget
 					autoDetermineHeight="true"
 					autoDetermineWidth="true"
@@ -72,7 +70,7 @@
 
 					<TextWidget
 						id="textWidget_p1Runner"
-						text=" Runner"
+						text=" RUNNER"
 						font="defaultFont"
 						left="20"
 						characterSize="20" />
@@ -85,7 +83,6 @@
 					height="10"
 					backgroundColor="transparent"	/>
 
-				<!-- Joystick 1 -->
 				<HorizontalLayoutWidget
 					autoDetermineHeight="true"
 					autoDetermineWidth="true"
@@ -98,7 +95,7 @@
 
 					<TextWidget
 						id="textWidget_p1Wizard"
-						text=" Wizard"
+						text=" WIZARD"
 						font="defaultFont"
 						left="20"
 						characterSize="20" />
@@ -121,7 +118,7 @@
 					backgroundColor="transparent">
 					<TextWidget
 						id="textWidget_level"
-						text="Level"
+						text="LEVEL"
 						font="defaultFont"
 						characterSize="30" />
 
@@ -149,11 +146,10 @@
 
 					<TextWidget
 						id="textWidget_player2"
-						text="Player 2"
+						text="PLAYER 2"
 						font="defaultFont"
 						characterSize="30" />
 
-					<!-- Keyboard -->
 					<HorizontalLayoutWidget
 		     		autoDetermineHeight="true"
 						autoDetermineWidth="true"
@@ -166,7 +162,7 @@
 
 						<TextWidget
 		         	id="textWidget_p2Knight"
-		         	text=" Knight"
+		         	text=" KNIGHT"
 		         	font="defaultFont"
 							left="20"
 		         	characterSize="20" />
@@ -179,7 +175,6 @@
 					height="10"
 					backgroundColor="transparent"	/>
 
-				<!-- Joystick 0 -->
 				<HorizontalLayoutWidget
 					autoDetermineHeight="true"
 					autoDetermineWidth="true"
@@ -192,7 +187,7 @@
 
 					<TextWidget
 						id="textWidget_p2Runner"
-						text=" Runner"
+						text=" RUNNER"
 						font="defaultFont"
 						left="20"
 						characterSize="20" />
@@ -205,7 +200,6 @@
 					height="10"
 					backgroundColor="transparent"	/>
 
-				<!-- Joystick 1 -->
 				<HorizontalLayoutWidget
 					autoDetermineHeight="true"
 					autoDetermineWidth="true"
@@ -218,7 +212,7 @@
 
 					<TextWidget
 						id="textWidget_p2Wizard"
-						text=" Wizard"
+						text=" WIZARD"
 						font="defaultFont"
 						left="20"
 						characterSize="20" />
@@ -240,7 +234,8 @@
 					id="textButtonWidget_back"
 					width="160"
 					height="40"
-					text="Back"
+					text="BACK"
+					characterSize="30"
 					orientation="centerVertical"
 					font="defaultFont" />
 
@@ -253,7 +248,8 @@
 					id="textButtonWidget_start"
 					width="160"
 					height="40"
-					text="Start Game"
+					text="START GAME"
+					characterSize="30"
 					orientation="centerVertical"
 					font="defaultFont" />
 

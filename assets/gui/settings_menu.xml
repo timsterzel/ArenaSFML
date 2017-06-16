@@ -4,7 +4,7 @@
 	<Resources>
 		<Font
 			id="defaultFont"
-			src="assets/fonts/UbuntuMono-R.ttf"
+			src="assets/fonts/cave-story/Cave-Story.ttf"
 		/>
 	</Resources>
     <Widgets>
@@ -35,7 +35,7 @@
 
 					<TextWidget
           	id="textWidget_sound"
-          	text=" Sound"
+          	text=" SOUND"
           	font="defaultFont"
 						left="20"
           	characterSize="20" />
@@ -60,7 +60,7 @@
 
 				<TextWidget
 					id="textWidget_fullscreen"
-					text=" Fullscreen"
+					text=" FULLSCREEN"
 					font="defaultFont"
 					left="20"
 					characterSize="20" />
@@ -85,7 +85,7 @@
 
 				<TextWidget
 					id="textWidget_famelimit"
-					text=" Limit FPS"
+					text=" LIMIT FPS"
 					font="defaultFont"
 					left="20"
 					characterSize="20" />
@@ -110,7 +110,7 @@
 
 				<TextWidget
 					id="textWidget_vsync"
-					text=" Vsync"
+					text=" VSYNC"
 					font="defaultFont"
 					left="20"
 					characterSize="20" />
@@ -140,7 +140,7 @@
 			<!-- Input Player 1 -->
 			<TextWidget
 				id="textWidget_inputPlayer1"
-				text="Input Player 1"
+				text="INPUT PLAYER 1"
 				font="defaultFont"
 				left="20"
 				characterSize="20" />
@@ -155,7 +155,7 @@
 				<!-- Input Player 2 -->
 				<TextWidget
 					id="textWidget_inputPlayer2"
-					text="Input Player 2"
+					text="INPUT PLAYER 2"
 					font="defaultFont"
 					left="20"
 					characterSize="20" />
@@ -180,7 +180,8 @@
 				id="textButtonWidget_back"
 				width="160"
 				height="40"
-				text="Back"
+				text="BACK"
+				characterSize="26"
 				orientation="centerVertical"
 				font="defaultFont" />
 
@@ -193,7 +194,8 @@
 				id="textButtonWidget_save"
 				width="160"
 				height="40"
-				text="Save"
+				text="SAVE"
+				characterSize="26"
 				orientation="centerVertical"
 				font="defaultFont" />
 
@@ -217,7 +219,7 @@
 
 			<TextWidget
 				id="textWidget_header"
-				text="Version 0.8"
+				text="VERSION 0.8"
 				characterSize="20"
 				font="defaultFont" />
 

@@ -4,10 +4,19 @@
 	<Resources>
 		<Font
 			id="defaultFont"
-			src="assets/fonts/UbuntuMono-R.ttf"
+			src="assets/fonts/cave-story/Cave-Story.ttf"
 		/>
+	
 	</Resources>
     <Widgets>
+
+			<!-- Header -->
+			<TextWidget
+					orientation="centerHorizontal"
+					text="ARENA"
+					characterSize="180"
+					font="defaultFont" />
+
 			<VerticalLayoutWidget
 				id="vertWidget_vl1"
 				autoDetermineWidth="true"
@@ -20,7 +29,8 @@
 					width="300"
 					height="60"
 					orientation="centerHorizontal"
-					text="One Player"
+					text="ONE PLAYER"
+					characterSize="30"
 					font="defaultFont" />
 
 				<Widget
@@ -33,7 +43,8 @@
 					width="300"
 					height="60"
 					orientation="centerHorizontal"
-					text="Two Player"
+					text="TWO PLAYER"
+					characterSize="30"
 					font="defaultFont" />
 
 				<Widget
@@ -46,7 +57,8 @@
 					width="300"
 					height="60"
 					orientation="centerHorizontal"
-					text="Settings"
+					text="SETTINGS"
+					characterSize="30"
 					font="defaultFont" />
 
 					<Widget
@@ -59,7 +71,8 @@
 						width="300"
 						height="60"
 						orientation="centerHorizontal"
-						text="Quit Game"
+						text="QUIT GAME"
+						characterSize="30"
 						font="defaultFont" />
 
 			</VerticalLayoutWidget>

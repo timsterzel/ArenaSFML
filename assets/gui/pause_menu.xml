@@ -4,7 +4,7 @@
 	<Resources>
 		<Font
 			id="defaultFont"
-			src="assets/fonts/UbuntuMono-R.ttf"
+			src="assets/fonts/cave-story/Cave-Story.ttf"
 		/>
 	</Resources>
     <Widgets>
@@ -29,7 +29,8 @@
 					width="300"
 					height="60"
 					orientation="centerHorizontal"
-					text="Resume"
+					text="RESUME"
+					characterSize="26"
 					font="defaultFont" />
 
 				<Widget
@@ -42,7 +43,8 @@
 					width="300"
 					height="60"
 					orientation="centerHorizontal"
-					text="Main menu"
+					text="MAIN MENU"
+					characterSize="26"
 					font="defaultFont" />
 
 			</VerticalLayoutWidget>

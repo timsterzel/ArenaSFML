@@ -110,8 +110,8 @@ void Game::adjustShownWorldToWindowSize(unsigned int windowWidth, unsigned int w
 
 void Game::loadFonts()
 {
-    //m_fontHolder.load(Fonts::DEFAULT, "assets/fonts/UbuntuMono-R.ttf");
-    m_fontHolder.load("default", "assets/fonts/UbuntuMono-R.ttf");
+    //m_fontHolder.load("default", "assets/fonts/UbuntuMono-R.ttf");
+    m_fontHolder.load("default", "assets/fonts/cave-story/Cave-Story.ttf");
 }
 
 void Game::loadTextures()
