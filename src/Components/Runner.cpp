@@ -213,6 +213,7 @@ void Runner::startCloseAttack()
         m_weapon->setDamageMultiplicator(m_closeAttackDamageMul);
         m_weapon->startNewAttack();
         removeStanima(m_closeAttackStanima);
+        m_sound.play("swoosh1");
     }
 }
 
