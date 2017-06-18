@@ -10,6 +10,7 @@ class SettingsScreen : public Screen
         gsf::GUIEnvironment m_guiEnvironment;
         ConfigManager *m_config;
         bool m_settingChanged;
+        gsf::CheckBoxWidget *m_checkBoxMusic;
         gsf::CheckBoxWidget *m_checkBoxSound;
         gsf::CheckBoxWidget *m_checkBoxFullscreen;
         gsf::CheckBoxWidget *m_checkBoxFramelimit;

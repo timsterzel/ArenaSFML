@@ -25,7 +25,7 @@ Game::Game()
 , m_currentBgColorStep{ 0 }
 , m_totalBgStepTime{ 5.f }
 , m_currentBgStepTime{ 0.f }
-, m_window{ sf::VideoMode{ m_screenHeight, m_screenWidth} , "ArenaSFML" }
+, m_window{ sf::VideoMode{ m_screenHeight, m_screenWidth} , "ARENA" }
 , m_music{ }
 , m_sound{  }
 , m_context{ &m_config, &m_window, &m_fontHolder, &m_textureHolder, 
@@ -62,12 +62,12 @@ Game::Game()
         m_window.setMouseCursorVisible(false);
     }
 
+    int musicLevel{ m_config.getInt("music_level", 10) };
+    m_music.setVolume(musicLevel * 10);
     if (!m_config.getBool("music_on", true))
     {
         m_music.setVolume(0.f);
     }
-    int musicLevel{ m_config.getInt("music_level", 10) };
-    m_music.setVolume(musicLevel * 10);
     
     int soundLevel{ m_config.getInt("sound_level", 10) };
     m_sound.setVolume(soundLevel * 10);

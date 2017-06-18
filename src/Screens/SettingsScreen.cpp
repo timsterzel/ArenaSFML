@@ -24,6 +24,8 @@ void SettingsScreen::buildScene()
     m_guiEnvironment.createScene("assets/gui/settings_menu.xml");
     m_context.window->setView(oldView);
     
+    m_checkBoxMusic = static_cast<gsf::CheckBoxWidget*>(
+        m_guiEnvironment.getWidgetByID("checkBoxWidget_music" ));
     m_checkBoxSound = static_cast<gsf::CheckBoxWidget*>(
         m_guiEnvironment.getWidgetByID("checkBoxWidget_sound" ));
     m_checkBoxFullscreen = static_cast<gsf::CheckBoxWidget*>(
@@ -47,6 +49,12 @@ void SettingsScreen::buildScene()
         m_settingChanged = true;
     } };
     */
+    
+    m_checkBoxMusic->setOnLeftClickListener(
+            [this](gsf::Widget *widget, sf::Vector2f pos)
+    {
+        m_settingChanged = true;
+    });
     m_checkBoxSound->setOnLeftClickListener(
             [this](gsf::Widget *widget, sf::Vector2f pos)
     {
@@ -99,8 +107,8 @@ void SettingsScreen::buildScene()
     {
         if (m_settingChanged)
         {
-            std::cout << "Changed \n";
-            m_config->set("music_on", m_checkBoxSound->isChecked());
+            m_config->set("sound_on", m_checkBoxSound->isChecked());
+            m_config->set("music_on", m_checkBoxMusic->isChecked());
             m_config->set("fullscreen", m_checkBoxFullscreen->isChecked());
             m_config->set("framerate_limit", m_checkBoxFramelimit->isChecked());
             m_config->set("vertical_sync", m_checkBoxVsync->isChecked());
@@ -127,7 +135,8 @@ void SettingsScreen::buildScene()
 
 void SettingsScreen::loadSettings()
 {
-    m_checkBoxSound->setIsChecked(m_config->getBool("music_on", true));
+    m_checkBoxMusic->setIsChecked(m_config->getBool("music_on", true));
+    m_checkBoxSound->setIsChecked(m_config->getBool("sound_on", true));
     m_checkBoxFullscreen->setIsChecked(m_config->getBool("fullscreen", true));
     m_checkBoxFramelimit->setIsChecked(m_config->getBool("framerate_limit", true));
     m_checkBoxVsync->setIsChecked(m_config->getBool("vertical_sync", true));

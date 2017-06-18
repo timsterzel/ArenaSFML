@@ -22,6 +22,32 @@
 				backgroundColor="transparent"
 				orientation="center" >
 
+
+				<!-- Music on/off -->
+				<HorizontalLayoutWidget
+					autoDetermineHeight="true"
+					autoDetermineWidth="true"
+					backgroundColor="transparent" >
+
+					<CheckBoxWidget
+						id="checkBoxWidget_music"
+						width="20"
+						height="20" />
+
+					<TextWidget
+						id="textWidget_music"
+						text=" MUSIC"
+						font="defaultFont"
+						left="20"
+						characterSize="20" />
+
+				</HorizontalLayoutWidget>
+
+				<Widget
+					width="10"
+					height="10"
+					backgroundColor="transparent"	/>
+
 				<!-- Sound on/off -->
 				<HorizontalLayoutWidget
       		autoDetermineHeight="true"
