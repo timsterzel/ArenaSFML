@@ -10,6 +10,7 @@ class SettingsScreen : public Screen
         gsf::GUIEnvironment m_guiEnvironment;
         ConfigManager *m_config;
         bool m_settingChanged;
+
         gsf::CheckBoxWidget *m_checkBoxMusic;
         gsf::CheckBoxWidget *m_checkBoxSound;
         gsf::CheckBoxWidget *m_checkBoxFullscreen;
@@ -18,6 +19,17 @@ class SettingsScreen : public Screen
         gsf::ComboBoxWidget *m_comboBoxResolution;
         gsf::ComboBoxWidget *m_comboBoxInputP1;
         gsf::ComboBoxWidget *m_comboBoxInputP2;
+
+        // Old values
+        bool m_oldMusicOn;
+        int m_oldMusicLevel;
+        bool m_oldSoundOn;
+        int m_oldSoundLevel;
+        bool m_oldFullscreenOn;
+        bool m_oldFrameLimitOn;
+        bool m_oldVsynOn;
+        std::string m_oldResolution;
+
     public:
         SettingsScreen(ScreenStack *screenStack, Context &context);
 
@@ -34,6 +46,7 @@ class SettingsScreen : public Screen
 
     private:
         void loadSettings();
+        void updateSettings();
         void selectInputEntry(gsf::ComboBoxWidget *widget, const std::string &value);
         std::string getInputEntry(gsf::ComboBoxWidget *widget) const;
 };
