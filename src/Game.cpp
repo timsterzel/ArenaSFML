@@ -27,8 +27,10 @@ Game::Game()
 , m_currentBgStepTime{ 0.f }
 , m_window{ sf::VideoMode{ m_screenHeight, m_screenWidth} , "ArenaSFML" }
 , m_music{ }
-, m_context{ &m_config, &m_window, &m_fontHolder, &m_textureHolder, &m_shaderHolder,
-    &m_spriteSheetMapHolder, &m_levelHolder, &m_music, &m_background }
+, m_sound{  }
+, m_context{ &m_config, &m_window, &m_fontHolder, &m_textureHolder, 
+    &m_shaderHolder, &m_spriteSheetMapHolder, &m_levelHolder, &m_music, 
+    &m_sound, &m_background }
 , m_isRunning{ true }
 , m_isPaused{ false }
 , m_renderManager{ &m_sceneGraph }
@@ -64,6 +66,10 @@ Game::Game()
     {
         m_music.setVolume(0.f);
     }
+    if (!m_config.getBool("sound_on", true))
+    {
+        m_sound.setVolume(0.f);
+    }
     //std::unique_ptr<Screen> actualScreen = { std::make_unique<MainGameScreen>(isInDebug, this, &m_window, m_fontHolder, m_textureHolder, m_spriteSheetMapHolder) };
     //m_actualScreen = std::move(actualScreen);
     m_context.guiView = m_window.getView();
@@ -74,6 +80,7 @@ Game::Game()
     loadShaders();
     loadLevels();
     loadMusic();
+    loadSounds();
     buildScene();
     // Register screens
     m_screenStack.registerScreen<MainMenuScreen>(ScreenID::MAINMENU);
@@ -162,6 +169,12 @@ void Game::loadMusic()
 {
     m_music.add("gametheme01", 
             "assets/sounds/themes/Juhani_Junkala_-_Epic_Boss_Battle.ogg");
+}
+
+void Game::loadSounds()
+{
+    m_sound.load("fireball", "assets/sounds/fx/fireball.wav");
+    m_sound.play("fireball");
 }
 
 void Game::buildScene()

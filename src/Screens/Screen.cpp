@@ -8,6 +8,7 @@
 #include "Components/Knight.hpp"
 #include "Calc.hpp"
 #include "Sound/MusicPlayer.hpp"
+#include "Sound/SoundPlayer.hpp"
 #include <memory>
 
 Screen::Screen(ScreenStack *screenStack, Context &context)
@@ -27,6 +28,7 @@ Screen::Context::Context(
     SpriteSheetMapHolder *spriteSheetMapHolder, 
     LevelHolder *levelHolder,
     MusicPlayer *music,
+    SoundPlayer *sound,
     sf::RectangleShape *background)
 : config{ config }
 , window{ window }
@@ -38,6 +40,7 @@ Screen::Context::Context(
 , spriteSheetMapHolder{ spriteSheetMapHolder }
 , levelHolder{ levelHolder }
 , music{ music }
+, sound{ sound }
 , background{ background }
 {
 

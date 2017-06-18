@@ -17,6 +17,7 @@
 #include "Resources/LevelHolder.hpp"
 #include "Screens/ScreenStack.hpp"
 #include "Sound/MusicPlayer.hpp"
+#include "Sound/SoundPlayer.hpp"
 #include "libs/GUI-SFML/libs/tinyxml2.h"
 
 typedef std::chrono::high_resolution_clock CLOCK;
@@ -51,6 +52,7 @@ class Game
         
         sf::RenderWindow m_window;
         MusicPlayer m_music;
+        SoundPlayer m_sound;
         sf::Text m_txtStatFPS;
         Screen::Context m_context;
 
@@ -93,6 +95,7 @@ class Game
         void loadShaders();
         void loadLevels();
         void loadMusic();
+        void loadSounds();
         void buildScene();
         
         void determineDeltaTime();

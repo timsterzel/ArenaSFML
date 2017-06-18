@@ -17,6 +17,7 @@
 
 
 class MusicPlayer;
+class SoundPlayer;
 class ScreenStack;
 
 class Screen : private sf::NonCopyable
@@ -36,6 +37,7 @@ class Screen : private sf::NonCopyable
             SpriteSheetMapHolder *spriteSheetMapHolder;
             LevelHolder *levelHolder;
             MusicPlayer *music;
+            SoundPlayer *sound;
             // The color changing baclground
             sf::RectangleShape *background;
 
@@ -47,6 +49,7 @@ class Screen : private sf::NonCopyable
                     SpriteSheetMapHolder *spriteSheetMapHolder, 
                     LevelHolder *levelHolder,
                     MusicPlayer *music,
+                    SoundPlayer *sound,
                     sf::RectangleShape *background);
 
             Context();
