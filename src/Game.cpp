@@ -319,6 +319,7 @@ void Game::update()
         m_sceneGraph.removeDestroyed();
         m_sceneGraph.update(m_dt);
     }
+    m_sound.removeStoppedSounds();
 }
 
 void Game::updateBackground(float dt)
