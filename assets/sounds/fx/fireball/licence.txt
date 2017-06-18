@@ -1,4 +1,4 @@
 fireball.wav
-CC0
+Licence: CC0
 Autor: Julien Matthey
 Source: https://opengameart.org/content/fireball-1

@@ -260,6 +260,7 @@ void Runner::startDodging()
         // The dodge direction is the direction where the runner looking at
         m_dodgeDir = Calc::degAngleToDirectionVector(getRotation() + 90.f);
         removeStanima(m_dodgeStanima);
+        m_sound.play("dodge");
     }
 }
 

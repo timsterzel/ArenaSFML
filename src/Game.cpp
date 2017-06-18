@@ -173,8 +173,8 @@ void Game::loadMusic()
 
 void Game::loadSounds()
 {
-    m_sound.load("fireball", "assets/sounds/fx/fireball.wav");
-    m_sound.play("fireball");
+    m_sound.load("fireball", "assets/sounds/fx/fireball/fireball.wav");
+    m_sound.load("dodge", "assets/sounds/fx/dodge/dodge.wav");
 }
 
 void Game::buildScene()
