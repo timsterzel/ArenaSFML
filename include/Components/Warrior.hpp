@@ -7,6 +7,7 @@
 #include "Components/SpriteNode.hpp"
 #include "Resources/ResourceHolder.hpp"
 #include "Resources/SpriteSheetMapHolder.hpp"
+#include "Sound/SoundPlayer.hpp"
 
 class Weapon;
 
@@ -17,6 +18,8 @@ class Warrior : public Entity
         // A random generated id (should be unique)
         std::string m_ID;
         
+        SoundPlayer &m_sound;
+
         const ResourceHolder<sf::Texture> &m_textureHolder;
         const SpriteSheetMapHolder &m_spriteSheetMapHolder;
         
@@ -59,7 +62,9 @@ class Warrior : public Entity
 
 
     public:
-        Warrior(RenderLayers layer, const float health, const std::string &textureId,                const ResourceHolder<sf::Texture> &textureHolder,
+        Warrior(RenderLayers layer, SoundPlayer &sound, const float health, 
+                const std::string &textureId, 
+                const ResourceHolder<sf::Texture> &textureHolder,
                 const SpriteSheetMapHolder &spriteSheetMapHolder, 
                 std::vector<Warrior*> &possibleTargetsInWord);
         virtual ~Warrior();

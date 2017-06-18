@@ -5,10 +5,13 @@
 #include <iostream>
 #include <vector>
 
-Warrior::Warrior(RenderLayers layer, const float health, const std::string &textureId, const ResourceHolder<sf::Texture> &textureHolder,
+Warrior::Warrior(RenderLayers layer, SoundPlayer &sound, const float health, 
+        const std::string &textureId, 
+        const ResourceHolder<sf::Texture> &textureHolder,
     const SpriteSheetMapHolder &spriteSheetMapHolder, std::vector<Warrior*> &possibleTargetsInWord)
 : Entity(layer)
 , m_ID{ Helpers::createUniqueID(30) }
+, m_sound{ sound }
 , m_textureHolder{ textureHolder }
 , m_spriteSheetMapHolder{ spriteSheetMapHolder }
 , m_maxHealth{ health }

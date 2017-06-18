@@ -146,18 +146,21 @@ std::unique_ptr<Warrior> MainGameScreen::createWarrior(
     {
         case WorldObjectTypes::KNIGHT:
             warrior = std::make_unique<Knight>
-                (RenderLayers::MAIN, 100.f, "knight", *m_context.textureHolder, 
-                *m_context.spriteSheetMapHolder, m_possibleTargetWarriors);
+                (RenderLayers::MAIN, *m_context.sound, 100.f, "knight", 
+                 *m_context.textureHolder, *m_context.spriteSheetMapHolder, 
+                  m_possibleTargetWarriors);
             break;
         case WorldObjectTypes::RUNNER:
             warrior = std::make_unique<Runner>
-                (RenderLayers::MAIN, 100.f, "runner", *m_context.textureHolder, 
-                *m_context.spriteSheetMapHolder, m_possibleTargetWarriors);
+                (RenderLayers::MAIN, *m_context.sound, 100.f, "runner", 
+                 *m_context.textureHolder, *m_context.spriteSheetMapHolder, 
+                  m_possibleTargetWarriors);
             break;
         case WorldObjectTypes::WIZARD:
             warrior = std::make_unique<Wizard>
-                (RenderLayers::MAIN, 100.f, "wizard", *m_context.textureHolder, 
-                *m_context.spriteSheetMapHolder, m_possibleTargetWarriors);
+                (RenderLayers::MAIN, *m_context.sound, 100.f, "wizard", 
+                 *m_context.textureHolder, *m_context.spriteSheetMapHolder, 
+                 m_possibleTargetWarriors);
             break;
         default:
             assert(false && "This block should be unreachable!");
@@ -272,6 +275,7 @@ void MainGameScreen::handleConsoleCommands(gsf::Widget* widget, sf::String comma
     }
     std::string mainCom{ commands[0] };
     // Spawm something
+    /*
     if (mainCom == "SPAWN")
     {
         // Nothing to spawn specified
@@ -285,7 +289,8 @@ void MainGameScreen::handleConsoleCommands(gsf::Widget* widget, sf::String comma
         if (spawnObjCom == "KNIGHT")
         {
             spawnWar = std::make_unique<Knight>
-                (RenderLayers::MAIN, 100.f, "knight", *m_context.textureHolder, 
+                (RenderLayers::MAIN, *m_context.sound, 
+                 100.f, "knight", *m_context.textureHolder, 
                 *m_context.spriteSheetMapHolder, m_possibleTargetWarriors);
             type = WorldObjectTypes::KNIGHT;
         }
@@ -308,7 +313,8 @@ void MainGameScreen::handleConsoleCommands(gsf::Widget* widget, sf::String comma
         m_possibleTargetWarriors.push_back(spawnWar.get());
         m_sceneGraph.attachChild(std::move(spawnWar));
     }
-    else if (mainCom == "HEAL")
+    */
+    if (mainCom == "HEAL")
     {
         if (comCnt > 1)
         {

@@ -6,11 +6,11 @@
 #include "Calc.hpp"
 #include <iostream>
 
-Knight::Knight(RenderLayers layer, const int health, const std::string &textureId,
+Knight::Knight(RenderLayers layer, SoundPlayer &sound, const int health, const std::string &textureId,
         const ResourceHolder<sf::Texture> &textureHolder,
         const SpriteSheetMapHolder &spriteSheetMapHolder, 
         std::vector<Warrior*> &possibleTargetsInWord)
-: Warrior(layer, health, textureId, textureHolder, spriteSheetMapHolder, 
+: Warrior(layer, sound, health, textureId, textureHolder, spriteSheetMapHolder, 
         possibleTargetsInWord)
 , m_animCloseAttack{ nullptr, false }
 //, m_animStrongAttack{ nullptr, false }

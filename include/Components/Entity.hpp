@@ -14,8 +14,7 @@ class Entity : public SceneNode
         sf::Vector2f m_currentDirection;
         float m_width;
         float m_height;
-    private:
-
+    
     public:
         explicit Entity(RenderLayers layer);
         virtual ~Entity();

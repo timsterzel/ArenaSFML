@@ -8,13 +8,13 @@
 #include "DebugHelpers.hpp"
 #include <iostream>
 
-Wizard::Wizard(RenderLayers layer, const int health, const std::string &textureId, 
+Wizard::Wizard(RenderLayers layer, SoundPlayer &sound, 
+        const int health, const std::string &textureId, 
         const ResourceHolder<sf::Texture> &textureHolder,
         const SpriteSheetMapHolder &spriteSheetMapHolder, 
         std::vector<Warrior*> &possibleTargetsInWord)
-: Warrior(layer, health, textureId, textureHolder, spriteSheetMapHolder, 
+: Warrior(layer, sound, health, textureId, textureHolder, spriteSheetMapHolder, 
         possibleTargetsInWord)
-
 , m_animFireballAttack( nullptr, false )
 //, m_animStrongAttack( nullptr, false )
 // Close Attack
@@ -252,6 +252,7 @@ void Wizard::startFireballAttack()
         fireball->setIsCollisionCheckOn(true);
         rootNode->attachChild(std::move(fireball));
         removeStanima(m_fireballAttackStanima);
+        m_sound.play("fireball");
     }
 }
 
