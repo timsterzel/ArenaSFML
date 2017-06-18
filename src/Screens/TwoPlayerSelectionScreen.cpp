@@ -127,145 +127,6 @@ void TwoPlayerSelectionScreen::buildScene()
         m_screenStack->popScreen();
         m_screenStack->pushScreen(ScreenID::MAINMENU);
     });
-
-
-
-    /*
-    // Player 1
-    m_p1KnightCheckBox = static_cast<gsf::CheckBoxWidget*>(
-            m_guiEnvironment.getWidgetByID("checkBoxWidget_p1Keyboard"));
-    m_p1RunnerCheckBox = static_cast<gsf::CheckBoxWidget*>(
-            m_guiEnvironment.getWidgetByID("checkBoxWidget_p1Joystick0"));    
-    m_p1WizardCheckBox = static_cast<gsf::CheckBoxWidget*>(
-            m_guiEnvironment.getWidgetByID("checkBoxWidget_p1Joystick1"));
-    m_p1WarriorCheckBoxes.push_back(m_p1KnightCheckBox);
-    m_p1WarriorCheckBoxes.push_back(m_p1RunnerCheckBox);
-    m_p1WarriorCheckBoxes.push_back(m_p1WizardCheckBox);
-    
-    m_p1KnightCheckBox->setOnLeftClickListener(
-            [this](gsf::Widget *widget, sf::Vector2f pos)
-    {
-        if (!m_p1KnightCheckBox->isChecked())
-        {
-            m_p2KnightCheckBox->setIsChecked(false);
-            deselectDevicesWhichAreNotGiven(widget, m_p1WarriorCheckBoxes);
-        }
-    });
-    m_p1RunnerCheckBox->setOnLeftClickListener(
-            [this](gsf::Widget *widget, sf::Vector2f pos)
-    {
-        if (!m_p1RunnerCheckBox->isChecked())
-        {
-            m_p2RunnerCheckBox->setIsChecked(false);
-            deselectDevicesWhichAreNotGiven(widget, m_p1WarriorCheckBoxes);
-        }
-    });
-    m_p1WizardCheckBox->setOnLeftClickListener(
-            [this](gsf::Widget *widget, sf::Vector2f pos)
-    {
-        if (!m_p1WizardCheckBox->isChecked())
-        {
-            m_p2WizardCheckBox->setIsChecked(false);
-            deselectDevicesWhichAreNotGiven(widget, m_p1WarriorCheckBoxes);
-        }
-    });
-
-    // Player 2
-    m_p2KnightCheckBox = static_cast<gsf::CheckBoxWidget*>(
-            m_guiEnvironment.getWidgetByID("checkBoxWidget_p2Keyboard"));
-    m_p2RunnerCheckBox = static_cast<gsf::CheckBoxWidget*>(
-            m_guiEnvironment.getWidgetByID("checkBoxWidget_p2Joystick0"));    
-    m_p2WizardCheckBox = static_cast<gsf::CheckBoxWidget*>(
-            m_guiEnvironment.getWidgetByID("checkBoxWidget_p2Joystick1"));
-    m_p2WarriorCheckBoxes.push_back(m_p2KnightCheckBox);
-    m_p2WarriorCheckBoxes.push_back(m_p2RunnerCheckBox);
-    m_p2WarriorCheckBoxes.push_back(m_p2WizardCheckBox);
-
-    m_p2KnightCheckBox->setOnLeftClickListener(
-            [this](gsf::Widget *widget, sf::Vector2f pos)
-    {
-        if (!m_p2KnightCheckBox->isChecked())
-        {
-            m_p1KnightCheckBox->setIsChecked(false);
-            deselectDevicesWhichAreNotGiven(widget, m_p2WarriorCheckBoxes);
-        }
-    });
-    m_p2RunnerCheckBox->setOnLeftClickListener(
-            [this](gsf::Widget *widget, sf::Vector2f pos)
-    {
-        if (!m_p2RunnerCheckBox->isChecked())
-        {
-            m_p1RunnerCheckBox->setIsChecked(false);
-            deselectDevicesWhichAreNotGiven(widget, m_p2WarriorCheckBoxes);
-        }
-    });
-    m_p2WizardCheckBox->setOnLeftClickListener(
-            [this](gsf::Widget *widget, sf::Vector2f pos)
-    {
-        if (!m_p2WizardCheckBox->isChecked())
-        {
-            m_p1WizardCheckBox->setIsChecked(false);
-            deselectDevicesWhichAreNotGiven(widget, m_p2WarriorCheckBoxes);
-        }
-    });
-    */
-
-
-    /*
-    // One Player
-    gsf::TextButtonWidget* onePlayerBtn{ static_cast<gsf::TextButtonWidget*>(
-            m_guiEnvironment.getWidgetByID("textButtonWidget_onePlayer")) };
-    onePlayerBtn->setOnLeftClickListener(
-            [this](gsf::Widget *widget, sf::Vector2f pos)
-    {
-        std::map<InputDevice, WorldObjectTypes> deviceMap;
-        deviceMap.insert({ InputDevice::KEYBOARD_MOUSE, 
-                WorldObjectTypes::PLAYER_1 });
-        MainGameScreen::GameData gameData(MainGameScreen::GameMode::ONE_PLAYER,
-                "level1", deviceMap, WorldObjectTypes::WIZARD,
-                WorldObjectTypes::RUNNER);
-        m_screenStack->registerScreen<MainGameScreen, 
-            MainGameScreen::GameData>(ScreenID::GAME, gameData);
-        m_screenStack->popScreen();
-        m_screenStack->pushScreen(ScreenID::GAME);
-    });
-    // Two Player
-    gsf::TextButtonWidget* twoPlayerBtn{ static_cast<gsf::TextButtonWidget*>(
-            m_guiEnvironment.getWidgetByID("textButtonWidget_twoPlayer")) };
-    twoPlayerBtn->setOnLeftClickListener(
-            [this](gsf::Widget *widget, sf::Vector2f pos)
-    {
-        std::map<InputDevice, WorldObjectTypes> deviceMap;
-        deviceMap.insert({ InputDevice::KEYBOARD_MOUSE, 
-                WorldObjectTypes::PLAYER_1 });
-        deviceMap.insert({ InputDevice::JOYSTICK_0, 
-                WorldObjectTypes::PLAYER_2 });
-        MainGameScreen::GameData gameData(MainGameScreen::GameMode::TWO_PLAYER,
-                "level1", deviceMap, WorldObjectTypes::KNIGHT,
-                WorldObjectTypes::RUNNER);
-        m_screenStack->registerScreen<MainGameScreen, 
-            MainGameScreen::GameData>(ScreenID::GAME, gameData);
-        m_screenStack->popScreen();
-        m_screenStack->pushScreen(ScreenID::GAME);
-    });
-
-    gsf::TextButtonWidget* settingsBtn{ static_cast<gsf::TextButtonWidget*>(
-            m_guiEnvironment.getWidgetByID("textButtonWidget_settings")) };
-    settingsBtn->setOnLeftClickListener(
-            [this](gsf::Widget *widget, sf::Vector2f pos)
-    {
-        m_screenStack->popScreen();
-        m_screenStack->pushScreen(ScreenID::SETTINGS);
-    });
-
-    gsf::TextButtonWidget* quitGameBtn{ static_cast<gsf::TextButtonWidget*>(
-            m_guiEnvironment.getWidgetByID("textButtonWidget_quitGame")) };
-    quitGameBtn->setOnLeftClickListener(
-            [this](gsf::Widget *widget, sf::Vector2f pos)
-    {
-        getContext().window->close();
-    });
-    */
 }
 
 void TwoPlayerSelectionScreen::deselectDevicesWhichAreNotGiven(
@@ -330,7 +191,8 @@ bool TwoPlayerSelectionScreen::handleInput(Input &input, float dt)
     {
         case InputTypes::BACK :
         {
-            m_context.window->close();
+            m_screenStack->popScreen();
+            m_screenStack->pushScreen(ScreenID::MAINMENU);
             return false;
         }
         default:
