@@ -21,11 +21,18 @@ void MusicPlayer::play(const std::string &id)
     m_music.setVolume(m_volume);
     m_music.setLoop(true);
     m_music.play();
+    m_currentPlayed = id;
 }
 
 void MusicPlayer::stop()
 {
     m_music.stop();
+    m_currentPlayed = "";
+}
+
+std::string MusicPlayer::getCurrentId() const
+{
+    return m_currentPlayed;
 }
 
 void MusicPlayer::setPaused(bool paused)

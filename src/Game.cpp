@@ -66,10 +66,16 @@ Game::Game()
     {
         m_music.setVolume(0.f);
     }
+    int musicLevel{ m_config.getInt("music_level", 10) };
+    m_music.setVolume(musicLevel * 10);
+    
+    int soundLevel{ m_config.getInt("sound_level", 10) };
+    m_sound.setVolume(soundLevel * 10);
     if (!m_config.getBool("sound_on", true))
     {
         m_sound.setVolume(0.f);
     }
+    
     //std::unique_ptr<Screen> actualScreen = { std::make_unique<MainGameScreen>(isInDebug, this, &m_window, m_fontHolder, m_textureHolder, m_spriteSheetMapHolder) };
     //m_actualScreen = std::move(actualScreen);
     m_context.guiView = m_window.getView();
@@ -168,7 +174,11 @@ void Game::loadLevels()
 void Game::loadMusic()
 {
     m_music.add("gametheme01", 
-            "assets/sounds/themes/Juhani_Junkala_-_Epic_Boss_Battle.ogg");
+            "assets/sounds/themes/S31-City_on_Speed.ogg");
+    m_music.add("gametheme02", 
+            "assets/sounds/themes/S31-Sentry.ogg");
+    m_music.add("gametheme03", 
+            "assets/sounds/themes/S31-200_Production.ogg");
 }
 
 void Game::loadSounds()

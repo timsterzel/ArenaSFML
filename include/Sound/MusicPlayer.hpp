@@ -11,6 +11,7 @@ class MusicPlayer : private sf::NonCopyable
         sf::Music m_music;
         // Identifer, filename
         std::map<std::string, std::string> m_fileNames;
+        std::string m_currentPlayed;
         float m_volume;
 
     public:
@@ -18,6 +19,8 @@ class MusicPlayer : private sf::NonCopyable
 
         void play(const std::string &id);
         void stop();
+        // Returns an empty string (""), when nothing is played
+        std::string getCurrentId() const;
 
         void setPaused(bool paused);
         void setVolume(float volume);

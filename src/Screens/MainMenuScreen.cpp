@@ -2,6 +2,7 @@
 #include "Screens/ScreenStack.hpp"
 #include "Screens/MainGameScreen.hpp"
 #include "Screens/PauseScreen.hpp"
+#include "Sound/MusicPlayer.hpp"
 
 MainMenuScreen::MainMenuScreen(ScreenStack *screenStack, Context &context)
 : Screen(screenStack, context)
@@ -17,7 +18,12 @@ MainMenuScreen::~MainMenuScreen()
 
 void MainMenuScreen::buildScene()
 {
-    m_screenStack->pushScreen(ScreenID::GAME);
+    // Only play Song when it is not already played
+    if (m_context.music->getCurrentId() != "gametheme03")
+    {
+        m_context.music->play("gametheme03");
+    }
+
     sf::View oldView{ m_context.window->getView() };
     m_context.window->setView(m_context.guiView);
     m_guiEnvironment.createScene("assets/gui/main_menu.xml");
