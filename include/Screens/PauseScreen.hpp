@@ -8,7 +8,8 @@ class PauseScreen : public Screen
 {
     private:
         gsf::GUIEnvironment m_guiEnvironment;
-
+        gsf::CheckBoxWidget* m_checkBoxMusic;
+        gsf::CheckBoxWidget* m_checkBoxSound;
     public:
         PauseScreen(ScreenStack *screenStack, Context &context);
 

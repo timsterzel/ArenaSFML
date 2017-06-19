@@ -53,6 +53,11 @@ void MusicPlayer::setVolume(float volume)
     m_music.setVolume(volume);
 }
 
+float MusicPlayer::getVolume() const
+{
+    return m_volume;
+}
+
 void MusicPlayer::add(const std::string &id, const std::string &fileName)
 {
     m_fileNames[id] = fileName;

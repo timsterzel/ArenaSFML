@@ -20,6 +20,7 @@ class SoundPlayer : private sf::NonCopyable
         void play(const std::string &id);
         void removeStoppedSounds();
         void setVolume(float volume);
+        float getVolume() const;
 };
 
 #endif // SOUNDPLAYER_HPP

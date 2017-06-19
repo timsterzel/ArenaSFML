@@ -36,3 +36,8 @@ void SoundPlayer::setVolume(float volume)
         sound.setVolume(volume);
     }
 }
+
+float SoundPlayer::getVolume() const
+{
+    return m_volume;
+}
