@@ -238,6 +238,7 @@ void Runner::startRoundAttack()
         m_weapon->setDamageMultiplicator(m_roundAttackDamageMul);
         m_weapon->startNewAttack();
         removeStanima(m_roundAttackStanima);
+        m_sound.play("swoosh-long");
     }
 }
 

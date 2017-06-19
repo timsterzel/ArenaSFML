@@ -185,6 +185,7 @@ void Game::loadSounds()
 {
     m_sound.load("swoosh1", "assets/sounds/fx/swoosh1/swoosh1.wav");
     m_sound.load("sword-clash", "assets/sounds/fx/sword-clash/sword-clash.wav");
+    m_sound.load("swoosh-long", "assets/sounds/fx/swoosh-long/swoosh-long.wav");
     m_sound.load("slashkut", "assets/sounds/fx/slashkut/slashkut.wav");
     m_sound.load("fireball", "assets/sounds/fx/fireball/fireball.wav");
     m_sound.load("dodge", "assets/sounds/fx/dodge/dodge.wav");
