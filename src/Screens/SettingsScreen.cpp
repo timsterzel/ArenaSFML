@@ -36,6 +36,10 @@ void SettingsScreen::buildScene()
         m_guiEnvironment.getWidgetByID("checkBoxWidget_music" ));
     m_checkBoxSound = static_cast<gsf::CheckBoxWidget*>(
         m_guiEnvironment.getWidgetByID("checkBoxWidget_sound" ));
+    m_comboBoxMusicLevel = static_cast<gsf::ComboBoxWidget*>(
+        m_guiEnvironment.getWidgetByID("comboBoxWidget_musicLevel" ));
+    m_comboBoxSoundLevel = static_cast<gsf::ComboBoxWidget*>(
+        m_guiEnvironment.getWidgetByID("comboBoxWidget_soundLevel" ));
     m_checkBoxFullscreen = static_cast<gsf::CheckBoxWidget*>(
         m_guiEnvironment.getWidgetByID("checkBoxWidget_fullscreen" ));
     m_checkBoxFramelimit = static_cast<gsf::CheckBoxWidget*>(
@@ -67,6 +71,16 @@ void SettingsScreen::buildScene()
             [this](gsf::Widget *widget, sf::Vector2f pos)
     {
         m_settingChanged = true;
+    });
+    m_comboBoxMusicLevel->setOnSelectionChangedListener(
+            [this](gsf::Widget *widget, int index)
+    {
+        m_settingChanged = true;     
+    });
+    m_comboBoxSoundLevel->setOnSelectionChangedListener(
+            [this](gsf::Widget *widget, int index)
+    {
+        m_settingChanged = true;     
     });
     m_checkBoxFullscreen->setOnLeftClickListener(
             [this](gsf::Widget *widget, sf::Vector2f pos)
@@ -134,6 +148,8 @@ void SettingsScreen::loadSettings()
 
     m_checkBoxMusic->setIsChecked(m_oldMusicOn);
     m_checkBoxSound->setIsChecked(m_oldSoundOn);
+    m_comboBoxMusicLevel->selectElement(m_oldMusicLevel);
+    m_comboBoxSoundLevel->selectElement(m_oldSoundLevel);
     m_checkBoxFullscreen->setIsChecked(m_oldFullscreenOn);
     m_checkBoxFramelimit->setIsChecked(m_oldFrameLimitOn);
     m_checkBoxVsync->setIsChecked(m_oldVsynOn);
@@ -157,11 +173,25 @@ void SettingsScreen::loadSettings()
 void SettingsScreen::updateSettings()
 {
     bool isWindowRecreationReq{ false };
-    
+
+    int newMusicLevel{ m_comboBoxMusicLevel->currentIndex() };
+    if (newMusicLevel != m_oldMusicLevel)
+    {
+        m_context.music->setVolume(newMusicLevel * 10);
+        m_config->set("music_level", newMusicLevel);
+    }
+
+    int newSoundLevel{ m_comboBoxSoundLevel->currentIndex() };
+    if (newSoundLevel != m_oldSoundLevel)
+    {
+        m_context.sound->setVolume(newSoundLevel * 10);
+        m_config->set("sound_level", newSoundLevel);
+    }
+
     bool newMusicOn{ m_checkBoxMusic->isChecked() };
     if (newMusicOn != m_oldMusicOn)
     {
-        int volumeLevel{ newMusicOn ? m_oldMusicLevel : 0 };
+        int volumeLevel{ newMusicOn ? newMusicLevel : 0 };
         m_context.music->setVolume(volumeLevel * 10);
         m_config->set("music_on", newMusicOn);
     }
@@ -169,11 +199,12 @@ void SettingsScreen::updateSettings()
     bool newSoundOn{ m_checkBoxSound->isChecked() };
     if (newSoundOn != m_oldSoundOn)
     {
-        int volumeLevel{ newSoundOn ? m_oldSoundLevel : 0 };
+        int volumeLevel{ newSoundOn ? newSoundLevel : 0 };
         m_context.sound->setVolume(volumeLevel * 10);
         m_config->set("sound_on", newSoundOn);
     }
     
+
     // Window recreation reqiered zone
     bool newFullScreenOn{ m_checkBoxFullscreen->isChecked() };
     if (newFullScreenOn != m_oldFullscreenOn)

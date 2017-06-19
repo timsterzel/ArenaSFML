@@ -73,6 +73,46 @@
 				height="10"
 				backgroundColor="transparent"	/>
 
+			<!-- Music level -->
+			<TextWidget
+				id="textWidget_musicLevel"
+				text="MUSIC LEVEL"
+				font="defaultFont"
+				left="20"
+				characterSize="20" />
+
+			<ComboBoxWidget
+				id="comboBoxWidget_musicLevel"
+				font="defaultFont"
+				width="160"
+				height="20"
+				listData="0|1|2|3|4|5|6|7|8|9|10" />
+
+				<Widget
+					width="10"
+					height="10"
+					backgroundColor="transparent"	/>
+
+			<!-- Sound level -->
+			<TextWidget
+				id="textWidget_soundLevel"
+				text="SOUND LEVEL"
+				font="defaultFont"
+				left="20"
+				characterSize="20" />
+
+			<ComboBoxWidget
+				id="comboBoxWidget_soundLevel"
+				font="defaultFont"
+				width="160"
+				height="20"
+				listData="0|1|2|3|4|5|6|7|8|9|10" />
+
+			<Widget
+				width="10"
+				height="10"
+				backgroundColor="transparent"	/>
+
 			<!-- Fullscreen on/off -->
 			<HorizontalLayoutWidget
 				autoDetermineHeight="true"

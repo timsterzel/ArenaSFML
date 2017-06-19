@@ -12,7 +12,9 @@ class SettingsScreen : public Screen
         bool m_settingChanged;
 
         gsf::CheckBoxWidget *m_checkBoxMusic;
+        gsf::ComboBoxWidget *m_comboBoxMusicLevel;
         gsf::CheckBoxWidget *m_checkBoxSound;
+        gsf::ComboBoxWidget *m_comboBoxSoundLevel;
         gsf::CheckBoxWidget *m_checkBoxFullscreen;
         gsf::CheckBoxWidget *m_checkBoxFramelimit;
         gsf::CheckBoxWidget *m_checkBoxVsync;
