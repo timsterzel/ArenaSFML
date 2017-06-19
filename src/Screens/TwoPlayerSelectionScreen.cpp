@@ -102,15 +102,20 @@ void TwoPlayerSelectionScreen::buildScene()
             deselectDevicesWhichAreNotGiven(widget, m_p2WarriorCheckBoxes);
         }
     });
+    // Level
+    handleLevelLoading();
+
     // Buttons
     gsf::TextButtonWidget* startBtn{ static_cast<gsf::TextButtonWidget*>(
             m_guiEnvironment.getWidgetByID("textButtonWidget_start")) };
     startBtn->setOnLeftClickListener(
             [this](gsf::Widget *widget, sf::Vector2f pos)
     {
+        std::string levelName {m_levelListBox->currentText() };
+        std::string levelID{ m_levels[levelName] };
         MainGameScreen::GameData gameData(
                 MainGameScreen::GameMode::TWO_PLAYER,
-                "level1", 
+                levelID, 
                 getPlayer1WarriorType(),
                 getPlayer2WarriorType());
         m_screenStack->registerScreen<MainGameScreen, 
@@ -127,6 +132,18 @@ void TwoPlayerSelectionScreen::buildScene()
         m_screenStack->popScreen();
         m_screenStack->pushScreen(ScreenID::MAINMENU);
     });
+}
+
+void TwoPlayerSelectionScreen::handleLevelLoading()
+{
+    m_levelListBox = static_cast<gsf::ListBoxWidget*>(
+            m_guiEnvironment.getWidgetByID("listBoxWidget_level"));
+    for (const auto &level : m_context.levelHolder->getLevels())
+    {
+        const Level &levelIns{ *level.second.get() };
+        m_levels.insert(std::make_pair(levelIns.name, level.first));
+        m_levelListBox->addElement(levelIns.name);
+    }
 }
 
 void TwoPlayerSelectionScreen::deselectDevicesWhichAreNotGiven(

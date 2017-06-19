@@ -126,7 +126,7 @@
 			    	id="listBoxWidget_level"
 			    	width="160"
 			    	height="100"
-			    	listData="Entry1|Entry2|Entry3|Entry4|Entry5|Entry6|"
+			    	listData=""
 						font="defaultFont" />
 
 			</VerticalLayoutWidget>

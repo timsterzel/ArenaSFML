@@ -169,6 +169,7 @@ void Game::loadShaders()
 void Game::loadLevels()
 {
     m_levelHolder.load("assets/level/level1.lvl");
+    m_levelHolder.load("assets/level/level2.lvl");
 }
 
 void Game::loadMusic()

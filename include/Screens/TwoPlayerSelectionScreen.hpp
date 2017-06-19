@@ -8,6 +8,9 @@
 class TwoPlayerSelectionScreen : public Screen
 {
     private:
+        // <LevelName, LevelID>
+        std::map<std::string, std::string> m_levels;
+        
         gsf::GUIEnvironment m_guiEnvironment;
         
         gsf::CheckBoxWidget *m_p1KnightCheckBox; 
@@ -16,7 +19,8 @@ class TwoPlayerSelectionScreen : public Screen
         gsf::CheckBoxWidget *m_p2KnightCheckBox; 
         gsf::CheckBoxWidget *m_p2RunnerCheckBox; 
         gsf::CheckBoxWidget *m_p2WizardCheckBox; 
-        
+        gsf::ListBoxWidget *m_levelListBox;
+
         std::vector<gsf::CheckBoxWidget*> m_p1WarriorCheckBoxes;
         std::vector<gsf::CheckBoxWidget*> m_p2WarriorCheckBoxes;
 
@@ -37,6 +41,8 @@ class TwoPlayerSelectionScreen : public Screen
         virtual void render();
 
     private:
+        void handleLevelLoading();
+
         void deselectDevicesWhichAreNotGiven(gsf::Widget *widget, 
                 std::vector<gsf::CheckBoxWidget*> &checkBoxes);
 
