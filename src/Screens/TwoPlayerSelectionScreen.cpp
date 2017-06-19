@@ -111,7 +111,7 @@ void TwoPlayerSelectionScreen::buildScene()
     startBtn->setOnLeftClickListener(
             [this](gsf::Widget *widget, sf::Vector2f pos)
     {
-        std::string levelName {m_levelListBox->currentText() };
+        std::string levelName{ m_levelListBox->currentText() };
         std::string levelID{ m_levels[levelName] };
         MainGameScreen::GameData gameData(
                 MainGameScreen::GameMode::TWO_PLAYER,
