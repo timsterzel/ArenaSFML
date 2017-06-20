@@ -1,295 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Scene>
-	<!-- Resources are loaded before creating and placing the widgets. You can use Resources with the id, which can be set with the id attribute -->
-	<Resources>
-		<Font
-			id="defaultFont"
-			src="assets/fonts/cave-story/Cave-Story.ttf"
-		/>
-	</Resources>
-    <Widgets>
-
-			<!-- Header -->
-			<TextWidget
-					orientation="centerHorizontal"
-					text="SETTINGS"
-					characterSize="60"
-					font="defaultFont" />
-
-			<VerticalLayoutWidget
-				autoDetermineWidth="true"
-				autoDetermineHeight="true"
-				backgroundColor="transparent"
-				orientation="center" >
-
-
-				<!-- Music on/off -->
-				<HorizontalLayoutWidget
-					autoDetermineHeight="true"
-					autoDetermineWidth="true"
-					backgroundColor="transparent" >
-
-					<CheckBoxWidget
-						id="checkBoxWidget_music"
-						width="20"
-						height="20" />
-
-					<TextWidget
-						id="textWidget_music"
-						text=" MUSIC"
-						font="defaultFont"
-						left="20"
-						characterSize="20" />
-
-				</HorizontalLayoutWidget>
-
-				<Widget
-					width="10"
-					height="10"
-					backgroundColor="transparent"	/>
-
-				<!-- Sound on/off -->
-				<HorizontalLayoutWidget
-      		autoDetermineHeight="true"
-					autoDetermineWidth="true"
-					backgroundColor="transparent" >
-
-      		<CheckBoxWidget
-        		id="checkBoxWidget_sound"
-          	width="20"
-          	height="20" />
-
-					<TextWidget
-          	id="textWidget_sound"
-          	text=" SOUND"
-          	font="defaultFont"
-						left="20"
-          	characterSize="20" />
-
-			</HorizontalLayoutWidget>
-
-			<Widget
-				width="10"
-				height="10"
-				backgroundColor="transparent"	/>
-
-			<!-- Music level -->
-			<TextWidget
-				id="textWidget_musicLevel"
-				text="MUSIC LEVEL"
-				font="defaultFont"
-				left="20"
-				characterSize="20" />
-
-			<ComboBoxWidget
-				id="comboBoxWidget_musicLevel"
-				font="defaultFont"
-				width="160"
-				height="20"
-				listData="0|1|2|3|4|5|6|7|8|9|10" />
-
-				<Widget
-					width="10"
-					height="10"
-					backgroundColor="transparent"	/>
-
-			<!-- Sound level -->
-			<TextWidget
-				id="textWidget_soundLevel"
-				text="SOUND LEVEL"
-				font="defaultFont"
-				left="20"
-				characterSize="20" />
-
-			<ComboBoxWidget
-				id="comboBoxWidget_soundLevel"
-				font="defaultFont"
-				width="160"
-				height="20"
-				listData="0|1|2|3|4|5|6|7|8|9|10" />
-
-			<Widget
-				width="10"
-				height="10"
-				backgroundColor="transparent"	/>
-
-			<!-- Fullscreen on/off -->
-			<HorizontalLayoutWidget
-				autoDetermineHeight="true"
-				autoDetermineWidth="true"
-				backgroundColor="transparent" >
-
-				<CheckBoxWidget
-					id="checkBoxWidget_fullscreen"
-					width="20"
-					height="20" />
-
-				<TextWidget
-					id="textWidget_fullscreen"
-					text=" FULLSCREEN"
-					font="defaultFont"
-					left="20"
-					characterSize="20" />
-
-		</HorizontalLayoutWidget>
-
-		<Widget
-			width="10"
-			height="10"
-			backgroundColor="transparent"	/>
-
-			<!-- Framelimit on/off -->
-			<HorizontalLayoutWidget
-				autoDetermineHeight="true"
-				autoDetermineWidth="true"
-				backgroundColor="transparent" >
-
-				<CheckBoxWidget
-					id="checkBoxWidget_framelimit"
-					width="20"
-					height="20" />
-
-				<TextWidget
-					id="textWidget_famelimit"
-					text=" LIMIT FPS"
-					font="defaultFont"
-					left="20"
-					characterSize="20" />
-
-		</HorizontalLayoutWidget>
-
-		<Widget
-			width="10"
-			height="10"
-			backgroundColor="transparent"	/>
-
-			<!-- Vsync on/off -->
-			<HorizontalLayoutWidget
-				autoDetermineHeight="true"
-				autoDetermineWidth="true"
-				backgroundColor="transparent" >
-
-				<CheckBoxWidget
-					id="checkBoxWidget_vsync"
-					width="20"
-					height="20" />
-
-				<TextWidget
-					id="textWidget_vsync"
-					text=" VSYNC"
-					font="defaultFont"
-					left="20"
-					characterSize="20" />
-
-		</HorizontalLayoutWidget>
-
-		<Widget
-			width="10"
-			height="10"
-			backgroundColor="transparent"	/>
-
-		<!-- Resolution -->
-		<TextWidget
-			id="textWidget_resolution"
-			text="Resolution"
-			font="defaultFont"
-			left="20"
-			characterSize="20" />
-
-		<ComboBoxWidget
-			id="comboBoxWidget_resolution"
-			font="defaultFont"
-      width="160"
-			height="20"
-			listData="640x480|800x600|1024x768|1280x1024|1366x768|1680x1050|1920x1080|2560x1440|4096x2160" />
-
-			<!-- Input Player 1 -->
-			<TextWidget
-				id="textWidget_inputPlayer1"
-				text="INPUT PLAYER 1"
-				font="defaultFont"
-				left="20"
-				characterSize="20" />
-
-			<ComboBoxWidget
-				id="comboBoxWidget_inputPlayer1"
-				font="defaultFont"
-	      width="160"
-				height="20"
-				listData="Keyboard + Mouse|Controller 1|Controller 2" />
-
-				<!-- Input Player 2 -->
-				<TextWidget
-					id="textWidget_inputPlayer2"
-					text="INPUT PLAYER 2"
-					font="defaultFont"
-					left="20"
-					characterSize="20" />
-
-				<ComboBoxWidget
-					id="comboBoxWidget_inputPlayer2"
-					font="defaultFont"
-		      width="160"
-					height="20"
-					listData="Keyboard + Mouse|Controller 1|Controller 2" />
-
-		</VerticalLayoutWidget>
-
-		<!-- Buttons -->
-		<HorizontalLayoutWidget
-			autoDetermineWidth="true"
-			orientation="right|bottom"
-			height="100"
-			backgroundColor="transparent" >
-
-			<TextButtonWidget
-				id="textButtonWidget_back"
-				width="160"
-				height="40"
-				text="BACK"
-				characterSize="26"
-				orientation="centerVertical"
-				font="defaultFont" />
-
-			<Widget
-				width="10"
-				height="10"
-				backgroundColor="transparent"	/>
-
-			<TextButtonWidget
-				id="textButtonWidget_save"
-				width="160"
-				height="40"
-				text="SAVE"
-				characterSize="26"
-				orientation="centerVertical"
-				font="defaultFont" />
-
-			<Widget
-				width="20"
-				height="20"
-				backgroundColor="transparent"	/>
-
-		</HorizontalLayoutWidget>
-
-		<!-- Version -->
-		<HorizontalLayoutWidget
-			autoDetermineHeight="true"
-			autoDetermineWidth="true"
-			orientation="left|bottom"
-			backgroundColor="transparent" >
-			<Widget
-				width="5"
-				height="10"
-				backgroundColor="transparent"	/>
-
-			<TextWidget
-				id="textWidget_header"
-				text="VERSION 0.8"
-				characterSize="20"
-				font="defaultFont" />
-
-		</HorizontalLayoutWidget>
-
-	</Widgets>
+  <!-- Resources are loaded before creating and placing the widgets. You can use Resources with the id, which can be set with the id attribute -->
+  <Resources>
+    <Font id="defaultFont" src="assets/fonts/cave-story/Cave-Story.ttf"/>
+  </Resources>
+  <Widgets>
+    <!-- Header -->
+    <TextWidget orientation="centerHorizontal" text="SETTINGS" characterSize="60" font="defaultFont"/>
+    <VerticalLayoutWidget autoDetermineWidth="true" autoDetermineHeight="true" backgroundColor="transparent" orientation="center">
+      <!-- Music on/off -->
+      <HorizontalLayoutWidget autoDetermineHeight="true" autoDetermineWidth="true" backgroundColor="transparent">
+        <CheckBoxWidget id="checkBoxWidget_music" width="20" height="20"/>
+        <TextWidget id="textWidget_music" text=" MUSIC" font="defaultFont" left="20" characterSize="20"/>
+      </HorizontalLayoutWidget>
+      <Widget width="10" height="10" backgroundColor="transparent"/>
+      <!-- Sound on/off -->
+      <HorizontalLayoutWidget autoDetermineHeight="true" autoDetermineWidth="true" backgroundColor="transparent">
+        <CheckBoxWidget id="checkBoxWidget_sound" width="20" height="20"/>
+        <TextWidget id="textWidget_sound" text=" SOUND" font="defaultFont" left="20" characterSize="20"/>
+      </HorizontalLayoutWidget>
+      <Widget width="10" height="10" backgroundColor="transparent"/>
+      <!-- Music level -->
+      <TextWidget id="textWidget_musicLevel" text="MUSIC LEVEL" font="defaultFont" left="20" characterSize="20"/>
+      <ComboBoxWidget id="comboBoxWidget_musicLevel" font="defaultFont" width="160" height="20" listData="0|1|2|3|4|5|6|7|8|9|10"/>
+      <Widget width="10" height="10" backgroundColor="transparent"/>
+      <!-- Sound level -->
+      <TextWidget id="textWidget_soundLevel" text="SOUND LEVEL" font="defaultFont" left="20" characterSize="20"/>
+      <ComboBoxWidget id="comboBoxWidget_soundLevel" font="defaultFont" width="160" height="20" listData="0|1|2|3|4|5|6|7|8|9|10"/>
+      <Widget width="10" height="10" backgroundColor="transparent"/>
+      <!-- Fullscreen on/off -->
+      <HorizontalLayoutWidget autoDetermineHeight="true" autoDetermineWidth="true" backgroundColor="transparent">
+        <CheckBoxWidget id="checkBoxWidget_fullscreen" width="20" height="20"/>
+        <TextWidget id="textWidget_fullscreen" text=" FULLSCREEN" font="defaultFont" left="20" characterSize="20"/>
+      </HorizontalLayoutWidget>
+      <Widget width="10" height="10" backgroundColor="transparent"/>
+      <!-- Framelimit on/off -->
+      <HorizontalLayoutWidget autoDetermineHeight="true" autoDetermineWidth="true" backgroundColor="transparent">
+        <CheckBoxWidget id="checkBoxWidget_framelimit" width="20" height="20"/>
+        <TextWidget id="textWidget_famelimit" text=" LIMIT FPS" font="defaultFont" left="20" characterSize="20"/>
+      </HorizontalLayoutWidget>
+      <Widget width="10" height="10" backgroundColor="transparent"/>
+      <!-- Vsync on/off -->
+      <HorizontalLayoutWidget autoDetermineHeight="true" autoDetermineWidth="true" backgroundColor="transparent">
+        <CheckBoxWidget id="checkBoxWidget_vsync" width="20" height="20"/>
+        <TextWidget id="textWidget_vsync" text=" VSYNC" font="defaultFont" left="20" characterSize="20"/>
+      </HorizontalLayoutWidget>
+      <Widget width="10" height="10" backgroundColor="transparent"/>
+      <!-- Resolution -->
+      <TextWidget id="textWidget_resolution" text="Resolution" font="defaultFont" left="20" characterSize="20"/>
+      <ComboBoxWidget id="comboBoxWidget_resolution" font="defaultFont" width="160" height="20" listData="640x480|800x600|1024x768|1280x1024|1366x768|1680x1050|1920x1080|2560x1440|4096x2160"/>
+      <!-- Input Player 1 -->
+      <TextWidget id="textWidget_inputPlayer1" text="INPUT PLAYER 1" font="defaultFont" left="20" characterSize="20"/>
+      <ComboBoxWidget id="comboBoxWidget_inputPlayer1" font="defaultFont" width="160" height="20" listData="Keyboard + Mouse|Controller 1|Controller 2"/>
+      <!-- Input Player 2 -->
+      <TextWidget id="textWidget_inputPlayer2" text="INPUT PLAYER 2" font="defaultFont" left="20" characterSize="20"/>
+      <ComboBoxWidget id="comboBoxWidget_inputPlayer2" font="defaultFont" width="160" height="20" listData="Keyboard + Mouse|Controller 1|Controller 2"/>
+    </VerticalLayoutWidget>
+    <!-- Buttons -->
+    <HorizontalLayoutWidget autoDetermineWidth="true" orientation="right|bottom" height="100" backgroundColor="transparent">
+      <TextButtonWidget id="textButtonWidget_back" width="160" height="40" text="BACK" characterSize="26" orientation="centerVertical" font="defaultFont"/>
+      <Widget width="10" height="10" backgroundColor="transparent"/>
+      <TextButtonWidget id="textButtonWidget_save" width="160" height="40" text="SAVE" characterSize="26" orientation="centerVertical" font="defaultFont"/>
+      <Widget width="20" height="20" backgroundColor="transparent"/>
+    </HorizontalLayoutWidget>
+    <!-- Version -->
+    <HorizontalLayoutWidget autoDetermineHeight="true" autoDetermineWidth="true" orientation="left|bottom" backgroundColor="transparent">
+      <Widget width="5" height="10" backgroundColor="transparent"/>
+      <TextWidget id="textWidget_header" text="VERSION 1.0" characterSize="20" font="defaultFont"/>
+    </HorizontalLayoutWidget>
+  </Widgets>
 </Scene>

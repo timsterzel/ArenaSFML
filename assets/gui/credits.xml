@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Scene>
+  <!-- Resources are loaded before creating and placing the widgets. You can use Resources with the id, which can be set with the id attribute -->
+  <Resources>
+    <Font id="defaultFont" src="assets/fonts/cave-story/Cave-Story.ttf"/>
+  </Resources>
+  <Widgets>
+    <!-- Header -->
+    <TextWidget orientation="centerHorizontal" text="CREDITS" characterSize="60" font="defaultFont"/>
+    <VerticalLayoutWidget autoDetermineWidth="true" autoDetermineHeight="true" backgroundColor="transparent" orientation="center">
+      <TextWidget orientation="centerHorizontal" text="THIS GAME IS CREATED BY TIM STERZEL." characterSize="30" font="defaultFont"/>
+      <TextWidget orientation="centerHorizontal" text="SOME OF USED ASSETS ARE FROM OTHER AUTHORS." characterSize="30" font="defaultFont"/>
+      <TextWidget orientation="centerHorizontal" text="YOU CAN FIND INFOS ABOUT AUTORS AND LICENCE IN ASSETS FOLDER." characterSize="30" font="defaultFont"/>
+    </VerticalLayoutWidget>
+    <!-- Buttons -->
+    <HorizontalLayoutWidget autoDetermineWidth="true" orientation="right|bottom" height="100" backgroundColor="transparent">
+      <TextButtonWidget id="textButtonWidget_back" width="160" height="40" text="BACK" characterSize="26" orientation="centerVertical" font="defaultFont"/>
+      <Widget width="20" height="20" backgroundColor="transparent"/>
+    </HorizontalLayoutWidget>
+  </Widgets>
+</Scene>

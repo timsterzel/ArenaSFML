@@ -11,7 +11,7 @@ TwoPlayerSelectionScreen::TwoPlayerSelectionScreen(ScreenStack *screenStack, Con
 
 TwoPlayerSelectionScreen::~TwoPlayerSelectionScreen()
 {
-    std::cout << "TwoPlayerSelectionScreen Destructor\n";
+
 }
 
 void TwoPlayerSelectionScreen::buildScene()

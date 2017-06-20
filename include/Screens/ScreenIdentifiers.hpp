@@ -7,6 +7,7 @@ enum class ScreenID
     MAINMENU,
     TWOPLAYERSELECTION,
     SETTINGS,
+    CREDITS,
     GAME,
     PAUSE,
 };

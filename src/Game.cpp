@@ -1,4 +1,5 @@
 #include "Game.hpp"
+#include "Screens/CreditsScreen.hpp"
 #include "Screens/Screen.hpp"
 #include "Screens/MainGameScreen.hpp"
 #include "Screens/MainMenuScreen.hpp"
@@ -93,6 +94,7 @@ Game::Game()
     m_screenStack.registerScreen<TwoPlayerSelectionScreen>
         (ScreenID::TWOPLAYERSELECTION);
     m_screenStack.registerScreen<SettingsScreen>(ScreenID::SETTINGS);
+    m_screenStack.registerScreen<CreditsScreen>(ScreenID::CREDITS);
     m_screenStack.registerScreen<PauseScreen>(ScreenID::PAUSE);
     m_screenStack.pushScreen(ScreenID::MAINMENU);
 }

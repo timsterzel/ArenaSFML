@@ -37,10 +37,6 @@ class Entity : public SceneNode
         // Move the actual object the given length by the acutal direction (velocity)
         void moveInActualDirection(const float length);
         void moveInDirection(const sf::Vector2f direction, const float length);
-
-        // We have to override this method, because the entity can have a width an height
-        //virtual sf::Vector2f getWorldCenterPosition() const;
-
    protected:
         virtual void updateCurrent(float dt);
         virtual void onCommandCurrent(const Command &command, float dt);

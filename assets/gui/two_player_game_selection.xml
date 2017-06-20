@@ -1,265 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Scene>
-	<!-- Resources are loaded before creating and placing the widgets. You can use Resources with the id, which can be set with the id attribute -->
-	<Resources>
-		<Font
-			id="defaultFont"
-			src="assets/fonts/cave-story/Cave-Story.ttf"
-		/>
-	</Resources>
-    <Widgets>
-			<!-- Header -->
-			<TextWidget
-					orientation="centerHorizontal"
-					text="START GAME"
-					characterSize="60"
-					font="defaultFont" />
-			<!-- Main Content -->
-			<HorizontalLayoutWidget
-				id="vertWidget_vl1"
-				autoDetermineWidth="true"
-				autoDetermineHeight="true"
-				backgroundColor="transparent"
-				orientation="center" >
-				<!-- Player 1 -->
-				<VerticalLayoutWidget
-					id="vertWidget_vl1"
-					autoDetermineWidth="true"
-					autoDetermineHeight="true"
-					backgroundColor="transparent" >
-
-					<TextWidget
-						id="textWidget_player1"
-						text="PLAYER 1"
-						font="defaultFont"
-						characterSize="30" />
-
-					<HorizontalLayoutWidget
-	      		autoDetermineHeight="true"
-						autoDetermineWidth="true"
-						backgroundColor="transparent" >
-
-	      		<CheckBoxWidget
-	        		id="checkBoxWidget_p1Knight"
-	          	width="20"
-	          	height="20" />
-
-						<TextWidget
-	          	id="textWidget_p1Knight"
-	          	text=" KNIGHT"
-	          	font="defaultFont"
-							left="20"
-	          	characterSize="20" />
-				</HorizontalLayoutWidget>
-
-				<!-- Puffer -->
-				<Widget
-					width="10"
-					height="10"
-					backgroundColor="transparent"	/>
-
-				<HorizontalLayoutWidget
-					autoDetermineHeight="true"
-					autoDetermineWidth="true"
-					backgroundColor="transparent" >
-
-					<CheckBoxWidget
-						id="checkBoxWidget_p1Runner"
-						width="20"
-						height="20" />
-
-					<TextWidget
-						id="textWidget_p1Runner"
-						text=" RUNNER"
-						font="defaultFont"
-						left="20"
-						characterSize="20" />
-
-				</HorizontalLayoutWidget>
-
-				<!-- Puffer -->
-				<Widget
-					width="10"
-					height="10"
-					backgroundColor="transparent"	/>
-
-				<HorizontalLayoutWidget
-					autoDetermineHeight="true"
-					autoDetermineWidth="true"
-					backgroundColor="transparent" >
-
-					<CheckBoxWidget
-						id="checkBoxWidget_p1Wizard"
-						width="20"
-						height="20" />
-
-					<TextWidget
-						id="textWidget_p1Wizard"
-						text=" WIZARD"
-						font="defaultFont"
-						left="20"
-						characterSize="20" />
-
-				</HorizontalLayoutWidget>
-
-			</VerticalLayoutWidget>
-
-			<!-- Puffer -->
-			<Widget
-				width="60"
-				height="20"
-				backgroundColor="transparent"	/>
-
-			<!-- Level -->
-			<VerticalLayoutWidget
-					id="vertWidget_vl1"
-					autoDetermineWidth="true"
-					autoDetermineHeight="true"
-					backgroundColor="transparent">
-					<TextWidget
-						id="textWidget_level"
-						text="LEVEL"
-						font="defaultFont"
-						characterSize="30" />
-
-					<ListBoxWidget
-			    	id="listBoxWidget_level"
-			    	width="160"
-			    	height="100"
-			    	listData=""
-						font="defaultFont" />
-
-			</VerticalLayoutWidget>
-
-			<!-- Puffer -->
-			<Widget
-				width="60"
-				height="20"
-				backgroundColor="transparent"	/>
-
-			<!-- Player 2 -->
-			<VerticalLayoutWidget
-					id="vertWidget_vl1"
-					autoDetermineWidth="true"
-					autoDetermineHeight="true"
-					backgroundColor="transparent">
-
-					<TextWidget
-						id="textWidget_player2"
-						text="PLAYER 2"
-						font="defaultFont"
-						characterSize="30" />
-
-					<HorizontalLayoutWidget
-		     		autoDetermineHeight="true"
-						autoDetermineWidth="true"
-						backgroundColor="transparent" >
-
-		     		<CheckBoxWidget
-		       		id="checkBoxWidget_p2Knight"
-		         	width="20"
-		         	height="20" />
-
-						<TextWidget
-		         	id="textWidget_p2Knight"
-		         	text=" KNIGHT"
-		         	font="defaultFont"
-							left="20"
-		         	characterSize="20" />
-
-				</HorizontalLayoutWidget>
-
-				<!-- Puffer -->
-				<Widget
-					width="10"
-					height="10"
-					backgroundColor="transparent"	/>
-
-				<HorizontalLayoutWidget
-					autoDetermineHeight="true"
-					autoDetermineWidth="true"
-					backgroundColor="transparent" >
-
-					<CheckBoxWidget
-						id="checkBoxWidget_p2Runner"
-						width="20"
-						height="20" />
-
-					<TextWidget
-						id="textWidget_p2Runner"
-						text=" RUNNER"
-						font="defaultFont"
-						left="20"
-						characterSize="20" />
-
-				</HorizontalLayoutWidget>
-
-				<!-- Puffer -->
-				<Widget
-					width="10"
-					height="10"
-					backgroundColor="transparent"	/>
-
-				<HorizontalLayoutWidget
-					autoDetermineHeight="true"
-					autoDetermineWidth="true"
-					backgroundColor="transparent" >
-
-					<CheckBoxWidget
-						id="checkBoxWidget_p2Wizard"
-						width="20"
-						height="20" />
-
-					<TextWidget
-						id="textWidget_p2Wizard"
-						text=" WIZARD"
-						font="defaultFont"
-						left="20"
-						characterSize="20" />
-
-					</HorizontalLayoutWidget>
-
-				</VerticalLayoutWidget>
-
-			</HorizontalLayoutWidget>
-
-			<!-- Bottom Buttons -->
-			<HorizontalLayoutWidget
-				height="100"
-				autoDetermineWidth="true"
-				orientation="centerHorizontal|bottom"
-				backgroundColor="transparent" >
-
-				<TextButtonWidget
-					id="textButtonWidget_back"
-					width="160"
-					height="40"
-					text="BACK"
-					characterSize="30"
-					orientation="centerVertical"
-					font="defaultFont" />
-
-				<Widget
-					width="10"
-					height="10"
-					backgroundColor="transparent"	/>
-
-				<TextButtonWidget
-					id="textButtonWidget_start"
-					width="160"
-					height="40"
-					text="START GAME"
-					characterSize="30"
-					orientation="centerVertical"
-					font="defaultFont" />
-
-				<Widget
-					width="20"
-					height="20"
-					backgroundColor="transparent"	/>
-
-			</HorizontalLayoutWidget>
-
-
-	</Widgets>
+  <!-- Resources are loaded before creating and placing the widgets. You can use Resources with the id, which can be set with the id attribute -->
+  <Resources>
+    <Font id="defaultFont" src="assets/fonts/cave-story/Cave-Story.ttf"/>
+  </Resources>
+  <Widgets>
+    <!-- Header -->
+    <TextWidget orientation="centerHorizontal" text="START GAME" characterSize="60" font="defaultFont"/>
+    <!-- Main Content -->
+    <HorizontalLayoutWidget id="vertWidget_vl1" autoDetermineWidth="true" autoDetermineHeight="true" backgroundColor="transparent" orientation="center">
+      <!-- Player 1 -->
+      <VerticalLayoutWidget id="vertWidget_vl1" autoDetermineWidth="true" autoDetermineHeight="true" backgroundColor="transparent">
+        <TextWidget id="textWidget_player1" text="PLAYER 1" font="defaultFont" characterSize="30"/>
+        <HorizontalLayoutWidget autoDetermineHeight="true" autoDetermineWidth="true" backgroundColor="transparent">
+          <CheckBoxWidget id="checkBoxWidget_p1Knight" width="20" height="20"/>
+          <TextWidget id="textWidget_p1Knight" text=" KNIGHT" font="defaultFont" left="20" characterSize="20"/>
+        </HorizontalLayoutWidget>
+        <!-- Puffer -->
+        <Widget width="10" height="10" backgroundColor="transparent"/>
+        <HorizontalLayoutWidget autoDetermineHeight="true" autoDetermineWidth="true" backgroundColor="transparent">
+          <CheckBoxWidget id="checkBoxWidget_p1Runner" width="20" height="20"/>
+          <TextWidget id="textWidget_p1Runner" text=" RUNNER" font="defaultFont" left="20" characterSize="20"/>
+        </HorizontalLayoutWidget>
+        <!-- Puffer -->
+        <Widget width="10" height="10" backgroundColor="transparent"/>
+        <HorizontalLayoutWidget autoDetermineHeight="true" autoDetermineWidth="true" backgroundColor="transparent">
+          <CheckBoxWidget id="checkBoxWidget_p1Wizard" width="20" height="20"/>
+          <TextWidget id="textWidget_p1Wizard" text=" WIZARD" font="defaultFont" left="20" characterSize="20"/>
+        </HorizontalLayoutWidget>
+      </VerticalLayoutWidget>
+      <!-- Puffer -->
+      <Widget width="60" height="20" backgroundColor="transparent"/>
+      <!-- Level -->
+      <VerticalLayoutWidget id="vertWidget_vl1" autoDetermineWidth="true" autoDetermineHeight="true" backgroundColor="transparent">
+        <TextWidget id="textWidget_level" text="LEVEL" font="defaultFont" characterSize="30"/>
+        <ListBoxWidget id="listBoxWidget_level" width="160" height="100" listData="" font="defaultFont"/>
+      </VerticalLayoutWidget>
+      <!-- Puffer -->
+      <Widget width="60" height="20" backgroundColor="transparent"/>
+      <!-- Player 2 -->
+      <VerticalLayoutWidget id="vertWidget_vl1" autoDetermineWidth="true" autoDetermineHeight="true" backgroundColor="transparent">
+        <TextWidget id="textWidget_player2" text="PLAYER 2" font="defaultFont" characterSize="30"/>
+        <HorizontalLayoutWidget autoDetermineHeight="true" autoDetermineWidth="true" backgroundColor="transparent">
+          <CheckBoxWidget id="checkBoxWidget_p2Knight" width="20" height="20"/>
+          <TextWidget id="textWidget_p2Knight" text=" KNIGHT" font="defaultFont" left="20" characterSize="20"/>
+        </HorizontalLayoutWidget>
+        <!-- Puffer -->
+        <Widget width="10" height="10" backgroundColor="transparent"/>
+        <HorizontalLayoutWidget autoDetermineHeight="true" autoDetermineWidth="true" backgroundColor="transparent">
+          <CheckBoxWidget id="checkBoxWidget_p2Runner" width="20" height="20"/>
+          <TextWidget id="textWidget_p2Runner" text=" RUNNER" font="defaultFont" left="20" characterSize="20"/>
+        </HorizontalLayoutWidget>
+        <!-- Puffer -->
+        <Widget width="10" height="10" backgroundColor="transparent"/>
+        <HorizontalLayoutWidget autoDetermineHeight="true" autoDetermineWidth="true" backgroundColor="transparent">
+          <CheckBoxWidget id="checkBoxWidget_p2Wizard" width="20" height="20"/>
+          <TextWidget id="textWidget_p2Wizard" text=" WIZARD" font="defaultFont" left="20" characterSize="20"/>
+        </HorizontalLayoutWidget>
+      </VerticalLayoutWidget>
+    </HorizontalLayoutWidget>
+    <!-- Bottom Buttons -->
+    <HorizontalLayoutWidget height="100" autoDetermineWidth="true" orientation="centerHorizontal|bottom" backgroundColor="transparent">
+      <TextButtonWidget id="textButtonWidget_back" width="160" height="40" text="BACK" characterSize="30" orientation="centerVertical" font="defaultFont"/>
+      <Widget width="10" height="10" backgroundColor="transparent"/>
+      <TextButtonWidget id="textButtonWidget_start" width="160" height="40" text="START GAME" characterSize="30" orientation="centerVertical" font="defaultFont"/>
+      <Widget width="20" height="20" backgroundColor="transparent"/>
+    </HorizontalLayoutWidget>
+  </Widgets>
 </Scene>

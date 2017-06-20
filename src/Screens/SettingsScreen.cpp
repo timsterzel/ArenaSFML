@@ -26,7 +26,6 @@ SettingsScreen::SettingsScreen(ScreenStack *screenStack, Context &context)
 
 void SettingsScreen::buildScene()
 {
-    m_screenStack->pushScreen(ScreenID::GAME);
     sf::View oldView{ m_context.window->getView() };
     m_context.window->setView(m_context.guiView);
     m_guiEnvironment.createScene("assets/gui/settings_menu.xml");
@@ -54,13 +53,6 @@ void SettingsScreen::buildScene()
         m_guiEnvironment.getWidgetByID("comboBoxWidget_inputPlayer2" ));
 
     loadSettings();
-    /*
-    std::function<void(gsf::Widget *widget, sf::Vector2f pos)> {
-        [this](gsf::Widget *widget, sf::Vector2f pos)
-    {
-        m_settingChanged = true;
-    } };
-    */
     
     m_checkBoxMusic->setOnLeftClickListener(
             [this](gsf::Widget *widget, sf::Vector2f pos)

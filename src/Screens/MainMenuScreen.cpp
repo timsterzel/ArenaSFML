@@ -64,20 +64,6 @@ void MainMenuScreen::buildScene()
     twoPlayerBtn->setOnLeftClickListener(
             [this](gsf::Widget *widget, sf::Vector2f pos)
     {
-        /*
-        std::map<InputDevice, WorldObjectTypes> deviceMap;
-        deviceMap.insert({ InputDevice::KEYBOARD_MOUSE, 
-                WorldObjectTypes::PLAYER_1 });
-        deviceMap.insert({ InputDevice::JOYSTICK_0, 
-                WorldObjectTypes::PLAYER_2 });
-        MainGameScreen::GameData gameData(MainGameScreen::GameMode::TWO_PLAYER,
-                "level1", deviceMap, WorldObjectTypes::KNIGHT,
-                WorldObjectTypes::RUNNER);
-        m_screenStack->registerScreen<MainGameScreen, 
-            MainGameScreen::GameData>(ScreenID::GAME, gameData);
-        m_screenStack->popScreen();
-        m_screenStack->pushScreen(ScreenID::GAME);
-        */
         m_screenStack->popScreen();
         m_screenStack->pushScreen(ScreenID::TWOPLAYERSELECTION);
     });
@@ -89,6 +75,15 @@ void MainMenuScreen::buildScene()
     {
         m_screenStack->popScreen();
         m_screenStack->pushScreen(ScreenID::SETTINGS);
+    });
+    
+    gsf::TextButtonWidget* creditsBtn{ static_cast<gsf::TextButtonWidget*>(
+            m_guiEnvironment.getWidgetByID("textButtonWidget_credits")) };
+    creditsBtn->setOnLeftClickListener(
+            [this](gsf::Widget *widget, sf::Vector2f pos)
+    {
+        m_screenStack->popScreen();
+        m_screenStack->pushScreen(ScreenID::CREDITS);
     });
 
     gsf::TextButtonWidget* quitGameBtn{ static_cast<gsf::TextButtonWidget*>(
@@ -150,4 +145,3 @@ void MainMenuScreen::render()
     m_context.window->draw(m_guiEnvironment);
     m_context.window->setView(oldView);
 }
-

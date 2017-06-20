@@ -1,109 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Scene>
-	<!-- Resources are loaded before creating and placing the widgets. You can use Resources with the id, which can be set with the id attribute -->
-	<Resources>
-		<Font
-			id="defaultFont"
-			src="assets/fonts/cave-story/Cave-Story.ttf"
-		/>
-	</Resources>
-    <Widgets>
-
-			<!-- Header -->
-			<TextWidget
-					orientation="centerHorizontal"
-					text="--PAUSE--"
-					characterSize="60"
-					textColor="white"
-					font="defaultFont" />
-
-			<VerticalLayoutWidget
-				id="vertWidget_vl1"
-				autoDetermineWidth="true"
-				autoDetermineHeight="true"
-				backgroundColor="transparent"
-				orientation="center" >
-
-				<TextButtonWidget
-					id="textButtonWidget_resumeGame"
-					width="300"
-					height="60"
-					orientation="centerHorizontal"
-					text="RESUME"
-					characterSize="26"
-					font="defaultFont" />
-
-				<Widget
-					width="300"
-					height="20"
-					backgroundColor="transparent"	/>
-
-				<TextButtonWidget
-					id="textButtonWidget_mainMenu"
-					width="300"
-					height="60"
-					orientation="centerHorizontal"
-					text="MAIN MENU"
-					characterSize="26"
-					font="defaultFont" />
-
-					<Widget
-						width="300"
-						height="20"
-						backgroundColor="transparent"	/>
-
-				<HorizontalLayoutWidget
-					autoDetermineWidth="true"
-					autoDetermineHeight="true"
-					backgroundColor="transparent"
-					orientation="centerHorizontal" >
-					<!-- Music on/off -->
-					<HorizontalLayoutWidget
-						autoDetermineHeight="true"
-						autoDetermineWidth="true"
-						backgroundColor="transparent" >
-
-						<CheckBoxWidget
-							id="checkBoxWidget_music"
-							width="20"
-							height="20" />
-
-						<TextWidget
-							id="textWidget_music"
-							text=" MUSIC"
-							font="defaultFont"
-							left="20"
-							characterSize="20" />
-
-					</HorizontalLayoutWidget>
-
-					<Widget
-						width="10"
-						height="10"
-						backgroundColor="transparent"	/>
-
-					<!-- Sound on/off -->
-					<HorizontalLayoutWidget
-	      		autoDetermineHeight="true"
-						autoDetermineWidth="true"
-						backgroundColor="transparent" >
-
-	      		<CheckBoxWidget
-	        		id="checkBoxWidget_sound"
-	          	width="20"
-	          	height="20" />
-
-						<TextWidget
-	          	id="textWidget_sound"
-	          	text=" SOUND"
-	          	font="defaultFont"
-							left="20"
-	          	characterSize="20" />
-
-				</HorizontalLayoutWidget>
-
-				</HorizontalLayoutWidget>
-
-			</VerticalLayoutWidget>
-	</Widgets>
+  <!-- Resources are loaded before creating and placing the widgets. You can use Resources with the id, which can be set with the id attribute -->
+  <Resources>
+    <Font id="defaultFont" src="assets/fonts/cave-story/Cave-Story.ttf"/>
+  </Resources>
+  <Widgets>
+    <!-- Header -->
+    <TextWidget orientation="centerHorizontal" text="--PAUSE--" characterSize="60" textColor="white" font="defaultFont"/>
+    <VerticalLayoutWidget id="vertWidget_vl1" autoDetermineWidth="true" autoDetermineHeight="true" backgroundColor="transparent" orientation="center">
+      <TextButtonWidget id="textButtonWidget_resumeGame" width="300" height="60" orientation="centerHorizontal" text="RESUME" characterSize="26" font="defaultFont"/>
+      <Widget width="300" height="20" backgroundColor="transparent"/>
+      <TextButtonWidget id="textButtonWidget_mainMenu" width="300" height="60" orientation="centerHorizontal" text="MAIN MENU" characterSize="26" font="defaultFont"/>
+      <Widget width="300" height="20" backgroundColor="transparent"/>
+      <HorizontalLayoutWidget autoDetermineWidth="true" autoDetermineHeight="true" backgroundColor="transparent" orientation="centerHorizontal">
+        <!-- Music on/off -->
+        <HorizontalLayoutWidget autoDetermineHeight="true" autoDetermineWidth="true" backgroundColor="transparent">
+          <CheckBoxWidget id="checkBoxWidget_music" width="20" height="20"/>
+          <TextWidget id="textWidget_music" text=" MUSIC" font="defaultFont" left="20" characterSize="20"/>
+        </HorizontalLayoutWidget>
+        <Widget width="10" height="10" backgroundColor="transparent"/>
+        <!-- Sound on/off -->
+        <HorizontalLayoutWidget autoDetermineHeight="true" autoDetermineWidth="true" backgroundColor="transparent">
+          <CheckBoxWidget id="checkBoxWidget_sound" width="20" height="20"/>
+          <TextWidget id="textWidget_sound" text=" SOUND" font="defaultFont" left="20" characterSize="20"/>
+        </HorizontalLayoutWidget>
+      </HorizontalLayoutWidget>
+    </VerticalLayoutWidget>
+  </Widgets>
 </Scene>

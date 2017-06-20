@@ -47,7 +47,6 @@ void ScreenStack::update(float dt)
 {
     for (auto itr = m_stack.rbegin(); itr != m_stack.rend(); itr++)
     {
-        //(*itr)->update(dt);
         if (!(*itr)->update(dt))
         {
             break;

@@ -1,83 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Scene>
-	<!-- Resources are loaded before creating and placing the widgets. You can use Resources with the id, which can be set with the id attribute -->
-	<Resources>
-		<Font
-			id="defaultFont"
-			src="assets/fonts/cave-story/Cave-Story.ttf"
-		/>
-
-	</Resources>
-    <Widgets>
-
-			<!-- Header -->
-			<TextWidget
-					orientation="centerHorizontal"
-					text=" ARENA "
-					characterSize="180"
-					textColor="Transparent"
-					outlineTextColor="White"
-					textOutlineThickness="3"
-					font="defaultFont" />
-
-			<VerticalLayoutWidget
-				id="vertWidget_vl1"
-				autoDetermineWidth="true"
-				autoDetermineHeight="true"
-				backgroundColor="transparent"
-				orientation="center" >
-
-				<TextButtonWidget
-					id="textButtonWidget_onePlayer"
-					width="300"
-					height="60"
-					orientation="centerHorizontal"
-					text="ONE PLAYER"
-					characterSize="30"
-					font="defaultFont" />
-
-				<Widget
-					width="300"
-					height="20"
-					backgroundColor="transparent"	/>
-
-				<TextButtonWidget
-					id="textButtonWidget_twoPlayer"
-					width="300"
-					height="60"
-					orientation="centerHorizontal"
-					text="TWO PLAYER"
-					characterSize="30"
-					font="defaultFont" />
-
-				<Widget
-					width="300"
-					height="20"
-					backgroundColor="transparent"	/>
-
-				<TextButtonWidget
-					id="textButtonWidget_settings"
-					width="300"
-					height="60"
-					orientation="centerHorizontal"
-					text="SETTINGS"
-					characterSize="30"
-					font="defaultFont" />
-
-					<Widget
-						width="300"
-						height="20"
-						backgroundColor="transparent"	/>
-
-					<TextButtonWidget
-						id="textButtonWidget_quitGame"
-						width="300"
-						height="60"
-						orientation="centerHorizontal"
-						text="QUIT GAME"
-						characterSize="30"
-						font="defaultFont" />
-
-			</VerticalLayoutWidget>
-	</Widgets>
+  <!-- Resources are loaded before creating and placing the widgets. You can use Resources with the id, which can be set with the id attribute -->
+  <Resources>
+    <Font id="defaultFont" src="assets/fonts/cave-story/Cave-Story.ttf"/>
+  </Resources>
+  <Widgets>
+    <!-- Header -->
+    <TextWidget orientation="centerHorizontal" text=" ARENA " characterSize="180" textColor="Transparent" outlineTextColor="White" textOutlineThickness="3" font="defaultFont"/>
+    <VerticalLayoutWidget id="vertWidget_vl1" autoDetermineWidth="true" autoDetermineHeight="true" backgroundColor="transparent" orientation="center">
+      <TextButtonWidget id="textButtonWidget_onePlayer" width="300" height="60" orientation="centerHorizontal" text="ONE PLAYER" characterSize="30" font="defaultFont"/>
+      <Widget width="300" height="20" backgroundColor="transparent"/>
+      <TextButtonWidget id="textButtonWidget_twoPlayer" width="300" height="60" orientation="centerHorizontal" text="TWO PLAYER" characterSize="30" font="defaultFont"/>
+      <Widget width="300" height="20" backgroundColor="transparent"/>
+      <TextButtonWidget id="textButtonWidget_settings" width="300" height="60" orientation="centerHorizontal" text="SETTINGS" characterSize="30" font="defaultFont"/>
+      <Widget width="300" height="20" backgroundColor="transparent"/>
+      <TextButtonWidget id="textButtonWidget_credits" width="300" height="60" orientation="centerHorizontal" text="CREDITS" characterSize="30" font="defaultFont"/>
+      <Widget width="300" height="20" backgroundColor="transparent"/>
+      <TextButtonWidget id="textButtonWidget_quitGame" width="300" height="60" orientation="centerHorizontal" text="QUIT GAME" characterSize="30" font="defaultFont"/>
+    </VerticalLayoutWidget>
+  </Widgets>
 </Scene>
