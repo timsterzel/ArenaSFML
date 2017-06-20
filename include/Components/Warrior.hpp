@@ -24,7 +24,6 @@ class Warrior : public Entity
         const ResourceHolder<sf::Texture> &m_textureHolder;
         const SpriteSheetMapHolder &m_spriteSheetMapHolder;
         
-        float m_mass;
         float m_maxHealth;
         float m_currentHealth;
 
@@ -74,8 +73,6 @@ class Warrior : public Entity
         
         const std::string& getID();
 
-        float getMass() const;
-        void setMass(float mass);
 
         float getCurrentHealth() const;
         void setCurrentHealth(const float health);

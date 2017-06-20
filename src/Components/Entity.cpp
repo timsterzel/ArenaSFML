@@ -6,6 +6,7 @@ Entity::Entity(RenderLayers layer)
 : SceneNode(layer)
 , m_velocity{ 0.f }
 , m_currentVelocity{ 0.f }
+, m_mass{ 0.f }
 , m_currentDirection{ 0.f, 0.f }
 , m_width{ 0.f }
 , m_height{ 0.f }
@@ -41,6 +42,16 @@ float Entity::getCurrentVelocity() const
 void Entity::setCurrentDirection(sf::Vector2f currentDirection)
 {
     m_currentDirection = currentDirection;
+}
+
+float Entity::getMass() const
+{
+    return m_mass;
+}
+
+void Entity::setMass(float mass)
+{
+    m_mass = mass;
 }
 
 sf::Vector2f Entity::getCurrentDirection() const

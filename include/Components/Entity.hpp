@@ -11,6 +11,8 @@ class Entity : public SceneNode
         // The current velocity of the entity
         float m_currentVelocity;
         // The current direction of the entity
+        // The mass of the entity
+        float m_mass;
         sf::Vector2f m_currentDirection;
         float m_width;
         float m_height;
@@ -23,6 +25,8 @@ class Entity : public SceneNode
         float getVelocity() const;
         void setCurrentVelocity(float currentVelocity);
         float getCurrentVelocity() const;
+        float getMass() const;
+        void setMass(float mass);
         void setCurrentDirection(sf::Vector2f currentDirection);
         sf::Vector2f getCurrentDirection() const;
 

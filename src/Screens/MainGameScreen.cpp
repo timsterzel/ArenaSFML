@@ -557,6 +557,7 @@ bool MainGameScreen::isStillPlayer2InGame()
     return false;
 }
 
+/*
 void MainGameScreen::resolveEntityCollisions(SceneNode *sceneNodeFirst, 
         SceneNode *sceneNodeSecond, CollisionInfo &collisionInfo)
 {
@@ -565,6 +566,28 @@ void MainGameScreen::resolveEntityCollisions(SceneNode *sceneNodeFirst,
     float overlap{ collisionInfo.getLength() };
     entityOne->moveInDirection(collisionInfo.getResolveDirOfFirst(), overlap / 2.f);
     entityTwo->moveInDirection(collisionInfo.getResolveDirOfSecond(), overlap / 2.f);
+}
+*/
+
+void MainGameScreen::resolveEntityCollisions(SceneNode *sceneNodeFirst, 
+        SceneNode *sceneNodeSecond, CollisionInfo &collisionInfo)
+{
+    Entity *entityOne{ static_cast<Entity*>(sceneNodeFirst) };
+    Entity *entityTwo{ static_cast<Entity*>(sceneNodeSecond) };
+    float massEntityOne{ entityOne->getMass() };
+    float massEntityTwo{ entityTwo->getMass() };
+    float massSum{ massEntityOne + massEntityTwo };
+    if (massSum <= 0.f)
+    {
+        return;
+    }
+    float massProp1{ massEntityOne / massSum };
+    float massProp2{ massEntityTwo / massSum };
+    float overlap{ collisionInfo.getLength() };
+    entityOne->moveInDirection(collisionInfo.getResolveDirOfFirst(), 
+            overlap * massProp2);
+    entityTwo->moveInDirection(collisionInfo.getResolveDirOfSecond(), 
+            overlap * massProp1);
 }
 
 void MainGameScreen::handleCollision(float dt)
@@ -624,10 +647,6 @@ void MainGameScreen::handleCollision(float dt)
             Entity *entity{ static_cast<Entity*>
                 (getSceneNodeOfType(sceneNodes, WorldObjectTypes::PROJECTILE)) };
             entity->setStatus(WorldObjectStatus::DESTORYED);
-        }
-        if (m_showCollisionInfo)
-        {
-            //std::cout << "Collision: " << colCnt++ << std::endl;
         }
     }
 }
@@ -736,7 +755,6 @@ void MainGameScreen::calcGuiSizeAndPos()
     m_consoleWidget->setHeight(windowViewSize.y / 4);
     m_consoleWidget->setTopPosition(0.f);
     m_consoleWidget->setLeftPosition(0.f);
-
     // Winner Text
     m_winnerText->setCenterPosition(m_guiView.getSize().x / 2.f, 80.f);
 }
