@@ -41,7 +41,7 @@ class Runner : public Warrior
         sf::Vector2f m_dodgeDir;
 
     public:
-        Runner(RenderLayers layer, SoundPlayer &sound, const int health, 
+        Runner(RenderLayers layer, ConfigManager &config, SoundPlayer &sound, const int health, 
                 const std::string &textureId,
                 const ResourceHolder<sf::Texture> &textureHolder,
                 const SpriteSheetMapHolder &spriteSheetMapHolder, 

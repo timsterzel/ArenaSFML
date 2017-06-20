@@ -6,14 +6,13 @@
 #include "Calc.hpp"
 #include <iostream>
 
-Knight::Knight(RenderLayers layer, SoundPlayer &sound, const int health, const std::string &textureId,
+Knight::Knight(RenderLayers layer, ConfigManager &config, SoundPlayer &sound, const int health, const std::string &textureId,
         const ResourceHolder<sf::Texture> &textureHolder,
         const SpriteSheetMapHolder &spriteSheetMapHolder, 
         std::vector<Warrior*> &possibleTargetsInWord)
-: Warrior(layer, sound, health, textureId, textureHolder, spriteSheetMapHolder, 
+: Warrior(layer, config, sound, health, textureId, textureHolder, spriteSheetMapHolder, 
         possibleTargetsInWord)
 , m_animCloseAttack{ nullptr, false }
-//, m_animStrongAttack{ nullptr, false }
 , m_WeaponDamage{ 30.f }
 , m_closeAttackStanima{ 10.f }
 , m_closeAttackDamageMul{ 1.f }
@@ -25,7 +24,6 @@ Knight::Knight(RenderLayers layer, SoundPlayer &sound, const int health, const s
 , m_curStrongAttackTime{ 0.f }
 {
     addType(WorldObjectTypes::KNIGHT);
-    setVelocity(60.f);
     // Animation
     std::vector<AnimationStepRotation>  swordRoationStepsCloseAtt;
     swordRoationStepsCloseAtt.push_back({ 0.f, -60.f,  0.3f });
@@ -96,7 +94,6 @@ void Knight::updateCurrent(float dt)
     if(m_isStrongAttackRunning) 
     {
         m_curStrongAttackTime += dt;
-        //m_currentDirection = m_strongAttackDir;
         moveInDirection(m_strongAttackDir, m_strongAttackVelocity * dt);
         if (m_curStrongAttackTime > m_totalStrongAttackTime)
         {
@@ -125,7 +122,6 @@ void Knight::updateCurrent(float dt)
 void Knight::onCommandCurrent(const Command &command, float dt)
 {
     // Do command handling of parent class
-    //Entity::onCommand(command, dt);
     Warrior::onCommandCurrent(command, dt);
     if (command.getWorldObjectType() & m_type)
     {
@@ -150,11 +146,6 @@ void Knight::onCommandCurrent(const Command &command, float dt)
                 break;
 
         }
-
-        // Move is the same as setPosition(getPosition() + offset) of the 
-        // sf::Transformable class
-        //move(m_currentVelocity * dt);
-        //moveInDirection(m_currentDirection, m_currentVelocity * dt);
         moveInActualDirection(m_currentVelocity * dt);
     }
 }
@@ -209,16 +200,13 @@ void Knight::stopCloseAttack()
 
 void Knight::startStrongAttack()
 {
-    if (m_weapon && /*!m_animStrongAttack.isRunning() &&*/ 
-            /*!isBlocking() &&*/ 
-            m_currentStamina >= m_strongAttackStanima)
+    if (m_weapon && m_currentStamina >= m_strongAttackStanima)
     {
         m_isStrongAttackRunning = true;
         m_curStrongAttackTime = 0.f;
         // The attack direction is the direction where the knight looking at
         m_strongAttackDir = Calc::degAngleToDirectionVector(getRotation() + 90.f);
         m_weapon->setRotation(0.f);
-        //m_animStrongAttack.start();
         m_weapon->setIsCollisionCheckOn(true);
         m_weapon->setDamageMultiplicator(m_strongAttackDamageMul);
         m_weapon->startNewAttack();
@@ -240,8 +228,6 @@ void Knight::startBlocking()
     if (m_shield && !m_isBlocking)
     {
         m_isBlocking = true;
-        //m_shield->setRotation(270.f);
-        //m_shield->setPosition(10.f, 0.f);
         m_shield->setRotation(0.f);
         m_shield->setPosition(0.f, 10.f);
     }
@@ -251,8 +237,6 @@ void Knight::stopBlocking()
 {
     {
         m_isBlocking = false;
-        //m_shield->setRotation(0.f);
-        //m_shield->setPosition(m_shieldEquipPos);
         m_shield->setRotation(90.f);
         m_shield->setPosition(m_shieldEquipPos);
     }
@@ -261,7 +245,6 @@ void Knight::stopBlocking()
 void Knight::weaponAdded()
 {
     m_animCloseAttack.setParent(m_weapon);
-    //m_animStrongAttack.setParent(m_weapon);
 }
 
 void Knight::handleDamage(Weapon *weapon)

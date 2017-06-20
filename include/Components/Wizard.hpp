@@ -27,7 +27,7 @@ class Wizard : public Warrior
         float m_currentHealColorStepTime;
         
     public:
-        Wizard(RenderLayers layer, SoundPlayer &sound, const int health, 
+        Wizard(RenderLayers layer, const ConfigManager &config, SoundPlayer &sound, const int health, 
                 const std::string &textureId, 
                 const ResourceHolder<sf::Texture> &textureHolder,
                 const SpriteSheetMapHolder &spriteSheetMapHolder, 

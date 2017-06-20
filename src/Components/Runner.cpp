@@ -6,12 +6,12 @@
 #include "Calc.hpp"
 #include <iostream>
 
-Runner::Runner(RenderLayers layer, SoundPlayer &sound, const int health, 
+Runner::Runner(RenderLayers layer, ConfigManager &config, SoundPlayer &sound, const int health, 
         const std::string &textureId,
         const ResourceHolder<sf::Texture> &textureHolder,
         const SpriteSheetMapHolder &spriteSheetMapHolder, 
         std::vector<Warrior*> &possibleTargetsInWord)
-: Warrior(layer, sound, health, textureId, textureHolder, spriteSheetMapHolder, 
+: Warrior(layer, config, sound, health, textureId, textureHolder, spriteSheetMapHolder, 
         possibleTargetsInWord)
 , m_animCloseAttack( nullptr, false )
 // Close Attack
@@ -32,7 +32,6 @@ Runner::Runner(RenderLayers layer, SoundPlayer &sound, const int health,
 , m_curDodgeTime{ 0.f }
 {
     addType(WorldObjectTypes::RUNNER);
-    setVelocity(80.f);
     // Animation
     std::vector<AnimationStepRotation>  swordRoationStepsCloseAtt;
     swordRoationStepsCloseAtt.push_back({ 0.f, -60.f,  0.3f });
@@ -117,7 +116,6 @@ void Runner::updateCurrent(float dt)
 void Runner::onCommandCurrent(const Command &command, float dt)
 {
     // Do command handling of parent class
-    //Entity::onCommand(command, dt);
     Warrior::onCommandCurrent(command, dt);
     if (command.getWorldObjectType() & m_type)
     {
@@ -135,22 +133,10 @@ void Runner::onCommandCurrent(const Command &command, float dt)
             case CommandTypes::SPECIAL_ACTION:
                 startDodging();
                 break;
-            /*
-            case CommandTypes::START_BLOCKING:
-                startBlocking();
-                break;
-            case CommandTypes::STOP_BLOCKING:
-                stopBlocking();
-                break;
-            */
             default:
                 break;
 
         }
-
-        // Move is the same as setPosition(getPosition() + offset) of the sf::Transformable class
-        //move(m_currentVelocity * dt);
-        //moveInDirection(m_currentDirection, m_currentVelocity * dt);
         moveInActualDirection(m_currentVelocity * dt);
     }
 }
@@ -254,7 +240,6 @@ void Runner::startDodging()
     if (!m_isRoundAttacking && m_currentStamina >= m_dodgeStanima)
     {
         makeTransparent();
-        //setIsCollisionCheckOn(false);
         // Only should collide with level objects
         setColisionWhiteListTypes(WorldObjectTypes::LEVEL);
         m_isDodging = true;
@@ -272,24 +257,8 @@ void Runner::stopDodging()
     clearCollisionWhiteListTypes();
     makeInTransparent();
 }
-/*
-void Runner::startStrongAttack()
-{
-    if (m_weapon && !m_animStrongAttack.isRunning() && 
-            m_currentStamina >= m_strongAttackStanima)
-    {
-        m_weapon->setRotation(0.f);
-        m_animStrongAttack.start();
-        m_weapon->setIsCollisionCheckOn(true);
-        m_weapon->setDamageMultiplicator(m_strongAttackDamageMul);
-        m_weapon->startNewAttack();
-        removeStanima(m_strongAttackStanima);
-    }
-}
-*/
 
 void Runner::weaponAdded()
 {
     m_animCloseAttack.setParent(m_weapon);
-    //m_animStrongAttack.setParent(m_weapon);
 }

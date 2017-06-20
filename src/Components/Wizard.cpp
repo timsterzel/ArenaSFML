@@ -8,15 +8,14 @@
 #include "DebugHelpers.hpp"
 #include <iostream>
 
-Wizard::Wizard(RenderLayers layer, SoundPlayer &sound, 
+Wizard::Wizard(RenderLayers layer, const ConfigManager &config, SoundPlayer &sound, 
         const int health, const std::string &textureId, 
         const ResourceHolder<sf::Texture> &textureHolder,
         const SpriteSheetMapHolder &spriteSheetMapHolder, 
         std::vector<Warrior*> &possibleTargetsInWord)
-: Warrior(layer, sound, health, textureId, textureHolder, spriteSheetMapHolder, 
+: Warrior(layer, config, sound, health, textureId, textureHolder, spriteSheetMapHolder, 
         possibleTargetsInWord)
 , m_animFireballAttack( nullptr, false )
-//, m_animStrongAttack( nullptr, false )
 // Close Attack
 , m_fireballAttackStanima{ 10.f }
 , m_fireballDamage{ 15.f }
@@ -28,17 +27,11 @@ Wizard::Wizard(RenderLayers layer, SoundPlayer &sound,
 , m_currentHealColorStepTime{ 0.f }
 {
     addType(WorldObjectTypes::WIZARD);
-    setVelocity(70.f);
     // Animation
     std::vector<AnimationStepMovement>  stickMovementStepsFireball;
     stickMovementStepsFireball.push_back({ -2.f, { 0, 1 },  0.1f });
     stickMovementStepsFireball.push_back({ 2.f, { 0, 1 },  0.1f });
     m_animFireballAttack.setMovementSteps(stickMovementStepsFireball);
-    /*
-    std::vector<AnimationStepRotation>  swordRoationStepsCloseAtt;
-    swordRoationStepsCloseAtt.push_back({ 0.f, -60.f,  0.3f });
-    m_animFireballAttack.setRotationSteps(swordRoationStepsCloseAtt);
-    */
     std::unique_ptr<Weapon> stick(new Weapon(RenderLayers::WEAPON, 10.f, 
                 textureHolder.get(textureId), 
                 spriteSheetMapHolder.getRectData(textureId, "stick")));
@@ -144,7 +137,6 @@ void Wizard::updateHealColor(float dt)
 void Wizard::onCommandCurrent(const Command &command, float dt)
 {
     // Do command handling of parent class
-    //Entity::onCommand(command, dt);
     Warrior::onCommandCurrent(command, dt);
     if (command.getWorldObjectType() & m_type)
     {
@@ -168,14 +160,6 @@ void Wizard::onCommandCurrent(const Command &command, float dt)
             case CommandTypes::ACTION_STOP:
                 stopHealing();
                 break;
-            /*
-            case CommandTypes::START_BLOCKING:
-                startBlocking();
-                break;
-            case CommandTypes::STOP_BLOCKING:
-                stopBlocking();
-                break;
-            */
             default:
                 break;
 
@@ -186,29 +170,7 @@ void Wizard::onCommandCurrent(const Command &command, float dt)
 
 void Wizard::updateAI(float dt)
 {
-    /*
-    m_isMoving = false;
-    Warrior::updateAI(dt);
-    if (!m_actualTarget)
-    {
-        return;
-    }
 
-    lookAt(m_actualTarget->getPosition());
-    CollisionInfo collisionInfo = m_closeCombatArea->isColliding(*m_actualTarget->getCollisionShape());
-    if (collisionInfo.isCollision())
-    {
-        startCloseAttack();
-    }
-    else
-    {
-        // Follow target
-        m_currentVelocity = m_velocity;
-        m_currentDirection = m_actualTarget->getWorldPosition() - getWorldPosition();
-        m_isMoving = true;
-        moveInActualDirection(m_currentVelocity * dt);
-    }
-    */
 }
 
 void Wizard::startFireballAttack()

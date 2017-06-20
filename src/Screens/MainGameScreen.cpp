@@ -70,7 +70,7 @@ void MainGameScreen::buildScene()
     // Play music
     switch (Helpers::getRandomNum(0, 1))
     {
-        case 0: m_context.music->play("gametheme01"); std::cout << "0\n" ;break;
+        case 0: m_context.music->play("gametheme01"); break;
         case 1: m_context.music->play("gametheme02"); break;
     }
     
@@ -78,12 +78,6 @@ void MainGameScreen::buildScene()
         createWarrior(m_gameData.player1Warrior) };
     m_warriorPlayer1 = warriorPlayer1.get();
     m_warriorPlayer1->addType(WorldObjectTypes::PLAYER_1);
-    /*
-    m_warriorPlayer1->setType(
-            WorldObjectTypes::PLAYER_1 | 
-            WorldObjectTypes::WARRIOR | 
-            WorldObjectTypes::KNIGHT);
-    */
     m_possibleTargetWarriors.push_back(m_warriorPlayer1);
     m_sceneGraph.attachChild(std::move(warriorPlayer1));
 
@@ -93,21 +87,11 @@ void MainGameScreen::buildScene()
     if (m_gameData.gameMode == GameMode::TWO_PLAYER)
     {
         warriorPlayer2->addType(WorldObjectTypes::PLAYER_2);
-        /*
-        warriorPlayer2->setType(WorldObjectTypes::PLAYER_2 | 
-            WorldObjectTypes::WARRIOR |
-            WorldObjectTypes::RUNNER);
-        */
         warriorPlayer2->setIsAiActive(false);
     }
     else if (m_gameData.gameMode == GameMode::ONE_PLAYER)
     {
         warriorPlayer2->addType(WorldObjectTypes::ENEMY);
-        /*
-        warriorPlayer2->setType(WorldObjectTypes::ENEMY | 
-            WorldObjectTypes::WARRIOR |
-            WorldObjectTypes::RUNNER);
-        */
         warriorPlayer2->setIsAiActive(true);
     }
     m_warriorPlayer2 = warriorPlayer2.get();    
@@ -145,23 +129,30 @@ std::unique_ptr<Warrior> MainGameScreen::createWarrior(
         WorldObjectTypes warriorType) 
 {
     std::unique_ptr<Warrior> warrior{ nullptr };
+    ConfigManager configKnight("assets/warrior_config/knight.ini");
+    ConfigManager configRunner("assets/warrior_config/runner.ini");
+    ConfigManager configWizard("assets/warrior_config/wizard.ini");
     switch(warriorType)
     {
         case WorldObjectTypes::KNIGHT:
             warrior = std::make_unique<Knight>
-                (RenderLayers::MAIN, *m_context.sound, 100.f, "knight", 
+                (RenderLayers::MAIN,
+                 configKnight,
+                 *m_context.sound, 100.f, "knight", 
                  *m_context.textureHolder, *m_context.spriteSheetMapHolder, 
                   m_possibleTargetWarriors);
             break;
         case WorldObjectTypes::RUNNER:
             warrior = std::make_unique<Runner>
-                (RenderLayers::MAIN, *m_context.sound, 100.f, "runner", 
+                (RenderLayers::MAIN, configRunner,
+                 *m_context.sound, 100.f, "runner", 
                  *m_context.textureHolder, *m_context.spriteSheetMapHolder, 
                   m_possibleTargetWarriors);
             break;
         case WorldObjectTypes::WIZARD:
             warrior = std::make_unique<Wizard>
-                (RenderLayers::MAIN, *m_context.sound, 100.f, "wizard", 
+                (RenderLayers::MAIN, configWizard, 
+                 *m_context.sound, 100.f, "wizard", 
                  *m_context.textureHolder, *m_context.spriteSheetMapHolder, 
                  m_possibleTargetWarriors);
             break;
@@ -229,7 +220,6 @@ void MainGameScreen::buildLevel()
     // Load the tiles
     for (const Level::TileData &tile : level.tiles)
     {
-        //*m_context.textureHolder
         sf::Texture &texture{ m_context.textureHolder->get("level") };
         sf::IntRect textureRect{ m_context.spriteSheetMapHolder->getRectData(
                 "level", tile.id) };
@@ -277,46 +267,6 @@ void MainGameScreen::handleConsoleCommands(gsf::Widget* widget, sf::String comma
         return;
     }
     std::string mainCom{ commands[0] };
-    // Spawm something
-    /*
-    if (mainCom == "SPAWN")
-    {
-        // Nothing to spawn specified
-        if (comCnt < 2)
-        {
-            return;
-        }
-        std::unique_ptr<Warrior> spawnWar{ nullptr };
-        std::string spawnObjCom{ commands[1] };
-        WorldObjectTypes type;
-        if (spawnObjCom == "KNIGHT")
-        {
-            spawnWar = std::make_unique<Knight>
-                (RenderLayers::MAIN, *m_context.sound, 
-                 100.f, "knight", *m_context.textureHolder, 
-                *m_context.spriteSheetMapHolder, m_possibleTargetWarriors);
-            type = WorldObjectTypes::KNIGHT;
-        }
-        else if (spawnObjCom == "RUNNER")
-        {
-            spawnWar = std::make_unique<Runner>
-                (RenderLayers::MAIN, 100.f, "runner", *m_context.textureHolder, 
-                *m_context.spriteSheetMapHolder, m_possibleTargetWarriors);
-            type = WorldObjectTypes::RUNNER;
-        }
-        // If spawnWar is null there was no valid warrior specified, so nothing to do
-        if (!spawnWar)
-        {
-            return;
-        }
-        spawnWar->setPosition(800.f / 2, 400.f / 2.f);
-        //spawnWar->setVelocity(60.f);
-        spawnWar->addType(WorldObjectTypes::ENEMY | type);
-        spawnWar->setIsAiActive(true);
-        m_possibleTargetWarriors.push_back(spawnWar.get());
-        m_sceneGraph.attachChild(std::move(spawnWar));
-    }
-    */
     if (mainCom == "HEAL")
     {
         if (comCnt > 1)
@@ -490,6 +440,7 @@ void MainGameScreen::handleCommands(float dt)
 
 bool MainGameScreen::update(float dt)
 {
+
     safeSceneNodeTrasform();
     handleCommands(dt);
     // Get iterator, pointing on the first element which should get erased

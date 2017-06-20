@@ -10,6 +10,7 @@
 #include "Sound/SoundPlayer.hpp"
 
 class Weapon;
+class ConfigManager;
 
 class Warrior : public Entity
 {
@@ -63,7 +64,8 @@ class Warrior : public Entity
 
 
     public:
-        Warrior(RenderLayers layer, SoundPlayer &sound, const float health, 
+        Warrior(RenderLayers layer, const ConfigManager &config, 
+                SoundPlayer &sound, const float health, 
                 const std::string &textureId, 
                 const ResourceHolder<sf::Texture> &textureHolder,
                 const SpriteSheetMapHolder &spriteSheetMapHolder, 
@@ -116,9 +118,9 @@ class Warrior : public Entity
         virtual void onCommandCurrent(const Command &command, float dt);
         void lookAt(sf::Vector2f pos);
         virtual void weaponAdded();
-        
-        // The command which are for every Warrior equal
-        //void onCommandCurrentWarrior(const Command &command, float dt);
+
+    private:
+        void applyConfig(const ConfigManager &config);
 };
 
 #endif // WARRIOR_HPP

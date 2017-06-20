@@ -35,7 +35,7 @@ class Knight : public Warrior
              
 
     public:
-        Knight(RenderLayers layer, SoundPlayer &sound, const int health, 
+        Knight(RenderLayers layer, ConfigManager &config, SoundPlayer &sound, const int health, 
                 const std::string &textureId,
                 const ResourceHolder<sf::Texture> &textureHolder,
                 const SpriteSheetMapHolder &spriteSheetMapHolder, 

@@ -15,7 +15,9 @@ class ConfigManager
                 const std::string &defaultVal) const;
         bool getBool(const std::string &key, bool defaultVal) const;
         int getInt(const std::string &key, int defaultVal) const;
-        
+        float getFloat(const std::string &key, float defaultVal) const;
+
+
         void set(const std::string &key, const std::string &value);
         void set(const std::string &key, bool value);
         void set(const std::string &key, int value);

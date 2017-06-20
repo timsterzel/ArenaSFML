@@ -1,11 +1,14 @@
 #include "Components/Warrior.hpp"
 #include "Calc.hpp"
 #include "Components/Weapon.hpp"
+#include "Config/ConfigManager.hpp"
 #include "Helpers.hpp"
 #include <iostream>
 #include <vector>
 
-Warrior::Warrior(RenderLayers layer, SoundPlayer &sound, const float health, 
+Warrior::Warrior(RenderLayers layer, const ConfigManager &config, 
+        SoundPlayer &sound, 
+        const float health, 
         const std::string &textureId, 
         const ResourceHolder<sf::Texture> &textureHolder,
     const SpriteSheetMapHolder &spriteSheetMapHolder, std::vector<Warrior*> &possibleTargetsInWord)
@@ -22,7 +25,6 @@ Warrior::Warrior(RenderLayers layer, SoundPlayer &sound, const float health,
 , m_stanimaRefreshRate{ 5.f }
 , m_isMoving{ false }
 , m_isBlocking{ false }
-//, m_sprite{ texeureHolder.get(textureId) }
 , m_leftShoe{ nullptr }
 , m_rightShoe{ nullptr }
 , m_weapon{ nullptr }
@@ -36,19 +38,11 @@ Warrior::Warrior(RenderLayers layer, SoundPlayer &sound, const float health,
 , m_actualTarget{ nullptr }
 {
     addType(WorldObjectTypes::WARRIOR);
-    //sf::FloatRect bounds = m_sprite.getLocalBounds();
-    //m_sprite.setOrigin(bounds.width / 2.f, bounds.height / 2.f);
-    //setWidth(bounds.width);
-    //setHeight(bounds.height);
-
-    //std::vector<AnimationStepRotation>  swordRoationSteps;
-    //swordRoationSteps.push_back({ 0.f, -60.f,  0.5f });
-    //m_animationWeapon.setRotationSteps(swordRoationSteps);
+    applyConfig(config);
     std::unique_ptr<SpriteNode> leftShoe =
         { std::make_unique<SpriteNode>(RenderLayers::SHOES, 
                 textureHolder.get(textureId), 
                 spriteSheetMapHolder.getRectData(textureId, "left_shoe"), true) };
-    //leftShoe->setPosition(8.f, -5.f);
     leftShoe->setPosition(-5.f, 8.f);
     std::unique_ptr<SpriteNode> rightShoe =
         { std::make_unique<SpriteNode>(RenderLayers::WEAPON, 
@@ -71,12 +65,6 @@ Warrior::Warrior(RenderLayers layer, SoundPlayer &sound, const float health,
     attachChild(std::move(leftShoe));
     attachChild(std::move(rightShoe));
     attachChild(std::move(upperBody));
-
-    /*
-    std::vector<AnimationStepMovement>  swordMovementSteps;
-    swordMovementSteps.push_back({ sf::Vector2f(0.f, 0.f), 100.f, sf::Vector2f(10.f, 0.f) , 1.5f });
-    m_animationSword.setMovementSteps(swordMovementSteps);
-    */
 }
 
 Warrior::~Warrior()
@@ -84,6 +72,16 @@ Warrior::~Warrior()
 
 }
 
+void Warrior::applyConfig(const ConfigManager &config)
+{
+    setVelocity(config.getFloat("velocity", 60.f));
+    setMass(config.getFloat("mass", 80.f));
+    m_maxHealth = config.getFloat("health", 100.f);
+    setCurrentHealth(m_maxHealth);
+    m_maxStamina = config.getFloat("stanima", 100.f);
+    setCurrentStanima(m_maxStamina);
+    m_stanimaRefreshRate = config.getFloat("stanima_refresh", 5.f);
+}
 
 const std::string& Warrior::getID()
 {
@@ -156,11 +154,7 @@ void Warrior::setWeapon(Weapon *weapon)
     m_weapon = weapon;
     m_weapon->setRotationPoint(m_weaponPos);
     m_weapon->setPosition(m_weaponPos);
-    //m_weapon->equip(m_weaponPos);
     weaponAdded();
-    //m_weapon->setPosition(m_weaponPos);
-    //m_weapon->setPosition(10.f, 10.f);
-    //m_weapon->setParent(this);
 }
 
 Weapon* Warrior::getWeapon() const
@@ -177,19 +171,6 @@ void Warrior::setIsAiActive(bool isAiActive)
 {
     m_isAiActive = isAiActive;
 }
-/*
-void Warrior::setActualTarget(Warrior *target)
-{
-    m_actualTarget = target;
-}
-*/
-
-/*
-int Warrior::getDamage() const
-{
-    return 0;
-}
-*/
 
 bool Warrior::isAlive() const
 {
@@ -362,40 +343,9 @@ void Warrior::onCommandCurrent(const Command &command, float dt)
             default:
                 break;
         }
-
-        //onCommandCurrentWarrior(command, dt);
-        // Move is the same as setPosition(getPosition() + offset) of the sf::Transformable class
-        //move(m_currentVelocity * dt);
-        //moveInDirection(m_currentDirection, m_currentVelocity * dt);
         moveInActualDirection(m_currentVelocity * dt);
     }
 }
-
-/*
-void Warrior::onCommandCurrentWarrior(const Command &command, float dt)
-{
-    switch (command.getCommandType())
-    {
-        case CommandTypes::LOOK_AT :
-            lookAt(command.getValues());
-            break;
-        case CommandTypes::ROTATE :
-            break;
-        case CommandTypes::MOVE_UP:
-            m_currentVelocity.y = -m_velocity.y;
-            break;
-        case CommandTypes::MOVE_DOWN:
-            m_currentVelocity.y = m_velocity.y;
-            break;
-        case CommandTypes::MOVE_LEFT:
-            m_currentVelocity.x = -m_velocity.x;
-            break;
-        case CommandTypes::MOVE_RIGHT:
-            m_currentVelocity.x = m_velocity.x;
-            break;
-    }
-}
-*/
 
 void Warrior::lookAt(const sf::Vector2f LookPos)
 {

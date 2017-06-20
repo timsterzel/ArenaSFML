@@ -102,6 +102,27 @@ int ConfigManager::getInt(const std::string &key, int defaultVal) const
     return valNum;
 }
 
+float ConfigManager::getFloat(const std::string &key, float defaultVal) const
+{
+    if (!isKeyExisting(key))
+    {
+        std::cerr << "Config with Key: \"" << key << "\" not existis\n";
+        return defaultVal;
+    }
+    std::string val{ m_configs.at(key) };
+    float valNum{ defaultVal }; 
+    try
+    {
+        valNum = std::stof(val);        
+    }
+    catch(std::invalid_argument& e)
+    {
+        std::cerr << "Value of key: \"" << key << "\" is no valid float."
+            << " Invalid value is: " <<  val << std::endl;
+    }
+    return valNum;
+}
+
 void ConfigManager::set(const std::string &key, const std::string &value)
 {
     m_configs[key] = value;
