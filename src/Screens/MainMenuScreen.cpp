@@ -26,26 +26,38 @@ void MainMenuScreen::buildScene()
 
     sf::View oldView{ m_context.window->getView() };
     m_context.window->setView(m_context.guiView);
-    m_guiEnvironment.createScene("assets/gui/main_menu.xml");
+    bool isDebugModeOn{ m_context.config->getBool("debug_mode", false) };
+    if (isDebugModeOn)
+    {
+        m_guiEnvironment.createScene("assets/gui/main_menu_debug.xml");
+    }
+    else
+    {
+        m_guiEnvironment.createScene("assets/gui/main_menu.xml");
+    }
     m_context.window->setView(oldView);
     
     // One Player
-    gsf::TextButtonWidget* onePlayerBtn{ static_cast<gsf::TextButtonWidget*>(
-            m_guiEnvironment.getWidgetByID("textButtonWidget_onePlayer")) };
-    onePlayerBtn->setOnLeftClickListener(
-            [this](gsf::Widget *widget, sf::Vector2f pos)
+    if (isDebugModeOn)
     {
-        std::map<InputDevice, WorldObjectTypes> deviceMap;
-        deviceMap.insert({ InputDevice::KEYBOARD_MOUSE, 
-                WorldObjectTypes::PLAYER_1 });
-        MainGameScreen::GameData gameData(MainGameScreen::GameMode::ONE_PLAYER,
-                "level1", WorldObjectTypes::WIZARD,
-                WorldObjectTypes::RUNNER);
-        m_screenStack->registerScreen<MainGameScreen, 
-            MainGameScreen::GameData>(ScreenID::GAME, gameData);
-        m_screenStack->popScreen();
-        m_screenStack->pushScreen(ScreenID::GAME);
-    });
+        gsf::TextButtonWidget* onePlayerBtn{ static_cast<gsf::TextButtonWidget*>(
+                m_guiEnvironment.getWidgetByID("textButtonWidget_onePlayer")) };
+        onePlayerBtn->setOnLeftClickListener(
+                [this](gsf::Widget *widget, sf::Vector2f pos)
+                {
+                std::map<InputDevice, WorldObjectTypes> deviceMap;
+                deviceMap.insert({ InputDevice::KEYBOARD_MOUSE, 
+                        WorldObjectTypes::PLAYER_1 });
+                MainGameScreen::GameData gameData(
+                        MainGameScreen::GameMode::ONE_PLAYER,
+                        "level1", WorldObjectTypes::WIZARD,
+                        WorldObjectTypes::RUNNER);
+                m_screenStack->registerScreen<MainGameScreen, 
+                MainGameScreen::GameData>(ScreenID::GAME, gameData);
+                m_screenStack->popScreen();
+                m_screenStack->pushScreen(ScreenID::GAME);
+                });
+    }
     // Two Player
     gsf::TextButtonWidget* twoPlayerBtn{ static_cast<gsf::TextButtonWidget*>(
             m_guiEnvironment.getWidgetByID("textButtonWidget_twoPlayer")) };

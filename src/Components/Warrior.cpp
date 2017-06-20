@@ -14,6 +14,7 @@ Warrior::Warrior(RenderLayers layer, SoundPlayer &sound, const float health,
 , m_sound{ sound }
 , m_textureHolder{ textureHolder }
 , m_spriteSheetMapHolder{ spriteSheetMapHolder }
+, m_mass{ 80.f }
 , m_maxHealth{ health }
 , m_currentHealth{ health }
 , m_maxStamina{ 100.f }
@@ -87,6 +88,16 @@ Warrior::~Warrior()
 const std::string& Warrior::getID()
 {
     return m_ID;
+}
+
+float Warrior::getMass() const
+{
+    return m_mass;
+}
+
+void Warrior::setMass(float mass)
+{
+    m_mass = mass;
 }
 
 float Warrior::getCurrentHealth() const

@@ -28,6 +28,20 @@
 				orientation="center" >
 
 				<TextButtonWidget
+					id="textButtonWidget_onePlayer"
+					width="300"
+					height="60"
+					orientation="centerHorizontal"
+					text="ONE PLAYER"
+					characterSize="30"
+					font="defaultFont" />
+
+				<Widget
+					width="300"
+					height="20"
+					backgroundColor="transparent"	/>
+
+				<TextButtonWidget
 					id="textButtonWidget_twoPlayer"
 					width="300"
 					height="60"
