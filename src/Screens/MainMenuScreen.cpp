@@ -13,7 +13,7 @@ MainMenuScreen::MainMenuScreen(ScreenStack *screenStack, Context &context)
 
 MainMenuScreen::~MainMenuScreen()
 {
-    std::cout << "MainMenuScreen Destructor\n";
+
 }
 
 void MainMenuScreen::buildScene()
@@ -21,7 +21,7 @@ void MainMenuScreen::buildScene()
     // Only play Song when it is not already played
     if (m_context.music->getCurrentId() != "gametheme03")
     {
-        m_context.music->play("gametheme03");
+        m_context.music->play("menutheme01");
     }
 
     sf::View oldView{ m_context.window->getView() };

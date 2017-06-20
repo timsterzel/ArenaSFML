@@ -50,7 +50,7 @@ MainGameScreen::MainGameScreen(ScreenStack *screenStack, Context &context,
 
 MainGameScreen::~MainGameScreen()
 {
-    std::cout << "MainGameScreen destructor\n";
+
 }
 
 void MainGameScreen::buildScene()
@@ -69,7 +69,11 @@ void MainGameScreen::buildScene()
     loadInputDeviceData();
     buildGuiElements();
     // Play music
-    m_context.music->play("gametheme01");
+    switch (Helpers::getRandomNum(0, 1))
+    {
+        case 0: m_context.music->play("gametheme01"); std::cout << "0\n" ;break;
+        case 1: m_context.music->play("gametheme02"); break;
+    }
     
     std::unique_ptr<Warrior> warriorPlayer1{ 
         createWarrior(m_gameData.player1Warrior) };

@@ -99,7 +99,7 @@ Game::Game()
 
 Game::~Game()
 {
-    std::cout << "Game Destructor\n";
+
 }
 
 void Game::adjustShownWorldToWindowSize(unsigned int windowWidth, unsigned int windowHeight)
@@ -178,7 +178,7 @@ void Game::loadMusic()
             "assets/sounds/themes/S31-City_on_Speed.ogg");
     m_music.add("gametheme02", 
             "assets/sounds/themes/S31-Sentry.ogg");
-    m_music.add("gametheme03", 
+    m_music.add("menutheme01", 
             "assets/sounds/themes/S31-200_Production.ogg");
 }
 

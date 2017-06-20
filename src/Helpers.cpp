@@ -14,7 +14,7 @@ std::string Helpers::getRandomAlphaNumString(int length)
     
     std::random_device randDev;
     std::mt19937 mt(randDev());
-    // Random int num between 1 (inclusive) and 6 (inclusive)
+    // Random int num between 0 (inclusive) and 62 (inclusive)
     std::uniform_int_distribution<int> dist(0, 62);
     std::string randStr{ "" };
     for (int i = 0; i != length; i++)
@@ -25,6 +25,13 @@ std::string Helpers::getRandomAlphaNumString(int length)
     return randStr;
 }
 
+int Helpers::getRandomNum(int a, int b)
+{
+    std::random_device randDev;
+    std::mt19937 mt(randDev());
+    std::uniform_int_distribution<int> dist(a, b);
+    return dist(mt);
+}
 
 std::string Helpers::createUniqueID(int length)
 {
