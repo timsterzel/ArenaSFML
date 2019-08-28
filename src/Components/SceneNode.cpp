@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <cassert>
 #include <iostream>
+#include <functional>
 
 SceneNode::SceneNode()
 : m_layer{ RenderLayers::NONE }
