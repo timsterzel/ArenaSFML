@@ -1,6 +1,7 @@
 #ifndef CONFIGMANAGER_HPP
 #define CONFIGMANAGER_HPP
 #include <map>
+#include <string>
 
 class ConfigManager
 {
